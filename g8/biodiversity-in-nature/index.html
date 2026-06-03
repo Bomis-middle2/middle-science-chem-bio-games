@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Food Chain Rescue Mission VB+</title>
+<style>
+body{font-family:Arial;margin:0;background:linear-gradient(#bfefff,#e8ffe0);overflow-x:hidden}
+.cloud{position:fixed;font-size:40px;animation:move 30s linear infinite}.c2{top:80px;animation-duration:40s}
+@keyframes move{from{left:-10%}to{left:110%}}
+.wrap{max-width:1000px;margin:20px auto;background:#fff;padding:20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.hidden{display:none}.btn{padding:10px 18px;background:#198754;color:#fff;border:none;border-radius:8px;cursor:pointer}
+.progress{height:18px;background:#ddd;border-radius:10px;overflow:hidden}.bar{height:100%;width:0;background:#198754}
+.badge{display:inline-block;background:#fff3cd;padding:8px 12px;border-radius:8px;margin:4px}
+.drag{display:inline-block;padding:8px 10px;background:#d1ffd8;margin:4px;border-radius:8px;cursor:grab}
+.drop{border:2px dashed #198754;min-height:24px;padding:8px;margin:4px}
+.center{text-align:center}
+</style></head><body>
+<div class='cloud'>☁️🦋</div><div class='cloud c2'>☁️🐦</div>
+<div class='wrap'>
+<h1>🌍 Food Chain Rescue Mission</h1>
+<div id='start'>
+<p>Name: <input id='student'></p>
+<div class='progress'><div class='bar' id='bar'></div></div><br>
+<button class='btn' onclick='show("forest")'>Start Adventure</button>
+</div>
 
+<div id='forest' class='hidden'>
+<h2>🌳 Forest</h2>
+<p>Arrange the chain.</p>
+<div>
+<span class='drag' draggable='true'>Grass</span><span class='drag' draggable='true'>Grasshopper</span>
+<span class='drag' draggable='true'>Frog</span><span class='drag' draggable='true'>Snake</span>
+<span class='drag' draggable='true'>Eagle</span>
+</div>
+<div id='f'><div class='drop'></div><div class='drop'></div><div class='drop'></div><div class='drop'></div><div class='drop'></div></div>
+<button class='btn' onclick='forestCheck()'>Check</button><div id='fm'></div>
+</div>
+
+<div id='pond' class='hidden'><h2>💧 Pond</h2>
+<p>Pollution enters a pond. What happens first?</p>
+<button onclick='pond(true)'>Fish may be affected</button>
+<button onclick='pond(false)'>Water becomes cleaner</button></div>
+
+<div id='grass' class='hidden'><h2>🌾 Grassland</h2>
+<p>If tigers decrease, deer...</p>
+<button onclick='grass(true)'>Increase</button>
+<button onclick='grass(false)'>Disappear</button></div>
+
+<div id='ocean' class='hidden'><h2>🌊 Ocean</h2>
+<p>Plastic pollution harms marine food chains.</p>
+<button class='btn' onclick='ocean()'>Clean the Ocean</button></div>
+
+<div id='web' class='hidden'><h2>🕸 Food Web</h2>
+<p>Match habitat:</p>
+<p>Tiger→Forest, Shark→Ocean, Fish→Pond, Deer→Grassland</p>
+<button class='btn' onclick='foodweb()'>I Matched Them</button></div>
+
+<div id='final' class='hidden'><h2>🏆 Final Challenge</h2>
+<textarea id='ans' style='width:100%;height:100px'></textarea><br><br>
+<button class='btn' onclick='finish()'>Submit</button></div>
+
+<div id='cert' class='hidden center'>
+<h1>🏆 MASTER ECOLOGIST</h1>
+<p>Awarded to</p><h2 id='nm'></h2>
+<div class='badge'>🌱 Forest Explorer</div>
+<div class='badge'>💧 Pond Protector</div>
+<div class='badge'>🌾 Grassland Guardian</div>
+<div class='badge'>🌊 Ocean Defender</div>
+<p id='score'></p>
+</div>
+</div>
+<script>
+let score=0,drag='';
+function show(id){['start','forest','pond','grass','ocean','web','final','cert'].forEach(x=>{let e=document.getElementById(x); if(e)e.classList.add('hidden')});document.getElementById(id).classList.remove('hidden')}
+function prog(n){document.getElementById('bar').style.width=(n*16)+'%'}
+document.querySelectorAll('.drag').forEach(d=>d.ondragstart=e=>drag=d.textContent);
+document.querySelectorAll('.drop').forEach(z=>{z.ondragover=e=>e.preventDefault();z.ondrop=e=>z.textContent=drag;});
+function forestCheck(){let c=['Grass','Grasshopper','Frog','Snake','Eagle'];let ok=true;document.querySelectorAll('#f .drop').forEach((d,i)=>{if(d.textContent!=c[i]) ok=false});if(ok){score++;prog(1);show('pond')}else document.getElementById('fm').innerHTML='Try again';}
+function pond(v){if(v){score++;prog(2);show('grass')}}
+function grass(v){if(v){score++;prog(3);show('ocean')}}
+function ocean(){score++;prog(4);show('web')}
+function foodweb(){score++;prog(5);show('final')}
+function finish(){let a=document.getElementById('ans').value.toLowerCase();if(a.includes('food')||a.includes('frog')||a.includes('decrease')) score++;prog(6);document.getElementById('nm').textContent=document.getElementById('student').value||'Eco Ranger';document.getElementById('score').textContent='Final Score: '+score+'/6';show('cert')}
+</script>
+</body></html>
