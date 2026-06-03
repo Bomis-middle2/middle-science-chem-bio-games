@@ -1,83 +1,2547 @@
 <!DOCTYPE html>
-<html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>Food Chain Rescue Mission VB+</title>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+Food Chain Rescue Mission
+</title>
+
 <style>
-body{font-family:Arial;margin:0;background:linear-gradient(#bfefff,#e8ffe0);overflow-x:hidden}
-.cloud{position:fixed;font-size:40px;animation:move 30s linear infinite}.c2{top:80px;animation-duration:40s}
-@keyframes move{from{left:-10%}to{left:110%}}
-.wrap{max-width:1000px;margin:20px auto;background:#fff;padding:20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-.hidden{display:none}.btn{padding:10px 18px;background:#198754;color:#fff;border:none;border-radius:8px;cursor:pointer}
-.progress{height:18px;background:#ddd;border-radius:10px;overflow:hidden}.bar{height:100%;width:0;background:#198754}
-.badge{display:inline-block;background:#fff3cd;padding:8px 12px;border-radius:8px;margin:4px}
-.drag{display:inline-block;padding:8px 10px;background:#d1ffd8;margin:4px;border-radius:8px;cursor:grab}
-.drop{border:2px dashed #198754;min-height:24px;padding:8px;margin:4px}
-.center{text-align:center}
-</style></head><body>
-<div class='cloud'>☁️🦋</div><div class='cloud c2'>☁️🐦</div>
-<div class='wrap'>
-<h1>🌍 Food Chain Rescue Mission</h1>
-<div id='start'>
-<p>Name: <input id='student'></p>
-<div class='progress'><div class='bar' id='bar'></div></div><br>
-<button class='btn' onclick='show("forest")'>Start Adventure</button>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#b8efff 0%,
+#dfffd6 100%
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+/* -----------------
+BACKGROUND
+------------------ */
+
+#background{
+
+position:fixed;
+
+inset:0;
+
+overflow:hidden;
+
+z-index:-1;
+
+}
+
+.cloud{
+
+position:absolute;
+
+font-size:70px;
+
+opacity:.7;
+
+animation:
+cloudMove linear infinite;
+
+}
+
+.cloud:nth-child(1){
+
+top:8%;
+left:-20%;
+
+animation-duration:40s;
+
+}
+
+.cloud:nth-child(2){
+
+top:35%;
+left:-25%;
+
+animation-duration:55s;
+
+}
+
+.cloud:nth-child(3){
+
+top:70%;
+left:-20%;
+
+animation-duration:48s;
+
+}
+
+@keyframes cloudMove{
+
+from{
+
+transform:
+translateX(0);
+
+}
+
+to{
+
+transform:
+translateX(140vw);
+
+}
+
+}
+
+.bird{
+
+position:absolute;
+
+font-size:32px;
+
+animation:
+birdMove linear infinite;
+
+}
+
+.bird:nth-child(4){
+
+top:20%;
+left:-15%;
+
+animation-duration:25s;
+
+}
+
+.bird:nth-child(5){
+
+top:40%;
+left:-10%;
+
+animation-duration:35s;
+
+}
+
+@keyframes birdMove{
+
+from{
+
+transform:
+translateX(0);
+
+}
+
+to{
+
+transform:
+translateX(130vw);
+
+}
+
+}
+
+.butterfly{
+
+position:absolute;
+
+font-size:30px;
+
+animation:
+butterflyMove linear infinite;
+
+}
+
+.butterfly:nth-child(6){
+
+top:60%;
+left:-10%;
+
+animation-duration:20s;
+
+}
+
+.butterfly:nth-child(7){
+
+top:80%;
+left:-20%;
+
+animation-duration:30s;
+
+}
+
+@keyframes butterflyMove{
+
+from{
+
+transform:
+translateX(0);
+
+}
+
+to{
+
+transform:
+translateX(130vw);
+
+}
+
+}
+
+.grass{
+
+position:fixed;
+
+bottom:0;
+left:0;
+
+width:100%;
+height:90px;
+
+background:
+repeating-linear-gradient(
+90deg,
+#2d8c43 0px,
+#2d8c43 10px,
+#42af61 10px,
+#42af61 20px
+);
+
+}
+
+/* -----------------
+LOGO
+------------------ */
+
+#logoScreen{
+
+position:fixed;
+
+inset:0;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+#logoScreen img{
+
+width:220px;
+
+animation:
+logoPop 1.5s ease;
+
+}
+
+@keyframes logoPop{
+
+from{
+
+transform:scale(.4);
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+opacity:1;
+
+}
+
+}
+
+/* -----------------
+LAYOUT
+------------------ */
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+padding:20px;
+
+}
+
+.card{
+
+background:
+rgba(
+255,
+255,
+255,
+0.95
+);
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 25px
+rgba(
+0,
+0,
+0,
+0.15
+);
+
+margin-top:20px;
+
+}
+
+.hidden{
+
+display:none !important;
+
+}
+
+.center{
+
+text-align:center;
+
+}
+
+h1,h2,h3{
+
+text-align:center;
+
+color:#166534;
+
+margin-bottom:15px;
+
+}
+
+.btn{
+
+background:#16a34a;
+
+color:white;
+
+border:none;
+
+padding:12px 25px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-size:16px;
+
+}
+
+.btn:hover{
+
+background:#15803d;
+
+}
+
+input{
+
+padding:12px;
+
+width:100%;
+max-width:350px;
+
+border-radius:10px;
+
+border:1px solid #ccc;
+
+font-size:16px;
+
+}
+
+/* -----------------
+PROGRESS
+------------------ */
+
+.progress{
+
+height:24px;
+
+background:#e5e7eb;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+.progressBar{
+
+height:100%;
+
+width:0%;
+
+background:#22c55e;
+
+transition:1s;
+
+}
+
+/* -----------------
+BADGES
+------------------ */
+
+.badges{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+justify-content:center;
+
+margin-top:20px;
+
+}
+
+.badge{
+
+padding:12px 15px;
+
+border-radius:12px;
+
+background:#fef3c7;
+
+display:none;
+
+font-weight:bold;
+
+}
+
+/* -----------------
+MAP
+------------------ */
+
+.mapGrid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(220px,1fr)
+);
+
+gap:20px;
+
+margin-top:25px;
+
+}
+
+.mapCard{
+
+background:#f0fff4;
+
+padding:25px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:22px;
+
+border:2px solid #d1fae5;
+
+}
+
+.locked{
+
+opacity:.4;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="background">
+
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+
+<div class="bird">🐦</div>
+<div class="bird">🕊️</div>
+
+<div class="butterfly">🦋</div>
+<div class="butterfly">🦋</div>
+
+<div class="grass"></div>
+
 </div>
 
-<div id='forest' class='hidden'>
-<h2>🌳 Forest</h2>
-<p>Arrange the chain.</p>
-<div>
-<span class='drag' draggable='true'>Grass</span><span class='drag' draggable='true'>Grasshopper</span>
-<span class='drag' draggable='true'>Frog</span><span class='drag' draggable='true'>Snake</span>
-<span class='drag' draggable='true'>Eagle</span>
-</div>
-<div id='f'><div class='drop'></div><div class='drop'></div><div class='drop'></div><div class='drop'></div><div class='drop'></div></div>
-<button class='btn' onclick='forestCheck()'>Check</button><div id='fm'></div>
+<div id="logoScreen">
+
+<img src="assets/innovine-logo.png">
+
 </div>
 
-<div id='pond' class='hidden'><h2>💧 Pond</h2>
-<p>Pollution enters a pond. What happens first?</p>
-<button onclick='pond(true)'>Fish may be affected</button>
-<button onclick='pond(false)'>Water becomes cleaner</button></div>
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
 
-<div id='grass' class='hidden'><h2>🌾 Grassland</h2>
-<p>If tigers decrease, deer...</p>
-<button onclick='grass(true)'>Increase</button>
-<button onclick='grass(false)'>Disappear</button></div>
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
 
-<div id='ocean' class='hidden'><h2>🌊 Ocean</h2>
-<p>Plastic pollution harms marine food chains.</p>
-<button class='btn' onclick='ocean()'>Clean the Ocean</button></div>
+<audio
+id="clapSound"
+src="assets/clap.mp3">
+</audio>
 
-<div id='web' class='hidden'><h2>🕸 Food Web</h2>
-<p>Match habitat:</p>
-<p>Tiger→Forest, Shark→Ocean, Fish→Pond, Deer→Grassland</p>
-<button class='btn' onclick='foodweb()'>I Matched Them</button></div>
+<div class="container">
 
-<div id='final' class='hidden'><h2>🏆 Final Challenge</h2>
-<textarea id='ans' style='width:100%;height:100px'></textarea><br><br>
-<button class='btn' onclick='finish()'>Submit</button></div>
+<div
+id="introScreen"
+class="card">
 
-<div id='cert' class='hidden center'>
-<h1>🏆 MASTER ECOLOGIST</h1>
-<p>Awarded to</p><h2 id='nm'></h2>
-<div class='badge'>🌱 Forest Explorer</div>
-<div class='badge'>💧 Pond Protector</div>
-<div class='badge'>🌾 Grassland Guardian</div>
-<div class='badge'>🌊 Ocean Defender</div>
-<p id='score'></p>
+<h1>
+🌍 Food Chain Rescue Mission
+</h1>
+
+<p class="center">
+
+Restore 4 ecosystems and become
+a Master Ecologist.
+
+</p>
+
+<br>
+
+<div class="center">
+
+<input
+id="studentName"
+placeholder="Enter your name">
+
 </div>
+
+<br>
+
+<div class="progress">
+
+<div
+id="progressBar"
+class="progressBar">
+
 </div>
+
+</div>
+
+<br>
+
+<div class="center">
+
+<button
+class="btn"
+onclick="startAdventure()">
+
+Start Adventure
+
+</button>
+
+</div>
+
+</div>
+<!-- MAP SCREEN -->
+
+<div
+id="mapScreen"
+class="card hidden">
+
+<h2>
+🗺️ Ecosystem Map
+</h2>
+
+<p class="center">
+
+Complete all ecosystem missions.
+
+</p>
+
+<div class="mapGrid">
+
+<div class="mapCard">
+
+🌳
+
+<br><br>
+
+Forest
+
+<br><br>
+
+<button
+class="btn"
+onclick="showForest()">
+
+Enter
+
+</button>
+
+</div>
+
+<div
+id="pondCard"
+class="mapCard locked">
+
+💧
+
+<br><br>
+
+Pond
+
+</div>
+
+<div
+id="grassCard"
+class="mapCard locked">
+
+🌾
+
+<br><br>
+
+Grassland
+
+</div>
+
+<div
+id="oceanCard"
+class="mapCard locked">
+
+🌊
+
+<br><br>
+
+Ocean
+
+</div>
+
+</div>
+
+<h3>
+
+Badges Earned
+
+</h3>
+
+<div class="badges">
+
+<div
+id="badgeForest"
+class="badge">
+
+🌱 Forest Explorer
+
+</div>
+
+<div
+id="badgePond"
+class="badge">
+
+💧 Pond Protector
+
+</div>
+
+<div
+id="badgeGrass"
+class="badge">
+
+🌾 Grassland Guardian
+
+</div>
+
+<div
+id="badgeOcean"
+class="badge">
+
+🌊 Ocean Defender
+
+</div>
+
+<div
+id="badgeMaster"
+class="badge">
+
+👑 Master Ecologist
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FOREST SCREEN -->
+
+<div
+id="forestScreen"
+class="card hidden">
+
+<h2>
+
+🌳 Forest Ecosystem
+
+</h2>
+
+<!-- MISSION 1 -->
+
+<div id="forestMission1">
+
+<h3>
+
+🌱 Mission 1:
+Wake Up The Producers
+
+</h3>
+
+<p class="center">
+
+Click the THREE things
+plants need to make food.
+
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+">
+
+<div
+class="producerCard"
+onclick="checkProducer(this,true)">
+
+☀️ Sunlight
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkProducer(this,true)">
+
+💧 Water
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkProducer(this,true)">
+
+🌬️ Carbon Dioxide
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkProducer(this,false)">
+
+☁️ Smoke
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkProducer(this,false)">
+
+🥤 Plastic
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkProducer(this,false)">
+
+🍫 Chocolate
+
+</div>
+
+</div>
+
+<div
+id="tree"
+class="hidden"
+style="
+font-size:120px;
+text-align:center;
+margin-top:25px;
+animation:treeGrow 1.5s ease;
+">
+
+🌳
+
+</div>
+
+<div
+id="producerSuccess"
+class="hidden center">
+
+<br>
+
+<h3>
+
+🌱 Forest Explorer Badge Earned!
+
+</h3>
+
+<button
+class="btn"
+onclick="showFoodChainMission()">
+
+Next Mission →
+
+</button>
+
+</div>
+
+</div>
+
+<!-- MISSION 2 -->
+
+<div
+id="foodChainMission"
+class="hidden">
+
+<h3>
+
+🦗 Build The Food Chain
+
+</h3>
+
+<p class="center">
+
+Arrange the organisms correctly.
+
+</p>
+
+<div
+style="
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-top:20px;
+">
+
+<div
+class="dragItem"
+draggable="true">
+
+🌾 Grass
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🦗 Grasshopper
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🐸 Frog
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🐍 Snake
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🦅 Eagle
+
+</div>
+
+</div>
+
+<div
+style="
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:20px;
+">
+
+<div class="dropZone"></div>
+⬇️
+<div class="dropZone"></div>
+⬇️
+<div class="dropZone"></div>
+⬇️
+<div class="dropZone"></div>
+⬇️
+<div class="dropZone"></div>
+
+</div>
+
+<br>
+
+<div class="center">
+
+<button
+class="btn"
+onclick="checkFoodChain()">
+
+Check Food Chain
+
+</button>
+
+</div>
+
+<div
+id="foodChainSuccess"
+class="hidden center">
+
+<h3>
+
+✅ Food Chain Restored
+
+</h3>
+
+<button
+class="btn"
+onclick="showCrisisMission()">
+
+Next Mission →
+
+</button>
+
+</div>
+
+</div>
+
+<!-- MISSION 3 -->
+
+<div
+id="crisisMission"
+class="hidden">
+
+<h3>
+
+🐸 Ecosystem Crisis
+
+</h3>
+
+<p class="center">
+
+A disease kills all frogs.
+
+What happens to grasshoppers?
+
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+">
+
+<button
+class="btn"
+onclick="checkCrisis(false)">
+
+Decrease
+
+</button>
+
+<button
+class="btn"
+onclick="checkCrisis(true)">
+
+Increase
+
+</button>
+
+<button
+class="btn"
+onclick="checkCrisis(false)">
+
+Disappear
+
+</button>
+
+<button
+class="btn"
+onclick="checkCrisis(false)">
+
+Stay Same
+
+</button>
+
+</div>
+
+<div
+id="crisisSuccess"
+class="hidden center">
+
+<br>
+
+<h3>
+
+🏅 Forest Ecosystem Complete!
+
+</h3>
+
+<button
+class="btn"
+onclick="completeForest()">
+
+Return To Map
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.producerCard{
+
+background:#f0fff4;
+
+padding:20px;
+
+border-radius:15px;
+
+text-align:center;
+
+cursor:pointer;
+
+font-size:20px;
+
+}
+
+.dragItem{
+
+background:#dcfce7;
+
+padding:12px;
+
+border-radius:12px;
+
+cursor:grab;
+
+}
+
+.dropZone{
+
+width:260px;
+
+height:55px;
+
+border:3px dashed #22c55e;
+
+border-radius:12px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:white;
+
+margin:8px;
+
+}
+
+.correctPick{
+
+background:#bbf7d0 !important;
+
+}
+
+.wrongPick{
+
+background:#fecaca !important;
+
+}
+
+@keyframes treeGrow{
+
+from{
+
+transform:scale(.2);
+
+}
+
+to{
+
+transform:scale(1);
+
+}
+
+}
+
+</style>
+<!-- POND SCREEN -->
+
+<div
+id="pondScreen"
+class="card hidden">
+
+<h2>
+
+💧 Pond Ecosystem
+
+</h2>
+
+<!-- MISSION 1 -->
+
+<div id="pondMission1">
+
+<h3>
+
+🧪 Pollution Challenge
+
+</h3>
+
+<p class="center">
+
+A pond is becoming polluted.
+
+Select ALL harmful pollutants.
+
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+">
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,true)">
+
+🏭 Factory Waste
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,true)">
+
+🛢 Oil Spill
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,true)">
+
+🗑 Plastic Waste
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,false)">
+
+🌿 Aquatic Plants
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,false)">
+
+🐟 Fish
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPollutant(this,false)">
+
+💧 Clean Water
+
+</div>
+
+</div>
+
+<div
+id="pondSuccess"
+class="hidden center">
+
+<br>
+
+<h3>
+
+💧 Pond Protector Badge Earned!
+
+</h3>
+
+<button
+class="btn"
+onclick="showPondMission2()">
+
+Next Mission →
+
+</button>
+
+</div>
+
+</div>
+
+<!-- MISSION 2 -->
+
+<div
+id="pondMission2"
+class="hidden">
+
+<h3>
+
+🐟 Pond Food Chain
+
+</h3>
+
+<p class="center">
+
+Arrange the pond food chain.
+
+</p>
+
+<div
+style="
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-top:20px;
+">
+
+<div
+class="dragItem"
+draggable="true">
+
+🟢 Algae
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🐠 Small Fish
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🐟 Large Fish
+
+</div>
+
+<div
+class="dragItem"
+draggable="true">
+
+🦩 Heron
+
+</div>
+
+</div>
+
+<div
+style="
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:20px;
+">
+
+<div class="pondDrop"></div>
+⬇️
+<div class="pondDrop"></div>
+⬇️
+<div class="pondDrop"></div>
+⬇️
+<div class="pondDrop"></div>
+
+</div>
+
+<br>
+
+<div class="center">
+
+<button
+class="btn"
+onclick="checkPondChain()">
+
+Check Food Chain
+
+</button>
+
+</div>
+
+<div
+id="pondChainSuccess"
+class="hidden center">
+
+<h3>
+
+✅ Pond Food Chain Restored
+
+</h3>
+
+<button
+class="btn"
+onclick="completePond()">
+
+Return To Map
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- GRASSLAND SCREEN -->
+
+<div
+id="grassScreen"
+class="card hidden">
+
+<h2>
+
+🌾 Grassland Ecosystem
+
+</h2>
+
+<p class="center">
+
+Coming in Part 4...
+
+</p>
+
+</div>
+
+<style>
+
+.pondDrop{
+
+width:260px;
+
+height:55px;
+
+border:3px dashed #0ea5e9;
+
+border-radius:12px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:white;
+
+margin:8px;
+
+}
+
+</style>
+
 <script>
-let score=0,drag='';
-function show(id){['start','forest','pond','grass','ocean','web','final','cert'].forEach(x=>{let e=document.getElementById(x); if(e)e.classList.add('hidden')});document.getElementById(id).classList.remove('hidden')}
-function prog(n){document.getElementById('bar').style.width=(n*16)+'%'}
-document.querySelectorAll('.drag').forEach(d=>d.ondragstart=e=>drag=d.textContent);
-document.querySelectorAll('.drop').forEach(z=>{z.ondragover=e=>e.preventDefault();z.ondrop=e=>z.textContent=drag;});
-function forestCheck(){let c=['Grass','Grasshopper','Frog','Snake','Eagle'];let ok=true;document.querySelectorAll('#f .drop').forEach((d,i)=>{if(d.textContent!=c[i]) ok=false});if(ok){score++;prog(1);show('pond')}else document.getElementById('fm').innerHTML='Try again';}
-function pond(v){if(v){score++;prog(2);show('grass')}}
-function grass(v){if(v){score++;prog(3);show('ocean')}}
-function ocean(){score++;prog(4);show('web')}
-function foodweb(){score++;prog(5);show('final')}
-function finish(){let a=document.getElementById('ans').value.toLowerCase();if(a.includes('food')||a.includes('frog')||a.includes('decrease')) score++;prog(6);document.getElementById('nm').textContent=document.getElementById('student').value||'Eco Ranger';document.getElementById('score').textContent='Final Score: '+score+'/6';show('cert')}
+
+let pollutantCount=0;
+
+function checkPollutant(card,correct){
+
+if(card.dataset.done) return;
+
+card.dataset.done=true;
+
+if(correct){
+
+pollutantCount++;
+
+card.classList.add(
+"correctPick"
+);
+
+document
+.getElementById(
+"correctSound"
+)
+.play();
+
+}else{
+
+card.classList.add(
+"wrongPick"
+);
+
+document
+.getElementById(
+"wrongSound"
+)
+.play();
+
+}
+
+if(pollutantCount===3){
+
+document
+.getElementById(
+"pondSuccess"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
+}
+
+function showPondMission2(){
+
+document
+.getElementById(
+"pondMission1"
+)
+.classList.add(
+"hidden"
+);
+
+document
+.getElementById(
+"pondMission2"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
+let draggedPond="";
+
+document.addEventListener(
+"dragstart",
+e=>{
+
+if(
+e.target.classList.contains(
+"dragItem"
+)
+){
+
+draggedPond=
+e.target.textContent;
+
+}
+
+}
+);
+
+document.addEventListener(
+"dragover",
+e=>{
+
+if(
+e.target.classList.contains(
+"pondDrop"
+)
+){
+
+e.preventDefault();
+
+}
+
+}
+);
+
+document.addEventListener(
+"drop",
+e=>{
+
+if(
+e.target.classList.contains(
+"pondDrop"
+)
+){
+
+e.target.textContent=
+draggedPond;
+
+}
+
+}
+);
+
+function checkPondChain(){
+
+const correct=[
+
+"🟢 Algae",
+"🐠 Small Fish",
+"🐟 Large Fish",
+"🦩 Heron"
+
+];
+
+const zones=
+document.querySelectorAll(
+".pondDrop"
+);
+
+let ok=true;
+
+zones.forEach((z,i)=>{
+
+if(
+z.textContent.trim()
+!==correct[i]
+){
+
+ok=false;
+
+}
+
+});
+
+if(ok){
+
+document
+.getElementById(
+"pondChainSuccess"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
+}
+
+function completePond(){
+
+document
+.getElementById(
+"pondScreen"
+)
+.classList.add(
+"hidden"
+);
+
+document
+.getElementById(
+"mapScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+document
+.getElementById(
+"badgePond"
+)
+.style.display=
+"block";
+
+document
+.getElementById(
+"progressBar"
+)
+.style.width=
+"50%";
+
+document
+.getElementById(
+"pondCard"
+)
+.innerHTML=
+`
+💧
+
+<br><br>
+
+Pond
+
+<br><br>
+
+✅ Complete
+`;
+
+document
+.getElementById(
+"grassCard"
+)
+.classList.remove(
+"locked"
+);
+
+document
+.getElementById(
+"grassCard"
+)
+.innerHTML=
+`
+🌾
+
+<br><br>
+
+Grassland
+
+<br><br>
+
+<button
+class="btn"
+onclick="showGrass()">
+
+Enter
+
+</button>
+`;
+
+}
+
+function showPond(){
+
+document
+.getElementById(
+"mapScreen"
+)
+.classList.add(
+"hidden"
+);
+
+document
+.getElementById(
+"pondScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
 </script>
-</body></html>
+<!-- GRASSLAND SCREEN -->
+
+<div
+id="grassScreen"
+class="card hidden">
+
+<h2>
+
+🌾 Grassland Ecosystem
+
+</h2>
+
+<div id="grassMission1">
+
+<h3>
+
+🦌 Population Balance Challenge
+
+</h3>
+
+<p class="center">
+
+If tiger population decreases,
+what happens to deer population?
+
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+">
+
+<button
+class="btn"
+onclick="checkGrass(true)">
+
+Increase
+
+</button>
+
+<button
+class="btn"
+onclick="checkGrass(false)">
+
+Decrease
+
+</button>
+
+<button
+class="btn"
+onclick="checkGrass(false)">
+
+Disappear
+
+</button>
+
+<button
+class="btn"
+onclick="checkGrass(false)">
+
+Remain Same
+
+</button>
+
+</div>
+
+<div
+id="grassSuccess"
+class="hidden center">
+
+<br>
+
+<h3>
+
+🌾 Grassland Guardian Badge Earned!
+
+</h3>
+
+<button
+class="btn"
+onclick="completeGrass()">
+
+Return To Map
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- OCEAN SCREEN -->
+
+<div
+id="oceanScreen"
+class="card hidden">
+
+<h2>
+
+🌊 Ocean Ecosystem
+
+</h2>
+
+<div id="oceanMission1">
+
+<h3>
+
+♻️ Plastic Pollution Rescue
+
+</h3>
+
+<p class="center">
+
+Click ALL plastic items
+before marine life is harmed.
+
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+">
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,true)">
+
+🥤 Plastic Bottle
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,true)">
+
+🛍 Plastic Bag
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,true)">
+
+🧴 Plastic Container
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,false)">
+
+🐠 Fish
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,false)">
+
+🐬 Dolphin
+
+</div>
+
+<div
+class="producerCard"
+onclick="checkPlastic(this,false)">
+
+🌊 Water
+
+</div>
+
+</div>
+
+<div
+id="oceanSuccess"
+class="hidden center">
+
+<br>
+
+<h3>
+
+🌊 Ocean Defender Badge Earned!
+
+</h3>
+
+<button
+class="btn"
+onclick="completeOcean()">
+
+Return To Map
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FINAL CHALLENGE -->
+
+<div
+id="finalScreen"
+class="card hidden">
+
+<h2>
+
+🕸 Food Web Challenge
+
+</h2>
+
+<p class="center">
+
+Match the organisms
+with their habitat mentally
+and then answer the question.
+
+</p>
+
+<br>
+
+<ul style="line-height:2;">
+
+<li>Tiger → Forest</li>
+
+<li>Fish → Pond</li>
+
+<li>Shark → Ocean</li>
+
+<li>Deer → Grassland</li>
+
+</ul>
+
+<br>
+
+<h3>
+
+✍ Final Reasoning Task
+
+</h3>
+
+<p>
+
+A pesticide kills insects in a forest.
+
+Explain ONE effect on the ecosystem.
+
+</p>
+
+<br>
+
+<textarea
+id="finalAnswer"
+style="
+width:100%;
+height:140px;
+padding:10px;
+border-radius:10px;
+"></textarea>
+
+<br><br>
+
+<div class="center">
+
+<button
+class="btn"
+onclick="submitFinalAnswer()">
+
+Submit Challenge
+
+</button>
+
+</div>
+
+</div>
+
+<!-- CERTIFICATE -->
+
+<div
+id="certificateScreen"
+class="card hidden">
+
+<h1>
+
+🏆 MASTER ECOLOGIST
+
+</h1>
+
+<br>
+
+<p class="center">
+
+Awarded To
+
+</p>
+
+<h2
+id="certificateName">
+
+</h2>
+
+<p class="center">
+
+For Successfully Restoring
+
+</p>
+
+<div
+style="
+font-size:22px;
+text-align:center;
+line-height:2;
+">
+
+🌳 Forest Ecosystem
+
+<br>
+
+💧 Pond Ecosystem
+
+<br>
+
+🌾 Grassland Ecosystem
+
+<br>
+
+🌊 Ocean Ecosystem
+
+</div>
+
+<br>
+
+<div
+class="badges"
+style="display:flex;">
+
+<div class="badge"
+style="display:block;">
+
+🌱 Forest Explorer
+
+</div>
+
+<div class="badge"
+style="display:block;">
+
+💧 Pond Protector
+
+</div>
+
+<div class="badge"
+style="display:block;">
+
+🌾 Grassland Guardian
+
+</div>
+
+<div class="badge"
+style="display:block;">
+
+🌊 Ocean Defender
+
+</div>
+
+<div class="badge"
+style="display:block;">
+
+👑 Master Ecologist
+
+</div>
+
+</div>
+
+<br>
+
+<h2
+class="center"
+id="finalScore">
+
+</h2>
+
+<div class="center">
+
+<button
+class="btn"
+onclick="location.reload()">
+
+Play Again
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* ---------- FOREST ---------- */
+
+let producerCount=0;
+
+function checkProducer(card,correct){
+
+if(card.dataset.done) return;
+
+card.dataset.done=true;
+
+if(correct){
+
+producerCount++;
+
+card.classList.add("correctPick");
+
+}else{
+
+card.classList.add("wrongPick");
+
+}
+
+if(producerCount===3){
+
+document
+.getElementById("tree")
+.classList.remove("hidden");
+
+document
+.getElementById("producerSuccess")
+.classList.remove("hidden");
+
+}
+
+}
+
+function showFoodChainMission(){
+
+document
+.getElementById("forestMission1")
+.classList.add("hidden");
+
+document
+.getElementById("foodChainMission")
+.classList.remove("hidden");
+
+}
+
+let dragged="";
+
+document.addEventListener(
+"dragstart",
+e=>{
+
+if(
+e.target.classList.contains(
+"dragItem"
+)
+){
+
+dragged=
+e.target.textContent;
+
+}
+
+}
+);
+
+document.addEventListener(
+"dragover",
+e=>{
+
+if(
+e.target.classList.contains(
+"dropZone"
+)
+){
+
+e.preventDefault();
+
+}
+
+}
+);
+
+document.addEventListener(
+"drop",
+e=>{
+
+if(
+e.target.classList.contains(
+"dropZone"
+)
+){
+
+e.target.textContent=
+dragged;
+
+}
+
+}
+);
+
+function checkFoodChain(){
+
+const correct=[
+
+"🌾 Grass",
+"🦗 Grasshopper",
+"🐸 Frog",
+"🐍 Snake",
+"🦅 Eagle"
+
+];
+
+const zones=
+document.querySelectorAll(
+".dropZone"
+);
+
+let ok=true;
+
+zones.forEach((z,i)=>{
+
+if(
+z.textContent.trim()
+!==correct[i]
+){
+
+ok=false;
+
+}
+
+});
+
+if(ok){
+
+document
+.getElementById(
+"foodChainSuccess"
+)
+.classList.remove("hidden");
+
+}
+
+}
+
+function showCrisisMission(){
+
+document
+.getElementById("foodChainMission")
+.classList.add("hidden");
+
+document
+.getElementById("crisisMission")
+.classList.remove("hidden");
+
+}
+
+function checkCrisis(correct){
+
+if(correct){
+
+document
+.getElementById(
+"crisisSuccess"
+)
+.classList.remove("hidden");
+
+}
+
+}
+
+function completeForest(){
+
+document
+.getElementById("badgeForest")
+.style.display="block";
+
+document
+.getElementById("progressBar")
+.style.width="25%";
+
+document
+.getElementById("forestScreen")
+.classList.add("hidden");
+
+document
+.getElementById("mapScreen")
+.classList.remove("hidden");
+
+document
+.getElementById("pondCard")
+.classList.remove("locked");
+
+document
+.getElementById("pondCard")
+.innerHTML=
+`
+💧<br><br>
+Pond
+<br><br>
+<button
+class="btn"
+onclick="showPond()">
+Enter
+</button>
+`;
+
+}
+
+/* ---------- GRASS ---------- */
+
+function showGrass(){
+
+document
+.getElementById("mapScreen")
+.classList.add("hidden");
+
+document
+.getElementById("grassScreen")
+.classList.remove("hidden");
+
+}
+
+function checkGrass(correct){
+
+if(correct){
+
+document
+.getElementById(
+"grassSuccess"
+)
+.classList.remove("hidden");
+
+}
+
+}
+
+function completeGrass(){
+
+document
+.getElementById("badgeGrass")
+.style.display="block";
+
+document
+.getElementById("progressBar")
+.style.width="75%";
+
+document
+.getElementById("grassScreen")
+.classList.add("hidden");
+
+document
+.getElementById("mapScreen")
+.classList.remove("hidden");
+
+document
+.getElementById("oceanCard")
+.classList.remove("locked");
+
+document
+.getElementById("oceanCard")
+.innerHTML=
+`
+🌊<br><br>
+Ocean
+<br><br>
+<button
+class="btn"
+onclick="showOcean()">
+Enter
+</button>
+`;
+
+}
+
+/* ---------- OCEAN ---------- */
+
+let plasticCount=0;
+
+function showOcean(){
+
+document
+.getElementById("mapScreen")
+.classList.add("hidden");
+
+document
+.getElementById("oceanScreen")
+.classList.remove("hidden");
+
+}
+
+function checkPlastic(card,correct){
+
+if(card.dataset.done) return;
+
+card.dataset.done=true;
+
+if(correct){
+
+plasticCount++;
+
+card.classList.add("correctPick");
+
+}else{
+
+card.classList.add("wrongPick");
+
+}
+
+if(plasticCount===3){
+
+document
+.getElementById("oceanSuccess")
+.classList.remove("hidden");
+
+}
+
+}
+
+function completeOcean(){
+
+document
+.getElementById("badgeOcean")
+.style.display="block";
+
+document
+.getElementById("progressBar")
+.style.width="100%";
+
+document
+.getElementById("oceanScreen")
+.classList.add("hidden");
+
+document
+.getElementById("finalScreen")
+.classList.remove("hidden");
+
+}
+
+/* ---------- START ---------- */
+
+function startAdventure(){
+
+const name=
+document
+.getElementById(
+"studentName"
+)
+.value.trim();
+
+if(name===""){
+
+alert(
+"Please enter your name."
+);
+
+return;
+
+}
+
+document
+.getElementById(
+"introScreen"
+)
+.classList.add("hidden");
+
+document
+.getElementById(
+"mapScreen"
+)
+.classList.remove("hidden");
+
+}
+
+/* ---------- FINAL ---------- */
+
+function submitFinalAnswer(){
+
+const answer=
+document
+.getElementById(
+"finalAnswer"
+)
+.value
+.toLowerCase();
+
+if(
+answer.includes("frog") ||
+answer.includes("food") ||
+answer.includes("chain") ||
+answer.includes("decrease") ||
+answer.includes("population")
+){
+
+document
+.getElementById(
+"badgeMaster"
+)
+.style.display=
+"block";
+
+document
+.getElementById(
+"certificateName"
+)
+.innerText=
+document
+.getElementById(
+"studentName"
+)
+.value;
+
+document
+.getElementById(
+"finalScore"
+)
+.innerText=
+"⭐⭐⭐⭐⭐ Mission Complete";
+
+document
+.getElementById(
+"finalScreen"
+)
+.classList.add(
+"hidden"
+);
+
+document
+.getElementById(
+"certificateScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+document
+.getElementById(
+"clapSound"
+)
+.play();
+
+}else{
+
+alert(
+"Think about how food chains are affected."
+);
+
+}
+
+}
+
+setTimeout(()=>{
+
+document
+.getElementById(
+"logoScreen"
+)
+.style.display=
+"none";
+
+},4000);
+
+</script>
+
+</div>
+
+</body>
+</html>
