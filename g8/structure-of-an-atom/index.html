@@ -1,1 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+
+Atomic Research Lab
+
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+radial-gradient(
+circle at center,
+#081520,
+#02060a
+);
+
+color:white;
+
+overflow-x:hidden;
+
+min-height:100vh;
+
+}
+
+/* LAB */
+
+.container{
+
+max-width:1400px;
+
+margin:auto;
+
+padding:20px;
+
+}
+
+.title{
+
+text-align:center;
+
+font-size:3rem;
+
+font-weight:bold;
+
+margin-bottom:20px;
+
+color:#4fd8ff;
+
+text-shadow:
+0 0 20px #4fd8ff;
+
+}
+
+/* CARD */
+
+.panel{
+
+background:
+rgba(255,255,255,.05);
+
+border:
+1px solid rgba(255,255,255,.1);
+
+border-radius:20px;
+
+padding:20px;
+
+backdrop-filter:blur(10px);
+
+}
+
+/* LAYOUT */
+
+.gameLayout{
+
+display:grid;
+
+grid-template-columns:
+
+300px
+1fr
+320px;
+
+gap:20px;
+
+}
+
+/* PARTICLES */
+
+.particle{
+
+width:90px;
+height:90px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+font-size:2rem;
+
+font-weight:bold;
+
+cursor:grab;
+
+margin:10px auto;
+
+}
+
+.proton{
+
+background:#ff3b30;
+
+}
+
+.neutron{
+
+background:#8b5cf6;
+
+}
+
+.electron{
+
+background:#2563eb;
+
+}
+
+/* ATOM */
+
+.atomArea{
+
+position:relative;
+
+height:800px;
+
+}
+
+/* SHELLS */
+
+.shell1{
+
+position:absolute;
+
+width:300px;
+height:300px;
+
+border:
+4px solid rgba(
+255,
+255,
+255,
+0.6
+);
+
+border-radius:50%;
+
+left:50%;
+top:50%;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+}
+
+.shell2{
+
+position:absolute;
+
+width:520px;
+height:520px;
+
+border:
+4px solid rgba(
+255,
+255,
+255,
+0.6
+);
+
+border-radius:50%;
+
+left:50%;
+top:50%;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+}
+
+/* NUCLEUS */
+
+#nucleus{
+
+position:absolute;
+
+width:220px;
+height:220px;
+
+border-radius:50%;
+
+background:
+rgba(
+255,
+180,
+0,
+0.15
+);
+
+border:
+4px solid gold;
+
+left:50%;
+top:50%;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+flex-wrap:wrap;
+
+padding:10px;
+
+}
+
+.nucleusParticle{
+
+width:40px;
+height:40px;
+
+border-radius:50%;
+
+margin:2px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:1rem;
+
+}
+
+/* ELECTRON SLOTS */
+
+.slot{
+
+position:absolute;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+border:
+3px dashed #4fd8ff;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:1.5rem;
+
+}
+
+/* K SHELL */
+
+#kTop{
+
+left:50%;
+top:31%;
+
+transform:
+translateX(-50%);
+
+}
+
+#kBottom{
+
+left:50%;
+bottom:31%;
+
+transform:
+translateX(-50%);
+
+}
+
+/* L SHELL */
+
+#lTop{
+
+left:50%;
+top:14%;
+
+transform:
+translateX(-50%);
+
+}
+
+#lRight{
+
+right:16%;
+top:50%;
+
+transform:
+translateY(-50%);
+
+}
+
+#lBottom{
+
+left:50%;
+bottom:14%;
+
+transform:
+translateX(-50%);
+
+}
+
+#lLeft{
+
+left:16%;
+top:50%;
+
+transform:
+translateY(-50%);
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+.success{
+
+color:#22c55e;
+font-size:1.4rem;
+font-weight:bold;
+text-align:center;
+
+margin-top:20px;
+
+}
+
+button{
+
+background:#22c55e;
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+color:white;
+
+font-size:1rem;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">
+
+🧪 ATOMIC RESEARCH LAB
+
+</div>
+
+<div class="gameLayout">
+
+<!-- LEFT PANEL -->
+
+<div class="panel">
+
+<h2>
+
+Particles
+
+</h2>
+
+<div id="particleBank">
+
+</div>
+
+</div>
+
+<!-- CENTER -->
+
+<div class="panel">
+
+<div class="atomArea">
+
+<div class="shell2"></div>
+
+<div class="shell1"></div>
+
+<div id="nucleus"></div>
+
+<div
+class="slot"
+id="kTop"></div>
+
+<div
+class="slot"
+id="kBottom"></div>
+
+<div
+class="slot"
+id="lTop"></div>
+
+<div
+class="slot"
+id="lRight"></div>
+
+<div
+class="slot"
+id="lBottom"></div>
+
+<div
+class="slot"
+id="lLeft"></div>
+
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+
+<div class="panel">
+
+<h2>
+
+Mission
+
+</h2>
+
+<br>
+
+<p>
+
+Build Carbon-12
+
+</p>
+
+<br>
+
+<p>
+
+✔ 6 Protons
+
+</p>
+
+<p>
+
+✔ 6 Neutrons
+
+</p>
+
+<p>
+
+✔ 6 Electrons
+
+</p>
+
+<br>
+
+<button
+onclick="checkAtom()">
+
+Check Atom
+
+</button>
+
+<div
+id="result"
+class="success">
+
+</div>
+
+</div>
+
+</div>
+<!-- PART 3 -->
+
+<script>
+
+/* -----------------------------
+   CHECK ATOM
+----------------------------- */
+
+function checkAtom(){
+
+const neutrons=
+countNeutrons();
+
+const totalParticles=
+nucleus.querySelectorAll(
+".nucleusParticle"
+).length;
+
+const protons=
+totalParticles-neutrons;
+
+const electrons=
+countElectrons();
+
+/* -----------------------------
+   CHECK SHELLS
+----------------------------- */
+
+let kCount=0;
+let lCount=0;
+
+if(
+document.getElementById(
+"kTop"
+).dataset.filled==="yes"
+){
+kCount++;
+}
+
+if(
+document.getElementById(
+"kBottom"
+).dataset.filled==="yes"
+){
+kCount++;
+}
+
+[
+"lTop",
+"lRight",
+"lBottom",
+"lLeft"
+].forEach(id=>{
+
+if(
+document.getElementById(id)
+.dataset.filled==="yes"
+){
+
+lCount++;
+
+}
+
+});
+
+/* -----------------------------
+   VALIDATION
+----------------------------- */
+
+const result=
+document.getElementById(
+"result"
+);
+
+if(
+
+protons===6 &&
+neutrons===6 &&
+electrons===6 &&
+kCount===2 &&
+lCount===4
+
+){
+
+result.innerHTML=
+`
+🏆 Carbon Atom Completed!
+<br><br>
+Atomic Number = 6
+<br>
+Mass Number = 12
+<br>
+Electronic Configuration = 2,4
+`;
+
+showQuiz();
+
+}else{
+
+result.innerHTML=
+`
+❌ Not Correct Yet
+<br><br>
+Protons:
+${protons}/6
+<br>
+Neutrons:
+${neutrons}/6
+<br>
+Electrons:
+${electrons}/6
+<br>
+K Shell:
+${kCount}/2
+<br>
+L Shell:
+${lCount}/4
+`;
+
+}
+
+}
+
+/* -----------------------------
+   QUIZ SCREEN
+----------------------------- */
+
+const quizHTML=
+
+`
+<div
+id="quizScreen"
+class="panel hidden"
+style="
+margin-top:20px;
+">
+
+<h2>
+
+🧠 Carbon Challenge
+
+</h2>
+
+<br>
+
+<p>
+
+1. Atomic Number of Carbon?
+
+</p>
+
+<br>
+
+<input
+id="q1"
+type="number">
+
+<br><br>
+
+<p>
+
+2. Mass Number of Carbon-12?
+
+</p>
+
+<br>
+
+<input
+id="q2"
+type="number">
+
+<br><br>
+
+<p>
+
+3. Valence Electrons?
+
+</p>
+
+<br>
+
+<input
+id="q3"
+type="number">
+
+<br><br>
+
+<button
+onclick="checkQuiz()">
+
+Submit
+
+</button>
+
+</div>
+`;
+
+document
+.querySelector(
+".container"
+)
+.insertAdjacentHTML(
+"beforeend",
+quizHTML
+);
+
+function showQuiz(){
+
+document
+.getElementById(
+"quizScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+}
+
+/* -----------------------------
+   CHECK QUIZ
+----------------------------- */
+
+function checkQuiz(){
+
+const q1=
+document.getElementById(
+"q1"
+).value;
+
+const q2=
+document.getElementById(
+"q2"
+).value;
+
+const q3=
+document.getElementById(
+"q3"
+).value;
+
+if(
+
+q1=="6" &&
+q2=="12" &&
+q3=="4"
+
+){
+
+showCertificate();
+
+}else{
+
+alert(
+"Check your answers again."
+);
+
+}
+
+}
+
+</script>
+<!-- PART 4 -->
+
+<script>
+
+/* -----------------------------
+   STUDENT NAME SCREEN
+----------------------------- */
+
+const studentHTML =
+
+`
+<div
+id="nameScreen"
+class="panel"
+style="
+margin-top:20px;
+">
+
+<h2>
+
+👨‍🔬 Scientist Registration
+
+</h2>
+
+<br>
+
+<p>
+
+Enter your name before claiming your certificate.
+
+</p>
+
+<br>
+
+<input
+id="studentName"
+type="text"
+placeholder="Enter your name"
+style="
+padding:12px;
+width:100%;
+border-radius:10px;
+border:none;
+">
+
+</div>
+`;
+
+document
+.querySelector(
+".container"
+)
+.insertAdjacentHTML(
+"beforeend",
+studentHTML
+);
+
+/* -----------------------------
+   CERTIFICATE
+----------------------------- */
+
+const certificateHTML=
+
+`
+<div
+id="certificateScreen"
+class="panel hidden"
+style="
+margin-top:20px;
+text-align:center;
+">
+
+<h1>
+
+🏆 CERTIFICATE OF ACHIEVEMENT
+
+</h1>
+
+<br>
+
+<h2>
+
+Atomic Research Lab
+
+</h2>
+
+<br>
+
+<p>
+
+This certifies that
+
+</p>
+
+<br>
+
+<h2
+id="certificateName">
+
+</h2>
+
+<br>
+
+<p>
+
+has successfully constructed a
+
+</p>
+
+<br>
+
+<h2>
+
+Carbon-12 Atom
+
+</h2>
+
+<br>
+
+<p>
+
+Atomic Number: 6
+
+</p>
+
+<p>
+
+Mass Number: 12
+
+</p>
+
+<p>
+
+Electronic Configuration: 2,4
+
+</p>
+
+<p>
+
+Valence Electrons: 4
+
+</p>
+
+<br>
+
+<div
+style="
+font-size:1.5rem;
+color:#22c55e;
+">
+
+⭐ Carbon Atom Master ⭐
+
+</div>
+
+<br>
+
+<button
+onclick="restartGame()">
+
+Build Again
+
+</button>
+
+</div>
+`;
+
+document
+.querySelector(
+".container"
+)
+.insertAdjacentHTML(
+"beforeend",
+certificateHTML
+);
+
+/* -----------------------------
+   SHOW CERTIFICATE
+----------------------------- */
+
+function showCertificate(){
+
+const name=
+document
+.getElementById(
+"studentName"
+)
+.value
+.trim();
+
+if(name===""){
+
+alert(
+"Please enter your name."
+);
+
+return;
+
+}
+
+document
+.getElementById(
+"certificateName"
+)
+.innerHTML=name;
+
+document
+.getElementById(
+"certificateScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+window.scrollTo({
+
+top:
+document.body.scrollHeight,
+
+behavior:"smooth"
+
+});
+
+}
+
+/* -----------------------------
+   RESTART
+----------------------------- */
+
+function restartGame(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+
+</html>
