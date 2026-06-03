@@ -522,6 +522,261 @@ class="success">
 </div>
 
 </div>
+<!-- PART 2 -->
+
+<script>
+
+/* -----------------------------
+   CREATE PARTICLES
+----------------------------- */
+
+const particleBank =
+document.getElementById(
+"particleBank"
+);
+
+for(let i=0;i<6;i++){
+
+particleBank.innerHTML +=
+`
+<div
+class="particle proton"
+draggable="true"
+data-type="proton">
+
++
+
+</div>
+`;
+
+}
+
+for(let i=0;i<6;i++){
+
+particleBank.innerHTML +=
+`
+<div
+class="particle neutron"
+draggable="true"
+data-type="neutron">
+
+0
+
+</div>
+`;
+
+}
+
+for(let i=0;i<6;i++){
+
+particleBank.innerHTML +=
+`
+<div
+class="particle electron"
+draggable="true"
+data-type="electron">
+
+−
+
+</div>
+`;
+
+}
+
+/* -----------------------------
+   DRAG SYSTEM
+----------------------------- */
+
+let draggedItem=null;
+
+document.addEventListener(
+"dragstart",
+e=>{
+
+if(
+e.target.classList.contains(
+"particle"
+)
+){
+
+draggedItem=e.target;
+
+}
+
+}
+);
+
+/* -----------------------------
+   NUCLEUS DROP
+----------------------------- */
+
+const nucleus=
+document.getElementById(
+"nucleus"
+);
+
+nucleus.addEventListener(
+"dragover",
+e=>{
+
+e.preventDefault();
+
+}
+);
+
+nucleus.addEventListener(
+"drop",
+()=>{
+
+if(!draggedItem) return;
+
+const type=
+draggedItem.dataset.type;
+
+if(
+type==="electron"
+) return;
+
+const particle=
+document.createElement(
+"div"
+);
+
+particle.className=
+"nucleusParticle";
+
+if(type==="proton"){
+
+particle.style.background=
+"#ff3b30";
+
+particle.innerHTML="+";
+
+}
+
+if(type==="neutron"){
+
+particle.style.background=
+"#8b5cf6";
+
+particle.innerHTML="0";
+
+}
+
+nucleus.appendChild(
+particle
+);
+
+draggedItem.remove();
+
+}
+);
+
+/* -----------------------------
+   ELECTRON SLOTS
+----------------------------- */
+
+const slots=
+document.querySelectorAll(
+".slot"
+);
+
+slots.forEach(slot=>{
+
+slot.addEventListener(
+"dragover",
+e=>{
+
+e.preventDefault();
+
+}
+);
+
+slot.addEventListener(
+"drop",
+()=>{
+
+if(!draggedItem) return;
+
+if(
+draggedItem.dataset.type
+!=="electron"
+) return;
+
+if(
+slot.innerHTML!==""
+) return;
+
+slot.innerHTML=
+"🔵";
+
+slot.dataset.filled=
+"yes";
+
+draggedItem.remove();
+
+}
+);
+
+});
+
+/* -----------------------------
+   COUNTERS
+----------------------------- */
+
+function countProtons(){
+
+return nucleus.querySelectorAll(
+".nucleusParticle"
+).length
+-
+countNeutrons();
+
+}
+
+function countNeutrons(){
+
+let count=0;
+
+nucleus.querySelectorAll(
+".nucleusParticle"
+).forEach(p=>{
+
+if(
+p.innerHTML==="0"
+){
+
+count++;
+
+}
+
+});
+
+return count;
+
+}
+
+function countElectrons(){
+
+let count=0;
+
+slots.forEach(slot=>{
+
+if(
+slot.dataset.filled==="yes"
+){
+
+count++;
+
+}
+
+});
+
+return count;
+
+}
+
+</script>
 <!-- PART 3 -->
 
 <script>
