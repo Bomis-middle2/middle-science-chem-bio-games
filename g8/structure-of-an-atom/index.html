@@ -7,11 +7,11 @@
 
 <meta
 name="viewport"
-content="width=device-width,initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
 <title>
 
-Carbon Atom Lab v4
+Carbon Atom Lab v5
 
 </title>
 
@@ -27,10 +27,10 @@ font-family:Arial,sans-serif;
 body{
 
 background:
-radial-gradient(
-circle,
-#07131d,
-#01050a
+linear-gradient(
+180deg,
+#08131d,
+#02070c
 );
 
 color:white;
@@ -65,9 +65,6 @@ clamp(
 color:#4fd8ff;
 
 margin-bottom:20px;
-
-text-shadow:
-0 0 15px #4fd8ff;
 
 }
 
@@ -117,7 +114,7 @@ border:
 255,
 255,
 255,
-0.15
+0.1
 );
 
 }
@@ -126,7 +123,7 @@ border:
 
 .instructions{
 
-line-height:1.7;
+line-height:1.8;
 
 font-size:1rem;
 
@@ -142,7 +139,7 @@ justify-content:center;
 
 align-items:center;
 
-height:160px;
+height:180px;
 
 }
 
@@ -178,7 +175,9 @@ background:#ff3b30;
 
 .neutron{
 
-background:#8b5cf6;
+background:#e7d54a;
+
+color:#333;
 
 }
 
@@ -188,7 +187,7 @@ background:#2563eb;
 
 }
 
-/* ATOM AREA */
+/* ATOM */
 
 .atomArea{
 
@@ -198,35 +197,7 @@ height:700px;
 
 }
 
-/* SHELLS */
-
-.shell1{
-
-position:absolute;
-
-width:300px;
-height:300px;
-
-border-radius:50%;
-
-border:
-3px solid rgba(
-255,
-255,
-255,
-0.6
-);
-
-left:50%;
-top:50%;
-
-transform:
-translate(
--50%,
--50%
-);
-
-}
+/* OUTER SHELL */
 
 .shell2{
 
@@ -256,14 +227,44 @@ translate(
 
 }
 
+/* INNER SHELL */
+
+.shell1{
+
+position:absolute;
+
+width:300px;
+height:300px;
+
+border-radius:50%;
+
+border:
+3px solid rgba(
+255,
+255,
+255,
+0.7
+);
+
+left:50%;
+top:50%;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+}
+
 /* NUCLEUS */
 
 #nucleus{
 
 position:absolute;
 
-width:190px;
-height:190px;
+width:220px;
+height:220px;
 
 border-radius:50%;
 
@@ -287,23 +288,16 @@ translate(
 -50%
 );
 
-display:flex;
-
-flex-wrap:wrap;
-
-justify-content:center;
-align-items:center;
-
-padding:8px;
-
 }
 
 /* PARTICLES INSIDE NUCLEUS */
 
 .nucleusParticle{
 
-width:24px;
-height:24px;
+position:absolute;
+
+width:34px;
+height:34px;
 
 border-radius:50%;
 
@@ -312,32 +306,51 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:.8rem;
+font-weight:bold;
 
-margin:1px;
+font-size:.9rem;
 
 color:white;
 
 }
 
-/* SINGLE ACTIVE SLOT */
+/* ELECTRONS */
+
+.electronPlaced{
+
+position:absolute;
+
+width:22px;
+height:22px;
+
+border-radius:50%;
+
+background:#2563eb;
+
+box-shadow:
+0 0 10px #2563eb;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+}
+
+/* ACTIVE SLOT */
 
 .activeSlot{
 
 position:absolute;
 
-width:50px;
-height:50px;
+width:48px;
+height:48px;
 
 border-radius:50%;
 
 border:
 3px dashed #4fd8ff;
-
-display:flex;
-
-justify-content:center;
-align-items:center;
 
 animation:
 pulse 1s infinite;
@@ -347,34 +360,22 @@ pulse 1s infinite;
 @keyframes pulse{
 
 0%{
-transform:scale(1);
+transform:
+translate(-50%,-50%)
+scale(1);
 }
 
 50%{
-transform:scale(1.1);
+transform:
+translate(-50%,-50%)
+scale(1.15);
 }
 
 100%{
-transform:scale(1);
+transform:
+translate(-50%,-50%)
+scale(1);
 }
-
-}
-
-/* ELECTRONS PLACED */
-
-.electronPlaced{
-
-position:absolute;
-
-width:26px;
-height:26px;
-
-border-radius:50%;
-
-background:#2563eb;
-
-box-shadow:
-0 0 10px #2563eb;
 
 }
 
@@ -384,25 +385,25 @@ box-shadow:
 
 margin-top:15px;
 
-font-weight:bold;
-
 color:#4fd8ff;
 
-line-height:1.6;
+line-height:1.7;
+
+font-weight:bold;
 
 }
 
 button{
 
-background:#22c55e;
-
-border:none;
+width:100%;
 
 padding:12px;
 
-width:100%;
+border:none;
 
 border-radius:12px;
+
+background:#22c55e;
 
 color:white;
 
@@ -428,7 +429,7 @@ margin-top:15px;
 
 <div class="game">
 
-<!-- LEFT -->
+<!-- LEFT PANEL -->
 
 <div class="panel">
 
@@ -446,7 +447,7 @@ Drag the subatomic particles and drop them in the correct location.
 
 <br><br>
 
-Build Carbon Atom step-by-step:
+Build Carbon-12:
 
 <br><br>
 
@@ -454,7 +455,7 @@ Build Carbon Atom step-by-step:
 
 <br>
 
-⚪ 6 Neutrons
+🟡 6 Neutrons
 
 <br>
 
@@ -474,7 +475,7 @@ Build Carbon Atom step-by-step:
 
 </div>
 
-<!-- CENTER -->
+<!-- CENTER PANEL -->
 
 <div class="panel">
 
@@ -492,13 +493,13 @@ id="atomArea">
 
 </div>
 
-<!-- RIGHT -->
+<!-- RIGHT PANEL -->
 
 <div class="panel">
 
 <h2>
 
-Mission Progress
+Mission
 
 </h2>
 
@@ -563,6 +564,31 @@ document.getElementById(
 );
 
 /* =====================================
+   NUCLEUS CLUSTER POSITIONS
+   (Like your reference image)
+===================================== */
+
+const nucleusPositions=[
+
+{left:50,top:20},
+{left:35,top:30},
+{left:50,top:30},
+{left:65,top:30},
+
+{left:28,top:45},
+{left:43,top:45},
+{left:58,top:45},
+{left:73,top:45},
+
+{left:35,top:60},
+{left:50,top:60},
+{left:65,top:60},
+
+{left:50,top:75}
+
+];
+
+/* =====================================
    CREATE PARTICLE
 ===================================== */
 
@@ -585,13 +611,13 @@ type;
 
 if(type==="proton"){
 
-particle.innerHTML="+";
+particle.innerHTML="P";
 
 }
 
 if(type==="neutron"){
 
-particle.innerHTML="0";
+particle.innerHTML="N";
 
 }
 
@@ -636,91 +662,6 @@ e.target;
 
 }
 );
-
-/* =====================================
-   NUCLEUS DROP
-===================================== */
-
-nucleus.addEventListener(
-"dragover",
-function(e){
-
-e.preventDefault();
-
-}
-);
-
-nucleus.addEventListener(
-"drop",
-function(){
-
-if(
-!draggedParticle
-) return;
-
-const type=
-draggedParticle.dataset.type;
-
-if(
-type==="electron"
-){
-
-return;
-
-}
-
-addToNucleus(type);
-
-draggedParticle.remove();
-
-nextParticle();
-
-}
-);
-
-/* =====================================
-   ADD PARTICLE TO NUCLEUS
-===================================== */
-
-function addToNucleus(type){
-
-const p=
-document.createElement(
-"div"
-);
-
-p.className=
-"nucleusParticle";
-
-if(type==="proton"){
-
-p.style.background=
-"#ff3b30";
-
-p.innerHTML="+";
-
-protonCount++;
-
-}
-
-if(type==="neutron"){
-
-p.style.background=
-"#8b5cf6";
-
-p.innerHTML="0";
-
-neutronCount++;
-
-}
-
-nucleus.appendChild(
-p
-);
-
-updateStatus();
-
-}
 
 /* =====================================
    UPDATE STATUS
@@ -778,7 +719,159 @@ lElectronCount+
 }
 
 /* =====================================
-   ACTIVE SLOT
+   NUCLEUS DROP
+===================================== */
+
+nucleus.addEventListener(
+"dragover",
+function(e){
+
+e.preventDefault();
+
+}
+);
+
+nucleus.addEventListener(
+"drop",
+function(){
+
+if(
+!draggedParticle
+) return;
+
+const type=
+draggedParticle.dataset.type;
+
+if(
+type==="electron"
+){
+
+return;
+
+}
+
+addToNucleus(type);
+
+draggedParticle.remove();
+
+nextParticle();
+
+}
+);
+
+/* =====================================
+   ADD TO NUCLEUS
+===================================== */
+
+function addToNucleus(type){
+
+const index=
+protonCount+
+neutronCount;
+
+const pos=
+nucleusPositions[index];
+
+const particle=
+document.createElement(
+"div"
+);
+
+particle.className=
+"nucleusParticle";
+
+particle.style.left=
+pos.left+"%";
+
+particle.style.top=
+pos.top+"%";
+
+particle.style.transform=
+"translate(-50%,-50%)";
+
+if(type==="proton"){
+
+particle.style.background=
+"#ff3b30";
+
+particle.innerHTML="P";
+
+protonCount++;
+
+}
+
+if(type==="neutron"){
+
+particle.style.background=
+"#e7d54a";
+
+particle.style.color=
+"#333";
+
+particle.innerHTML="N";
+
+neutronCount++;
+
+}
+
+nucleus.appendChild(
+particle
+);
+
+updateStatus();
+
+}
+<!-- PART 3 -->
+
+/* =====================================
+   ELECTRON POSITIONS
+   EXACTLY ON SHELLS
+===================================== */
+
+/* K SHELL (2 electrons) */
+
+const kShellPositions=[
+
+{
+left:"50%",
+top:"28%"
+},
+
+{
+left:"50%",
+top:"72%"
+}
+
+];
+
+/* L SHELL (4 electrons) */
+
+const lShellPositions=[
+
+{
+left:"50%",
+top:"13%"
+},
+
+{
+left:"87%",
+top:"50%"
+},
+
+{
+left:"50%",
+top:"87%"
+},
+
+{
+left:"13%",
+top:"50%"
+}
+
+];
+
+/* =====================================
+   CREATE ACTIVE SLOT
 ===================================== */
 
 function createSlot(
@@ -853,6 +946,7 @@ nextParticle();
 );
 
 }
+
 /* =====================================
    PLACE ELECTRON
 ===================================== */
@@ -876,14 +970,9 @@ left;
 electron.style.top=
 top;
 
-electron.style.transform=
-"translate(-50%,-50%)";
-
 atomArea.appendChild(
 electron
 );
-
-/* COUNTERS */
 
 if(stage==="k"){
 
@@ -904,12 +993,48 @@ updateStatus();
 }
 
 /* =====================================
+   SHOW NEXT K SLOT
+===================================== */
+
+function showNextKSlot(){
+
+const pos=
+kShellPositions[
+kElectronCount
+];
+
+createSlot(
+pos.left,
+pos.top
+);
+
+}
+
+/* =====================================
+   SHOW NEXT L SLOT
+===================================== */
+
+function showNextLSlot(){
+
+const pos=
+lShellPositions[
+lElectronCount
+];
+
+createSlot(
+pos.left,
+pos.top
+);
+
+}
+
+/* =====================================
    NEXT PARTICLE
 ===================================== */
 
 function nextParticle(){
 
-/* ---------- PROTONS ---------- */
+/* PROTONS */
 
 if(stage==="proton"){
 
@@ -947,7 +1072,7 @@ return;
 
 }
 
-/* ---------- NEUTRONS ---------- */
+/* NEUTRONS */
 
 if(stage==="neutron"){
 
@@ -988,7 +1113,7 @@ return;
 
 }
 
-/* ---------- K SHELL ---------- */
+/* K SHELL */
 
 if(stage==="k"){
 
@@ -1031,7 +1156,7 @@ return;
 
 }
 
-/* ---------- L SHELL ---------- */
+/* L SHELL */
 
 if(stage==="l"){
 
@@ -1054,11 +1179,13 @@ particleArea.innerHTML=
 `
 <div style="
 text-align:center;
-color:#22c55e;
 font-size:1.3rem;
+color:#22c55e;
 font-weight:bold;
 ">
+
 🏆 Carbon Atom Complete
+
 </div>
 `;
 
@@ -1070,8 +1197,15 @@ document
 
 `
 Carbon Atom Built
+
+<br><br>
+
+Electronic Configuration
+
 <br>
-Configuration: 2,4
+
+2,4
+
 `;
 
 document
@@ -1082,95 +1216,23 @@ document
 
 `
 ✔ 6 Protons
+
 <br>
+
 ✔ 6 Neutrons
+
 <br>
+
 ✔ 6 Electrons
 `;
 
 showQuiz();
 
 }
+<!-- PART 4 -->
 
-}
+<script>
 
-/* =====================================
-   K SHELL POSITIONS
-===================================== */
-
-function showNextKSlot(){
-
-if(kElectronCount===0){
-
-createSlot(
-"50%",
-"28%"
-);
-
-}
-
-else if(
-kElectronCount===1
-){
-
-createSlot(
-"50%",
-"72%"
-);
-
-}
-
-}
-
-/* =====================================
-   L SHELL POSITIONS
-===================================== */
-
-function showNextLSlot(){
-
-if(lElectronCount===0){
-
-createSlot(
-"50%",
-"13%"
-);
-
-}
-
-else if(
-lElectronCount===1
-){
-
-createSlot(
-"87%",
-"50%"
-);
-
-}
-
-else if(
-lElectronCount===2
-){
-
-createSlot(
-"50%",
-"87%"
-);
-
-}
-
-else if(
-lElectronCount===3
-){
-
-createSlot(
-"13%",
-"50%"
-);
-
-}
-
-}
 /* =====================================
    CHECK PROGRESS
 ===================================== */
@@ -1276,7 +1338,9 @@ Submit Quiz
 `;
 
 document
-.querySelector(".container")
+.querySelector(
+".container"
+)
 .insertAdjacentHTML(
 "beforeend",
 quizHTML
@@ -1314,18 +1378,21 @@ function checkQuiz(){
 
 const q1=
 document
-.getElementById("q1")
-.value;
+.getElementById(
+"q1"
+).value;
 
 const q2=
 document
-.getElementById("q2")
-.value;
+.getElementById(
+"q2"
+).value;
 
 const q3=
 document
-.getElementById("q3")
-.value;
+.getElementById(
+"q3"
+).value;
 
 if(
 
@@ -1350,7 +1417,7 @@ alert(
 }
 
 /* =====================================
-   CERTIFICATE
+   CERTIFICATE SCREEN
 ===================================== */
 
 const certificateHTML=
@@ -1385,9 +1452,9 @@ Enter Student Name
 id="studentName"
 placeholder="Student Name"
 style="
-padding:12px;
-width:280px;
+width:300px;
 max-width:100%;
+padding:12px;
 border-radius:10px;
 text-align:center;
 ">
@@ -1405,7 +1472,9 @@ Generate Certificate
 
 <div
 id="certificateContent"
-style="display:none;">
+style="
+display:none;
+">
 
 <h2
 id="studentDisplay">
@@ -1416,7 +1485,7 @@ id="studentDisplay">
 
 <p>
 
-Successfully Built a Carbon Atom
+Successfully Built a Carbon-12 Atom
 
 </p>
 
@@ -1469,7 +1538,9 @@ Play Again
 `;
 
 document
-.querySelector(".container")
+.querySelector(
+".container"
+)
 .insertAdjacentHTML(
 "beforeend",
 certificateHTML
@@ -1516,7 +1587,7 @@ document
 if(name===""){
 
 alert(
-"Please enter a student name."
+"Please enter your name."
 );
 
 return;
