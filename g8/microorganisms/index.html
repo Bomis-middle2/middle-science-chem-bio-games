@@ -7,11 +7,11 @@
 
 <meta
 name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width,initial-scale=1.0">
 
 <title>
 
-Microbe Detective Lab
+Microbe Detective Academy
 
 </title>
 
@@ -29,69 +29,160 @@ body{
 background:
 linear-gradient(
 180deg,
-#07131d,
-#02070c
+#04111f,
+#01060a
 );
 
 color:white;
 
 min-height:100vh;
 
-padding:15px;
+overflow-x:hidden;
 
 }
 
-.container{
+/* HEADER */
+
+.header{
+
+background:
+rgba(
+255,
+255,
+255,
+0.05
+);
+
+backdrop-filter:
+blur(10px);
+
+padding:15px;
+
+display:flex;
+
+justify-content:space-between;
+align-items:center;
+
+border-bottom:
+1px solid rgba(
+255,
+255,
+255,
+0.1
+);
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.logo img{
+
+height:50px;
+
+}
+
+.logo h1{
+
+color:#57e9ff;
+
+font-size:
+clamp(
+1.4rem,
+3vw,
+2rem
+);
+
+}
+
+/* SCORE BAR */
+
+.scoreBar{
+
+display:flex;
+gap:20px;
+
+font-weight:bold;
+
+color:#57e9ff;
+
+}
+
+/* MAIN */
+
+.main{
 
 max-width:1400px;
 
 margin:auto;
 
+padding:20px;
+
 }
 
-.title{
+/* HERO */
+
+.hero{
 
 text-align:center;
+
+padding:40px 20px;
+
+}
+
+.hero h2{
 
 font-size:
 clamp(
 2rem,
 4vw,
-3rem
+3.5rem
 );
 
-color:#56f0ff;
+color:#57e9ff;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
 
-.game{
+.hero p{
+
+max-width:800px;
+
+margin:auto;
+
+line-height:1.8;
+
+font-size:1.1rem;
+
+opacity:.9;
+
+}
+
+/* MISSION MAP */
+
+.missionMap{
 
 display:grid;
 
 grid-template-columns:
-
-300px
-1fr
-300px;
+repeat(
+auto-fit,
+minmax(250px,1fr)
+);
 
 gap:20px;
 
-}
-
-@media(max-width:900px){
-
-.game{
-
-grid-template-columns:
-1fr;
+margin-top:40px;
 
 }
 
-}
-
-.panel{
+.missionCard{
 
 background:
 rgba(
@@ -109,22 +200,122 @@ border:
 0.1
 );
 
-padding:20px;
-
 border-radius:20px;
+
+padding:25px;
+
+cursor:pointer;
+
+transition:.3s;
+
+text-align:center;
 
 }
 
+.missionCard:hover{
+
+transform:
+translateY(-5px);
+
+border-color:
+#57e9ff;
+
+}
+
+.missionIcon{
+
+font-size:4rem;
+
+margin-bottom:15px;
+
+}
+
+.missionCard h3{
+
+margin-bottom:10px;
+
+color:#57e9ff;
+
+}
+
+.missionCard p{
+
+line-height:1.6;
+
+opacity:.9;
+
+}
+
+/* ACTIVE GAME SCREEN */
+
+#gameScreen{
+
+display:none;
+
+margin-top:40px;
+
+background:
+rgba(
+255,
+255,
+255,
+0.05
+);
+
+border-radius:20px;
+
+padding:25px;
+
+border:
+1px solid rgba(
+255,
+255,
+255,
+0.1
+);
+
+}
+
+/* MICROBE DISPLAY */
+
 #microbeDisplay{
+
+height:350px;
 
 display:flex;
 
 justify-content:center;
 align-items:center;
 
-height:300px;
+margin-bottom:20px;
 
-font-size:9rem;
+}
+
+/* QUESTION */
+
+#question{
+
+text-align:center;
+
+font-size:1.4rem;
+
+margin-bottom:20px;
+
+}
+
+/* OPTIONS */
+
+.options{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(220px,1fr)
+);
+
+gap:15px;
 
 }
 
@@ -140,11 +331,11 @@ rgba(
 
 padding:15px;
 
-margin:10px 0;
-
 border-radius:12px;
 
 cursor:pointer;
+
+text-align:center;
 
 transition:.2s;
 
@@ -154,41 +345,43 @@ transition:.2s;
 
 background:
 rgba(
-86,
-240,
+87,
+233,
 255,
 0.2
 );
 
 }
 
-button{
+/* MOBILE */
 
-width:100%;
+@media(max-width:768px){
 
-padding:12px;
+#microbeDisplay{
 
-border:none;
-
-border-radius:12px;
-
-background:#22c55e;
-
-color:white;
-
-cursor:pointer;
-
-font-size:1rem;
+height:250px;
 
 }
 
-#score{
+.hero{
 
-font-size:1.2rem;
+padding:20px 10px;
 
-color:#56f0ff;
+}
 
-line-height:2;
+}
+
+/* BADGE AREA */
+
+#badgeArea{
+
+margin-top:25px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
 
 }
 
@@ -196,11 +389,11 @@ line-height:2;
 
 background:#22c55e;
 
-padding:10px;
+padding:10px 15px;
 
-border-radius:10px;
+border-radius:20px;
 
-margin-top:10px;
+font-weight:bold;
 
 }
 
@@ -210,89 +403,206 @@ margin-top:10px;
 
 <body>
 
-<div class="container">
+<div class="header">
 
-<h1 class="title">
+<div class="logo">
 
-🦠 Microbe Detective Lab
+<img
+src="assets/innovine-logo.png"
+alt="Innovine">
+
+<h1>
+
+🦠 Microbe Detective Academy
 
 </h1>
 
-<div class="game">
+</div>
 
-<!-- LEFT -->
+<div class="scoreBar">
 
-<div class="panel">
+<div>
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
+</div>
+
+<div>
+
+🏅 Badges:
+<span id="badgeCount">
+
+0
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="hero">
 
 <h2>
 
-Mission
+Become a Microbe Detective
 
 </h2>
 
-<br>
+<p>
 
-<div id="missionText">
+Investigate mysterious microorganisms,
+solve outbreaks,
+operate a food factory,
+and become the ultimate Microbe Master.
 
-Level 1
-
-<br><br>
-
-Identify the Microorganism
-
-</div>
-
-<br>
-
-<div id="score">
-
-Score: 0
+</p>
 
 </div>
 
+<div class="missionMap">
+
+<div
+class="missionCard"
+onclick="startMission1()">
+
+<div class="missionIcon">
+
+🔬
+
 </div>
 
-<!-- CENTER -->
+<h3>
 
-<div class="panel">
+Mission 1
+
+</h3>
+
+<p>
+
+Microscope Investigation
+
+</p>
+
+</div>
+
+<div class="missionCard">
+
+<div class="missionIcon">
+
+🧪
+
+</div>
+
+<h3>
+
+Mission 2
+
+</h3>
+
+<p>
+
+Scanner Lab
+
+</p>
+
+</div>
+
+<div class="missionCard">
+
+<div class="missionIcon">
+
+🏥
+
+</div>
+
+<h3>
+
+Mission 3
+
+</h3>
+
+<p>
+
+Outbreak Investigation
+
+</p>
+
+</div>
+
+<div class="missionCard">
+
+<div class="missionIcon">
+
+🏭
+
+</div>
+
+<h3>
+
+Mission 4
+
+</h3>
+
+<p>
+
+Food Factory
+
+</p>
+
+</div>
+
+<div class="missionCard">
+
+<div class="missionIcon">
+
+🏆
+
+</div>
+
+<h3>
+
+Mission 5
+
+</h3>
+
+<p>
+
+Microbe Master Challenge
+
+</p>
+
+</div>
+
+</div>
+
+<div id="gameScreen">
 
 <div id="microbeDisplay">
 
-🦠
-
 </div>
 
-<h2
-style="text-align:center;"
-id="question">
+<div id="question">
 
 Loading...
 
-</h2>
+</div>
 
-<br>
-
-<div id="options">
+<div
+class="options"
+id="options">
 
 </div>
 
-</div>
-
-<!-- RIGHT -->
-
-<div class="panel">
-
-<h2>
-
-Badges
-
-</h2>
-
-<br>
-
-<div id="badges">
-
-No badges yet
+<div id="badgeArea">
 
 </div>
 
@@ -304,12 +614,12 @@ No badges yet
 <script>
 
 /* =====================================
-   GAME DATA
+   GAME VARIABLES
 ===================================== */
 
 let score=0;
-let level=1;
-let currentQuestion=0;
+
+let badges=[];
 
 const correctSound=
 new Audio(
@@ -321,483 +631,250 @@ new Audio(
 "assets/wrong.mp3"
 );
 
-const questions=[
-
-{
-microbe:"🦠",
-question:
-"Single-celled microorganism used in yoghurt production.",
-options:[
-"Bacteria",
-"Virus",
-"Fungi",
-"Protozoa"
-],
-answer:
-"Bacteria"
-},
-
-{
-microbe:"🧬",
-question:
-"Needs a host cell to reproduce.",
-options:[
-"Algae",
-"Virus",
-"Protozoa",
-"Fungi"
-],
-answer:
-"Virus"
-},
-
-{
-microbe:"🌿",
-question:
-"Photosynthetic microorganism found in water.",
-options:[
-"Virus",
-"Bacteria",
-"Algae",
-"Fungi"
-],
-answer:
-"Algae"
-},
-
-{
-microbe:"🔬",
-question:
-"Uses pseudopodia for movement.",
-options:[
-"Protozoa",
-"Virus",
-"Bacteria",
-"Algae"
-],
-answer:
-"Protozoa"
-},
-
-{
-microbe:"🍄",
-question:
-"Includes yeast and moulds.",
-options:[
-"Fungi",
-"Virus",
-"Algae",
-"Bacteria"
-],
-answer:
-"Fungi"
-},
-
-{
-microbe:"🦠",
-question:
-"Example: Lactobacillus",
-options:[
-"Virus",
-"Bacteria",
-"Fungi",
-"Protozoa"
-],
-answer:
-"Bacteria"
-},
-
-{
-microbe:"🧬",
-question:
-"Influenza belongs to this group.",
-options:[
-"Virus",
-"Fungi",
-"Protozoa",
-"Algae"
-],
-answer:
-"Virus"
-},
-
-{
-microbe:"🌿",
-question:
-"Chlorella belongs to this group.",
-options:[
-"Algae",
-"Bacteria",
-"Virus",
-"Fungi"
-],
-answer:
-"Algae"
-},
-
-{
-microbe:"🔬",
-question:
-"Amoeba belongs to this group.",
-options:[
-"Protozoa",
-"Virus",
-"Algae",
-"Fungi"
-],
-answer:
-"Protozoa"
-},
-
-{
-microbe:"🍄",
-question:
-"Rhizopus belongs to this group.",
-options:[
-"Fungi",
-"Algae",
-"Virus",
-"Bacteria"
-],
-answer:
-"Fungi"
-}
-
-];
+const applause=
+new Audio(
+"assets/freesound_community-claps-44774.mp3"
+);
 
 /* =====================================
-   LOAD QUESTION
+   SCIENTIFIC SVG MICROBES
 ===================================== */
 
-function loadQuestion(){
+/* BACTERIA */
 
-const q=
-questions[
-currentQuestion
-];
+const bacteriaSVG=
 
-document
-.getElementById(
-"microbeDisplay"
-)
-.innerHTML=
-q.microbe;
+`
+<svg
+width="260"
+height="180"
+viewBox="0 0 260 180">
 
-document
-.getElementById(
-"question"
-)
-.innerHTML=
-q.question;
+<ellipse
+cx="130"
+cy="90"
+rx="90"
+ry="45"
+fill="#7ddc65"
+stroke="#2b8f2b"
+stroke-width="4"/>
 
-const options=
-document
-.getElementById(
-"options"
-);
+<circle cx="90" cy="80" r="5" fill="#1d5f1d"/>
+<circle cx="120" cy="95" r="5" fill="#1d5f1d"/>
+<circle cx="150" cy="75" r="5" fill="#1d5f1d"/>
+<circle cx="180" cy="100" r="5" fill="#1d5f1d"/>
 
-options.innerHTML="";
+<path
+d="M40 90 Q10 50 20 20"
+stroke="#7ddc65"
+stroke-width="4"
+fill="none"/>
 
-q.options.forEach(
-option=>{
+<path
+d="M220 90 Q250 120 240 160"
+stroke="#7ddc65"
+stroke-width="4"
+fill="none"/>
 
-const div=
-document.createElement(
-"div"
-);
+</svg>
+`;
 
-div.className=
-"option";
+/* AMOEBA */
 
-div.innerHTML=
-option;
+const amoebaSVG=
 
-div.onclick=
-function(){
+`
+<svg
+width="260"
+height="220"
+viewBox="0 0 260 220">
 
-checkAnswer(
-option
-);
+<path
+d="
+M60 100
+Q40 50 90 40
+Q130 10 180 40
+Q240 50 220 110
+Q250 170 180 190
+Q130 220 80 180
+Q20 160 60 100
+"
+fill="#6ee7b7"
+stroke="#0f766e"
+stroke-width="4"/>
 
-};
+<circle
+cx="130"
+cy="105"
+r="25"
+fill="#34d399"/>
 
-options.appendChild(
-div
-);
+<circle
+cx="130"
+cy="105"
+r="10"
+fill="#065f46"/>
 
-}
-);
+</svg>
+`;
 
-}
+/* PARAMECIUM */
+
+const parameciumSVG=
+
+`
+<svg
+width="260"
+height="220"
+viewBox="0 0 260 220">
+
+<ellipse
+cx="130"
+cy="110"
+rx="85"
+ry="50"
+fill="#93c5fd"
+stroke="#1d4ed8"
+stroke-width="4"/>
+
+<ellipse
+cx="145"
+cy="110"
+rx="18"
+ry="28"
+fill="#2563eb"/>
+
+<path
+d="
+M60 90
+Q130 130
+180 80
+"
+stroke="#1e40af"
+stroke-width="3"
+fill="none"/>
+
+</svg>
+`;
+
+/* EUGLENA */
+
+const euglenaSVG=
+
+`
+<svg
+width="260"
+height="220"
+viewBox="0 0 260 220">
+
+<ellipse
+cx="130"
+cy="110"
+rx="85"
+ry="38"
+fill="#4ade80"
+stroke="#166534"
+stroke-width="4"/>
+
+<circle
+cx="80"
+cy="110"
+r="8"
+fill="red"/>
+
+<path
+d="
+M210 110
+Q250 80 250 40
+"
+stroke="#d1fae5"
+stroke-width="3"
+fill="none"/>
+
+</svg>
+`;
+
+/* CHLORELLA */
+
+const algaeSVG=
+
+`
+<svg
+width="220"
+height="220"
+viewBox="0 0 220 220">
+
+<circle
+cx="110"
+cy="110"
+r="70"
+fill="#22c55e"
+stroke="#14532d"
+stroke-width="5"/>
+
+<circle
+cx="110"
+cy="110"
+r="35"
+fill="#15803d"/>
+
+</svg>
+`;
+
+/* VIRUS */
+
+const virusSVG=
+
+`
+<svg
+width="260"
+height="260"
+viewBox="0 0 260 260">
+
+<circle
+cx="130"
+cy="130"
+r="60"
+fill="#f472b6"
+stroke="#be185d"
+stroke-width="5"/>
+
+<line x1="130" y1="40" x2="130" y2="10"
+stroke="#f472b6"
+stroke-width="5"/>
+
+<line x1="130" y1="220" x2="130" y2="250"
+stroke="#f472b6"
+stroke-width="5"/>
+
+<line x1="40" y1="130" x2="10" y2="130"
+stroke="#f472b6"
+stroke-width="5"/>
+
+<line x1="220" y1="130" x2="250" y2="130"
+stroke="#f472b6"
+stroke-width="5"/>
+
+<circle cx="130" cy="10" r="8" fill="#ec4899"/>
+<circle cx="130" cy="250" r="8" fill="#ec4899"/>
+<circle cx="10" cy="130" r="8" fill="#ec4899"/>
+<circle cx="250" cy="130" r="8" fill="#ec4899"/>
+
+</svg>
+`;
 
 /* =====================================
-   CHECK ANSWER
+   UPDATE SCORE
 ===================================== */
 
-function checkAnswer(answer){
-
-const q=
-questions[
-currentQuestion
-];
-
-if(
-answer===q.answer
-){
-
-score+=10;
-
-correctSound.play();
-
-}
-else{
-
-wrongSound.play();
-
-}
+function updateScore(){
 
 document
 .getElementById(
 "score"
 )
 .innerHTML=
-
-"Score: "+
 score;
-
-currentQuestion++;
-
-if(
-currentQuestion<
-questions.length
-){
-
-loadQuestion();
-
-}
-else{
-
-showLevel2();
-
-}
-
-}
-
-loadQuestion();
-  <!-- PART 3 -->
-
-/* =====================================
-   LEVEL 2
-===================================== */
-
-const classificationData=[
-
-{
-name:"Amoeba",
-answer:"Protozoa"
-},
-
-{
-name:"Yeast",
-answer:"Fungi"
-},
-
-{
-name:"Lactobacillus",
-answer:"Bacteria"
-},
-
-{
-name:"Influenza Virus",
-answer:"Virus"
-},
-
-{
-name:"Chlorella",
-answer:"Algae"
-},
-
-{
-name:"Paramecium",
-answer:"Protozoa"
-},
-
-{
-name:"Rhizopus",
-answer:"Fungi"
-},
-
-{
-name:"Salmonella",
-answer:"Bacteria"
-}
-
-];
-
-let classificationIndex=0;
-
-/* =====================================
-   SHOW LEVEL 2
-===================================== */
-
-function showLevel2(){
-
-level=2;
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Level 2
-
-<br><br>
-
-Classification Challenge
-`;
-
-showClassification();
-
-}
-
-/* =====================================
-   CLASSIFICATION SCREEN
-===================================== */
-
-function showClassification(){
-
-const item=
-classificationData[
-classificationIndex
-];
-
-document
-.getElementById(
-"microbeDisplay"
-)
-.innerHTML=
-
-"🧪";
-
-document
-.getElementById(
-"question"
-)
-.innerHTML=
-
-`
-Classify:
-
-<br><br>
-
-<b>${item.name}</b>
-`;
-
-const options=
-document
-.getElementById(
-"options"
-);
-
-options.innerHTML="";
-
-[
-"Bacteria",
-"Fungi",
-"Protozoa",
-"Algae",
-"Virus"
-]
-.forEach(category=>{
-
-const div=
-document.createElement(
-"div"
-);
-
-div.className=
-"option";
-
-div.innerHTML=
-category;
-
-div.onclick=
-function(){
-
-checkClassification(
-category
-);
-
-};
-
-options.appendChild(
-div
-);
-
-});
-
-}
-
-/* =====================================
-   CHECK CLASSIFICATION
-===================================== */
-
-function checkClassification(
-answer
-){
-
-const item=
-classificationData[
-classificationIndex
-];
-
-if(
-answer===item.answer
-){
-
-score+=10;
-
-correctSound.play();
-
-}
-else{
-
-wrongSound.play();
-
-}
-
-document
-.getElementById(
-"score"
-)
-.innerHTML=
-
-"Score: "+
-score;
-
-classificationIndex++;
-
-if(
-
-classificationIndex<
-classificationData.length
-
-){
-
-showClassification();
-
-}
-else{
-
-unlockBadge(
-"🦠 Classification Expert"
-);
-
-showLevel3();
-
-}
 
 }
 
@@ -806,106 +883,130 @@ showLevel3();
 ===================================== */
 
 function unlockBadge(
-badge
+name
 ){
-
-const area=
-document
-.getElementById(
-"badges"
-);
 
 if(
-area.innerHTML===
-"No badges yet"
-){
+badges.includes(name)
+) return;
 
-area.innerHTML="";
+badges.push(name);
+
+document
+.getElementById(
+"badgeCount"
+)
+.innerHTML=
+badges.length;
+
+const badge=
+document.createElement(
+"div"
+);
+
+badge.className=
+"badge";
+
+badge.innerHTML=
+name;
+
+document
+.getElementById(
+"badgeArea"
+)
+.appendChild(
+badge
+);
 
 }
-
-area.innerHTML+=
-
-`
-<div class="badge">
-
-${badge}
-
-</div>
-`;
-
-}
-<!-- PART 4 -->
+<!-- PART 3 -->
 
 /* =====================================
-   LEVEL 3
-   HELPFUL OR HARMFUL
+   MISSION 1
+   MICROSCOPE INVESTIGATION
 ===================================== */
 
-const helpfulData=[
+const mission1Questions=[
 
 {
-name:"Lactobacillus",
-answer:"Helpful"
+svg:bacteriaSVG,
+question:
+"This microorganism is single-celled and commonly used in yoghurt production.",
+answer:
+"Bacteria"
 },
 
 {
-name:"Yeast",
-answer:"Helpful"
+svg:amoebaSVG,
+question:
+"This microorganism moves using pseudopodia.",
+answer:
+"Protozoa"
 },
 
 {
-name:"Spirulina",
-answer:"Helpful"
+svg:parameciumSVG,
+question:
+"This microorganism uses cilia for movement.",
+answer:
+"Protozoa"
 },
 
 {
-name:"Penicillium",
-answer:"Helpful"
+svg:euglenaSVG,
+question:
+"This microorganism contains chloroplasts and a flagellum.",
+answer:
+"Algae"
 },
 
 {
-name:"Influenza Virus",
-answer:"Harmful"
+svg:algaeSVG,
+question:
+"This photosynthetic microorganism is commonly found in water.",
+answer:
+"Algae"
 },
 
 {
-name:"Salmonella",
-answer:"Harmful"
-},
-
-{
-name:"Plasmodium",
-answer:"Harmful"
+svg:virusSVG,
+question:
+"This microorganism can only reproduce inside a host cell.",
+answer:
+"Virus"
 }
 
 ];
 
-let helpfulIndex=0;
+let mission1Index=0;
 
 /* =====================================
-   SHOW LEVEL 3
+   START MISSION 1
 ===================================== */
 
-function showLevel3(){
-
-level=3;
+function startMission1(){
 
 document
 .getElementById(
-"missionText"
+"gameScreen"
 )
-.innerHTML=
+.style.display=
+"block";
 
-`
-Level 3
+window.scrollTo({
 
-<br><br>
+top:
+document
+.getElementById(
+"gameScreen"
+)
+.offsetTop,
 
-Helpful or Harmful?
-`;
+behavior:"smooth"
 
-showHelpfulQuestion();
+});
+
+showMission1Question();
 
 }
 
@@ -913,11 +1014,11 @@ showHelpfulQuestion();
    SHOW QUESTION
 ===================================== */
 
-function showHelpfulQuestion(){
+function showMission1Question(){
 
 const item=
-helpfulData[
-helpfulIndex
+mission1Questions[
+mission1Index
 ];
 
 document
@@ -925,8 +1026,7 @@ document
 "microbeDisplay"
 )
 .innerHTML=
-
-"🦠";
+item.svg;
 
 document
 .getElementById(
@@ -935,206 +1035,15 @@ document
 .innerHTML=
 
 `
-Microorganism:
+🔬 Microscope Sample
 
 <br><br>
 
-<b>${item.name}</b>
+${item.question}
 
 <br><br>
 
-Helpful or Harmful?
-`;
-
-const options=
-document
-.getElementById(
-"options"
-);
-
-options.innerHTML="";
-
-[
-"Helpful",
-"Harmful"
-]
-.forEach(choice=>{
-
-const div=
-document.createElement(
-"div"
-);
-
-div.className=
-"option";
-
-div.innerHTML=
-choice;
-
-div.onclick=
-function(){
-
-checkHelpfulAnswer(
-choice
-);
-
-};
-
-options.appendChild(
-div
-);
-
-});
-
-}
-
-/* =====================================
-   CHECK ANSWER
-===================================== */
-
-function checkHelpfulAnswer(
-answer
-){
-
-const item=
-helpfulData[
-helpfulIndex
-];
-
-if(
-answer===item.answer
-){
-
-score+=10;
-
-correctSound.play();
-
-}
-else{
-
-wrongSound.play();
-
-}
-
-document
-.getElementById(
-"score"
-)
-.innerHTML=
-
-"Score: "+score;
-
-helpfulIndex++;
-
-if(
-helpfulIndex<
-helpfulData.length
-){
-
-showHelpfulQuestion();
-
-}
-else{
-
-unlockBadge(
-"🧪 Helpful vs Harmful Expert"
-);
-
-showLevel4();
-
-}
-
-}
-
-/* =====================================
-   LEVEL 4
-   DISEASE DETECTIVE
-===================================== */
-
-const diseaseData=[
-
-{
-disease:"Malaria",
-answer:"Protozoa"
-},
-
-{
-disease:"Influenza",
-answer:"Virus"
-},
-
-{
-disease:"Athlete's Foot",
-answer:"Fungi"
-},
-
-{
-disease:"Tuberculosis",
-answer:"Bacteria"
-},
-
-{
-disease:"Cholera",
-answer:"Bacteria"
-}
-
-];
-
-let diseaseIndex=0;
-
-function showLevel4(){
-
-level=4;
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Level 4
-
-<br><br>
-
-Disease Detective
-`;
-
-showDiseaseQuestion();
-
-}
-
-function showDiseaseQuestion(){
-
-const item=
-diseaseData[
-diseaseIndex
-];
-
-document
-.getElementById(
-"microbeDisplay"
-)
-.innerHTML=
-
-"🏥";
-
-document
-.getElementById(
-"question"
-)
-.innerHTML=
-
-`
-Disease:
-
-<br><br>
-
-<b>${item.disease}</b>
-
-<br><br>
-
-Which microorganism causes it?
+Identify the microorganism.
 `;
 
 const options=
@@ -1147,8 +1056,9 @@ options.innerHTML="";
 
 [
 "Bacteria",
-"Virus",
 "Protozoa",
+"Algae",
+"Virus",
 "Fungi"
 ]
 .forEach(choice=>{
@@ -1167,7 +1077,7 @@ choice;
 div.onclick=
 function(){
 
-checkDiseaseAnswer(
+checkMission1Answer(
 choice
 );
 
@@ -1181,13 +1091,17 @@ div
 
 }
 
-function checkDiseaseAnswer(
+/* =====================================
+   CHECK ANSWER
+===================================== */
+
+function checkMission1Answer(
 answer
 ){
 
 const item=
-diseaseData[
-diseaseIndex
+mission1Questions[
+mission1Index
 ];
 
 if(
@@ -1195,6 +1109,8 @@ answer===item.answer
 ){
 
 score+=10;
+
+updateScore();
 
 correctSound.play();
 
@@ -1205,96 +1121,33 @@ wrongSound.play();
 
 }
 
-document
-.getElementById(
-"score"
-)
-.innerHTML=
-
-"Score: "+score;
-
-diseaseIndex++;
+mission1Index++;
 
 if(
-diseaseIndex<
-diseaseData.length
+mission1Index<
+mission1Questions.length
 ){
 
-showDiseaseQuestion();
+showMission1Question();
 
 }
 else{
 
 unlockBadge(
-"🔬 Disease Detective"
+"🔬 Microscope Expert"
 );
 
-showLevel5();
+showMission1Complete();
 
 }
 
 }
-<!-- PART 5 -->
 
 /* =====================================
-   LEVEL 5
-   MICROBE FACTORY
+   MISSION COMPLETE
 ===================================== */
 
-const factoryData=[
-
-{
-microbe:"Yeast",
-answer:"Bread Making"
-},
-
-{
-microbe:"Lactobacillus",
-answer:"Curd Formation"
-},
-
-{
-microbe:"Penicillium",
-answer:"Antibiotic Production"
-},
-
-{
-microbe:"Spirulina",
-answer:"Food Supplement"
-}
-
-];
-
-let factoryIndex=0;
-
-function showLevel5(){
-
-level=5;
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Level 5
-
-<br><br>
-
-Microbe Factory
-`;
-
-showFactoryQuestion();
-
-}
-
-function showFactoryQuestion(){
-
-const item=
-factoryData[
-factoryIndex
-];
+function showMission1Complete(){
 
 document
 .getElementById(
@@ -1302,7 +1155,13 @@ document
 )
 .innerHTML=
 
-"🏭";
+`
+<div style="
+font-size:6rem;
+">
+🏆
+</div>
+`;
 
 document
 .getElementById(
@@ -1311,15 +1170,226 @@ document
 .innerHTML=
 
 `
-Microorganism:
+Mission 1 Complete!
 
 <br><br>
 
-<b>${item.microbe}</b>
+You successfully identified
+the microorganisms.
 
 <br><br>
 
-What is it used for?
+Badge Earned:
+
+🔬 Microscope Expert
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="showMission2Intro()">
+
+Continue to Mission 2
+
+🧪 Scanner Lab
+
+</div>
+`;
+
+}
+
+/* =====================================
+   MISSION 2 INTRO
+===================================== */
+
+function showMission2Intro(){
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:6rem;
+">
+🧪
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 2
+
+Scanner Lab
+
+<br><br>
+
+Use scientific clues to identify microorganisms.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="startMission2()">
+
+Start Scanner Lab
+
+</div>
+`;
+
+}
+<!-- PART 4 -->
+
+/* =====================================
+   MISSION 2
+   SCANNER LAB
+===================================== */
+
+const mission2Data=[
+
+{
+clue:
+"Single-celled microorganism found in yoghurt. Helps digestion.",
+answer:
+"Bacteria"
+},
+
+{
+clue:
+"Can only reproduce inside a living host cell.",
+answer:
+"Virus"
+},
+
+{
+clue:
+"Uses pseudopodia to move and feed.",
+answer:
+"Protozoa"
+},
+
+{
+clue:
+"Contains chloroplasts and makes its own food.",
+answer:
+"Algae"
+},
+
+{
+clue:
+"Includes yeast and moulds.",
+answer:
+"Fungi"
+},
+
+{
+clue:
+"Example: Lactobacillus.",
+answer:
+"Bacteria"
+},
+
+{
+clue:
+"Example: Amoeba.",
+answer:
+"Protozoa"
+},
+
+{
+clue:
+"Example: Influenza.",
+answer:
+"Virus"
+}
+
+];
+
+let mission2Index=0;
+
+/* =====================================
+   START MISSION 2
+===================================== */
+
+function startMission2(){
+
+mission2Index=0;
+
+showMission2Question();
+
+}
+
+/* =====================================
+   SHOW SCANNER SCREEN
+===================================== */
+
+function showMission2Question(){
+
+const item=
+mission2Data[
+mission2Index
+];
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+width:260px;
+height:260px;
+border-radius:20px;
+border:4px solid #57e9ff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:5rem;
+background:
+rgba(87,233,255,.08);
+">
+
+🧪
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+SCANNER REPORT
+
+<br><br>
+
+${item.clue}
+
+<br><br>
+
+Identify the microorganism.
 `;
 
 const options=
@@ -1331,10 +1401,11 @@ document
 options.innerHTML="";
 
 [
-"Bread Making",
-"Curd Formation",
-"Antibiotic Production",
-"Food Supplement"
+"Bacteria",
+"Protozoa",
+"Algae",
+"Virus",
+"Fungi"
 ]
 .forEach(choice=>{
 
@@ -1352,7 +1423,7 @@ choice;
 div.onclick=
 function(){
 
-checkFactoryAnswer(
+checkMission2Answer(
 choice
 );
 
@@ -1366,13 +1437,17 @@ div
 
 }
 
-function checkFactoryAnswer(
+/* =====================================
+   CHECK MISSION 2 ANSWER
+===================================== */
+
+function checkMission2Answer(
 answer
 ){
 
 const item=
-factoryData[
-factoryIndex
+mission2Data[
+mission2Index
 ];
 
 if(
@@ -1380,6 +1455,8 @@ answer===item.answer
 ){
 
 score+=10;
+
+updateScore();
 
 correctSound.play();
 
@@ -1390,98 +1467,237 @@ wrongSound.play();
 
 }
 
-document
-.getElementById(
-"score"
-)
-.innerHTML=
-
-"Score: "+score;
-
-factoryIndex++;
+mission2Index++;
 
 if(
-factoryIndex<
-factoryData.length
+mission2Index<
+mission2Data.length
 ){
 
-showFactoryQuestion();
+showMission2Question();
 
 }
 else{
 
 unlockBadge(
-"🏭 Microbe Factory Expert"
+"🧪 Scanner Specialist"
 );
 
-showFinalChallenge();
+showMission2Complete();
 
 }
 
 }
 
 /* =====================================
-   FINAL CHALLENGE
+   COMPLETE SCREEN
 ===================================== */
 
-const finalQuestions=[
-
-{
-question:"Which microorganism makes curd?",
-answer:"Bacteria"
-},
-
-{
-question:"Which group includes Amoeba?",
-answer:"Protozoa"
-},
-
-{
-question:"Influenza belongs to which group?",
-answer:"Virus"
-},
-
-{
-question:"Which group includes Yeast?",
-answer:"Fungi"
-},
-
-{
-question:"Chlorella belongs to which group?",
-answer:"Algae"
-}
-
-];
-
-let finalIndex=0;
-
-function showFinalChallenge(){
-
-level=6;
+function showMission2Complete(){
 
 document
 .getElementById(
-"missionText"
+"microbeDisplay"
 )
 .innerHTML=
 
 `
-Level 6
+<div style="
+font-size:6rem;
+">
+
+🏅
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 2 Complete!
 
 <br><br>
 
-Final Challenge
+Badge Earned:
+
+🧪 Scanner Specialist
+
+<br><br>
+
+You successfully analysed
+all microorganism samples.
 `;
 
-showFinalQuestion();
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="showMission3Intro()">
+
+Continue to Mission 3
+
+🏥 Outbreak Investigation
+
+</div>
+`;
 
 }
 
-function showFinalQuestion(){
+/* =====================================
+   MISSION 3 INTRO
+===================================== */
+
+function showMission3Intro(){
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:6rem;
+">
+
+🏥
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 3
+
+Outbreak Investigation
+
+<br><br>
+
+Investigate disease outbreaks
+and identify the responsible
+microorganisms.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="startMission3()">
+
+Start Investigation
+
+</div>
+`;
+
+}
+<!-- PART 5 -->
+
+/* =====================================
+   MISSION 3
+   OUTBREAK INVESTIGATION
+===================================== */
+
+const mission3Cases=[
+
+{
+location:
+"Classroom 8A",
+
+symptoms:
+"Students have fever, body aches and sneezing.",
+
+answer:
+"Virus"
+},
+
+{
+location:
+"School Canteen",
+
+symptoms:
+"Several students developed food poisoning after lunch.",
+
+answer:
+"Bacteria"
+},
+
+{
+location:
+"Sports Team",
+
+symptoms:
+"Several athletes developed Athlete's Foot.",
+
+answer:
+"Fungi"
+},
+
+{
+location:
+"Village Clinic",
+
+symptoms:
+"Patients have fever, chills and were bitten by mosquitoes.",
+
+answer:
+"Protozoa"
+},
+
+{
+location:
+"Water Tank",
+
+symptoms:
+"Green growth covering the surface of the water.",
+
+answer:
+"Algae"
+}
+
+];
+
+let mission3Index=0;
+
+/* =====================================
+   START MISSION 3
+===================================== */
+
+function startMission3(){
+
+mission3Index=0;
+
+showMission3Case();
+
+}
+
+/* =====================================
+   SHOW CASE
+===================================== */
+
+function showMission3Case(){
 
 const item=
-finalQuestions[
-finalIndex
+mission3Cases[
+mission3Index
 ];
 
 document
@@ -1490,7 +1706,24 @@ document
 )
 .innerHTML=
 
-"🏆";
+`
+<div style="
+width:280px;
+height:280px;
+border-radius:20px;
+border:4px solid #57e9ff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:6rem;
+background:
+rgba(87,233,255,.08);
+">
+
+🏥
+
+</div>
+`;
 
 document
 .getElementById(
@@ -1498,7 +1731,21 @@ document
 )
 .innerHTML=
 
-item.question;
+`
+OUTBREAK CASE FILE
+
+<br><br>
+
+<b>${item.location}</b>
+
+<br><br>
+
+${item.symptoms}
+
+<br><br>
+
+Which microorganism group is responsible?
+`;
 
 const options=
 document
@@ -1531,7 +1778,7 @@ choice;
 div.onclick=
 function(){
 
-checkFinalAnswer(
+checkMission3Answer(
 choice
 );
 
@@ -1545,13 +1792,17 @@ div
 
 }
 
-function checkFinalAnswer(
+/* =====================================
+   CHECK ANSWER
+===================================== */
+
+function checkMission3Answer(
 answer
 ){
 
 const item=
-finalQuestions[
-finalIndex
+mission3Cases[
+mission3Index
 ];
 
 if(
@@ -1559,6 +1810,8 @@ answer===item.answer
 ){
 
 score+=10;
+
+updateScore();
 
 correctSound.play();
 
@@ -1569,22 +1822,674 @@ wrongSound.play();
 
 }
 
+mission3Index++;
+
+if(
+mission3Index<
+mission3Cases.length
+){
+
+showMission3Case();
+
+}
+else{
+
+unlockBadge(
+"🏥 Outbreak Detective"
+);
+
+showMission3Complete();
+
+}
+
+}
+
+/* =====================================
+   COMPLETE SCREEN
+===================================== */
+
+function showMission3Complete(){
+
 document
 .getElementById(
-"score"
+"microbeDisplay"
 )
 .innerHTML=
 
-"Score: "+score;
+`
+<div style="
+font-size:7rem;
+">
 
-finalIndex++;
+🕵️
 
-if(
-finalIndex<
-finalQuestions.length
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 3 Complete!
+
+<br><br>
+
+Badge Earned:
+
+🏥 Outbreak Detective
+
+<br><br>
+
+You successfully solved
+all outbreak investigations.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="showMission4Intro()">
+
+Continue to Mission 4
+
+🏭 Food Factory
+
+</div>
+`;
+
+}
+
+/* =====================================
+   MISSION 4 INTRO
+===================================== */
+
+function showMission4Intro(){
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:7rem;
+">
+
+🏭
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 4
+
+Food Factory
+
+<br><br>
+
+Use microorganisms to create
+useful products and medicines.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="startMission4()">
+
+Start Food Factory
+
+</div>
+`;
+
+}
+<!-- PART 6 -->
+
+/* =====================================
+   MISSION 4
+   FOOD FACTORY
+===================================== */
+
+const mission4Factory=[
+
+{
+microbe:"Yeast",
+product:"Bread"
+},
+
+{
+microbe:"Lactobacillus",
+product:"Curd"
+},
+
+{
+microbe:"Penicillium",
+product:"Antibiotics"
+},
+
+{
+microbe:"Spirulina",
+product:"Food Supplement"
+},
+
+{
+microbe:"Yeast",
+product:"Fermented Drinks"
+}
+
+];
+
+let mission4Index=0;
+
+/* =====================================
+   START MISSION 4
+===================================== */
+
+function startMission4(){
+
+mission4Index=0;
+
+showMission4Question();
+
+}
+
+/* =====================================
+   SHOW FACTORY TASK
+===================================== */
+
+function showMission4Question(){
+
+const item=
+mission4Factory[
+mission4Index
+];
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+width:300px;
+height:300px;
+border-radius:20px;
+border:4px solid #57e9ff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:6rem;
+background:
+rgba(87,233,255,.08);
+">
+
+🏭
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+FACTORY ORDER
+
+<br><br>
+
+Which microorganism is used to make:
+
+<br><br>
+
+<b>${item.product}</b>
+`;
+
+const options=
+document
+.getElementById(
+"options"
+);
+
+options.innerHTML="";
+
+[
+"Yeast",
+"Lactobacillus",
+"Penicillium",
+"Spirulina"
+]
+.forEach(choice=>{
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"option";
+
+div.innerHTML=
+choice;
+
+div.onclick=
+function(){
+
+checkMission4Answer(
+choice
+);
+
+};
+
+options.appendChild(
+div
+);
+
+});
+
+}
+
+/* =====================================
+   CHECK ANSWER
+===================================== */
+
+function checkMission4Answer(
+answer
 ){
 
-showFinalQuestion();
+const item=
+mission4Factory[
+mission4Index
+];
+
+if(
+answer===item.microbe
+){
+
+score+=10;
+
+updateScore();
+
+correctSound.play();
+
+}
+else{
+
+wrongSound.play();
+
+}
+
+mission4Index++;
+
+if(
+mission4Index<
+mission4Factory.length
+){
+
+showMission4Question();
+
+}
+else{
+
+unlockBadge(
+"🏭 Factory Expert"
+);
+
+showMission4Complete();
+
+}
+
+}
+
+/* =====================================
+   MISSION 4 COMPLETE
+===================================== */
+
+function showMission4Complete(){
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:7rem;
+">
+
+🏭
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 4 Complete!
+
+<br><br>
+
+Badge Earned:
+
+🏭 Factory Expert
+
+<br><br>
+
+You successfully operated
+the Microbe Factory.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="showMission5Intro()">
+
+Continue to Mission 5
+
+🏆 Microbe Master Challenge
+
+</div>
+`;
+
+}
+
+/* =====================================
+   MISSION 5 INTRO
+===================================== */
+
+function showMission5Intro(){
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:7rem;
+">
+
+🏆
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+Mission 5
+
+Microbe Master Challenge
+
+<br><br>
+
+Your final examination.
+
+Answer all questions correctly
+to become a certified
+Microbe Detective.
+`;
+
+document
+.getElementById(
+"options"
+)
+.innerHTML=
+
+`
+<div
+class="option"
+onclick="startMission5()">
+
+Start Final Challenge
+
+</div>
+`;
+
+}
+<!-- PART 7 -->
+
+/* =====================================
+   MISSION 5
+   MICROBE MASTER CHALLENGE
+===================================== */
+
+const mission5Questions=[
+
+{
+question:
+"Which microorganism is used to make curd?",
+answer:
+"Bacteria"
+},
+
+{
+question:
+"Amoeba belongs to which group?",
+answer:
+"Protozoa"
+},
+
+{
+question:
+"Influenza is caused by which group?",
+answer:
+"Virus"
+},
+
+{
+question:
+"Yeast belongs to which group?",
+answer:
+"Fungi"
+},
+
+{
+question:
+"Chlorella belongs to which group?",
+answer:
+"Algae"
+},
+
+{
+question:
+"Which microorganism uses pseudopodia?",
+answer:
+"Protozoa"
+},
+
+{
+question:
+"Which group includes moulds?",
+answer:
+"Fungi"
+},
+
+{
+question:
+"Which group can only reproduce inside a host?",
+answer:
+"Virus"
+}
+
+];
+
+let mission5Index=0;
+
+/* =====================================
+   START MISSION 5
+===================================== */
+
+function startMission5(){
+
+mission5Index=0;
+
+showMission5Question();
+
+}
+
+/* =====================================
+   SHOW QUESTION
+===================================== */
+
+function showMission5Question(){
+
+const item=
+mission5Questions[
+mission5Index
+];
+
+document
+.getElementById(
+"microbeDisplay"
+)
+.innerHTML=
+
+`
+<div style="
+font-size:8rem;
+">
+
+🏆
+
+</div>
+`;
+
+document
+.getElementById(
+"question"
+)
+.innerHTML=
+
+`
+MICROBE MASTER CHALLENGE
+
+<br><br>
+
+${item.question}
+`;
+
+const options=
+document
+.getElementById(
+"options"
+);
+
+options.innerHTML="";
+
+[
+"Bacteria",
+"Protozoa",
+"Virus",
+"Fungi",
+"Algae"
+]
+.forEach(choice=>{
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"option";
+
+div.innerHTML=
+choice;
+
+div.onclick=
+function(){
+
+checkMission5Answer(
+choice
+);
+
+};
+
+options.appendChild(
+div
+);
+
+});
+
+}
+
+/* =====================================
+   CHECK ANSWER
+===================================== */
+
+function checkMission5Answer(
+answer
+){
+
+const item=
+mission5Questions[
+mission5Index
+];
+
+if(
+answer===item.answer
+){
+
+score+=10;
+
+updateScore();
+
+correctSound.play();
+
+}
+else{
+
+wrongSound.play();
+
+}
+
+mission5Index++;
+
+if(
+mission5Index<
+mission5Questions.length
+){
+
+showMission5Question();
 
 }
 else{
@@ -1600,7 +2505,7 @@ showCertificate();
 }
 
 /* =====================================
-   CERTIFICATE
+   CERTIFICATE SCREEN
 ===================================== */
 
 const certificateHTML=
@@ -1608,11 +2513,21 @@ const certificateHTML=
 `
 <div
 id="certificateScreen"
-class="panel"
 style="
 display:none;
-margin-top:20px;
+margin-top:30px;
+background:
+rgba(255,255,255,.05);
+border-radius:20px;
+padding:30px;
 text-align:center;
+border:
+1px solid rgba(
+255,
+255,
+255,
+0.1
+);
 ">
 
 <img
@@ -1632,7 +2547,15 @@ margin-bottom:20px;
 
 <p>
 
-Microbe Detective Lab
+MICROBE DETECTIVE ACADEMY
+
+</p>
+
+<br>
+
+<p>
+
+Awarded To
 
 </p>
 
@@ -1643,9 +2566,9 @@ id="studentName"
 placeholder="Enter Student Name"
 style="
 padding:12px;
-width:300px;
+width:320px;
 max-width:100%;
-border-radius:10px;
+border-radius:12px;
 text-align:center;
 ">
 
@@ -1662,7 +2585,9 @@ Generate Certificate
 
 <div
 id="certificateContent"
-style="display:none;">
+style="
+display:none;
+">
 
 <h2
 id="studentDisplay">
@@ -1673,7 +2598,13 @@ id="studentDisplay">
 
 <p>
 
-Successfully completed
+Successfully completed all missions
+
+</p>
+
+<p>
+
+and demonstrated mastery of
 
 </p>
 
@@ -1699,6 +2630,18 @@ Grade 8 Science
 
 <br>
 
+<p>
+
+Final Score:
+
+<span id="finalScore">
+
+</span>
+
+</p>
+
+<br>
+
 <button
 onclick="location.reload()">
 
@@ -1713,19 +2656,18 @@ Play Again
 
 document
 .querySelector(
-".container"
+".main"
 )
 .insertAdjacentHTML(
 "beforeend",
 certificateHTML
 );
 
-function showCertificate(){
+/* =====================================
+   SHOW CERTIFICATE
+===================================== */
 
-const applause=
-new Audio(
-"assets/freesound_community-claps-44774.mp3"
-);
+function showCertificate(){
 
 applause.play();
 
@@ -1735,6 +2677,13 @@ document
 )
 .style.display=
 "block";
+
+document
+.getElementById(
+"finalScore"
+)
+.innerHTML=
+score;
 
 window.scrollTo({
 
@@ -1746,6 +2695,10 @@ behavior:"smooth"
 });
 
 }
+
+/* =====================================
+   GENERATE CERTIFICATE
+===================================== */
 
 function generateCertificate(){
 
