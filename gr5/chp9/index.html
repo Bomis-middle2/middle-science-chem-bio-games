@@ -6,319 +6,277 @@
 <title>Garden Planner Challenge</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#dfffd8,#b8ecff);
+  color:#203020;
+  overflow-x:hidden;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #dfffd8, #b8ecff);
-  color: #203020;
-  overflow-x: hidden;
+#splash{
+  position:fixed;
+  inset:0;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 
-/* SPLASH SCREEN */
-#splash {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+#splash img{
+  width:70%;
+  max-width:320px;
+  height:auto;
 }
 
-#splash img {
-  width: 70%;
-  max-width: 320px;
-  height: auto;
+#game{
+  display:none;
+  min-height:100vh;
+  padding:14px;
 }
 
-/* GAME */
-#game {
-  display: none;
-  min-height: 100vh;
-  padding: 14px;
+.header{
+  text-align:center;
+  background:#ffffffee;
+  border-radius:18px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px #00000022;
 }
 
-.header {
-  text-align: center;
-  background: #ffffffdd;
-  border-radius: 18px;
-  padding: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 12px #00000022;
+h1{
+  margin:6px 0;
+  font-size:clamp(24px,5vw,42px);
+  color:#247a35;
 }
 
-h1 {
-  margin: 6px 0;
-  font-size: clamp(24px, 5vw, 42px);
-  color: #247a35;
+.info{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
 }
 
-.info {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+.badge{
+  background:#fff7b8;
+  border:2px solid #f2d85b;
+  border-radius:20px;
+  padding:8px 14px;
+  font-weight:bold;
 }
 
-.badge {
-  background: #fff7b8;
-  border: 2px solid #f2d85b;
-  border-radius: 20px;
-  padding: 8px 14px;
-  font-weight: bold;
+.controls{
+  margin-top:10px;
 }
 
-.controls {
-  margin-top: 10px;
+button{
+  border:none;
+  border-radius:18px;
+  padding:10px 18px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#35a852;
+  color:white;
+  box-shadow:0 4px 0 #1d7334;
 }
 
-button {
-  border: none;
-  border-radius: 18px;
-  padding: 10px 18px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  background: #35a852;
-  color: white;
-  box-shadow: 0 4px 0 #1d7334;
+button:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #1d7334;
 }
 
-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #1d7334;
+#volume{
+  width:130px;
+  vertical-align:middle;
 }
 
-#volume {
-  width: 130px;
-  vertical-align: middle;
+.screen{display:none}
+.screen.active{display:block}
+
+.intro-card,.result-card{
+  max-width:760px;
+  margin:30px auto;
+  background:#ffffffee;
+  padding:24px;
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 6px 18px #00000025;
 }
 
-.screen {
-  display: none;
+.intro-card p{
+  font-size:18px;
+  line-height:1.5;
 }
 
-.screen.active {
-  display: block;
+.game-area{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  gap:14px;
 }
 
-.intro-card,
-.result-card {
-  max-width: 760px;
-  margin: 30px auto;
-  background: #ffffffee;
-  padding: 24px;
-  border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 6px 18px #00000025;
+.task-box{
+  background:#ffffffee;
+  border-radius:18px;
+  padding:14px;
+  text-align:center;
+  box-shadow:0 4px 12px #00000022;
 }
 
-.intro-card p {
-  font-size: 18px;
-  line-height: 1.5;
+.task-box h2{
+  margin:4px;
+  color:#326b27;
 }
 
-.game-area {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  max-width: 1100px;
-  margin: auto;
+.zones{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
 }
 
-.task-box {
-  background: #ffffffee;
-  border-radius: 18px;
-  padding: 14px;
-  text-align: center;
-  box-shadow: 0 4px 12px #00000022;
+.zone{
+  min-height:180px;
+  border-radius:22px;
+  padding:10px;
+  border:3px dashed white;
+  text-align:center;
+  box-shadow:inset 0 0 12px #00000022;
+  transition:.2s;
 }
 
-.task-box h2 {
-  margin: 4px;
-  color: #326b27;
+.zone h3{
+  margin:0 0 8px;
+  font-size:16px;
 }
 
-.zones {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+.zone.over{
+  transform:scale(1.03);
+  border-color:#1e7d35;
 }
 
-.zone {
-  min-height: 180px;
-  border-radius: 22px;
-  padding: 10px;
-  border: 3px dashed #ffffff;
-  text-align: center;
-  box-shadow: inset 0 0 12px #00000022;
-  transition: 0.2s;
+.sunny{background:#ffe680}
+.shade{background:#c9f0c5}
+.pond{background:#a8e7ff}
+.dry{background:#ffd1a8}
+.rich{background:#d8b28a}
+
+.plant-tray{
+  background:#ffffffee;
+  border-radius:22px;
+  padding:14px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  box-shadow:0 4px 12px #00000022;
 }
 
-.zone h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
+.plant{
+  background:white;
+  border:3px solid #7acb62;
+  border-radius:18px;
+  padding:12px;
+  width:130px;
+  min-height:95px;
+  text-align:center;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  box-shadow:0 5px 10px #00000022;
+  transition:transform .2s;
 }
 
-.zone.over {
-  transform: scale(1.03);
-  border-color: #1e7d35;
+.plant:active{cursor:grabbing}
+
+.plant .emoji{
+  font-size:38px;
 }
 
-.sunny { background: #ffe680; }
-.shade { background: #c9f0c5; }
-.pond { background: #a8e7ff; }
-.dry { background: #ffd1a8; }
-.rich { background: #d8b28a; }
-
-.plant-tray {
-  background: #ffffffee;
-  border-radius: 22px;
-  padding: 14px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  box-shadow: 0 4px 12px #00000022;
+.plant .name{
+  font-weight:bold;
+  margin-top:6px;
+  font-size:18px;
 }
 
-.plant {
-  background: #fff;
-  border: 3px solid #7acb62;
-  border-radius: 18px;
-  padding: 10px;
-  width: 130px;
-  min-height: 110px;
-  text-align: center;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-  box-shadow: 0 5px 10px #00000022;
-  transition: transform 0.2s;
+.correct{
+  animation:pop .5s ease;
+  background:#d9ffd4;
 }
 
-.plant:active {
-  cursor: grabbing;
+.wrong{
+  animation:shake .35s ease;
+  background:#ffdede;
 }
 
-.plant .emoji {
-  font-size: 36px;
+@keyframes pop{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.18)}
+  100%{transform:scale(1)}
 }
 
-.plant .name {
-  font-weight: bold;
-  margin-top: 4px;
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  75%{transform:translateX(8px)}
 }
 
-.plant .clue {
-  font-size: 12px;
-  margin-top: 4px;
+.sparkle{
+  position:fixed;
+  font-size:22px;
+  pointer-events:none;
+  animation:sparkle 900ms ease-out forwards;
+  z-index:9000;
 }
 
-.correct {
-  animation: pop 0.5s ease;
-  background: #d9ffd4;
+@keyframes sparkle{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translateY(-60px) scale(1.8)}
 }
 
-.wrong {
-  animation: shake 0.35s ease;
-  background: #ffdede;
+#feedback{
+  min-height:34px;
+  margin-top:8px;
+  font-size:18px;
+  font-weight:bold;
+  text-align:center;
 }
 
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.18); }
-  100% { transform: scale(1); }
+.restart-wrap{
+  margin-top:20px;
+  text-align:center;
 }
 
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
+.dragging-clone{
+  position:fixed;
+  z-index:10000;
+  pointer-events:none;
+  opacity:.9;
+  transform:scale(1.05);
 }
 
-.sparkle {
-  position: fixed;
-  font-size: 22px;
-  pointer-events: none;
-  animation: sparkle 900ms ease-out forwards;
-  z-index: 9000;
+@media(max-width:850px){
+  .zones{grid-template-columns:repeat(2,1fr)}
+  .zone{min-height:145px}
+  .plant{width:120px}
 }
 
-@keyframes sparkle {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+@media(max-width:480px){
+  #game{padding:8px}
+  .zones{grid-template-columns:1fr}
+  .plant{
+    width:46%;
+    min-height:90px;
+    padding:8px;
   }
-  to {
-    opacity: 0;
-    transform: translateY(-60px) scale(1.8);
-  }
-}
-
-#feedback {
-  min-height: 34px;
-  margin-top: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.restart-wrap {
-  margin-top: 20px;
-  text-align: center;
-}
-
-/* Floating dragged clone */
-.dragging-clone {
-  position: fixed;
-  z-index: 10000;
-  pointer-events: none;
-  opacity: 0.9;
-  transform: scale(1.05);
-}
-
-/* RESPONSIVE */
-@media (max-width: 850px) {
-  .zones {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .zone {
-    min-height: 145px;
-  }
-
-  .plant {
-    width: 120px;
-  }
-}
-
-@media (max-width: 480px) {
-  #game {
-    padding: 8px;
-  }
-
-  .zones {
-    grid-template-columns: 1fr;
-  }
-
-  .plant {
-    width: 46%;
-    min-height: 100px;
-    padding: 8px;
-  }
-
-  .plant .emoji {
-    font-size: 30px;
-  }
-
-  button {
-    font-size: 15px;
-    padding: 9px 14px;
+  .plant .emoji{font-size:30px}
+  .plant .name{font-size:15px}
+  button{
+    font-size:15px;
+    padding:9px 14px;
   }
 }
 </style>
@@ -326,7 +284,6 @@ button:active {
 
 <body>
 
-<!-- Innovine logo only for 5 seconds -->
 <div id="splash">
   <img src="assets/innovine-logo.png" alt="Innovine Logo">
 </div>
@@ -335,6 +292,7 @@ button:active {
 
   <div class="header">
     <h1>Garden Planner Challenge</h1>
+
     <div class="info">
       <div class="badge">Level: <span id="levelText">1</span>/10</div>
       <div class="badge">Score: <span id="scoreText">0</span></div>
@@ -354,11 +312,8 @@ button:active {
     <div class="intro-card">
       <h2>Welcome, Garden Designer!</h2>
       <p>
-        Your task is to design a healthy garden. Drag each plant into the correct place.
-        Think about sunlight, water, soil and where different plants grow best.
-      </p>
-      <p>
-        A perfect garden needs smart science choices.
+        Drag each plant into the correct garden zone.
+        Think about sunlight, water, soil and where plants grow best.
       </p>
       <button onclick="startGame()">Start Garden Mission</button>
     </div>
@@ -373,25 +328,11 @@ button:active {
       </div>
 
       <div class="zones">
-        <div class="zone sunny" data-zone="sunny">
-          <h3>☀ Sunny Area</h3>
-        </div>
-
-        <div class="zone shade" data-zone="shade">
-          <h3>🌳 Shady Area</h3>
-        </div>
-
-        <div class="zone pond" data-zone="pond">
-          <h3>💧 Pond Area</h3>
-        </div>
-
-        <div class="zone dry" data-zone="dry">
-          <h3>🌵 Dry Area</h3>
-        </div>
-
-        <div class="zone rich" data-zone="rich">
-          <h3>🌱 Rich Soil Bed</h3>
-        </div>
+        <div class="zone sunny" data-zone="sunny"><h3>☀ Sunny Area</h3></div>
+        <div class="zone shade" data-zone="shade"><h3>🌳 Shady Area</h3></div>
+        <div class="zone pond" data-zone="pond"><h3>💧 Pond Area</h3></div>
+        <div class="zone dry" data-zone="dry"><h3>🌵 Dry Area</h3></div>
+        <div class="zone rich" data-zone="rich"><h3>🌱 Rich Soil Bed</h3></div>
       </div>
 
       <div class="plant-tray" id="plantTray"></div>
@@ -418,182 +359,182 @@ button:active {
 <audio id="clapSound" src="assets/clapping.mp3"></audio>
 
 <script>
-const levels = [
+const levels=[
   {
-    title: "Level 1: Match plants to their favourite places.",
-    plants: [
-      { name: "Cactus", emoji: "🌵", clue: "Needs very little water", zone: "dry" },
-      { name: "Lotus", emoji: "🪷", clue: "Grows in water", zone: "pond" },
-      { name: "Sunflower", emoji: "🌻", clue: "Loves bright sunlight", zone: "sunny" }
+    title:"Level 1: Match plants to their favourite places.",
+    plants:[
+      {name:"Cactus",emoji:"🌵",zone:"dry"},
+      {name:"Lotus",emoji:"🪷",zone:"pond"},
+      {name:"Sunflower",emoji:"🌻",zone:"sunny"}
     ]
   },
   {
-    title: "Level 2: Choose the best growing conditions.",
-    plants: [
-      { name: "Fern", emoji: "🌿", clue: "Likes shade and moisture", zone: "shade" },
-      { name: "Tomato", emoji: "🍅", clue: "Needs sun and fertile soil", zone: "rich" },
-      { name: "Aloe Vera", emoji: "🪴", clue: "Stores water in leaves", zone: "dry" }
+    title:"Level 2: Choose the best growing conditions.",
+    plants:[
+      {name:"Fern",emoji:"🌿",zone:"shade"},
+      {name:"Tomato",emoji:"🍅",zone:"rich"},
+      {name:"Aloe Vera",emoji:"🪴",zone:"dry"}
     ]
   },
   {
-    title: "Level 3: Think about water needs.",
-    plants: [
-      { name: "Water Lily", emoji: "🪷", clue: "Floats on water", zone: "pond" },
-      { name: "Rose", emoji: "🌹", clue: "Needs good soil and care", zone: "rich" },
-      { name: "Moss", emoji: "🍃", clue: "Grows well in damp shade", zone: "shade" }
+    title:"Level 3: Think about water needs.",
+    plants:[
+      {name:"Water Lily",emoji:"🪷",zone:"pond"},
+      {name:"Rose",emoji:"🌹",zone:"rich"},
+      {name:"Moss",emoji:"🍃",zone:"shade"}
     ]
   },
   {
-    title: "Level 4: Build a balanced garden.",
-    plants: [
-      { name: "Bamboo", emoji: "🎋", clue: "Needs moist fertile soil", zone: "rich" },
-      { name: "Marigold", emoji: "🌼", clue: "Needs lots of sunlight", zone: "sunny" },
-      { name: "Cactus", emoji: "🌵", clue: "Best in dry places", zone: "dry" }
+    title:"Level 4: Build a balanced garden.",
+    plants:[
+      {name:"Bamboo",emoji:"🎋",zone:"rich"},
+      {name:"Marigold",emoji:"🌼",zone:"sunny"},
+      {name:"Cactus",emoji:"🌵",zone:"dry"}
     ]
   },
   {
-    title: "Level 5: Plants have different habitats.",
-    plants: [
-      { name: "Duckweed", emoji: "🌱", clue: "Small plant on pond water", zone: "pond" },
-      { name: "Mint", emoji: "🌿", clue: "Likes moist rich soil", zone: "rich" },
-      { name: "Fern", emoji: "🍃", clue: "Avoids strong direct sun", zone: "shade" }
+    title:"Level 5: Plants have different habitats.",
+    plants:[
+      {name:"Duckweed",emoji:"🌱",zone:"pond"},
+      {name:"Mint",emoji:"🌿",zone:"rich"},
+      {name:"Fern",emoji:"🍃",zone:"shade"}
     ]
   },
   {
-    title: "Level 6: Use clues carefully.",
-    plants: [
-      { name: "Hibiscus", emoji: "🌺", clue: "Flowers well in sunlight", zone: "sunny" },
-      { name: "Aloe Vera", emoji: "🪴", clue: "Can survive with less water", zone: "dry" },
-      { name: "Lotus", emoji: "🪷", clue: "Needs a watery home", zone: "pond" }
+    title:"Level 6: Use plant knowledge carefully.",
+    plants:[
+      {name:"Hibiscus",emoji:"🌺",zone:"sunny"},
+      {name:"Aloe Vera",emoji:"🪴",zone:"dry"},
+      {name:"Lotus",emoji:"🪷",zone:"pond"}
     ]
   },
   {
-    title: "Level 7: Soil matters too.",
-    plants: [
-      { name: "Wheat", emoji: "🌾", clue: "Needs fertile soil", zone: "rich" },
-      { name: "Mushroom", emoji: "🍄", clue: "Grows best in shade", zone: "shade" },
-      { name: "Sunflower", emoji: "🌻", clue: "Turns towards the sun", zone: "sunny" }
+    title:"Level 7: Soil matters too.",
+    plants:[
+      {name:"Wheat",emoji:"🌾",zone:"rich"},
+      {name:"Mushroom",emoji:"🍄",zone:"shade"},
+      {name:"Sunflower",emoji:"🌻",zone:"sunny"}
     ]
   },
   {
-    title: "Level 8: Plan like a scientist.",
-    plants: [
-      { name: "Rice", emoji: "🌾", clue: "Needs plenty of water", zone: "pond" },
-      { name: "Bougainvillea", emoji: "🌸", clue: "Thrives in bright sun", zone: "sunny" },
-      { name: "Cactus", emoji: "🌵", clue: "Avoid overwatering", zone: "dry" }
+    title:"Level 8: Plan like a scientist.",
+    plants:[
+      {name:"Rice",emoji:"🌾",zone:"pond"},
+      {name:"Bougainvillea",emoji:"🌸",zone:"sunny"},
+      {name:"Cactus",emoji:"🌵",zone:"dry"}
     ]
   },
   {
-    title: "Level 9: Advanced garden challenge.",
-    plants: [
-      { name: "Money Plant", emoji: "🪴", clue: "Can grow in shade", zone: "shade" },
-      { name: "Carrot", emoji: "🥕", clue: "Needs loose fertile soil", zone: "rich" },
-      { name: "Water Lily", emoji: "🪷", clue: "Lives in ponds", zone: "pond" }
+    title:"Level 9: Advanced garden challenge.",
+    plants:[
+      {name:"Money Plant",emoji:"🪴",zone:"shade"},
+      {name:"Carrot",emoji:"🥕",zone:"rich"},
+      {name:"Water Lily",emoji:"🪷",zone:"pond"}
     ]
   },
   {
-    title: "Final Level: Complete the science garden.",
-    plants: [
-      { name: "Rose", emoji: "🌹", clue: "Needs rich soil", zone: "rich" },
-      { name: "Fern", emoji: "🌿", clue: "Needs shade", zone: "shade" },
-      { name: "Sunflower", emoji: "🌻", clue: "Needs sunlight", zone: "sunny" },
-      { name: "Aloe Vera", emoji: "🪴", clue: "Needs dry conditions", zone: "dry" },
-      { name: "Lotus", emoji: "🪷", clue: "Needs water", zone: "pond" }
+    title:"Final Level: Complete the science garden.",
+    plants:[
+      {name:"Rose",emoji:"🌹",zone:"rich"},
+      {name:"Fern",emoji:"🌿",zone:"shade"},
+      {name:"Sunflower",emoji:"🌻",zone:"sunny"},
+      {name:"Aloe Vera",emoji:"🪴",zone:"dry"},
+      {name:"Lotus",emoji:"🪷",zone:"pond"}
     ]
   }
 ];
 
-let currentLevel = 0;
-let score = 0;
-let placed = 0;
-let totalInLevel = 0;
-let muted = false;
-let draggedElement = null;
-let touchClone = null;
+let currentLevel=0;
+let score=0;
+let placed=0;
+let totalInLevel=0;
+let muted=false;
+let draggedElement=null;
+let touchClone=null;
 
-const correctSound = document.getElementById("correctSound");
-const wrongSound = document.getElementById("wrongSound");
-const clapSound = document.getElementById("clapSound");
-const volume = document.getElementById("volume");
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+const volume=document.getElementById("volume");
 
-window.addEventListener("load", function () {
-  document.getElementById("game").style.display = "none";
+window.addEventListener("load",function(){
+  document.getElementById("game").style.display="none";
 
-  setTimeout(function () {
-    document.getElementById("splash").style.display = "none";
-    document.getElementById("game").style.display = "block";
-  }, 5000);
+  setTimeout(function(){
+    document.getElementById("splash").style.display="none";
+    document.getElementById("game").style.display="block";
+  },5000);
 });
 
-volume.addEventListener("input", function () {
-  correctSound.volume = volume.value;
-  wrongSound.volume = volume.value;
-  clapSound.volume = volume.value;
+volume.addEventListener("input",function(){
+  correctSound.volume=volume.value;
+  wrongSound.volume=volume.value;
+  clapSound.volume=volume.value;
 });
 
-function playSound(sound) {
-  if (muted) return;
-  sound.currentTime = 0;
-  sound.volume = volume.value;
-  sound.play().catch(function () {});
+function playSound(sound){
+  if(muted)return;
+  sound.currentTime=0;
+  sound.volume=volume.value;
+  sound.play().catch(function(){});
 }
 
-function toggleMute() {
-  muted = !muted;
-  document.getElementById("muteBtn").textContent = muted ? "Sound: Off" : "Sound: On";
+function toggleMute(){
+  muted=!muted;
+  document.getElementById("muteBtn").textContent=muted?"Sound: Off":"Sound: On";
 }
 
-function showScreen(id) {
-  document.querySelectorAll(".screen").forEach(function (screen) {
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(screen){
     screen.classList.remove("active");
   });
   document.getElementById(id).classList.add("active");
 }
 
-function startGame() {
-  currentLevel = 0;
-  score = 0;
+function startGame(){
+  currentLevel=0;
+  score=0;
   loadLevel();
   showScreen("play");
 }
 
-function shuffle(array) {
-  return array.sort(function () {
-    return Math.random() - 0.5;
-  });
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
 }
 
-function loadLevel() {
-  placed = 0;
+function loadLevel(){
+  placed=0;
   clearZones();
 
-  const level = levels[currentLevel];
-  const plants = shuffle([...level.plants]);
-  totalInLevel = plants.length;
+  const level=levels[currentLevel];
+  const plants=shuffle([...level.plants]);
+  totalInLevel=plants.length;
 
-  document.getElementById("taskTitle").textContent = level.title;
-  document.getElementById("levelText").textContent = currentLevel + 1;
-  document.getElementById("scoreText").textContent = score;
-  document.getElementById("placedText").textContent = placed;
-  document.getElementById("totalText").textContent = totalInLevel;
-  document.getElementById("feedback").textContent = "";
+  document.getElementById("taskTitle").textContent=level.title;
+  document.getElementById("levelText").textContent=currentLevel+1;
+  document.getElementById("scoreText").textContent=score;
+  document.getElementById("placedText").textContent=placed;
+  document.getElementById("totalText").textContent=totalInLevel;
+  document.getElementById("feedback").textContent="";
 
-  const tray = document.getElementById("plantTray");
-  tray.innerHTML = "";
+  const tray=document.getElementById("plantTray");
+  tray.innerHTML="";
 
-  plants.forEach(function (plant, index) {
-    const card = document.createElement("div");
-    card.className = "plant";
-    card.draggable = true;
-    card.dataset.zone = plant.zone;
-    card.dataset.name = plant.name;
-    card.id = "plant-" + currentLevel + "-" + index;
+  plants.forEach(function(plant,index){
+    const card=document.createElement("div");
+    card.className="plant";
+    card.draggable=true;
+    card.dataset.zone=plant.zone;
+    card.dataset.name=plant.name;
+    card.id="plant-"+currentLevel+"-"+index;
 
-    card.innerHTML = `
-      <div class="emoji">${plant.emoji}</div>
-      <div class="name">${plant.name}</div>
-      <div class="clue">${plant.clue}</div>
-    `;
+    card.innerHTML=
+      '<div class="emoji">'+plant.emoji+'</div>'+
+      '<div class="name">'+plant.name+'</div>';
 
     addDragEvents(card);
     addTouchEvents(card);
@@ -601,184 +542,181 @@ function loadLevel() {
   });
 }
 
-function clearZones() {
-  document.querySelectorAll(".zone").forEach(function (zone) {
+function clearZones(){
+  document.querySelectorAll(".zone").forEach(function(zone){
     zone.classList.remove("over");
-    const heading = zone.querySelector("h3").outerHTML;
-    zone.innerHTML = heading;
+    const heading=zone.querySelector("h3").outerHTML;
+    zone.innerHTML=heading;
   });
 }
 
-function addDragEvents(card) {
-  card.addEventListener("dragstart", function (e) {
-    draggedElement = card;
-    e.dataTransfer.setData("text/plain", card.id);
+function addDragEvents(card){
+  card.addEventListener("dragstart",function(e){
+    draggedElement=card;
+    e.dataTransfer.setData("text/plain",card.id);
   });
 
-  card.addEventListener("dragend", function () {
-    draggedElement = null;
+  card.addEventListener("dragend",function(){
+    draggedElement=null;
   });
 }
 
-document.querySelectorAll(".zone").forEach(function (zone) {
-  zone.addEventListener("dragover", function (e) {
+document.querySelectorAll(".zone").forEach(function(zone){
+  zone.addEventListener("dragover",function(e){
     e.preventDefault();
     zone.classList.add("over");
   });
 
-  zone.addEventListener("dragleave", function () {
+  zone.addEventListener("dragleave",function(){
     zone.classList.remove("over");
   });
 
-  zone.addEventListener("drop", function (e) {
+  zone.addEventListener("drop",function(e){
     e.preventDefault();
     zone.classList.remove("over");
 
-    const id = e.dataTransfer.getData("text/plain");
-    const plant = document.getElementById(id);
-    checkPlacement(plant, zone);
+    const id=e.dataTransfer.getData("text/plain");
+    const plant=document.getElementById(id);
+    checkPlacement(plant,zone);
   });
 });
 
-function checkPlacement(plant, zone) {
-  if (!plant || plant.classList.contains("placed")) return;
+function checkPlacement(plant,zone){
+  if(!plant || plant.classList.contains("placed"))return;
 
-  const correctZone = plant.dataset.zone;
-  const droppedZone = zone.dataset.zone;
+  const correctZone=plant.dataset.zone;
+  const droppedZone=zone.dataset.zone;
 
-  if (correctZone === droppedZone) {
-    plant.classList.add("correct", "placed");
-    plant.draggable = false;
+  if(correctZone===droppedZone){
+    plant.classList.add("correct","placed");
+    plant.draggable=false;
     zone.appendChild(plant);
 
-    score += 10;
+    score+=10;
     placed++;
 
     playSound(correctSound);
     sparkleBurst();
-    document.getElementById("feedback").textContent = "Correct! This plant will grow well here.";
-  } else {
+    document.getElementById("feedback").textContent="Correct! The plant has been placed well.";
+  }else{
     plant.classList.add("wrong");
     playSound(wrongSound);
-    document.getElementById("feedback").textContent = "Try again. Think about what this plant needs.";
+    document.getElementById("feedback").textContent="Try again. Choose another garden zone.";
 
-    setTimeout(function () {
+    setTimeout(function(){
       plant.classList.remove("wrong");
-    }, 500);
+    },500);
   }
 
   updateScore();
 
-  if (placed === totalInLevel) {
-    setTimeout(nextLevel, 1200);
+  if(placed===totalInLevel){
+    setTimeout(nextLevel,1200);
   }
 }
 
-function updateScore() {
-  document.getElementById("scoreText").textContent = score;
-  document.getElementById("placedText").textContent = placed;
+function updateScore(){
+  document.getElementById("scoreText").textContent=score;
+  document.getElementById("placedText").textContent=placed;
 }
 
-function nextLevel() {
+function nextLevel(){
   currentLevel++;
 
-  if (currentLevel >= levels.length) {
+  if(currentLevel>=levels.length){
     endGame();
-  } else {
+  }else{
     loadLevel();
   }
 }
 
-function endGame() {
+function endGame(){
   showScreen("result");
   playSound(clapSound);
 
-  const maxScore = levels.reduce(function (sum, level) {
-    return sum + level.plants.length * 10;
-  }, 0);
+  const maxScore=levels.reduce(function(sum,level){
+    return sum+level.plants.length*10;
+  },0);
 
-  const percent = Math.round((score / maxScore) * 100);
+  const percent=Math.round((score/maxScore)*100);
 
-  let stars = "⭐";
-  let message = "Good effort! Review which plants need sunlight, water, shade and rich soil.";
+  let stars="⭐";
+  let message="Good effort! Revise where different plants grow best.";
 
-  if (percent >= 90) {
-    stars = "⭐⭐⭐";
-    message = "Excellent! You planned a healthy science garden.";
-  } else if (percent >= 70) {
-    stars = "⭐⭐";
-    message = "Well done! Your garden shows strong plant knowledge.";
+  if(percent>=90){
+    stars="⭐⭐⭐";
+    message="Excellent! You planned a healthy science garden.";
+  }else if(percent>=70){
+    stars="⭐⭐";
+    message="Well done! Your garden shows good plant knowledge.";
   }
 
-  document.getElementById("finalStars").textContent = stars;
-  document.getElementById("finalScore").textContent = "Final Score: " + score + " / " + maxScore;
-  document.getElementById("finalMessage").textContent = message;
+  document.getElementById("finalStars").textContent=stars;
+  document.getElementById("finalScore").textContent="Final Score: "+score+" / "+maxScore;
+  document.getElementById("finalMessage").textContent=message;
 }
 
-function restartGame() {
-  currentLevel = 0;
-  score = 0;
+function restartGame(){
+  currentLevel=0;
+  score=0;
   loadLevel();
   showScreen("play");
 }
 
-/* Celebration effect */
-function sparkleBurst() {
-  for (let i = 0; i < 14; i++) {
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.textContent = ["🌟", "✨", "🌼", "🍃"][Math.floor(Math.random() * 4)];
-    sparkle.style.left = Math.random() * window.innerWidth + "px";
-    sparkle.style.top = (window.innerHeight * 0.35 + Math.random() * 160) + "px";
+function sparkleBurst(){
+  for(let i=0;i<14;i++){
+    const sparkle=document.createElement("div");
+    sparkle.className="sparkle";
+    sparkle.textContent=["🌟","✨","🌼","🍃"][Math.floor(Math.random()*4)];
+    sparkle.style.left=Math.random()*window.innerWidth+"px";
+    sparkle.style.top=(window.innerHeight*0.35+Math.random()*160)+"px";
     document.body.appendChild(sparkle);
 
-    setTimeout(function () {
+    setTimeout(function(){
       sparkle.remove();
-    }, 900);
+    },900);
   }
 }
 
-/* TOUCH SUPPORT FOR MOBILES */
-function addTouchEvents(card) {
-  card.addEventListener("touchstart", function (e) {
-    if (card.classList.contains("placed")) return;
+function addTouchEvents(card){
+  card.addEventListener("touchstart",function(e){
+    if(card.classList.contains("placed"))return;
 
-    draggedElement = card;
-
-    touchClone = card.cloneNode(true);
+    draggedElement=card;
+    touchClone=card.cloneNode(true);
     touchClone.classList.add("dragging-clone");
     document.body.appendChild(touchClone);
 
     moveTouchClone(e.touches[0]);
-  }, { passive: false });
+  },{passive:false});
 
-  card.addEventListener("touchmove", function (e) {
-    if (!touchClone) return;
+  card.addEventListener("touchmove",function(e){
+    if(!touchClone)return;
     e.preventDefault();
     moveTouchClone(e.touches[0]);
-  }, { passive: false });
+  },{passive:false});
 
-  card.addEventListener("touchend", function (e) {
-    if (!touchClone || !draggedElement) return;
+  card.addEventListener("touchend",function(e){
+    if(!touchClone || !draggedElement)return;
 
-    const touch = e.changedTouches[0];
-    const target = document.elementFromPoint(touch.clientX, touch.clientY);
-    const zone = target ? target.closest(".zone") : null;
+    const touch=e.changedTouches[0];
+    const target=document.elementFromPoint(touch.clientX,touch.clientY);
+    const zone=target?target.closest(".zone"):null;
 
     touchClone.remove();
-    touchClone = null;
+    touchClone=null;
 
-    if (zone) {
-      checkPlacement(draggedElement, zone);
+    if(zone){
+      checkPlacement(draggedElement,zone);
     }
 
-    draggedElement = null;
-  }, { passive: false });
+    draggedElement=null;
+  },{passive:false});
 }
 
-function moveTouchClone(touch) {
-  touchClone.style.left = touch.clientX - 60 + "px";
-  touchClone.style.top = touch.clientY - 50 + "px";
+function moveTouchClone(touch){
+  touchClone.style.left=touch.clientX-60+"px";
+  touchClone.style.top=touch.clientY-50+"px";
 }
 </script>
 
