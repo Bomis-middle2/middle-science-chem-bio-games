@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Balanced Diet Pyramid Rescue</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#eef7ee;padding:16px}
+.container{max-width:900px;margin:auto;background:#fff;padding:20px;border-radius:16px}
+.center{text-align:center}
+.btn{padding:12px 16px;border:none;border-radius:10px;margin:6px;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none}
+#foodEmoji{font-size:72px}
+.progress{height:14px;background:#ddd;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:#4caf50;width:0%}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="center">
+<img src="assets/innovine-logo.png" style="max-width:120px">
+<h1>Balanced Diet Pyramid Rescue</h1>
+</div>
 
+<div id="start">
+<p>Help build a healthy diet by making healthy food choices.</p>
+<button class="btn" onclick="startGame()">Start Adventure</button>
+</div>
+
+<div id="game" class="hidden">
+<h3>Level 1: Food Detective</h3>
+<div class="progress"><div class="fill" id="fill"></div></div>
+<p>Score: <span id="score">0</span></p>
+<div class="center">
+<div id="foodEmoji"></div>
+<h2 id="foodName"></h2>
+</div>
+<div class="grid">
+<button class="btn" onclick="answer('most')">Eat the Most</button>
+<button class="btn" onclick="answer('more')">Eat More</button>
+<button class="btn" onclick="answer('moderate')">Eat Moderately</button>
+<button class="btn" onclick="answer('less')">Eat Less</button>
+</div>
+<p id="feedback"></p>
+</div>
+
+<div id="end" class="hidden center">
+<h2>Mission Complete!</h2>
+<p>Final Score: <span id="finalScore"></span></p>
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+</div>
+
+<script>
+const foods=[
+{name:"Rice",emoji:"🍚",group:"most"},
+{name:"Apple",emoji:"🍎",group:"more"},
+{name:"Carrot",emoji:"🥕",group:"more"},
+{name:"Milk",emoji:"🥛",group:"moderate"},
+{name:"Egg",emoji:"🥚",group:"moderate"},
+{name:"Chocolate",emoji:"🍫",group:"less"}
+];
+
+let i=0,score=0;
+
+function startGame(){
+document.getElementById('start').classList.add('hidden');
+document.getElementById('game').classList.remove('hidden');
+showFood();
+}
+
+function showFood(){
+let f=foods[i];
+foodEmoji.textContent=f.emoji;
+foodName.textContent=f.name;
+fill.style.width=((i)/foods.length*100)+'%';
+}
+
+function answer(g){
+let f=foods[i];
+feedback.textContent=(g===f.group)?'✅ Correct':'❌ Try again';
+if(g===f.group) score+=10;
+document.getElementById('score').textContent=score;
+setTimeout(()=>{
+i++;
+if(i>=foods.length){
+game.classList.add('hidden');
+end.classList.remove('hidden');
+finalScore.textContent=score;
+}else showFood();
+feedback.textContent='';
+},800);
+}
+</script>
+</body>
+</html>
