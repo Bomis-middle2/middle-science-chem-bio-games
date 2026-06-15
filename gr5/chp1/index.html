@@ -1,97 +1,2618 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Balanced Diet Pyramid Rescue</title>
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+
+Balanced Diet Pyramid Rescue
+
+</title>
+
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#eef7ee;padding:16px}
-.container{max-width:900px;margin:auto;background:#fff;padding:20px;border-radius:16px}
-.center{text-align:center}
-.btn{padding:12px 16px;border:none;border-radius:10px;margin:6px;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hidden{display:none}
-#foodEmoji{font-size:72px}
-.progress{height:14px;background:#ddd;border-radius:20px;overflow:hidden}
-.fill{height:100%;background:#4caf50;width:0%}
+
+/* =====================================
+   RESET
+===================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:
+Arial,
+sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(
+180deg,
+#e8f5e9,
+#f8fff8
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+padding:15px;
+
+color:#222;
+
+}
+
+/* =====================================
+   MAIN CONTAINER
+===================================== */
+
+.container{
+
+max-width:1400px;
+
+margin:auto;
+
+}
+
+/* =====================================
+   TITLE
+===================================== */
+
+.gameTitle{
+
+text-align:center;
+
+font-size:
+clamp(
+2rem,
+4vw,
+3.2rem
+);
+
+color:#2e7d32;
+
+margin-bottom:15px;
+
+}
+
+.logo{
+
+width:130px;
+
+display:block;
+
+margin:auto;
+
+margin-bottom:15px;
+
+}
+
+/* =====================================
+   START SCREEN
+===================================== */
+
+#startScreen{
+
+text-align:center;
+
+padding:30px;
+
+}
+
+.startCard{
+
+max-width:900px;
+
+margin:auto;
+
+background:white;
+
+padding:30px;
+
+border-radius:25px;
+
+box-shadow:
+0 8px 20px
+rgba(
+0,0,0,.1
+);
+
+}
+
+.startCard h2{
+
+color:#43a047;
+
+margin-bottom:15px;
+
+}
+
+.startCard p{
+
+line-height:1.8;
+
+font-size:1.05rem;
+
+margin-bottom:20px;
+
+}
+
+.startBtn{
+
+background:#2e7d32;
+
+color:white;
+
+border:none;
+
+padding:18px 30px;
+
+font-size:1.1rem;
+
+border-radius:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.startBtn:hover{
+
+transform:
+translateY(-2px);
+
+}
+
+/* =====================================
+   GAME SCREEN
+===================================== */
+
+#gameScreen{
+
+display:none;
+
+}
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-bottom:15px;
+
+}
+
+.scoreBox,
+.levelBox,
+.badgeBox{
+
+background:white;
+
+padding:12px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+box-shadow:
+0 3px 10px
+rgba(
+0,0,0,.08
+);
+
+}
+
+/* =====================================
+   PROGRESS BAR
+===================================== */
+
+.progressWrap{
+
+height:18px;
+
+background:#ddd;
+
+border-radius:50px;
+
+overflow:hidden;
+
+margin-bottom:20px;
+
+}
+
+#progressFill{
+
+height:100%;
+
+width:0%;
+
+background:
+linear-gradient(
+90deg,
+#43a047,
+#81c784
+);
+
+transition:.5s;
+
+}
+
+/* =====================================
+   LAYOUT
+===================================== */
+
+.gameLayout{
+
+display:grid;
+
+grid-template-columns:
+
+260px
+1fr
+280px;
+
+gap:20px;
+
+}
+
+@media(max-width:950px){
+
+.gameLayout{
+
+grid-template-columns:
+1fr;
+
+}
+
+}
+
+/* =====================================
+   PANELS
+===================================== */
+
+.panel{
+
+background:white;
+
+padding:20px;
+
+border-radius:25px;
+
+box-shadow:
+0 5px 18px
+rgba(
+0,0,0,.08
+);
+
+}
+
+/* =====================================
+   MISSION PANEL
+===================================== */
+
+#missionText{
+
+line-height:1.8;
+
+font-size:1rem;
+
+}
+
+/* =====================================
+   FOOD CARD
+===================================== */
+
+.foodArea{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+min-height:350px;
+
+}
+
+.foodCard{
+
+width:240px;
+
+height:240px;
+
+border-radius:25px;
+
+background:
+linear-gradient(
+180deg,
+#ffffff,
+#f1fff2
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+cursor:pointer;
+
+box-shadow:
+0 8px 20px
+rgba(
+0,0,0,.1
+);
+
+transition:.3s;
+
+}
+
+.foodCard:hover{
+
+transform:
+translateY(-4px);
+
+}
+
+.foodEmoji{
+
+font-size:6rem;
+
+}
+
+.foodName{
+
+font-size:1.8rem;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+/* =====================================
+   FEEDBACK
+===================================== */
+
+#feedback{
+
+margin-top:20px;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+min-height:80px;
+
+text-align:center;
+
+}
+
+.correct{
+
+color:#2e7d32;
+
+}
+
+.wrong{
+
+color:#c62828;
+
+}
+
+/* =====================================
+   PYRAMID
+===================================== */
+
+.pyramid{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.levelBtn{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+font-size:1rem;
+
+transition:.25s;
+
+}
+
+.levelBtn:hover{
+
+transform:scale(1.03);
+
+}
+
+.less{
+
+background:#e53935;
+color:white;
+
+}
+
+.moderate{
+
+background:#1e88e5;
+color:white;
+
+}
+
+.more{
+
+background:#43a047;
+color:white;
+
+}
+
+.most{
+
+background:#fbc02d;
+color:black;
+
+}
+
+/* =====================================
+   FLOATING SCORE
+===================================== */
+
+.floatingScore{
+
+position:fixed;
+
+font-size:2rem;
+
+font-weight:bold;
+
+pointer-events:none;
+
+animation:
+floatUp 1s forwards;
+
+z-index:999;
+
+}
+
+@keyframes floatUp{
+
+0%{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+translateY(-80px);
+
+}
+
+}
+
+/* =====================================
+   BADGES
+===================================== */
+
+.badge{
+
+display:inline-block;
+
+padding:8px 12px;
+
+background:#fff3cd;
+
+border-radius:10px;
+
+margin-top:10px;
+
+font-size:.9rem;
+
+}
+
+/* =====================================
+   UTILITY
+===================================== */
+
+.hidden{
+
+display:none;
+
+}
+
 </style>
+
 </head>
+
 <body>
+
 <div class="container">
-<div class="center">
-<img src="assets/innovine-logo.png" style="max-width:120px">
-<h1>Balanced Diet Pyramid Rescue</h1>
+
+<!-- =====================================
+     START SCREEN
+===================================== -->
+
+<div id="startScreen">
+
+<img
+src="assets/innovine-logo.png"
+class="logo">
+
+<h1 class="gameTitle">
+
+🥗 Balanced Diet Pyramid Rescue
+
+</h1>
+
+<div class="startCard">
+
+<h2>
+
+Food Pyramid Rescue Mission
+
+</h2>
+
+<p>
+
+The Healthy Kingdom is losing its energy because foods have escaped from the Food Pyramid.
+
+Help the Nutrition Hero return them to the correct place.
+
+Complete missions, earn badges, and become the Balanced Diet Champion.
+
+</p>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+🚀 Start Adventure
+
+</button>
+
 </div>
 
-<div id="start">
-<p>Help build a healthy diet by making healthy food choices.</p>
-<button class="btn" onclick="startGame()">Start Adventure</button>
 </div>
 
-<div id="game" class="hidden">
-<h3>Level 1: Food Detective</h3>
-<div class="progress"><div class="fill" id="fill"></div></div>
-<p>Score: <span id="score">0</span></p>
-<div class="center">
-<div id="foodEmoji"></div>
-<h2 id="foodName"></h2>
-</div>
-<div class="grid">
-<button class="btn" onclick="answer('most')">Eat the Most</button>
-<button class="btn" onclick="answer('more')">Eat More</button>
-<button class="btn" onclick="answer('moderate')">Eat Moderately</button>
-<button class="btn" onclick="answer('less')">Eat Less</button>
-</div>
-<p id="feedback"></p>
+<!-- =====================================
+     GAME SCREEN
+===================================== -->
+
+<div id="gameScreen">
+
+<div class="topBar">
+
+<div class="scoreBox">
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
 </div>
 
-<div id="end" class="hidden center">
-<h2>Mission Complete!</h2>
-<p>Final Score: <span id="finalScore"></span></p>
-<button class="btn" onclick="location.reload()">Play Again</button>
+<div class="levelBox">
+
+🎯 Level:
+<span id="levelName">
+
+Food Detective
+
+</span>
+
 </div>
+
+<div class="badgeBox">
+
+🏅
+<span id="badgeCount">
+
+0
+
+</span>
+
+Badges
+
+</div>
+
+</div>
+
+<div class="progressWrap">
+
+<div id="progressFill"></div>
+
+</div>
+
+<div class="gameLayout">
+
+<!-- LEFT -->
+
+<div class="panel">
+
+<h2>
+
+Mission
+
+</h2>
+
+<br>
+
+<div id="missionText">
+
+Tap the food card and then select the correct Food Pyramid level.
+
+</div>
+
+<div
+id="currentBadge"
+class="badge">
+
+Food Detective Mission
+
+</div>
+
+</div>
+
+<!-- CENTER -->
+
+<div class="panel">
+
+<div class="foodArea">
+
+<div
+id="foodCard"
+class="foodCard">
+
+<div
+id="foodEmoji"
+class="foodEmoji">
+
+🍎
+
+</div>
+
+<div
+id="foodName"
+class="foodName">
+
+Apple
+
+</div>
+
+</div>
+
+<div id="feedback"></div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="panel">
+
+<h2>
+
+Food Pyramid
+
+</h2>
+
+<br>
+
+<div class="pyramid">
+
+<button
+class="levelBtn less"
+data-group="less">
+
+Eat Less
+
+</button>
+
+<button
+class="levelBtn moderate"
+data-group="moderate">
+
+Eat Moderately
+
+</button>
+
+<button
+class="levelBtn more"
+data-group="more">
+
+Eat More
+
+</button>
+
+<button
+class="levelBtn most"
+data-group="most">
+
+Eat the Most
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <script>
+
+/* =====================================
+   AUDIO
+===================================== */
+
+const correctSound=
+new Audio(
+"assets/correct.mp3"
+);
+
+const wrongSound=
+new Audio(
+"assets/wrong.mp3"
+);
+
+const clapSound=
+new Audio(
+"assets/freesound_community-claps-44774.mp3"
+);
+
+/* =====================================
+   LEVEL 1 DATA
+===================================== */
+
 const foods=[
-{name:"Rice",emoji:"🍚",group:"most"},
-{name:"Apple",emoji:"🍎",group:"more"},
-{name:"Carrot",emoji:"🥕",group:"more"},
-{name:"Milk",emoji:"🥛",group:"moderate"},
-{name:"Egg",emoji:"🥚",group:"moderate"},
-{name:"Chocolate",emoji:"🍫",group:"less"}
+
+{
+name:"Rice",
+emoji:"🍚",
+group:"most",
+fact:"Rice belongs to grains and cereals."
+},
+
+{
+name:"Bread",
+emoji:"🍞",
+group:"most",
+fact:"Bread provides energy."
+},
+
+{
+name:"Corn",
+emoji:"🌽",
+group:"most",
+fact:"Corn is a cereal grain."
+},
+
+{
+name:"Apple",
+emoji:"🍎",
+group:"more",
+fact:"Apples provide vitamins and fibre."
+},
+
+{
+name:"Carrot",
+emoji:"🥕",
+group:"more",
+fact:"Carrots are rich in Vitamin A."
+},
+
+{
+name:"Spinach",
+emoji:"🥬",
+group:"more",
+fact:"Spinach provides iron."
+},
+
+{
+name:"Milk",
+emoji:"🥛",
+group:"moderate",
+fact:"Milk helps build strong bones."
+},
+
+{
+name:"Egg",
+emoji:"🥚",
+group:"moderate",
+fact:"Eggs provide protein."
+},
+
+{
+name:"Fish",
+emoji:"🐟",
+group:"moderate",
+fact:"Fish helps body growth."
+},
+
+{
+name:"Chocolate",
+emoji:"🍫",
+group:"less",
+fact:"Too much sugar is unhealthy."
+},
+
+{
+name:"Candy",
+emoji:"🍬",
+group:"less",
+fact:"Candy should be eaten occasionally."
+},
+
+{
+name:"Chips",
+emoji:"🍟",
+group:"less",
+fact:"Chips contain excess fat and salt."
+}
+
 ];
 
-let i=0,score=0;
+let score=0;
+let badges=0;
+let currentFood=0;
+let currentLevel=1;
+let foodActivated=false;
+/* =====================================
+   LEVEL 2 DATA
+===================================== */
+
+const cartFoods=[
+
+{
+emoji:"🍌",
+name:"Banana",
+healthy:true
+},
+
+{
+emoji:"🥕",
+name:"Carrot",
+healthy:true
+},
+
+{
+emoji:"🥛",
+name:"Milk",
+healthy:true
+},
+
+{
+emoji:"🍫",
+name:"Chocolate",
+healthy:false
+},
+
+{
+emoji:"🍟",
+name:"Fries",
+healthy:false
+},
+
+{
+emoji:"🥤",
+name:"Soft Drink",
+healthy:false
+}
+
+];
+
+/* =====================================
+   LEVEL 3 DATA
+===================================== */
+
+const mealFoods=[
+
+{
+emoji:"🍚",
+name:"Rice",
+type:"grain"
+},
+
+{
+emoji:"🍗",
+name:"Chicken",
+type:"protein"
+},
+
+{
+emoji:"🥕",
+name:"Carrot",
+type:"vegetable"
+},
+
+{
+emoji:"🍎",
+name:"Apple",
+type:"fruit"
+},
+
+{
+emoji:"🥛",
+name:"Milk",
+type:"dairy"
+},
+
+{
+emoji:"🍫",
+name:"Chocolate",
+type:"junk"
+}
+
+];
+
+/* =====================================
+   DOM
+===================================== */
+
+const startScreen=
+document.getElementById(
+"startScreen"
+);
+
+const gameScreen=
+document.getElementById(
+"gameScreen"
+);
+
+const scoreEl=
+document.getElementById(
+"score"
+);
+
+const foodEmoji=
+document.getElementById(
+"foodEmoji"
+);
+
+const foodName=
+document.getElementById(
+"foodName"
+);
+
+const feedback=
+document.getElementById(
+"feedback"
+);
+
+const levelName=
+document.getElementById(
+"levelName"
+);
+
+const missionText=
+document.getElementById(
+"missionText"
+);
+
+const progressFill=
+document.getElementById(
+"progressFill"
+);
+
+const badgeCount=
+document.getElementById(
+"badgeCount"
+);
+
+const foodCard=
+document.getElementById(
+"foodCard"
+);
+
+/* =====================================
+   START GAME
+===================================== */
 
 function startGame(){
-document.getElementById('start').classList.add('hidden');
-document.getElementById('game').classList.remove('hidden');
-showFood();
+
+startScreen.style.display=
+"none";
+
+gameScreen.style.display=
+"block";
+
+loadFood();
+
 }
 
-function showFood(){
-let f=foods[i];
-foodEmoji.textContent=f.emoji;
-foodName.textContent=f.name;
-fill.style.width=((i)/foods.length*100)+'%';
+/* =====================================
+   LOAD FOOD
+===================================== */
+
+function loadFood(){
+
+foodActivated=false;
+
+const food=
+foods[currentFood];
+
+foodEmoji.innerHTML=
+food.emoji;
+
+foodName.innerHTML=
+food.name;
+
+feedback.innerHTML=
+"Tap the food card first.";
+
+updateProgress();
+
 }
 
-function answer(g){
-let f=foods[i];
-feedback.textContent=(g===f.group)?'✅ Correct':'❌ Try again';
-if(g===f.group) score+=10;
-document.getElementById('score').textContent=score;
+/* =====================================
+   TAP FOOD CARD
+===================================== */
+
+foodCard.addEventListener(
+"click",
+function(){
+
+foodActivated=true;
+
+feedback.innerHTML=
+
+`
+✨ Great!
+<br>
+Now choose the correct Food Pyramid level.
+`;
+
+foodCard.style.transform=
+"scale(1.05)";
+
 setTimeout(()=>{
-i++;
-if(i>=foods.length){
-game.classList.add('hidden');
-end.classList.remove('hidden');
-finalScore.textContent=score;
-}else showFood();
-feedback.textContent='';
-},800);
+
+foodCard.style.transform=
+"scale(1)";
+
+},300);
+
 }
+);
+
+/* =====================================
+   PYRAMID BUTTONS
+===================================== */
+
+document
+.querySelectorAll(
+".levelBtn"
+)
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+checkFoodAnswer
+);
+
+});
+
+/* =====================================
+   CHECK FOOD ANSWER
+===================================== */
+
+function checkFoodAnswer(){
+
+if(
+!foodActivated
+){
+
+feedback.innerHTML=
+
+`
+❗ Tap the food card first.
+`;
+
+return;
+
+}
+
+const answer=
+this.dataset.group;
+
+const food=
+foods[currentFood];
+
+if(
+answer===food.group
+){
+
+correctSound.play();
+
+score+=10;
+
+showFloatingScore(
+"+10"
+);
+
+feedback.innerHTML=
+
+`
+<div class="correct">
+
+✅ Correct!
+
+<br>
+
+${food.fact}
+
+</div>
+`;
+
+}
+else{
+
+wrongSound.play();
+
+feedback.innerHTML=
+
+`
+<div class="wrong">
+
+❌ Not Quite
+
+<br>
+
+${food.fact}
+
+</div>
+`;
+
+}
+
+scoreEl.innerHTML=
+score;
+
+setTimeout(()=>{
+
+currentFood++;
+
+if(
+currentFood<
+foods.length
+){
+
+loadFood();
+
+}
+else{
+
+unlockBadge(
+"Food Detective"
+);
+
+startLevel2();
+
+}
+
+},1500);
+
+}
+
+/* =====================================
+   FLOATING SCORE
+===================================== */
+
+function showFloatingScore(
+text
+){
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"floatingScore";
+
+div.innerHTML=text;
+
+div.style.left=
+"50%";
+
+div.style.top=
+"40%";
+
+document.body.appendChild(
+div
+);
+
+setTimeout(()=>{
+
+div.remove();
+
+},1000);
+
+}
+
+/* =====================================
+   BADGES
+===================================== */
+
+function unlockBadge(
+name
+){
+
+badges++;
+
+badgeCount.innerHTML=
+badges;
+
+}
+
+/* =====================================
+   PROGRESS
+===================================== */
+
+function updateProgress(){
+
+const total=
+
+foods.length+
+cartFoods.length+
+6;
+
+let done=
+
+currentFood;
+
+let percent=
+
+(done/total)*100;
+
+progressFill.style.width=
+
+percent+"%";
+
+}
+
+/* =====================================
+   LEVEL 2 START
+===================================== */
+
+function startLevel2(){
+
+currentLevel=2;
+
+levelName.innerHTML=
+
+"Healthy Shopping Cart";
+
+missionText.innerHTML=
+
+`
+Tap healthy foods to
+add them to the cart.
+`;
+
+document
+.querySelector(
+".pyramid"
+)
+.innerHTML=
+
+`
+<div id="cartGame"></div>
+`;
+
+showCartFood();
+
+}
+
+/* =====================================
+   SHOW CART FOOD
+===================================== */
+
+let cartIndex=0;
+
+function showCartFood(){
+
+const food=
+cartFoods[cartIndex];
+
+foodEmoji.innerHTML=
+food.emoji;
+
+foodName.innerHTML=
+food.name;
+
+feedback.innerHTML=
+
+`
+Should this go into
+the healthy cart?
+`;
+
+document
+.getElementById(
+"cartGame"
+)
+.innerHTML=
+
+`
+<button
+class="levelBtn more"
+onclick="cartAnswer(true)">
+
+🛒 Add To Cart
+
+</button>
+
+<button
+class="levelBtn less"
+onclick="cartAnswer(false)">
+
+🚫 Leave On Shelf
+
+</button>
+`;
+
+}
+/* =====================================
+   CART ANSWER
+===================================== */
+
+function cartAnswer(
+choice
+){
+
+const food=
+cartFoods[cartIndex];
+
+if(
+choice===food.healthy
+){
+
+score+=10;
+
+correctSound.play();
+
+showFloatingScore(
+"+10"
+);
+
+feedback.innerHTML=
+
+`
+<div class="correct">
+
+✅ Great Choice!
+
+<br>
+
+${food.name}
+is a healthy food.
+
+</div>
+`;
+
+}
+else{
+
+wrongSound.play();
+
+feedback.innerHTML=
+
+`
+<div class="wrong">
+
+❌ Not Quite
+
+<br>
+
+Think about whether
+this food helps
+your body stay healthy.
+
+</div>
+`;
+
+}
+
+scoreEl.innerHTML=
+score;
+
+setTimeout(()=>{
+
+cartIndex++;
+
+if(
+cartIndex<
+cartFoods.length
+){
+
+showCartFood();
+
+}
+else{
+
+unlockBadge(
+"Shopping Star"
+);
+
+startLevel3();
+
+}
+
+},1200);
+
+}
+
+/* =====================================
+   LEVEL 3
+===================================== */
+
+let selectedMeal=[];
+
+/* =====================================
+   START LEVEL 3
+===================================== */
+
+function startLevel3(){
+
+currentLevel=3;
+
+levelName.innerHTML=
+
+"Build A Balanced Meal";
+
+missionText.innerHTML=
+
+`
+Choose 4 foods
+to create a healthy lunch.
+`;
+
+foodEmoji.innerHTML=
+"🍱";
+
+foodName.innerHTML=
+"Healthy Lunch Tray";
+
+feedback.innerHTML=
+
+`
+Select four foods.
+`;
+
+document
+.querySelector(
+".pyramid"
+)
+.innerHTML=
+
+`
+<div id="mealBuilder"></div>
+
+<button
+class="levelBtn more"
+onclick="checkMeal()">
+
+✔ Check Meal
+
+</button>
+`;
+
+renderMealFoods();
+
+}
+
+/* =====================================
+   RENDER MEAL FOODS
+===================================== */
+
+function renderMealFoods(){
+
+let html=
+
+`
+<div style="
+display:grid;
+grid-template-columns:
+1fr 1fr;
+gap:10px;
+">
+`;
+
+mealFoods.forEach(
+(food,index)=>{
+
+html+=
+
+`
+<div
+
+onclick="toggleMeal(${index})"
+
+id="meal${index}"
+
+style="
+background:white;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+border:2px solid #ddd;
+text-align:center;
+">
+
+<div style="
+font-size:2rem;
+">
+
+${food.emoji}
+
+</div>
+
+<div>
+
+${food.name}
+
+</div>
+
+</div>
+`;
+
+});
+
+html+=
+"</div>";
+
+document
+.getElementById(
+"mealBuilder"
+)
+.innerHTML=
+html;
+
+}
+
+/* =====================================
+   TOGGLE FOOD
+===================================== */
+
+function toggleMeal(
+index
+){
+
+const food=
+mealFoods[index];
+
+const card=
+document.getElementById(
+"meal"+index
+);
+
+const exists=
+
+selectedMeal.includes(
+index
+);
+
+if(exists){
+
+selectedMeal=
+selectedMeal.filter(
+x=>x!==index
+);
+
+card.style.background=
+"white";
+
+card.style.border=
+"2px solid #ddd";
+
+return;
+
+}
+
+if(
+selectedMeal.length>=4
+){
+
+return;
+
+}
+
+selectedMeal.push(
+index
+);
+
+card.style.background=
+"#c8f7c5";
+
+card.style.border=
+"2px solid green";
+
+}
+
+/* =====================================
+   CHECK MEAL
+===================================== */
+
+function checkMeal(){
+
+if(
+selectedMeal.length!==4
+){
+
+feedback.innerHTML=
+
+`
+Select exactly
+4 foods.
+`;
+
+return;
+
+}
+
+let grain=false;
+let protein=false;
+let fruitVeg=false;
+let junk=false;
+
+selectedMeal.forEach(
+i=>{
+
+const food=
+mealFoods[i];
+
+if(
+food.type==="grain"
+){
+
+grain=true;
+
+}
+
+if(
+food.type==="protein"
+){
+
+protein=true;
+
+}
+
+if(
+food.type==="fruit"
+||
+food.type==="vegetable"
+){
+
+fruitVeg=true;
+
+}
+
+if(
+food.type==="junk"
+){
+
+junk=true;
+
+}
+
+});
+
+if(
+grain &&
+protein &&
+fruitVeg &&
+!junk
+){
+
+score+=30;
+
+correctSound.play();
+
+showFloatingScore(
+"+30"
+);
+
+feedback.innerHTML=
+
+`
+<div class="correct">
+
+🥗 Excellent!
+
+<br>
+
+You built a
+balanced meal.
+
+</div>
+`;
+
+}
+else{
+
+wrongSound.play();
+
+feedback.innerHTML=
+
+`
+<div class="wrong">
+
+⚠ Your meal needs
+better balance.
+
+Try including
+grains, protein
+and fruits or vegetables.
+
+</div>
+`;
+
+}
+
+scoreEl.innerHTML=
+score;
+
+setTimeout(()=>{
+
+unlockBadge(
+"Lunch Builder"
+);
+
+startLevel4();
+
+},2000);
+
+}
+
+/* =====================================
+   LEVEL 4 VARIABLES
+===================================== */
+
+let badFoods=[
+
+{
+emoji:"🍟",
+bad:true
+},
+
+{
+emoji:"🍕",
+bad:false
+},
+
+{
+emoji:"🍫",
+bad:true
+},
+
+{
+emoji:"🥤",
+bad:true
+}
+
+];
+
+let fixedCount=0;
+
+/* =====================================
+   START LEVEL 4
+===================================== */
+
+function startLevel4(){
+
+currentLevel=4;
+
+levelName.innerHTML=
+
+"Fix The Plate";
+
+missionText.innerHTML=
+
+`
+Tap unhealthy foods
+that should be replaced.
+`;
+
+foodEmoji.innerHTML=
+"🍽";
+
+foodName.innerHTML=
+"What's Wrong With This Plate?";
+
+feedback.innerHTML=
+
+`
+Tap unhealthy foods.
+`;
+
+let html=
+
+`
+<div
+id="plateArea"
+style="
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+">
+`;
+
+badFoods.forEach(
+(food,index)=>{
+
+html+=
+
+`
+<div
+
+onclick="fixFood(${index})"
+
+id="bad${index}"
+
+style="
+font-size:3rem;
+cursor:pointer;
+padding:10px;
+">
+
+${food.emoji}
+
+</div>
+`;
+
+});
+
+html+=
+"</div>";
+
+document
+.querySelector(
+".pyramid"
+)
+.innerHTML=
+html;
+
+}
+/* =====================================
+   FIX FOOD
+===================================== */
+
+function fixFood(
+index
+){
+
+const food=
+badFoods[index];
+
+const card=
+document.getElementById(
+"bad"+index
+);
+
+if(
+card.dataset.done
+) return;
+
+card.dataset.done=
+"yes";
+
+if(
+food.bad
+){
+
+score+=10;
+
+fixedCount++;
+
+correctSound.play();
+
+showFloatingScore(
+"+10"
+);
+
+card.style.opacity=
+".3";
+
+card.style.transform=
+"scale(.8)";
+
+}
+else{
+
+wrongSound.play();
+
+card.style.background=
+"#ffebee";
+
+}
+
+scoreEl.innerHTML=
+score;
+
+if(
+fixedCount>=3
+){
+
+setTimeout(()=>{
+
+unlockBadge(
+"Plate Fixer"
+);
+
+startLevel5();
+
+},1200);
+
+}
+
+}
+
+/* =====================================
+   LEVEL 5
+===================================== */
+
+let rushQuestions=[
+
+{
+emoji:"🥚",
+answer:"moderate"
+},
+
+{
+emoji:"🍎",
+answer:"more"
+},
+
+{
+emoji:"🍫",
+answer:"less"
+},
+
+{
+emoji:"🍚",
+answer:"most"
+}
+
+];
+
+let rushIndex=0;
+let rushTimer=10;
+let timerInterval;
+
+/* =====================================
+   START LEVEL 5
+===================================== */
+
+function startLevel5(){
+
+currentLevel=5;
+
+levelName.innerHTML=
+
+"Pyramid Rush";
+
+missionText.innerHTML=
+
+`
+Answer quickly before
+the timer runs out.
+`;
+
+document
+.querySelector(
+".pyramid"
+)
+.innerHTML=
+
+`
+<div id="rushButtons">
+
+<button
+class="levelBtn most"
+onclick="rushAnswer('most')">
+
+Eat The Most
+
+</button>
+
+<button
+class="levelBtn more"
+onclick="rushAnswer('more')">
+
+Eat More
+
+</button>
+
+<button
+class="levelBtn moderate"
+onclick="rushAnswer('moderate')">
+
+Eat Moderately
+
+</button>
+
+<button
+class="levelBtn less"
+onclick="rushAnswer('less')">
+
+Eat Less
+
+</button>
+
+</div>
+`;
+
+showRushQuestion();
+
+}
+
+/* =====================================
+   SHOW RUSH QUESTION
+===================================== */
+
+function showRushQuestion(){
+
+rushTimer=10;
+
+const q=
+rushQuestions[rushIndex];
+
+foodEmoji.innerHTML=
+q.emoji;
+
+foodName.innerHTML=
+
+"Quick Answer";
+
+feedback.innerHTML=
+
+`
+⏰ Time Left:
+<span id="timer">
+
+10
+
+</span>
+`;
+
+clearInterval(
+timerInterval
+);
+
+timerInterval=
+
+setInterval(()=>{
+
+rushTimer--;
+
+const timer=
+document.getElementById(
+"timer"
+);
+
+if(timer){
+
+timer.innerHTML=
+rushTimer;
+
+}
+
+if(
+rushTimer<=0
+){
+
+clearInterval(
+timerInterval
+);
+
+rushIndex++;
+
+if(
+rushIndex<
+rushQuestions.length
+){
+
+showRushQuestion();
+
+}
+else{
+
+unlockBadge(
+"Pyramid Master"
+);
+
+startLevel6();
+
+}
+
+}
+
+},1000);
+
+}
+
+/* =====================================
+   RUSH ANSWER
+===================================== */
+
+function rushAnswer(
+answer
+){
+
+clearInterval(
+timerInterval
+);
+
+const q=
+rushQuestions[rushIndex];
+
+if(
+answer===q.answer
+){
+
+score+=10;
+
+correctSound.play();
+
+showFloatingScore(
+"+10"
+);
+
+}
+
+else{
+
+wrongSound.play();
+
+}
+
+scoreEl.innerHTML=
+score;
+
+rushIndex++;
+
+if(
+rushIndex<
+rushQuestions.length
+){
+
+showRushQuestion();
+
+}
+else{
+
+unlockBadge(
+"Pyramid Master"
+);
+
+startLevel6();
+
+}
+
+}
+
+/* =====================================
+   LEVEL 6 QUIZ
+===================================== */
+
+const quiz=[
+
+{
+question:
+"Which food group provides vitamins and minerals?",
+
+options:[
+"Oils",
+"Fruits & Vegetables",
+"Sweets",
+"Salt"
+],
+
+answer:1
+},
+
+{
+question:
+"Which food should be eaten less often?",
+
+options:[
+"Apple",
+"Carrot",
+"Chocolate",
+"Spinach"
+],
+
+answer:2
+},
+
+{
+question:
+"Which food helps build strong bones?",
+
+options:[
+"Milk",
+"Chips",
+"Candy",
+"Soft Drink"
+],
+
+answer:0
+}
+
+];
+
+let quizIndex=0;
+
+/* =====================================
+   START LEVEL 6
+===================================== */
+
+function startLevel6(){
+
+currentLevel=6;
+
+levelName.innerHTML=
+
+"Nutrition Hero";
+
+missionText.innerHTML=
+
+`
+Answer the final
+Nutrition Hero Quiz.
+`;
+
+showQuizQuestion();
+
+}
+
+/* =====================================
+   SHOW QUIZ
+===================================== */
+
+function showQuizQuestion(){
+
+const q=
+quiz[quizIndex];
+
+foodEmoji.innerHTML=
+"🦸";
+
+foodName.innerHTML=
+
+"Nutrition Hero";
+
+let html=
+
+`
+<h3>
+
+${q.question}
+
+</h3>
+
+<br>
+`;
+
+q.options.forEach(
+(option,index)=>{
+
+html+=
+
+`
+<button
+
+class="levelBtn more"
+
+style="
+margin-bottom:10px;
+"
+
+onclick="quizAnswer(${index})">
+
+${option}
+
+</button>
+`;
+
+});
+
+document
+.querySelector(
+".pyramid"
+)
+.innerHTML=
+html;
+
+}
+
+/* =====================================
+   QUIZ ANSWER
+===================================== */
+
+function quizAnswer(
+choice
+){
+
+const q=
+quiz[quizIndex];
+
+if(
+choice===q.answer
+){
+
+score+=10;
+
+correctSound.play();
+
+showFloatingScore(
+"+10"
+);
+
+}
+else{
+
+wrongSound.play();
+
+}
+
+scoreEl.innerHTML=
+score;
+
+quizIndex++;
+
+if(
+quizIndex<
+quiz.length
+){
+
+showQuizQuestion();
+
+}
+else{
+
+unlockBadge(
+"Nutrition Hero"
+);
+
+showCertificate();
+
+}
+
+}
+
+/* =====================================
+   CERTIFICATE
+===================================== */
+
+function showCertificate(){
+
+clapSound.play();
+
+document
+.querySelector(
+".gameLayout"
+)
+.innerHTML=
+
+`
+<div
+class="panel"
+style="
+grid-column:1/-1;
+text-align:center;
+">
+
+<h1>
+
+🏆 Certificate of Achievement
+
+</h1>
+
+<br>
+
+<p>
+
+Enter Student Name
+
+</p>
+
+<br>
+
+<input
+
+id="studentName"
+
+placeholder="Student Name"
+
+style="
+padding:12px;
+width:300px;
+max-width:100%;
+border-radius:12px;
+border:1px solid #ccc;
+">
+
+<br><br>
+
+<button
+
+class="startBtn"
+
+onclick="generateCertificate()">
+
+Generate Certificate
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =====================================
+   GENERATE CERTIFICATE
+===================================== */
+
+function generateCertificate(){
+
+const name=
+
+document
+.getElementById(
+"studentName"
+)
+.value
+.trim();
+
+if(
+name===""
+){
+
+alert(
+"Please enter a name."
+);
+
+return;
+
+}
+
+document
+.querySelector(
+".gameLayout"
+)
+.innerHTML=
+
+`
+<div
+class="panel"
+style="
+grid-column:1/-1;
+text-align:center;
+">
+
+<h1>
+
+🏆 Certificate of Completion
+
+</h1>
+
+<br>
+
+<h2>
+
+${name}
+
+</h2>
+
+<br>
+
+<p>
+
+Successfully completed
+
+</p>
+
+<h3>
+
+Balanced Diet Pyramid Rescue
+
+</h3>
+
+<br>
+
+<p>
+
+Final Score:
+<b>
+
+${score}
+
+</b>
+
+</p>
+
+<br>
+
+<h2>
+
+⭐ Balanced Diet Champion ⭐
+
+</h2>
+
+<br>
+
+<button
+
+class="startBtn"
+
+onclick="location.reload()">
+
+Play Again
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =====================================
+   END SCRIPT
+===================================== */
+
 </script>
+
 </body>
+
 </html>
