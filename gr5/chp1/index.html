@@ -41,16 +41,16 @@ linear-gradient(
 
 min-height:100vh;
 
-overflow-x:hidden;
-
 padding:15px;
+
+overflow-x:hidden;
 
 color:#222;
 
 }
 
 /* =====================================
-   MAIN CONTAINER
+   CONTAINER
 ===================================== */
 
 .container{
@@ -58,39 +58,6 @@ color:#222;
 max-width:1400px;
 
 margin:auto;
-
-}
-
-/* =====================================
-   TITLE
-===================================== */
-
-.gameTitle{
-
-text-align:center;
-
-font-size:
-clamp(
-2rem,
-4vw,
-3.2rem
-);
-
-color:#2e7d32;
-
-margin-bottom:15px;
-
-}
-
-.logo{
-
-width:130px;
-
-display:block;
-
-margin:auto;
-
-margin-bottom:15px;
 
 }
 
@@ -103,6 +70,33 @@ margin-bottom:15px;
 text-align:center;
 
 padding:30px;
+
+}
+
+.logo{
+
+width:130px;
+
+display:block;
+
+margin:auto;
+
+margin-bottom:20px;
+
+}
+
+.title{
+
+font-size:
+clamp(
+2rem,
+5vw,
+3.2rem
+);
+
+color:#2e7d32;
+
+margin-bottom:15px;
 
 }
 
@@ -126,24 +120,6 @@ rgba(
 
 }
 
-.startCard h2{
-
-color:#43a047;
-
-margin-bottom:15px;
-
-}
-
-.startCard p{
-
-line-height:1.8;
-
-font-size:1.05rem;
-
-margin-bottom:20px;
-
-}
-
 .startBtn{
 
 background:#2e7d32;
@@ -152,22 +128,15 @@ color:white;
 
 border:none;
 
-padding:18px 30px;
-
-font-size:1.1rem;
+padding:16px 30px;
 
 border-radius:15px;
 
+font-size:1.1rem;
+
 cursor:pointer;
 
-transition:.3s;
-
-}
-
-.startBtn:hover{
-
-transform:
-translateY(-2px);
+margin-top:20px;
 
 }
 
@@ -187,8 +156,6 @@ display:flex;
 
 justify-content:space-between;
 
-align-items:center;
-
 gap:10px;
 
 flex-wrap:wrap;
@@ -197,9 +164,7 @@ margin-bottom:15px;
 
 }
 
-.scoreBox,
-.levelBox,
-.badgeBox{
+.infoBox{
 
 background:white;
 
@@ -218,7 +183,7 @@ rgba(
 }
 
 /* =====================================
-   PROGRESS BAR
+   PROGRESS
 ===================================== */
 
 .progressWrap{
@@ -248,31 +213,30 @@ linear-gradient(
 #81c784
 );
 
-transition:.5s;
+transition:.4s;
 
 }
 
 /* =====================================
-   LAYOUT
+   MAIN LAYOUT
 ===================================== */
 
-.gameLayout{
+.mainLayout{
 
 display:grid;
 
 grid-template-columns:
 
-260px
-1fr
-280px;
+320px
+1fr;
 
 gap:20px;
 
 }
 
-@media(max-width:950px){
+@media(max-width:900px){
 
-.gameLayout{
+.mainLayout{
 
 grid-template-columns:
 1fr;
@@ -294,7 +258,7 @@ padding:20px;
 border-radius:25px;
 
 box-shadow:
-0 5px 18px
+0 5px 15px
 rgba(
 0,0,0,.08
 );
@@ -302,74 +266,50 @@ rgba(
 }
 
 /* =====================================
-   MISSION PANEL
+   CURRENT FOOD
 ===================================== */
-
-#missionText{
-
-line-height:1.8;
-
-font-size:1rem;
-
-}
-
-/* =====================================
-   FOOD CARD
-===================================== */
-
-.foodArea{
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-flex-direction:column;
-
-min-height:350px;
-
-}
 
 .foodCard{
 
-width:240px;
+width:260px;
 
-height:240px;
+height:260px;
 
-border-radius:25px;
+margin:auto;
 
 background:
 linear-gradient(
 180deg,
-#ffffff,
-#f1fff2
+#fff,
+#f7fff8
 );
 
+border-radius:25px;
+
 display:flex;
+
+flex-direction:column;
 
 justify-content:center;
 
 align-items:center;
 
-flex-direction:column;
-
 cursor:pointer;
 
-box-shadow:
-0 8px 20px
-rgba(
-0,0,0,.1
-);
-
 transition:.3s;
+
+box-shadow:
+0 8px 18px
+rgba(
+0,0,0,.12
+);
 
 }
 
 .foodCard:hover{
 
 transform:
-translateY(-4px);
+translateY(-5px);
 
 }
 
@@ -381,7 +321,7 @@ font-size:6rem;
 
 .foodName{
 
-font-size:1.8rem;
+font-size:1.6rem;
 
 font-weight:bold;
 
@@ -389,110 +329,105 @@ margin-top:10px;
 
 }
 
-/* =====================================
-   FEEDBACK
-===================================== */
-
 #feedback{
 
 margin-top:20px;
 
-font-size:1.2rem;
+min-height:80px;
+
+font-size:1.1rem;
 
 font-weight:bold;
-
-min-height:80px;
 
 text-align:center;
 
 }
 
-.correct{
-
-color:#2e7d32;
-
-}
-
-.wrong{
-
-color:#c62828;
-
-}
-
 /* =====================================
-   PYRAMID
+   PYRAMID AREA
 ===================================== */
 
-.pyramid{
+.pyramidWrapper{
 
-display:flex;
+position:relative;
 
-flex-direction:column;
+max-width:700px;
 
-align-items:center;
-
-gap:10px;
-
-margin-top:15px;
+margin:auto;
 
 }
 
-.levelBtn{
+/* SVG scales perfectly */
+
+#foodPyramid{
 
 width:100%;
 
-padding:14px;
+height:auto;
 
-border:none;
-
-border-radius:15px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-font-size:1rem;
-
-transition:.25s;
-
-}
-
-.levelBtn:hover{
-
-transform:scale(1.03);
-
-}
-
-.less{
-
-background:#e53935;
-color:white;
-
-}
-
-.moderate{
-
-background:#1e88e5;
-color:white;
-
-}
-
-.more{
-
-background:#43a047;
-color:white;
-
-}
-
-.most{
-
-background:#fbc02d;
-color:black;
+display:block;
 
 }
 
 /* =====================================
-   FLOATING SCORE
+   PYRAMID ZONES
+===================================== */
+
+.zone{
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.zone:hover{
+
+opacity:.8;
+
+}
+
+/* =====================================
+   PLACED FOODS
+===================================== */
+
+.placedFood{
+
+position:absolute;
+
+font-size:2rem;
+
+animation:
+dropIn .5s ease;
+
+}
+
+@keyframes dropIn{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(-30px)
+scale(.5);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0)
+scale(1);
+
+}
+
+}
+
+/* =====================================
+   FLOAT SCORE
 ===================================== */
 
 .floatingScore{
@@ -534,33 +469,15 @@ translateY(-80px);
 
 }
 
-/* =====================================
-   BADGES
-===================================== */
+.correct{
 
-.badge{
-
-display:inline-block;
-
-padding:8px 12px;
-
-background:#fff3cd;
-
-border-radius:10px;
-
-margin-top:10px;
-
-font-size:.9rem;
+color:#2e7d32;
 
 }
 
-/* =====================================
-   UTILITY
-===================================== */
+.wrong{
 
-.hidden{
-
-display:none;
+color:#c62828;
 
 }
 
@@ -582,7 +499,7 @@ display:none;
 src="assets/innovine-logo.png"
 class="logo">
 
-<h1 class="gameTitle">
+<h1 class="title">
 
 🥗 Balanced Diet Pyramid Rescue
 
@@ -592,17 +509,23 @@ class="logo">
 
 <h2>
 
-Food Pyramid Rescue Mission
+Food Pyramid Builder
 
 </h2>
 
+<br>
+
 <p>
 
-The Healthy Kingdom is losing its energy because foods have escaped from the Food Pyramid.
+Foods have escaped from the Healthy Kingdom.
 
-Help the Nutrition Hero return them to the correct place.
+Help return each food to the correct level of the Food Pyramid.
 
-Complete missions, earn badges, and become the Balanced Diet Champion.
+Tap the food card.
+
+Then tap the correct pyramid section.
+
+Watch the pyramid slowly fill up.
 
 </p>
 
@@ -626,7 +549,7 @@ onclick="startGame()">
 
 <div class="topBar">
 
-<div class="scoreBox">
+<div class="infoBox">
 
 ⭐ Score:
 <span id="score">
@@ -637,27 +560,25 @@ onclick="startGame()">
 
 </div>
 
-<div class="levelBox">
+<div class="infoBox">
 
-🎯 Level:
-<span id="levelName">
-
-Food Detective
-
-</span>
-
-</div>
-
-<div class="badgeBox">
-
-🏅
+🏅 Badges:
 <span id="badgeCount">
 
 0
 
 </span>
 
-Badges
+</div>
+
+<div class="infoBox">
+
+🎯 Foods Placed:
+<span id="placedCount">
+
+0
+
+</span>
 
 </div>
 
@@ -669,41 +590,19 @@ Badges
 
 </div>
 
-<div class="gameLayout">
+<div class="mainLayout">
 
-<!-- LEFT -->
+<!-- LEFT PANEL -->
 
 <div class="panel">
 
 <h2>
 
-Mission
+Current Food
 
 </h2>
 
 <br>
-
-<div id="missionText">
-
-Tap the food card and then select the correct Food Pyramid level.
-
-</div>
-
-<div
-id="currentBadge"
-class="badge">
-
-Food Detective Mission
-
-</div>
-
-</div>
-
-<!-- CENTER -->
-
-<div class="panel">
-
-<div class="foodArea">
 
 <div
 id="foodCard"
@@ -727,57 +626,143 @@ Apple
 
 </div>
 
-<div id="feedback"></div>
+<div id="feedback">
+
+Tap the food card.
 
 </div>
 
 </div>
 
-<!-- RIGHT -->
+<!-- RIGHT PANEL -->
 
 <div class="panel">
 
-<h2>
+<div
+class="pyramidWrapper">
 
-Food Pyramid
+<svg
+id="foodPyramid"
+viewBox="0 0 600 600">
 
-</h2>
+<!-- LESS -->
 
-<br>
+<polygon
 
-<div class="pyramid">
+id="zoneLess"
 
-<button
-class="levelBtn less"
-data-group="less">
+class="zone"
+
+points="
+300,40
+360,140
+240,140
+"
+
+fill="#ef5350"
+
+opacity=".7"
+/>
+
+<!-- MODERATE -->
+
+<polygon
+
+id="zoneModerate"
+
+class="zone"
+
+points="
+240,140
+360,140
+420,260
+180,260
+"
+
+fill="#42a5f5"
+
+opacity=".7"
+/>
+
+<!-- MORE -->
+
+<polygon
+
+id="zoneMore"
+
+class="zone"
+
+points="
+180,260
+420,260
+500,420
+100,420
+"
+
+fill="#66bb6a"
+
+opacity=".7"
+/>
+
+<!-- MOST -->
+
+<polygon
+
+id="zoneMost"
+
+class="zone"
+
+points="
+100,420
+500,420
+560,560
+40,560
+"
+
+fill="#ffd54f"
+
+opacity=".7"
+/>
+
+<text
+x="300"
+y="95"
+text-anchor="middle">
 
 Eat Less
 
-</button>
+</text>
 
-<button
-class="levelBtn moderate"
-data-group="moderate">
+<text
+x="300"
+y="210"
+text-anchor="middle">
 
 Eat Moderately
 
-</button>
+</text>
 
-<button
-class="levelBtn more"
-data-group="more">
+<text
+x="300"
+y="340"
+text-anchor="middle">
 
 Eat More
 
-</button>
+</text>
 
-<button
-class="levelBtn most"
-data-group="most">
+<text
+x="300"
+y="500"
+text-anchor="middle">
 
-Eat the Most
+Eat The Most
 
-</button>
+</text>
+
+</svg>
+
+<div id="placedFoods"></div>
 
 </div>
 
@@ -809,16 +794,15 @@ new Audio(
 );
 
 /* =====================================
-   LEVEL 1 DATA
+   FOOD DATA
 ===================================== */
 
 const foods=[
-
 {
 name:"Rice",
 emoji:"🍚",
 group:"most",
-fact:"Rice belongs to grains and cereals."
+fact:"Rice belongs to the grains group."
 },
 
 {
@@ -839,7 +823,7 @@ fact:"Corn is a cereal grain."
 name:"Apple",
 emoji:"🍎",
 group:"more",
-fact:"Apples provide vitamins and fibre."
+fact:"Apples provide vitamins."
 },
 
 {
@@ -900,98 +884,21 @@ fact:"Chips contain excess fat and salt."
 
 ];
 
+/* =====================================
+   GAME VARIABLES
+===================================== */
+
 let score=0;
+
 let badges=0;
+
 let currentFood=0;
-let currentLevel=1;
+
 let foodActivated=false;
-/* =====================================
-   LEVEL 2 DATA
-===================================== */
 
-const cartFoods=[
+let foodsPlaced=0;
 
-{
-emoji:"🍌",
-name:"Banana",
-healthy:true
-},
-
-{
-emoji:"🥕",
-name:"Carrot",
-healthy:true
-},
-
-{
-emoji:"🥛",
-name:"Milk",
-healthy:true
-},
-
-{
-emoji:"🍫",
-name:"Chocolate",
-healthy:false
-},
-
-{
-emoji:"🍟",
-name:"Fries",
-healthy:false
-},
-
-{
-emoji:"🥤",
-name:"Soft Drink",
-healthy:false
-}
-
-];
-
-/* =====================================
-   LEVEL 3 DATA
-===================================== */
-
-const mealFoods=[
-
-{
-emoji:"🍚",
-name:"Rice",
-type:"grain"
-},
-
-{
-emoji:"🍗",
-name:"Chicken",
-type:"protein"
-},
-
-{
-emoji:"🥕",
-name:"Carrot",
-type:"vegetable"
-},
-
-{
-emoji:"🍎",
-name:"Apple",
-type:"fruit"
-},
-
-{
-emoji:"🥛",
-name:"Milk",
-type:"dairy"
-},
-
-{
-emoji:"🍫",
-name:"Chocolate",
-type:"junk"
-}
-
-];
+let shuffledFoods=[];
 
 /* =====================================
    DOM
@@ -1007,9 +914,9 @@ document.getElementById(
 "gameScreen"
 );
 
-const scoreEl=
+const foodCard=
 document.getElementById(
-"score"
+"foodCard"
 );
 
 const foodEmoji=
@@ -1027,19 +934,9 @@ document.getElementById(
 "feedback"
 );
 
-const levelName=
+const scoreEl=
 document.getElementById(
-"levelName"
-);
-
-const missionText=
-document.getElementById(
-"missionText"
-);
-
-const progressFill=
-document.getElementById(
-"progressFill"
+"score"
 );
 
 const badgeCount=
@@ -1047,10 +944,54 @@ document.getElementById(
 "badgeCount"
 );
 
-const foodCard=
+const placedCount=
 document.getElementById(
-"foodCard"
+"placedCount"
 );
+
+const progressFill=
+document.getElementById(
+"progressFill"
+);
+
+const placedFoods=
+document.getElementById(
+"placedFoods"
+);
+
+/* =====================================
+   SHUFFLE
+===================================== */
+
+function shuffleArray(
+array
+){
+
+for(
+let i=
+array.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*
+(i+1)
+);
+
+[
+array[i],
+array[j]
+]=
+[
+array[j],
+array[i]
+];
+
+}
+
+}
 
 /* =====================================
    START GAME
@@ -1063,6 +1004,13 @@ startScreen.style.display=
 
 gameScreen.style.display=
 "block";
+
+shuffledFoods=
+[...foods];
+
+shuffleArray(
+shuffledFoods
+);
 
 loadFood();
 
@@ -1077,7 +1025,9 @@ function loadFood(){
 foodActivated=false;
 
 const food=
-foods[currentFood];
+shuffledFoods[
+currentFood
+];
 
 foodEmoji.innerHTML=
 food.emoji;
@@ -1086,7 +1036,16 @@ foodName.innerHTML=
 food.name;
 
 feedback.innerHTML=
-"Tap the food card first.";
+
+`
+Tap the food card first.
+`;
+
+foodCard.style.opacity=
+"1";
+
+foodCard.style.pointerEvents=
+"auto";
 
 updateProgress();
 
@@ -1106,45 +1065,146 @@ feedback.innerHTML=
 
 `
 ✨ Great!
+
 <br>
-Now choose the correct Food Pyramid level.
+
+Now tap the correct
+Food Pyramid section.
 `;
 
 foodCard.style.transform=
+
 "scale(1.05)";
 
 setTimeout(()=>{
 
 foodCard.style.transform=
+
 "scale(1)";
 
-},300);
+},250);
 
 }
 );
 
 /* =====================================
-   PYRAMID BUTTONS
+   SCORE POPUP
+===================================== */
+
+function showFloatingScore(
+text
+){
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"floatingScore";
+
+div.innerHTML=
+text;
+
+div.style.left=
+"50%";
+
+div.style.top=
+"45%";
+
+document.body.appendChild(
+div
+);
+
+setTimeout(()=>{
+
+div.remove();
+
+},1000);
+
+}
+
+/* =====================================
+   UPDATE PROGRESS
+===================================== */
+
+function updateProgress(){
+
+const percent=
+
+(
+foodsPlaced
+/
+foods.length
+)
+*
+100;
+
+progressFill.style.width=
+
+percent+"%";
+
+placedCount.innerHTML=
+
+foodsPlaced;
+
+}
+
+/* =====================================
+   PYRAMID ZONES
 ===================================== */
 
 document
-.querySelectorAll(
-".levelBtn"
+.getElementById(
+"zoneLess"
 )
-.forEach(btn=>{
-
-btn.addEventListener(
+.addEventListener(
 "click",
-checkFoodAnswer
+()=>checkAnswer(
+"less"
+)
 );
 
-});
+document
+.getElementById(
+"zoneModerate"
+)
+.addEventListener(
+"click",
+()=>checkAnswer(
+"moderate"
+)
+);
+
+document
+.getElementById(
+"zoneMore"
+)
+.addEventListener(
+"click",
+()=>checkAnswer(
+"more"
+)
+);
+
+document
+.getElementById(
+"zoneMost"
+)
+.addEventListener(
+"click",
+()=>checkAnswer(
+"most"
+)
+);
 
 /* =====================================
-   CHECK FOOD ANSWER
+   CHECK ANSWER
 ===================================== */
 
-function checkFoodAnswer(){
+function checkAnswer(
+answer
+){
 
 if(
 !foodActivated
@@ -1160,19 +1220,24 @@ return;
 
 }
 
-const answer=
-this.dataset.group;
-
 const food=
-foods[currentFood];
+shuffledFoods[
+currentFood
+];
 
 if(
-answer===food.group
+answer===
+food.group
 ){
 
 correctSound.play();
 
 score+=10;
+
+foodsPlaced++;
+
+scoreEl.innerHTML=
+score;
 
 showFloatingScore(
 "+10"
@@ -1192,6 +1257,16 @@ ${food.fact}
 </div>
 `;
 
+foodCard.style.opacity=
+".3";
+
+foodCard.style.pointerEvents=
+"none";
+
+placeFoodInPyramid(
+food
+);
+
 }
 else{
 
@@ -1202,19 +1277,19 @@ feedback.innerHTML=
 `
 <div class="wrong">
 
-❌ Not Quite
+❌ Try Again
 
 <br>
 
-${food.fact}
+Think carefully about
+which section this food belongs to.
 
 </div>
 `;
 
-}
+return;
 
-scoreEl.innerHTML=
-score;
+}
 
 setTimeout(()=>{
 
@@ -1222,7 +1297,7 @@ currentFood++;
 
 if(
 currentFood<
-foods.length
+shuffledFoods.length
 ){
 
 loadFood();
@@ -1231,10 +1306,10 @@ loadFood();
 else{
 
 unlockBadge(
-"Food Detective"
+"Food Pyramid Master"
 );
 
-startLevel2();
+showMealBuilder();
 
 }
 
@@ -1243,47 +1318,232 @@ startLevel2();
 }
 
 /* =====================================
-   FLOATING SCORE
+   PLACE FOOD
 ===================================== */
 
-function showFloatingScore(
-text
+function placeFoodInPyramid(
+food
 ){
 
-const div=
+const item=
 document.createElement(
 "div"
 );
 
-div.className=
-"floatingScore";
+item.className=
+"placedFood";
 
-div.innerHTML=text;
+item.innerHTML=
+food.emoji;
+/* =====================================
+   POSITION FOOD IN PYRAMID
+===================================== */
 
-div.style.left=
-"50%";
+let lessCount=0;
+let moderateCount=0;
+let moreCount=0;
+let mostCount=0;
 
-div.style.top=
-"40%";
+function getFoodPosition(
+group
+){
 
-document.body.appendChild(
-div
-);
+if(group==="less"){
 
-setTimeout(()=>{
+const positions=[
 
-div.remove();
+{
+left:"48%",
+top:"10%"
+},
 
-},1000);
+{
+left:"56%",
+top:"14%"
+},
+
+{
+left:"40%",
+top:"14%"
+}
+
+];
+
+return positions[
+lessCount++
+%
+positions.length
+];
+
+}
+
+if(group==="moderate"){
+
+const positions=[
+
+{
+left:"35%",
+top:"26%"
+},
+
+{
+left:"48%",
+top:"24%"
+},
+
+{
+left:"61%",
+top:"26%"
+},
+
+{
+left:"42%",
+top:"32%"
+},
+
+{
+left:"55%",
+top:"32%"
+}
+
+];
+
+return positions[
+moderateCount++
+%
+positions.length
+];
+
+}
+
+if(group==="more"){
+
+const positions=[
+
+{
+left:"22%",
+top:"48%"
+},
+
+{
+left:"35%",
+top:"45%"
+},
+
+{
+left:"48%",
+top:"43%"
+},
+
+{
+left:"61%",
+top:"45%"
+},
+
+{
+left:"74%",
+top:"48%"
+},
+
+{
+left:"30%",
+top:"54%"
+},
+
+{
+left:"52%",
+top:"54%"
+}
+
+];
+
+return positions[
+moreCount++
+%
+positions.length
+];
+
+}
+
+const positions=[
+
+{
+left:"15%",
+top:"78%"
+},
+
+{
+left:"28%",
+top:"75%"
+},
+
+{
+left:"41%",
+top:"73%"
+},
+
+{
+left:"54%",
+top:"73%"
+},
+
+{
+left:"67%",
+top:"75%"
+},
+
+{
+left:"80%",
+top:"78%"
+},
+
+{
+left:"25%",
+top:"84%"
+},
+
+{
+left:"55%",
+top:"84%"
+}
+
+];
+
+return positions[
+mostCount++
+%
+positions.length
+];
 
 }
 
 /* =====================================
-   BADGES
+   PLACE FOOD IN SVG PYRAMID
+===================================== */
+
+const position=
+getFoodPosition(
+food.group
+);
+
+item.style.left=
+position.left;
+
+item.style.top=
+position.top;
+
+placedFoods.appendChild(
+item
+);
+
+}
+
+/* =====================================
+   BADGE SYSTEM
 ===================================== */
 
 function unlockBadge(
-name
+badge
 ){
 
 badges++;
@@ -1291,368 +1551,225 @@ badges++;
 badgeCount.innerHTML=
 badges;
 
-}
-
-/* =====================================
-   PROGRESS
-===================================== */
-
-function updateProgress(){
-
-const total=
-
-foods.length+
-cartFoods.length+
-6;
-
-let done=
-
-currentFood;
-
-let percent=
-
-(done/total)*100;
-
-progressFill.style.width=
-
-percent+"%";
-
-}
-
-/* =====================================
-   LEVEL 2 START
-===================================== */
-
-function startLevel2(){
-
-currentLevel=2;
-
-levelName.innerHTML=
-
-"Healthy Shopping Cart";
-
-missionText.innerHTML=
-
-`
-Tap healthy foods to
-add them to the cart.
-`;
-
-document
-.querySelector(
-".pyramid"
-)
-.innerHTML=
-
-`
-<div id="cartGame"></div>
-`;
-
-showCartFood();
-
-}
-
-/* =====================================
-   SHOW CART FOOD
-===================================== */
-
-let cartIndex=0;
-
-function showCartFood(){
-
-const food=
-cartFoods[cartIndex];
-
-foodEmoji.innerHTML=
-food.emoji;
-
-foodName.innerHTML=
-food.name;
-
-feedback.innerHTML=
-
-`
-Should this go into
-the healthy cart?
-`;
-
-document
-.getElementById(
-"cartGame"
-)
-.innerHTML=
-
-`
-<button
-class="levelBtn more"
-onclick="cartAnswer(true)">
-
-🛒 Add To Cart
-
-</button>
-
-<button
-class="levelBtn less"
-onclick="cartAnswer(false)">
-
-🚫 Leave On Shelf
-
-</button>
-`;
-
-}
-/* =====================================
-   CART ANSWER
-===================================== */
-
-function cartAnswer(
-choice
-){
-
-const food=
-cartFoods[cartIndex];
-
-if(
-choice===food.healthy
-){
-
-score+=10;
-
-correctSound.play();
-
 showFloatingScore(
-"+10"
+"🏅"
 );
-
-feedback.innerHTML=
-
-`
-<div class="correct">
-
-✅ Great Choice!
-
-<br>
-
-${food.name}
-is a healthy food.
-
-</div>
-`;
-
-}
-else{
-
-wrongSound.play();
-
-feedback.innerHTML=
-
-`
-<div class="wrong">
-
-❌ Not Quite
-
-<br>
-
-Think about whether
-this food helps
-your body stay healthy.
-
-</div>
-`;
-
-}
-
-scoreEl.innerHTML=
-score;
-
-setTimeout(()=>{
-
-cartIndex++;
-
-if(
-cartIndex<
-cartFoods.length
-){
-
-showCartFood();
-
-}
-else{
-
-unlockBadge(
-"Shopping Star"
-);
-
-startLevel3();
-
-}
-
-},1200);
 
 }
 
 /* =====================================
-   LEVEL 3
+   MEAL BUILDER DATA
 ===================================== */
+
+const mealItems=[
+
+{
+emoji:"🍚",
+name:"Rice",
+type:"grain"
+},
+
+{
+emoji:"🍞",
+name:"Bread",
+type:"grain"
+},
+
+{
+emoji:"🍗",
+name:"Chicken",
+type:"protein"
+},
+
+{
+emoji:"🐟",
+name:"Fish",
+type:"protein"
+},
+
+{
+emoji:"🍎",
+name:"Apple",
+type:"fruit"
+},
+
+{
+emoji:"🥕",
+name:"Carrot",
+type:"vegetable"
+},
+
+{
+emoji:"🍫",
+name:"Chocolate",
+type:"junk"
+},
+
+{
+emoji:"🍟",
+name:"Chips",
+type:"junk"
+}
+
+];
 
 let selectedMeal=[];
 
 /* =====================================
-   START LEVEL 3
+   START MEAL BUILDER
 ===================================== */
 
-function startLevel3(){
-
-currentLevel=3;
-
-levelName.innerHTML=
-
-"Build A Balanced Meal";
-
-missionText.innerHTML=
-
-`
-Choose 4 foods
-to create a healthy lunch.
-`;
-
-foodEmoji.innerHTML=
-"🍱";
-
-foodName.innerHTML=
-"Healthy Lunch Tray";
-
-feedback.innerHTML=
-
-`
-Select four foods.
-`;
+function showMealBuilder(){
 
 document
 .querySelector(
-".pyramid"
+".mainLayout"
 )
-.innerHTML=
+innerHTML=
 
 `
-<div id="mealBuilder"></div>
+<div class="panel">
 
-<button
-class="levelBtn more"
-onclick="checkMeal()">
+<h2>
 
-✔ Check Meal
+🍱 Build A Balanced Meal
 
-</button>
-`;
+</h2>
 
-renderMealFoods();
+<br>
 
-}
+<p>
 
-/* =====================================
-   RENDER MEAL FOODS
-===================================== */
+Choose 4 foods to
+create a healthy meal.
 
-function renderMealFoods(){
+</p>
 
-let html=
-
-`
-<div style="
+<div
+id="mealGrid"
+style="
 display:grid;
 grid-template-columns:
 1fr 1fr;
 gap:10px;
+margin-top:20px;
 ">
+
+</div>
+
+<br>
+
+<button
+
+class="startBtn"
+
+onclick="checkMeal()">
+
+Check My Meal
+
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>
+
+My Meal Tray
+
+</h2>
+
+<br>
+
+<div
+
+id="mealTray"
+
+style="
+min-height:200px;
+border:3px dashed #81c784;
+border-radius:20px;
+padding:15px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+align-items:center;
+">
+
+</div>
+
+</div>
 `;
 
-mealFoods.forEach(
+renderMealItems();
+
+}
+
+/* =====================================
+   RENDER MEAL ITEMS
+===================================== */
+
+function renderMealItems(){
+
+const grid=
+document.getElementById(
+"mealGrid"
+);
+
+grid.innerHTML="";
+
+mealItems.forEach(
 (food,index)=>{
 
-html+=
+grid.innerHTML+=
 
 `
 <div
 
-onclick="toggleMeal(${index})"
+onclick="selectMeal(${index})"
 
 id="meal${index}"
 
 style="
-background:white;
 padding:12px;
-border-radius:12px;
-cursor:pointer;
+background:white;
 border:2px solid #ddd;
+border-radius:15px;
+cursor:pointer;
 text-align:center;
 ">
 
 <div style="
-font-size:2rem;
+font-size:2.5rem;
 ">
 
 ${food.emoji}
 
 </div>
 
-<div>
-
 ${food.name}
-
-</div>
 
 </div>
 `;
 
 });
 
-html+=
-"</div>";
-
-document
-.getElementById(
-"mealBuilder"
-)
-.innerHTML=
-html;
-
 }
 
 /* =====================================
-   TOGGLE FOOD
+   SELECT MEAL
 ===================================== */
 
-function toggleMeal(
+function selectMeal(
 index
 ){
 
-const food=
-mealFoods[index];
-
-const card=
-document.getElementById(
-"meal"+index
-);
-
-const exists=
-
+if(
 selectedMeal.includes(
 index
-);
-
-if(exists){
-
-selectedMeal=
-selectedMeal.filter(
-x=>x!==index
-);
-
-card.style.background=
-"white";
-
-card.style.border=
-"2px solid #ddd";
+)
+){
 
 return;
 
@@ -1670,14 +1787,32 @@ selectedMeal.push(
 index
 );
 
+const card=
+document.getElementById(
+"meal"+index
+);
+
 card.style.background=
 "#c8f7c5";
 
-card.style.border=
-"2px solid green";
+const tray=
+document.getElementById(
+"mealTray"
+);
+
+tray.innerHTML+=
+
+`
+<div style="
+font-size:2.5rem;
+">
+
+${mealItems[index].emoji}
+
+</div>
+`;
 
 }
-
 /* =====================================
    CHECK MEAL
 ===================================== */
@@ -1688,12 +1823,9 @@ if(
 selectedMeal.length!==4
 ){
 
-feedback.innerHTML=
-
-`
-Select exactly
-4 foods.
-`;
+alert(
+"Please choose exactly 4 foods."
+);
 
 return;
 
@@ -1705,10 +1837,10 @@ let fruitVeg=false;
 let junk=false;
 
 selectedMeal.forEach(
-i=>{
+index=>{
 
 const food=
-mealFoods[i];
+mealItems[index];
 
 if(
 food.type==="grain"
@@ -1755,505 +1887,47 @@ fruitVeg &&
 
 score+=30;
 
+scoreEl.innerHTML=
+score;
+
 correctSound.play();
 
 showFloatingScore(
 "+30"
 );
 
-feedback.innerHTML=
-
-`
-<div class="correct">
-
-🥗 Excellent!
-
-<br>
-
-You built a
-balanced meal.
-
-</div>
-`;
+unlockBadge(
+"Balanced Meal Builder"
+);
 
 }
 else{
 
 wrongSound.play();
 
-feedback.innerHTML=
-
-`
-<div class="wrong">
-
-⚠ Your meal needs
-better balance.
-
-Try including
-grains, protein
-and fruits or vegetables.
-
-</div>
-`;
+alert(
+"Your meal is not balanced. A healthy meal should contain grains, proteins, fruits or vegetables, and avoid junk foods."
+);
 
 }
 
-scoreEl.innerHTML=
-score;
-
-setTimeout(()=>{
-
-unlockBadge(
-"Lunch Builder"
-);
-
-startLevel4();
-
-},2000);
+showQuiz();
 
 }
 
 /* =====================================
-   LEVEL 4 VARIABLES
+   QUIZ DATA
 ===================================== */
 
-let badFoods=[
-
-{
-emoji:"🍟",
-bad:true
-},
-
-{
-emoji:"🍕",
-bad:false
-},
-
-{
-emoji:"🍫",
-bad:true
-},
-
-{
-emoji:"🥤",
-bad:true
-}
-
-];
-
-let fixedCount=0;
-
-/* =====================================
-   START LEVEL 4
-===================================== */
-
-function startLevel4(){
-
-currentLevel=4;
-
-levelName.innerHTML=
-
-"Fix The Plate";
-
-missionText.innerHTML=
-
-`
-Tap unhealthy foods
-that should be replaced.
-`;
-
-foodEmoji.innerHTML=
-"🍽";
-
-foodName.innerHTML=
-"What's Wrong With This Plate?";
-
-feedback.innerHTML=
-
-`
-Tap unhealthy foods.
-`;
-
-let html=
-
-`
-<div
-id="plateArea"
-style="
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-">
-`;
-
-badFoods.forEach(
-(food,index)=>{
-
-html+=
-
-`
-<div
-
-onclick="fixFood(${index})"
-
-id="bad${index}"
-
-style="
-font-size:3rem;
-cursor:pointer;
-padding:10px;
-">
-
-${food.emoji}
-
-</div>
-`;
-
-});
-
-html+=
-"</div>";
-
-document
-.querySelector(
-".pyramid"
-)
-.innerHTML=
-html;
-
-}
-/* =====================================
-   FIX FOOD
-===================================== */
-
-function fixFood(
-index
-){
-
-const food=
-badFoods[index];
-
-const card=
-document.getElementById(
-"bad"+index
-);
-
-if(
-card.dataset.done
-) return;
-
-card.dataset.done=
-"yes";
-
-if(
-food.bad
-){
-
-score+=10;
-
-fixedCount++;
-
-correctSound.play();
-
-showFloatingScore(
-"+10"
-);
-
-card.style.opacity=
-".3";
-
-card.style.transform=
-"scale(.8)";
-
-}
-else{
-
-wrongSound.play();
-
-card.style.background=
-"#ffebee";
-
-}
-
-scoreEl.innerHTML=
-score;
-
-if(
-fixedCount>=3
-){
-
-setTimeout(()=>{
-
-unlockBadge(
-"Plate Fixer"
-);
-
-startLevel5();
-
-},1200);
-
-}
-
-}
-
-/* =====================================
-   LEVEL 5
-===================================== */
-
-let rushQuestions=[
-
-{
-emoji:"🥚",
-answer:"moderate"
-},
-
-{
-emoji:"🍎",
-answer:"more"
-},
-
-{
-emoji:"🍫",
-answer:"less"
-},
-
-{
-emoji:"🍚",
-answer:"most"
-}
-
-];
-
-let rushIndex=0;
-let rushTimer=10;
-let timerInterval;
-
-/* =====================================
-   START LEVEL 5
-===================================== */
-
-function startLevel5(){
-
-currentLevel=5;
-
-levelName.innerHTML=
-
-"Pyramid Rush";
-
-missionText.innerHTML=
-
-`
-Answer quickly before
-the timer runs out.
-`;
-
-document
-.querySelector(
-".pyramid"
-)
-.innerHTML=
-
-`
-<div id="rushButtons">
-
-<button
-class="levelBtn most"
-onclick="rushAnswer('most')">
-
-Eat The Most
-
-</button>
-
-<button
-class="levelBtn more"
-onclick="rushAnswer('more')">
-
-Eat More
-
-</button>
-
-<button
-class="levelBtn moderate"
-onclick="rushAnswer('moderate')">
-
-Eat Moderately
-
-</button>
-
-<button
-class="levelBtn less"
-onclick="rushAnswer('less')">
-
-Eat Less
-
-</button>
-
-</div>
-`;
-
-showRushQuestion();
-
-}
-
-/* =====================================
-   SHOW RUSH QUESTION
-===================================== */
-
-function showRushQuestion(){
-
-rushTimer=10;
-
-const q=
-rushQuestions[rushIndex];
-
-foodEmoji.innerHTML=
-q.emoji;
-
-foodName.innerHTML=
-
-"Quick Answer";
-
-feedback.innerHTML=
-
-`
-⏰ Time Left:
-<span id="timer">
-
-10
-
-</span>
-`;
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=
-
-setInterval(()=>{
-
-rushTimer--;
-
-const timer=
-document.getElementById(
-"timer"
-);
-
-if(timer){
-
-timer.innerHTML=
-rushTimer;
-
-}
-
-if(
-rushTimer<=0
-){
-
-clearInterval(
-timerInterval
-);
-
-rushIndex++;
-
-if(
-rushIndex<
-rushQuestions.length
-){
-
-showRushQuestion();
-
-}
-else{
-
-unlockBadge(
-"Pyramid Master"
-);
-
-startLevel6();
-
-}
-
-}
-
-},1000);
-
-}
-
-/* =====================================
-   RUSH ANSWER
-===================================== */
-
-function rushAnswer(
-answer
-){
-
-clearInterval(
-timerInterval
-);
-
-const q=
-rushQuestions[rushIndex];
-
-if(
-answer===q.answer
-){
-
-score+=10;
-
-correctSound.play();
-
-showFloatingScore(
-"+10"
-);
-
-}
-
-else{
-
-wrongSound.play();
-
-}
-
-scoreEl.innerHTML=
-score;
-
-rushIndex++;
-
-if(
-rushIndex<
-rushQuestions.length
-){
-
-showRushQuestion();
-
-}
-else{
-
-unlockBadge(
-"Pyramid Master"
-);
-
-startLevel6();
-
-}
-
-}
-
-/* =====================================
-   LEVEL 6 QUIZ
-===================================== */
-
-const quiz=[
+const quizQuestions=[
 
 {
 question:
-"Which food group provides vitamins and minerals?",
+"Which food group gives vitamins and minerals?",
 
 options:[
 "Oils",
-"Fruits & Vegetables",
+"Fruits and Vegetables",
 "Sweets",
 "Salt"
 ],
@@ -2287,6 +1961,34 @@ options:[
 ],
 
 answer:0
+},
+
+{
+question:
+"What should we drink most often?",
+
+options:[
+"Soft Drink",
+"Water",
+"Energy Drink",
+"Cola"
+],
+
+answer:1
+},
+
+{
+question:
+"Which group gives energy?",
+
+options:[
+"Grains",
+"Chocolate",
+"Salt",
+"Candy"
+],
+
+answer:0
 }
 
 ];
@@ -2294,22 +1996,37 @@ answer:0
 let quizIndex=0;
 
 /* =====================================
-   START LEVEL 6
+   SHOW QUIZ
 ===================================== */
 
-function startLevel6(){
+function showQuiz(){
 
-currentLevel=6;
-
-levelName.innerHTML=
-
-"Nutrition Hero";
-
-missionText.innerHTML=
+document
+.querySelector(
+".mainLayout"
+)
+.innerHTML=
 
 `
-Answer the final
-Nutrition Hero Quiz.
+<div
+class="panel"
+style="
+grid-column:1/-1;
+">
+
+<h2>
+
+🦸 Nutrition Hero Quiz
+
+</h2>
+
+<br>
+
+<div id="quizArea">
+
+</div>
+
+</div>
 `;
 
 showQuizQuestion();
@@ -2317,20 +2034,15 @@ showQuizQuestion();
 }
 
 /* =====================================
-   SHOW QUIZ
+   SHOW QUESTION
 ===================================== */
 
 function showQuizQuestion(){
 
 const q=
-quiz[quizIndex];
-
-foodEmoji.innerHTML=
-"🦸";
-
-foodName.innerHTML=
-
-"Nutrition Hero";
+quizQuestions[
+quizIndex
+];
 
 let html=
 
@@ -2352,13 +2064,15 @@ html+=
 `
 <button
 
-class="levelBtn more"
+class="startBtn"
 
 style="
+display:block;
+width:100%;
 margin-bottom:10px;
 "
 
-onclick="quizAnswer(${index})">
+onclick="checkQuiz(${index})">
 
 ${option}
 
@@ -2368,8 +2082,8 @@ ${option}
 });
 
 document
-.querySelector(
-".pyramid"
+.getElementById(
+"quizArea"
 )
 .innerHTML=
 html;
@@ -2377,21 +2091,26 @@ html;
 }
 
 /* =====================================
-   QUIZ ANSWER
+   CHECK QUIZ
 ===================================== */
 
-function quizAnswer(
+function checkQuiz(
 choice
 ){
 
 const q=
-quiz[quizIndex];
+quizQuestions[
+quizIndex
+];
 
 if(
 choice===q.answer
 ){
 
 score+=10;
+
+scoreEl.innerHTML=
+score;
 
 correctSound.play();
 
@@ -2406,14 +2125,11 @@ wrongSound.play();
 
 }
 
-scoreEl.innerHTML=
-score;
-
 quizIndex++;
 
 if(
 quizIndex<
-quiz.length
+quizQuestions.length
 ){
 
 showQuizQuestion();
@@ -2441,7 +2157,7 @@ clapSound.play();
 
 document
 .querySelector(
-".gameLayout"
+".mainLayout"
 )
 .innerHTML=
 
@@ -2455,7 +2171,7 @@ text-align:center;
 
 <h1>
 
-🏆 Certificate of Achievement
+🏆 Certificate of Completion
 
 </h1>
 
@@ -2520,7 +2236,7 @@ name===""
 ){
 
 alert(
-"Please enter a name."
+"Please enter your name."
 );
 
 return;
@@ -2529,7 +2245,7 @@ return;
 
 document
 .querySelector(
-".gameLayout"
+".mainLayout"
 )
 .innerHTML=
 
@@ -2543,7 +2259,7 @@ text-align:center;
 
 <h1>
 
-🏆 Certificate of Completion
+🏆 Certificate of Achievement
 
 </h1>
 
@@ -2577,6 +2293,19 @@ Final Score:
 <b>
 
 ${score}
+
+</b>
+
+</p>
+
+<br>
+
+<p>
+
+Badges Earned:
+<b>
+
+${badges}
 
 </b>
 
