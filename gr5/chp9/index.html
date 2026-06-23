@@ -255,31 +255,38 @@ rgba(0,0,0,.15);
 }
 
 /* =========================
-   INSTRUCTIONS
+   CURRENT STEP CARD
 ========================= */
 
-.instructions{
+.currentStepCard{
 
-background:#e8f5e9;
+background:#1976d2;
 
-padding:18px;
+color:white;
 
-border-radius:18px;
+padding:20px;
 
-font-size:1.1rem;
-
-font-weight:bold;
+border-radius:20px;
 
 text-align:center;
 
+font-size:1.5rem;
+
+font-weight:bold;
+
 margin-bottom:20px;
 
-color:#1b5e20;
+min-height:100px;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
 
 }
 
 /* =========================
-   FARM IMAGE
+   IMAGE AREA
 ========================= */
 
 .imageContainer{
@@ -303,7 +310,7 @@ border-radius:20px;
 }
 
 /* =========================
-   BLANK BOXES
+   DROP BOXES
 ========================= */
 
 .dropBox{
@@ -315,7 +322,7 @@ height:45px;
 
 background:white;
 
-border:3px dashed #90caf9;
+border:3px dashed #64b5f6;
 
 border-radius:12px;
 
@@ -330,9 +337,9 @@ font-weight:bold;
 
 text-align:center;
 
-cursor:pointer;
-
 padding:5px;
+
+cursor:pointer;
 
 transition:.3s;
 
@@ -346,121 +353,17 @@ background:#f5fbff;
 
 .filled{
 
-border:3px solid #43a047;
+background:#e8f5e9 !important;
 
-background:#e8f5e9;
+border:3px solid #43a047 !important;
 
-}
-
-/* =========================
-   WORD BANK
-========================= */
-
-.wordBank{
-
-margin-top:30px;
-
-padding:20px;
-
-background:#f5fff5;
-
-border-radius:20px;
-
-}
-
-.wordTitle{
-
-font-size:1.3rem;
-
-font-weight:bold;
-
-text-align:center;
-
-margin-bottom:15px;
-
-color:#2e7d32;
-
-}
-
-.wordsContainer{
-
-display:flex;
-
-flex-wrap:wrap;
-
-justify-content:center;
-
-gap:12px;
-
-}
-
-.wordTile{
-
-padding:
-12px 18px;
-
-background:#1976d2;
-
-color:white;
-
-border-radius:12px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.wordTile:hover{
-
-transform:scale(1.05);
-
-}
-
-.wordSelected{
-
-background:#ef6c00 !important;
-
-}
-
-.wordUsed{
-
-display:none;
-
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.checkBtn{
-
-display:block;
-
-margin:25px auto;
-
-padding:
-16px 40px;
-
-border:none;
-
-border-radius:20px;
-
-background:#43a047;
-
-color:white;
-
-font-size:1.1rem;
-
-font-weight:bold;
-
-cursor:pointer;
+color:#1b5e20;
 
 }
 
 .feedback{
+
+margin-top:20px;
 
 text-align:center;
 
@@ -468,7 +371,7 @@ font-size:1.2rem;
 
 font-weight:bold;
 
-min-height:50px;
+min-height:40px;
 
 }
 
@@ -496,6 +399,12 @@ font-size:2rem;
 .gameTitle{
 
 font-size:2rem;
+
+}
+
+.currentStepCard{
+
+font-size:1rem;
 
 }
 
@@ -535,15 +444,19 @@ class="logo">
 
 <div class="story">
 
-Observe the farming cycle carefully.
+Help Farmer Raju complete the farming cycle.
 
 <br><br>
 
-Tap a word from the Word Bank and then tap the correct blank below the image.
+A farming step will appear at the top.
 
 <br><br>
 
-Fill all 8 farming steps correctly.
+Tap the correct blank under the matching picture.
+
+<br><br>
+
+Complete all 8 farming steps to become a Farming Master.
 
 </div>
 
@@ -559,7 +472,7 @@ onclick="startGame()">
 
 </div>
 
-<!-- GAME -->
+<!-- GAME SCREEN -->
 
 <div id="gameScreen">
 
@@ -579,9 +492,11 @@ class="gameLogo">
 
 <div class="mainCard">
 
-<div class="instructions">
+<div
+id="currentStepCard"
+class="currentStepCard">
 
-Select a farming step from the Word Bank and place it in the correct blank.
+Loading...
 
 </div>
 
@@ -591,7 +506,7 @@ Select a farming step from the Word Bank and place it in the correct blank.
 src="assets/steps-of-farming.png"
 class="farmingImage">
 
-<!-- DROP BOXES WILL COME IN PART 2 -->
+<!-- DROP BOXES WILL BE ADDED IN PART 2 -->
 <!-- =========================
      DROP BOXES
 ========================= -->
@@ -599,113 +514,92 @@ class="farmingImage">
 <!-- TOP ROW -->
 
 <div
-class="dropBox"
 id="box1"
+class="dropBox"
 style="
 left:2%;
-top:47%;
+top:48%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box2"
+class="dropBox"
 style="
-left:28%;
-top:47%;
+left:27%;
+top:48%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box3"
+class="dropBox"
 style="
-left:53%;
-top:47%;
+left:52%;
+top:48%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box4"
+class="dropBox"
 style="
-left:79%;
-top:47%;
+left:78%;
+top:48%;
 ">
+?
 </div>
 
 <!-- BOTTOM ROW -->
 
 <div
-class="dropBox"
 id="box5"
+class="dropBox"
 style="
-left:79%;
-top:93%;
+left:78%;
+top:92%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box6"
+class="dropBox"
 style="
-left:53%;
-top:93%;
+left:52%;
+top:92%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box7"
+class="dropBox"
 style="
-left:28%;
-top:93%;
+left:27%;
+top:92%;
 ">
+?
 </div>
 
 <div
-class="dropBox"
 id="box8"
+class="dropBox"
 style="
 left:2%;
-top:93%;
+top:92%;
 ">
+?
 </div>
 
 </div>
-
-<!-- =========================
-     WORD BANK
-========================= -->
-
-<div class="wordBank">
-
-<div class="wordTitle">
-
-🌾 WORD BANK
-
-</div>
-
-<div
-id="wordsContainer"
-class="wordsContainer">
-
-</div>
-
-</div>
-
-<button
-class="checkBtn"
-onclick="checkAnswers()">
-
-✅ CHECK ANSWERS
-
-</button>
 
 <div
 id="feedback"
 class="feedback">
-
 </div>
 
 </div>
@@ -734,18 +628,20 @@ src="assets/clapping.mp3">
 <script>
 
 /* =========================
-   SPLASH SCREEN
+   SPLASH
 ========================= */
 
 setTimeout(()=>{
 
 document.getElementById(
 "splashScreen"
-).style.display="none";
+).style.display =
+"none";
 
 document.getElementById(
 "introScreen"
-).style.display="flex";
+).style.display =
+"flex";
 
 },1500);
 
@@ -757,85 +653,86 @@ function startGame(){
 
 document.getElementById(
 "introScreen"
-).style.display="none";
+).style.display =
+"none";
 
 document.getElementById(
 "gameScreen"
-).style.display="block";
+).style.display =
+"block";
 
-createWordBank();
+shuffleSteps();
+
+showNextStep();
 
 }
 
 /* =========================
-   CORRECT ANSWERS
+   FARMING STEPS
 ========================= */
 
-const correctAnswers = {
+const farmingSteps = [
 
-box1:
-"Preparation of Soil",
+{
+name:"Preparation of Soil",
+target:"box1"
+},
 
-box2:
-"Sowing",
+{
+name:"Sowing",
+target:"box2"
+},
 
-box3:
-"Adding Manures & Fertilisers",
+{
+name:"Adding Manures & Fertilisers",
+target:"box3"
+},
 
-box4:
-"Irrigation",
+{
+name:"Irrigation",
+target:"box4"
+},
 
-box5:
-"Weeding",
+{
+name:"Weeding",
+target:"box5"
+},
 
-box6:
-"Harvesting",
+{
+name:"Harvesting",
+target:"box6"
+},
 
-box7:
-"Threshing",
+{
+name:"Threshing",
+target:"box7"
+},
 
-box8:
-"Storage"
-
-};
-
-/* =========================
-   WORD LIST
-========================= */
-
-const words = [
-
-"Preparation of Soil",
-
-"Sowing",
-
-"Adding Manures & Fertilisers",
-
-"Irrigation",
-
-"Weeding",
-
-"Harvesting",
-
-"Threshing",
-
-"Storage"
+{
+name:"Storage",
+target:"box8"
+}
 
 ];
 
-let selectedWord = null;
-let selectedTile = null;
+let gameSteps = [];
+
+let currentStepIndex = 0;
+
+let score = 0;
 
 /* =========================
    SHUFFLE
 ========================= */
 
-function shuffleArray(array){
+function shuffleSteps(){
 
-const copy = [...array];
+gameSteps =
+[...farmingSteps];
 
 for(
-let i=copy.length-1;
+let i =
+gameSteps.length-1;
 i>0;
 i--
 ){
@@ -846,96 +743,55 @@ Math.random()*(i+1)
 );
 
 [
-copy[i],
-copy[j]
+gameSteps[i],
+gameSteps[j]
 ]
 =
 [
-copy[j],
-copy[i]
+gameSteps[j],
+gameSteps[i]
 ];
 
 }
 
-return copy;
-
 }
 
 /* =========================
-   WORD BANK
+   SHOW NEXT STEP
 ========================= */
 
-function createWordBank(){
+function showNextStep(){
 
-const container =
-document.getElementById(
-"wordsContainer"
-);
-
-container.innerHTML="";
-
-const shuffled =
-shuffleArray(words);
-
-shuffled.forEach(word=>{
-
-const tile =
-document.createElement(
-"div"
-);
-
-tile.className =
-"wordTile";
-
-tile.innerHTML =
-word;
-
-tile.onclick =
-()=>selectWord(
-tile,
-word
-);
-
-container.appendChild(
-tile
-);
-
-});
-
-}
-/* =========================
-   SELECT WORD
-========================= */
-
-function selectWord(
-tile,
-word
+if(
+currentStepIndex >=
+gameSteps.length
 ){
 
-document
-.querySelectorAll(
-".wordTile"
-)
-.forEach(
-t=>t.classList.remove(
-"wordSelected"
-)
-);
+showCertificate();
 
-tile.classList.add(
-"wordSelected"
-);
-
-selectedWord =
-word;
-
-selectedTile =
-tile;
+return;
 
 }
 
+document.getElementById(
+"currentStepCard"
+).innerHTML =
+
+`
+🌾 Place This Farming Step
+
+<br><br>
+
+<b>
+
+${gameSteps[currentStepIndex].name}
+
+</b>
+`;
+
+}
 /* =========================
-   DROP BOX CLICK EVENTS
+   CLICK EVENTS
 ========================= */
 
 document
@@ -946,242 +802,42 @@ document
 
 box.addEventListener(
 "click",
-()=>placeWord(box)
+()=>selectBox(box)
 );
 
 });
 
 /* =========================
-   PLACE WORD
+   SELECT BOX
 ========================= */
 
-function placeWord(
-box
-){
+function selectBox(box){
+
+/* Ignore already solved boxes */
 
 if(
-!selectedWord
-){
-
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
-
-"⚠️ Select a word first.";
-
-return;
-
-}
-
-/* RETURN OLD WORD */
-
-if(
-box.dataset.word
-){
-
-restoreWord(
-box.dataset.word
-);
-
-}
-
-/* PLACE NEW WORD */
-
-box.innerHTML =
-selectedWord;
-
-box.dataset.word =
-selectedWord;
-
-box.classList.add(
+box.classList.contains(
 "filled"
-);
-
-/* REMOVE TILE */
-
-selectedTile.classList.add(
-"wordUsed"
-);
-
-selectedTile.classList.remove(
-"wordSelected"
-);
-
-selectedWord = null;
-selectedTile = null;
-
-document
-.getElementById(
-"feedback"
 )
-.innerHTML =
-
-"";
-
-}
-
-/* =========================
-   RESTORE WORD
-========================= */
-
-function restoreWord(
-word
 ){
-
-const tiles =
-document.querySelectorAll(
-".wordTile"
-);
-
-tiles.forEach(tile=>{
-
-if(
-tile.innerHTML ===
-word
-){
-
-tile.classList.remove(
-"wordUsed"
-);
-
-}
-
-});
-
-}
-
-/* =========================
-   RESET BOXES
-========================= */
-
-function clearHighlights(){
-
-document
-.querySelectorAll(
-".dropBox"
-)
-.forEach(box=>{
-
-box.style.border =
-"3px dashed #90caf9";
-
-box.style.background =
-"white";
-
-});
-
-}
-
-/* =========================
-   COUNT FILLED BOXES
-========================= */
-
-function countFilledBoxes(){
-
-let count = 0;
-
-document
-.querySelectorAll(
-".dropBox"
-)
-.forEach(box=>{
-
-if(
-box.dataset.word
-){
-
-count++;
-
-}
-
-});
-
-return count;
-
-}
-/* =========================
-   CHECK ANSWERS
-========================= */
-
-function checkAnswers(){
-
-clearHighlights();
-
-if(
-countFilledBoxes() < 8
-){
-
-const wrongSound =
-document.getElementById(
-"wrongSound"
-);
-
-wrongSound.currentTime = 0;
-
-wrongSound.play().catch(()=>{});
-
-document.getElementById(
-"feedback"
-).innerHTML =
-
-"⚠️ Fill all 8 blanks first.";
 
 return;
 
 }
 
-let allCorrect = true;
-
-Object.keys(
-correctAnswers
-).forEach(boxId=>{
-
-const box =
-document.getElementById(
-boxId
-);
-
-const userAnswer =
-box.dataset.word;
-
-const correctAnswer =
-correctAnswers[
-boxId
+const currentStep =
+gameSteps[
+currentStepIndex
 ];
 
-if(
-userAnswer ===
-correctAnswer
-){
-
-box.style.background =
-"#e8f5e9";
-
-box.style.border =
-"3px solid #43a047";
-
-}
-else{
-
-box.style.background =
-"#ffebee";
-
-box.style.border =
-"3px solid #e53935";
-
-allCorrect = false;
-
-}
-
-});
-
 /* =========================
-   ALL CORRECT
+   CORRECT
 ========================= */
 
-if(allCorrect){
+if(
+box.id ===
+currentStep.target
+){
 
 const correctSound =
 document.getElementById(
@@ -1192,22 +848,43 @@ correctSound.currentTime = 0;
 
 correctSound.play().catch(()=>{});
 
+box.innerHTML =
+currentStep.name;
+
+box.classList.add(
+"filled"
+);
+
+box.style.pointerEvents =
+"none";
+
+score++;
+
 document.getElementById(
 "feedback"
 ).innerHTML =
 
-"🎉 Excellent! All farming steps are correct.";
+`
+✅ Excellent!
+
+<br>
+
+${currentStep.name}
+placed correctly.
+`;
+
+currentStepIndex++;
 
 setTimeout(()=>{
 
-showCertificate();
+showNextStep();
 
-},1800);
+},1200);
 
 }
 
 /* =========================
-   SOME WRONG
+   WRONG
 ========================= */
 
 else{
@@ -1221,18 +898,127 @@ wrongSound.currentTime = 0;
 
 wrongSound.play().catch(()=>{});
 
+box.style.background =
+"#ffebee";
+
+box.style.border =
+"3px solid #e53935";
+
 document.getElementById(
 "feedback"
 ).innerHTML =
 
-"❌ Some answers are incorrect. Check the red boxes and try again.";
+`
+❌ Try Again
+
+<br>
+
+Look carefully at the farming process.
+`;
+
+setTimeout(()=>{
+
+if(
+!box.classList.contains(
+"filled"
+)
+){
+
+box.style.background =
+"white";
+
+box.style.border =
+"3px dashed #64b5f6";
+
+}
+
+},800);
 
 }
 
 }
 
 /* =========================
-   CERTIFICATE
+   EDUCATIONAL FACTS
+========================= */
+
+const farmingFacts = {
+
+"Preparation of Soil":
+"🚜 Soil is loosened before planting seeds.",
+
+"Sowing":
+"🌱 Healthy seeds are planted in the field.",
+
+"Adding Manures & Fertilisers":
+"🌿 Nutrients help crops grow better.",
+
+"Irrigation":
+"💧 Crops need water for healthy growth.",
+
+"Weeding":
+"🌾 Unwanted plants are removed.",
+
+"Harvesting":
+"🌽 Mature crops are cut and collected.",
+
+"Threshing":
+"🌾 Grains are separated from stalks.",
+
+"Storage":
+"📦 Grains are stored safely for future use."
+
+};
+
+/* =========================
+   SHOW FACT
+========================= */
+
+function showFact(stepName){
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+✅ Correct!
+
+<br><br>
+
+${farmingFacts[stepName]}
+`;
+
+}
+/* =========================
+   UPDATE CORRECT SECTION
+========================= */
+
+/*
+Inside selectBox(),
+replace this section:
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+✅ Excellent!
+
+<br>
+
+${currentStep.name}
+placed correctly.
+`;
+
+with:
+
+showFact(
+currentStep.name
+);
+*/
+
+/* =========================
+   CERTIFICATE SCREEN
 ========================= */
 
 function showCertificate(){
@@ -1281,7 +1067,7 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🚜 🌱 💧 🌾
+🚜 🌱 💧 🌾 📦
 
 </div>
 
@@ -1297,7 +1083,7 @@ Congratulations!
 
 <br><br>
 
-You successfully identified all stages of crop production.
+You successfully completed the entire farming cycle and identified all farming stages correctly.
 
 </p>
 
@@ -1305,22 +1091,41 @@ You successfully identified all stages of crop production.
 
 <div
 style="
-font-size:1.2rem;
+font-size:1.15rem;
 line-height:2;
 color:#2e7d32;
 font-weight:bold;
 ">
 
-1. Preparation of Soil<br>
-2. Sowing<br>
-3. Adding Manures & Fertilisers<br>
-4. Irrigation<br>
-5. Weeding<br>
-6. Harvesting<br>
-7. Threshing<br>
-8. Storage
+1️⃣ Preparation of Soil<br>
+
+2️⃣ Sowing<br>
+
+3️⃣ Adding Manures & Fertilisers<br>
+
+4️⃣ Irrigation<br>
+
+5️⃣ Weeding<br>
+
+6️⃣ Harvesting<br>
+
+7️⃣ Threshing<br>
+
+8️⃣ Storage
 
 </div>
+
+<br>
+
+<h2
+style="
+color:#1976d2;
+">
+
+⭐ Score:
+${score} / 8
+
+</h2>
 
 <br>
 
