@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Weather Detective Deluxe</title>
+<title>Weather Mysteries Challenge</title>
 
 <style>
 
@@ -19,224 +20,301 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Arial, sans-serif;
-background:linear-gradient(
+
+font-family:Arial,sans-serif;
+
+background:
+linear-gradient(
 180deg,
 #dff6ff,
-#f5fbff
+#ffffff
 );
+
 min-height:100vh;
-overflow-x:hidden;
+
+padding:20px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
 }
 
 /* =========================
-   APP
+   GAME CONTAINER
 ========================= */
 
-#app{
-max-width:1200px;
-margin:auto;
-padding:15px;
+.gameContainer{
+
+width:100%;
+
+max-width:900px;
+
+background:white;
+
+border-radius:25px;
+
+padding:25px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.15);
+
 }
 
 /* =========================
-   TOP BAR
+   HEADER
 ========================= */
 
 .topBar{
+
 display:flex;
-justify-content:center;
-gap:12px;
+
+justify-content:space-between;
+
+align-items:center;
+
 flex-wrap:wrap;
-margin-bottom:15px;
-}
 
-.statCard{
-background:white;
-padding:12px 18px;
-border-radius:15px;
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-font-weight:bold;
-min-width:150px;
-text-align:center;
-}
+gap:10px;
 
-/* =========================
-   MAIN SCREEN
-========================= */
-
-.screen{
-background:white;
-border-radius:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-padding:20px;
-min-height:75vh;
-}
-
-/* =========================
-   START SCREEN
-========================= */
-
-.startScreen{
-text-align:center;
-}
-
-.startScreen img{
-width:min(260px,80%);
 margin-bottom:20px;
+
 }
+
+.scoreBox{
+
+background:#e3f2fd;
+
+padding:10px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+.progressBox{
+
+background:#fff3cd;
+
+padding:10px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+/* =========================
+   TITLE
+========================= */
 
 .gameTitle{
-font-size:clamp(2rem,5vw,4rem);
-color:#1b4965;
+
+text-align:center;
+
+font-size:
+clamp(1.8rem,4vw,3rem);
+
+color:#1565c0;
+
 margin-bottom:10px;
+
 }
 
 .subtitle{
-font-size:1.1rem;
+
+text-align:center;
+
+color:#555;
+
 margin-bottom:25px;
-color:#444;
+
 }
 
 /* =========================
-   BUTTONS
+   CARD
 ========================= */
 
-.gameBtn{
-background:#1976d2;
-color:white;
-border:none;
-padding:15px 25px;
-border-radius:15px;
-font-size:1rem;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
+.card{
+
+text-align:center;
+
 }
 
-.gameBtn:hover{
-transform:translateY(-2px);
-}
+.cardImage{
 
-.optionBtn{
 width:100%;
-padding:15px;
-margin-top:10px;
-border:none;
-border-radius:15px;
-background:#2196f3;
-color:white;
-font-size:1rem;
-cursor:pointer;
-}
 
-.optionBtn:hover{
-opacity:.9;
-}
-
-/* =========================
-   DETECTIVE BOARD
-========================= */
-
-.boardTitle{
-text-align:center;
-font-size:2rem;
-margin-bottom:20px;
-color:#1b4965;
-}
-
-.caseBoard{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-}
-
-.caseCard{
-
-background:#f8fbff;
-
-border:3px solid #dbeafe;
-
-border-radius:20px;
-
-padding:20px;
-
-text-align:center;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.caseCard:hover{
-transform:scale(1.02);
-}
-
-.caseCard.locked{
-opacity:.5;
-cursor:not-allowed;
-}
-
-.caseIcon{
-font-size:3rem;
-margin-bottom:10px;
-}
-
-.caseName{
-font-weight:bold;
-font-size:1.1rem;
-}
-
-/* =========================
-   CASE SCREEN
-========================= */
-
-.caseHeader{
-text-align:center;
-margin-bottom:15px;
-}
-
-.caseHeader h2{
-color:#1b4965;
-}
-
-.caseImage{
-width:100%;
 max-width:700px;
-display:block;
-margin:auto;
+
+height:auto;
+
 border-radius:20px;
-box-shadow:0 5px 12px rgba(0,0,0,.15);
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.15);
+
 margin-bottom:20px;
+
 }
 
 .question{
-font-size:1.2rem;
-font-weight:bold;
-text-align:center;
-margin-bottom:15px;
-}
 
-.feedback{
-text-align:center;
+font-size:1.25rem;
+
 font-weight:bold;
-margin-top:15px;
-min-height:40px;
+
+margin-bottom:20px;
+
+line-height:1.5;
+
 }
 
 /* =========================
-   SOLVED SCREEN
+   OPTIONS
 ========================= */
 
-.solvedScreen{
-text-align:center;
+.options{
+
+max-width:550px;
+
+margin:auto;
+
 }
 
-.solvedScreen img{
-width:220px;
-margin-bottom:20px;
+.optionBtn{
+
+display:block;
+
+width:100%;
+
+padding:15px;
+
+margin:10px 0;
+
+border:none;
+
+border-radius:15px;
+
+background:#2196f3;
+
+color:white;
+
+font-size:1rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.optionBtn:hover{
+
+transform:scale(1.02);
+
+}
+
+/* =========================
+   FEEDBACK
+========================= */
+
+#feedback{
+
+margin-top:20px;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+min-height:70px;
+
+}
+
+.correct{
+
+color:#2e7d32;
+
+}
+
+.wrong{
+
+color:#c62828;
+
+}
+
+/* =========================
+   NEXT BUTTON
+========================= */
+
+.nextBtn{
+
+background:#43a047;
+
+color:white;
+
+border:none;
+
+padding:14px 25px;
+
+border-radius:15px;
+
+font-size:1rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+margin-top:15px;
+
+display:none;
+
+}
+
+/* =========================
+   RESULT SCREEN
+========================= */
+
+.resultScreen{
+
+text-align:center;
+
+padding:30px;
+
+}
+
+.resultScore{
+
+font-size:3rem;
+
+margin:20px 0;
+
+color:#1565c0;
+
+}
+
+.playAgain{
+
+background:#1565c0;
+
+color:white;
+
+border:none;
+
+padding:15px 30px;
+
+border-radius:15px;
+
+font-size:1rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
 /* =========================
@@ -245,47 +323,75 @@ margin-bottom:20px;
 
 @media(max-width:768px){
 
-.caseBoard{
-grid-template-columns:1fr;
+.question{
+
+font-size:1.05rem;
+
+}
+
+.optionBtn{
+
+font-size:.95rem;
+
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div id="app">
+<div class="gameContainer">
 
 <div class="topBar">
 
-<div class="statCard">
+<div class="scoreBox">
+
 ⭐ Score:
-<span id="score">0</span>
-</div>
+<span id="score">
 
-<div class="statCard">
-🏅 Cases Solved:
-<span id="casesSolved">0</span>
-</div>
+0
 
-<div class="statCard">
-🕵️ Rank:
-<span id="rank">Rookie</span>
-</div>
+</span>
 
 </div>
 
-<div id="gameScreen" class="screen">
+<div class="progressBox">
 
-<!-- JS WILL LOAD CONTENT -->
+Mystery
+<span id="progress">
+
+1
+
+</span>
+
+/4
 
 </div>
 
 </div>
 
-<!-- AUDIO -->
+<h1 class="gameTitle">
+
+🌦️ Weather Mysteries Challenge
+
+</h1>
+
+<p class="subtitle">
+
+Solve the mystery using your knowledge of states of matter.
+
+</p>
+
+<div id="gameArea">
+
+</div>
+
+</div>
+
+<!-- OPTIONAL AUDIO -->
 
 <audio
 id="correctSound"
@@ -297,179 +403,20 @@ id="wrongSound"
 src="assets/wrong.mp3">
 </audio>
 
-<audio
-id="clapSound"
-src="assets/freesound_community-claps-44774.mp3">
-</audio>
-
 <script>
 
 /* =========================
-   GAME STATE
+   GAME DATA
 ========================= */
 
-let score = 0;
-
-let solvedCases = 0;
-
-let currentCase = 0;
-
-/* =========================
-   CASE LOCKS
-========================= */
-
-const unlockedCases = [true,false,false,false,false];
-
-/* =========================
-   CASE ICONS
-========================= */
-
-const caseIcons = [
-
-"🌿",
-"💧",
-"🚪",
-"❄️",
-"🏆"
-
-];
-
-/* =========================
-   CASE NAMES
-========================= */
-
-const caseNames = [
-
-"Morning Mystery",
-"Missing Puddle",
-"Foggy Window",
-"Frozen Bottle",
-"Final Challenge"
-
-];
-
-/* =========================
-   START SCREEN
-========================= */
-
-function showStartScreen(){
-
-document.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div class="startScreen">
-
-<img
-src="assets/professor-particle.png"
-alt="Professor Particle">
-
-<h1 class="gameTitle">
-
-Weather Detective Deluxe
-
-</h1>
-
-<p class="subtitle">
-
-Professor Particle needs your help!
-
-Solve all weather mysteries
-and become a Master Weather Detective.
-
-</p>
-
-<button
-class="gameBtn"
-onclick="showDetectiveBoard()">
-
-🔍 Start Investigation
-
-</button>
-
-</div>
-`;
-
-}
-
-/* =========================
-   DETECTIVE BOARD
-========================= */
-
-function showDetectiveBoard(){
-
-let boardHTML = "";
-
-for(let i=0;i<5;i++){
-
-boardHTML +=
-
-`
-<div
-
-class="caseCard
-${unlockedCases[i] ? '' : 'locked'}"
-
-onclick="
-${unlockedCases[i]
-? `openCase(${i})`
-: ''}
-">
-
-<div class="caseIcon">
-
-${unlockedCases[i]
-? caseIcons[i]
-: '🔒'}
-
-</div>
-
-<div class="caseName">
-
-${caseNames[i]}
-
-</div>
-
-</div>
-`;
-
-}
-
-document.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<h2 class="boardTitle">
-
-🕵️ Detective Headquarters
-
-</h2>
-
-<div class="caseBoard">
-
-${boardHTML}
-
-</div>
-`;
-
-}
-
-showStartScreen();
-/* =========================
-   CASE DATA
-========================= */
-
-const cases = [
+const mysteries = [
 
 {
-title:"Morning Mystery",
-
-image:"assets/morning-dew.png",
+image:
+"assets/morning-dew.png",
 
 question:
-"How did the water droplets on the grass form?",
+"Tiny water droplets appeared on the grass early in the morning. How did they form?",
 
 options:[
 "Condensation",
@@ -477,39 +424,39 @@ options:[
 "Freezing"
 ],
 
-answer:"Condensation",
+answer:
+"Condensation",
 
-explanation:
-"Water vapour cooled and changed into tiny liquid droplets."
+feedback:
+"Water vapour in the air cooled and changed into tiny liquid droplets."
 },
 
 {
-title:"Missing Puddle",
-
-image:"assets/missing-puddle.png",
+image:
+"assets/missing-puddle.png",
 
 question:
-"Where did the puddle go?",
+"A puddle was seen in the morning but disappeared by afternoon. What happened to the water?",
 
 options:[
 "Evaporation",
-"Melting",
-"Freezing"
+"Freezing",
+"Melting"
 ],
 
-answer:"Evaporation",
+answer:
+"Evaporation",
 
-explanation:
-"The Sun heated the water and it changed into water vapour."
+feedback:
+"The Sun heated the water and changed it into water vapour."
 },
 
 {
-title:"Foggy Window",
-
-image:"assets/foggy-window.png",
+image:
+"assets/foggy-window.png",
 
 question:
-"Why did the window become foggy?",
+"The window became covered with tiny water droplets. What caused this?",
 
 options:[
 "Condensation",
@@ -517,19 +464,19 @@ options:[
 "Melting"
 ],
 
-answer:"Condensation",
+answer:
+"Condensation",
 
-explanation:
-"Water vapour touched the cool glass and became liquid droplets."
+feedback:
+"Water vapour cooled when it touched the cold glass."
 },
 
 {
-title:"Frozen Bottle",
-
-image:"assets/frozen-bottle.png",
+image:
+"assets/frozen-bottle.png",
 
 question:
-"What change happened to the water?",
+"The water inside the bottle turned into ice. Which change took place?",
 
 options:[
 "Freezing",
@@ -537,82 +484,44 @@ options:[
 "Evaporation"
 ],
 
-answer:"Freezing",
+answer:
+"Freezing",
 
-explanation:
-"The liquid water cooled and became solid ice."
+feedback:
+"Water lost heat and changed from liquid to solid."
 }
 
 ];
 
-/* =========================
-   OPEN CASE
-========================= */
+let currentQuestion = 0;
 
-function openCase(index){
-
-currentCase = index;
-
-const c = cases[index];
-
-document.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div class="caseHeader">
-
-<h2>
-
-🕵️ ${c.title}
-
-</h2>
-
-</div>
-
-<img
-src="${c.image}"
-class="caseImage">
-
-<div class="question">
-
-${c.question}
-
-</div>
-
-<div id="optionsArea">
-
-</div>
-
-<div
-id="feedback"
-class="feedback">
-
-</div>
-`;
-
-renderOptions();
-
-}
+let score = 0;
 
 /* =========================
-   RENDER OPTIONS
+   LOAD QUESTION
 ========================= */
 
-function renderOptions(){
+function loadQuestion(){
 
-const c = cases[currentCase];
-
-const area =
+const q =
+mysteries[
+currentQuestion
+];
+const gameArea =
 document.getElementById(
-"optionsArea"
+"gameArea"
 );
 
-let html="";
+document.getElementById(
+"progress"
+).innerHTML =
+currentQuestion + 1;
 
-c.options.forEach(option=>{
+let optionsHTML = "";
 
-html +=
+q.options.forEach(option=>{
+
+optionsHTML +=
 
 `
 <button
@@ -628,7 +537,46 @@ ${option}
 
 });
 
-area.innerHTML = html;
+gameArea.innerHTML =
+
+`
+<div class="card">
+
+<img
+src="${q.image}"
+class="cardImage">
+
+<div class="question">
+
+${q.question}
+
+</div>
+
+<div class="options">
+
+${optionsHTML}
+
+</div>
+
+<div
+id="feedback">
+
+</div>
+
+<button
+
+id="nextBtn"
+
+class="nextBtn"
+
+onclick="nextQuestion()">
+
+Next Mystery →
+
+</button>
+
+</div>
+`;
 
 }
 
@@ -636,730 +584,202 @@ area.innerHTML = html;
    CHECK ANSWER
 ========================= */
 
-function checkAnswer(answer){
+function checkAnswer(
+selected
+){
 
-const c =
-cases[currentCase];
+const q =
+mysteries[
+currentQuestion
+];
 
 const feedback =
 document.getElementById(
 "feedback"
 );
 
-if(
-answer===c.answer
-){
-
-document
-.getElementById(
-"correctSound"
-).play();
-
-score += 10;
-
-document
-.getElementById(
-"score"
-).innerHTML =
-score;
-
-feedback.style.color=
-"green";
-
-feedback.innerHTML=
-
-`
-✅ Correct!
-
-<br><br>
-
-${c.explanation}
-`;
-
-setTimeout(()=>{
-
-showSolvedScreen();
-
-},1500);
-
-}
-else{
-
-document
-.getElementById(
-"wrongSound"
-).play();
-
-feedback.style.color=
-"red";
-
-feedback.innerHTML=
-
-`
-❌ Not Quite.
-
-Try Again.
-`;
-
-}
-
-}
-
-/* =========================
-   CASE SOLVED
-========================= */
-
-function showSolvedScreen(){
-
-solvedCases++;
-
-document
-.getElementById(
-"casesSolved"
-).innerHTML =
-solvedCases;
-
-if(
-solvedCases===1
-){
-document
-.getElementById(
-"rank"
-).innerHTML =
-"Junior Detective";
-}
-
-if(
-solvedCases===2
-){
-document
-.getElementById(
-"rank"
-).innerHTML =
-"Weather Detective";
-}
-
-if(
-solvedCases===3
-){
-document
-.getElementById(
-"rank"
-).innerHTML =
-"Senior Detective";
-}
-
-if(
-solvedCases===4
-){
-document
-.getElementById(
-"rank"
-).innerHTML =
-"Master Detective";
-}
-
-unlockedCases[
-currentCase+1
-] = true;
-
-document
-.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div class="solvedScreen">
-
-<img
-src="assets/case-solved.png">
-
-<h2>
-
-CASE SOLVED!
-
-</h2>
-
-<br>
-
-<p>
-
-Excellent Detective Work!
-
-</p>
-
-<br>
-
-<button
-
-class="gameBtn"
-
-onclick="continueInvestigation()">
-
-Continue
-
-</button>
-
-</div>
-`;
-
-}
-
-/* =========================
-   CONTINUE
-========================= */
-
-function continueInvestigation(){
-
-if(
-solvedCases < 4
-){
-
-showDetectiveBoard();
-
-}
-else{
-
-showFinalChallenge();
-
-}
-
-}
-/* =========================
-   FINAL CHALLENGE DATA
-========================= */
-
-const finalQuestions = [
-
-{
-emoji:"🍦",
-question:"Ice cream dripping on a hot day",
-
-options:[
-"Melting",
-"Freezing",
-"Condensation"
-],
-
-answer:"Melting"
-},
-
-{
-emoji:"👕",
-question:"Clothes drying in sunlight",
-
-options:[
-"Evaporation",
-"Freezing",
-"Melting"
-],
-
-answer:"Evaporation"
-},
-
-{
-emoji:"☁️",
-question:"Clouds forming in the sky",
-
-options:[
-"Condensation",
-"Evaporation",
-"Melting"
-],
-
-answer:"Condensation"
-},
-
-{
-emoji:"🧊",
-question:"Water becoming ice",
-
-options:[
-"Freezing",
-"Evaporation",
-"Melting"
-],
-
-answer:"Freezing"
-}
-
-];
-
-let finalIndex = 0;
-
-/* =========================
-   FINAL CHALLENGE
-========================= */
-
-function showFinalChallenge(){
-
-finalIndex = 0;
-
-loadFinalQuestion();
-
-}
-
-/* =========================
-   LOAD FINAL QUESTION
-========================= */
-
-function loadFinalQuestion(){
-
-const q =
-finalQuestions[
-finalIndex
-];
-
-let buttons="";
-
-q.options.forEach(option=>{
-
-buttons +=
-
-`
-<button
-
-class="optionBtn"
-
-onclick="checkFinalAnswer('${option}')">
-
-${option}
-
-</button>
-`;
+const nextBtn =
+document.getElementById(
+"nextBtn"
+);
+
+const buttons =
+document.querySelectorAll(
+".optionBtn"
+);
+
+buttons.forEach(btn=>{
+
+btn.disabled = true;
 
 });
 
-document
-.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div
-style="
-text-align:center;
-">
-
-<h2>
-
-🏆 Master Detective Challenge
-
-</h2>
-
-<br>
-
-<p>
-
-Question
-${finalIndex+1}
-of
-4
-
-</p>
-
-<br>
-
-<div
-style="
-font-size:6rem;
-">
-
-${q.emoji}
-
-</div>
-
-<br>
-
-<div
-class="question">
-
-${q.question}
-
-</div>
-
-${buttons}
-
-<div
-id="feedback"
-class="feedback">
-
-</div>
-
-</div>
-`;
-
-}
-
-/* =========================
-   CHECK FINAL ANSWER
-========================= */
-
-function checkFinalAnswer(
-answer
-){
-
-const q =
-finalQuestions[
-finalIndex
-];
-
-const feedback =
-document
-.getElementById(
-"feedback"
-);
-
 if(
-answer===
-q.answer
+selected === q.answer
 ){
 
-document
-.getElementById(
-"correctSound"
-).play();
-
-score += 10;
+if(selected === q.answer){
+    score += 10;
+}
 
 document
 .getElementById(
 "score"
-).innerHTML =
+)
+.innerHTML =
 score;
 
-feedback.style.color=
-"green";
+const correctSound =
+document.getElementById(
+"correctSound"
+);
 
-feedback.innerHTML=
+if(correctSound){
+
+correctSound.play().catch(()=>{});
+
+}
+
+feedback.className =
+"correct";
+
+feedback.innerHTML =
 
 `
 ✅ Correct!
-`;
-
-setTimeout(()=>{
-
-finalIndex++;
-
-if(
-finalIndex <
-finalQuestions.length
-){
-
-loadFinalQuestion();
-
-}
-else{
-
-showMasterAward();
-
-}
-
-},1000);
-
-}
-else{
-
-document
-.getElementById(
-"wrongSound"
-).play();
-
-feedback.style.color=
-"red";
-
-feedback.innerHTML=
-
-`
-❌ Try Again
-`;
-
-}
-
-}
-
-/* =========================
-   MASTER DETECTIVE AWARD
-========================= */
-
-function showMasterAward(){
-
-document
-.getElementById(
-"clapSound"
-).play();
-
-document
-.getElementById(
-"rank"
-).innerHTML =
-"Master Detective";
-
-document
-.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div
-style="
-text-align:center;
-padding:20px;
-">
-
-<h1>
-
-🏆
-
-</h1>
-
-<h2>
-
-MASTER WEATHER DETECTIVE
-
-</h2>
-
-<br>
-
-<p>
-
-You solved all weather mysteries!
-
-</p>
-
-<br>
-
-<h2>
-
-⭐ Score:
-${score}
-
-</h2>
-
-<br>
-
-<button
-
-class="gameBtn"
-
-onclick="showCertificateForm()">
-
-🎓 Claim Certificate
-
-</button>
-
-</div>
-`;
-
-}
-
-/* =========================
-   CERTIFICATE FORM
-========================= */
-
-function showCertificateForm(){
-
-document
-.getElementById(
-"gameScreen"
-).innerHTML =
-
-`
-<div
-style="
-text-align:center;
-">
-
-<h2>
-
-🎓 Certificate
-
-</h2>
-
-<br>
-
-<input
-
-id="studentName"
-
-type="text"
-
-placeholder="Enter Student Name"
-
-style="
-padding:12px;
-width:300px;
-max-width:90%;
-border-radius:12px;
-border:1px solid #ccc;
-">
 
 <br><br>
 
-<button
-
-class="gameBtn"
-
-onclick="generateCertificate()">
-
-Generate
-
-</button>
-
-</div>
+${q.feedback}
 `;
 
 }
-/* =========================
-   GENERATE CERTIFICATE
-========================= */
+else{
 
-function generateCertificate(){
-
-const studentName =
-document
-.getElementById(
-"studentName"
-)
-.value
-.trim();
-
-if(
-studentName === ""
-){
-
-alert(
-"Please enter your name."
+const wrongSound =
+document.getElementById(
+"wrongSound"
 );
 
-return;
+if(wrongSound){
+
+wrongSound.play().catch(()=>{});
 
 }
 
-document
-.getElementById(
-"gameScreen"
-).innerHTML =
+feedback.className =
+"wrong";
+
+feedback.innerHTML =
 
 `
-<div
-style="
-max-width:900px;
-margin:auto;
-background:#fffdf5;
-border:8px solid gold;
-border-radius:25px;
-padding:30px;
-text-align:center;
-">
-
-<div
-style="
-font-size:4rem;
-">
-
-🏆
-
-</div>
-
-<h1
-style="
-color:#1b4965;
-">
-
-MASTER WEATHER DETECTIVE
-
-</h1>
-
-<br>
-
-<h2>
-
-Certificate of Achievement
-
-</h2>
+❌ Incorrect
 
 <br><br>
 
-<p>
+Correct Answer:
+<b>${q.answer}</b>
 
-This certificate is proudly awarded to
+<br><br>
 
-</p>
+${q.feedback}
+`;
 
-<br>
+}
 
-<h1
-style="
-color:#1976d2;
-">
+nextBtn.style.display =
+"inline-block";
 
-${studentName}
+}
 
-</h1>
+/* =========================
+   NEXT QUESTION
+========================= */
 
-<br>
+function nextQuestion(){
 
-<p>
+currentQuestion++;
 
-for successfully solving all weather mysteries and demonstrating excellent understanding of
+if(
+currentQuestion <
+mysteries.length
+){
 
-</p>
+loadQuestion();
 
-<br>
+}
+else{
+
+showResults();
+
+}
+
+}
+
+/* =========================
+   RESULTS
+========================= */
+
+function showResults(){
+
+let message =
+"Great Job!";
+
+if(score === 40){
+
+message =
+"🏆 Weather Expert!";
+}
+else if(score >= 30){
+
+message =
+"🌟 Excellent Detective!";
+}
+else if(score >= 20){
+
+message =
+"👍 Good Observation Skills!";
+}
+
+gameArea.innerHTML =
+
+`
+<div class="resultScreen">
 
 <h2>
 
-States of Matter & Changes of State
+🎉 Challenge Complete
 
 </h2>
 
-<br>
-
-<h2>
-
-⭐ Final Score:
-${score}
-
-</h2>
-
-<br>
-
 <div
-style="
-font-size:5rem;
-">
+class="resultScore">
 
-🏅
+${score}/40
 
 </div>
+
+<h3>
+
+${message}
+
+</h3>
 
 <br>
 
-<div
-style="
-font-size:1.3rem;
-font-weight:bold;
-color:#1b4965;
-">
+<p>
 
-Professor Particle
+You solved all four weather mysteries.
 
-</div>
-
-<div>
-
-Lead Investigator
-
-</div>
+</p>
 
 <br>
 
 <button
 
-class="gameBtn"
+class="playAgain"
 
-onclick="playAgain()">
+onclick="restartGame()">
 
 🔄 Play Again
 
@@ -1371,26 +791,14 @@ onclick="playAgain()">
 }
 
 /* =========================
-   PLAY AGAIN
+   RESTART
 ========================= */
 
-function playAgain(){
+function restartGame(){
+
+currentQuestion = 0;
 
 score = 0;
-
-solvedCases = 0;
-
-currentCase = 0;
-
-for(
-let i=1;
-i<unlockedCases.length;
-i++
-){
-
-unlockedCases[i] = false;
-
-}
 
 document
 .getElementById(
@@ -1400,23 +808,19 @@ document
 
 document
 .getElementById(
-"casesSolved"
+"progress"
 )
-.innerHTML = "0";
+.innerHTML = "1";
 
-document
-.getElementById(
-"rank"
-)
-.innerHTML = "Rookie";
-
-showStartScreen();
+loadQuestion();
 
 }
 
 /* =========================
-   END GAME
+   START GAME
 ========================= */
+
+loadQuestion();
 
 </script>
 
