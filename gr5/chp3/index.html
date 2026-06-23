@@ -1,182 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cell Sort Challenge</title>
+<title>Innovone Cell Sort Challenge</title>
 
 <style>
 
-body{
-font-family:Arial,sans-serif;
-background:#eef8f0;
-padding:20px;
+/* =========================
+   GLOBAL
+========================= */
+
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-.container{
-max-width:1100px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.15);
+body{
+
+font-family:'Trebuchet MS',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#e8f5e9 0%,
+#f1f8e9 40%,
+#e3f2fd 100%
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
 }
 
-h1{
-text-align:center;
-color:#2e7d32;
-}
+/* =========================
+   BIOLOGY BACKGROUND
+========================= */
 
-.score{
-text-align:center;
-font-size:1.2rem;
-font-weight:bold;
-margin-bottom:20px;
-}
+body::before{
 
-.cardArea{
+content:"🧬 🔬 🌿 🦠 🧫";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+font-size:80px;
+
+opacity:0.05;
+
 display:flex;
-flex-wrap:wrap;
-gap:10px;
+
+justify-content:space-around;
+
+align-items:center;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+#splashScreen{
+
+height:100vh;
+
+display:flex;
+
 justify-content:center;
-margin-bottom:20px;
-}
 
-.card{
-background:#1976d2;
-color:white;
-padding:12px 18px;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-}
+align-items:center;
 
-.card.selected{
-background:#ff9800;
-}
+flex-direction:column;
 
-.tableArea{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.column{
-border:3px solid #ccc;
-border-radius:15px;
-padding:15px;
-min-height:300px;
-}
-
-.animal{
-background:#e3f2fd;
-}
-
-.plant{
-background:#e8f5e9;
-}
-
-.column h2{
 text-align:center;
+
+padding:20px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+.logo{
+
+width:260px;
+
+max-width:80%;
+
+margin-bottom:30px;
+
+}
+
+.logoTitle{
+
+font-size:2rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
+margin-top:15px;
+
+}
+
+.startBtn{
+
+margin-top:30px;
+
+padding:15px 35px;
+
+font-size:1.1rem;
+
+border:none;
+
+border-radius:15px;
+
+background:#1565c0;
+
+color:white;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.2s;
+
+}
+
+.startBtn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* =========================
+   STORY SCREEN
+========================= */
+
+#storyScreen{
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+
+align-items:center;
+
+padding:25px;
+
+}
+
+.storyCard{
+
+background:white;
+
+max-width:900px;
+
+padding:35px;
+
+border-radius:25px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.15);
+
+text-align:center;
+
+}
+
+.storyCard h1{
+
+color:#2e7d32;
+
+margin-bottom:20px;
+
+}
+
+.storyCard p{
+
+font-size:1.15rem;
+
+line-height:1.8;
+
+color:#444;
+
+}
+
+.storyImage{
+
+font-size:100px;
+
+margin:20px 0;
+
+}
+
+/* =========================
+   GAME SCREEN
+========================= */
+
+#gameScreen{
+
+display:none;
+
+padding:20px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+.gameContainer{
+
+max-width:1200px;
+
+margin:auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.15);
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.scoreBox{
+
+background:#e3f2fd;
+
+padding:12px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+.progressBox{
+
+background:#fff3cd;
+
+padding:12px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.gameTitle{
+
+text-align:center;
+
+font-size:2rem;
+
+color:#2e7d32;
+
+margin-bottom:15px;
+
+}
+
+/* =========================
+   INSTRUCTIONS
+========================= */
+
+.instructionBox{
+
+background:#fff8e1;
+
+padding:15px;
+
+border-radius:15px;
+
+border:2px solid #ffd54f;
+
+text-align:center;
+
+font-weight:bold;
+
+margin-bottom:25px;
+
+}
+
+/* =========================
+   CELL PANELS
+========================= */
+
+.cellArea{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:20px;
+
+margin-bottom:25px;
+
+}
+
+.cellPanel{
+
+background:#fafafa;
+
+border-radius:20px;
+
+padding:20px;
+
+text-align:center;
+
+border:3px solid #dbeafe;
+
+}
+
+.cellPanel img{
+
+width:180px;
+
+max-width:90%;
+
+margin-bottom:10px;
+
+}
+
+.cellTitle{
+
+font-size:1.4rem;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+color:#1565c0;
+
 }
 
 .dropBtn{
+
 width:100%;
+
 padding:12px;
+
 border:none;
-border-radius:10px;
+
+border-radius:12px;
+
+background:#43a047;
+
+color:white;
+
 font-weight:bold;
+
 cursor:pointer;
+
 margin-bottom:15px;
+
 }
 
-.feedback{
-text-align:center;
-font-weight:bold;
-font-size:1.1rem;
-margin-top:15px;
-min-height:40px;
+.filledList{
+
+min-height:180px;
+
 }
 
 .filledItem{
+
 background:white;
-padding:8px;
-margin:6px 0;
-border-radius:8px;
+
+padding:10px;
+
+margin:8px 0;
+
+border-radius:10px;
+
+box-shadow:
+0 2px 6px rgba(0,0,0,.1);
+
 }
 
-.result{
-text-align:center;
-font-size:2rem;
-padding:30px;
+/* =========================
+   CARDS
+========================= */
+
+.cardArea{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:12px;
+
+margin-top:10px;
+
 }
+
+.card{
+
+background:#1976d2;
+
+color:white;
+
+padding:12px 18px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.2s;
+
+}
+
+.card:hover{
+
+transform:translateY(-2px);
+
+}
+
+.card.selected{
+
+background:#ff9800;
+
+}
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+min-height:60px;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:768px){
 
-.tableArea{
+.cellArea{
+
 grid-template-columns:1fr;
+
+}
+
+.logo{
+
+width:200px;
+
 }
 
 }
 
 </style>
+
 </head>
+
 <body>
 
-<div class="container">
+<!-- =========================
+     SPLASH SCREEN
+========================= -->
 
-<h1>🔬 Cell Sort Challenge</h1>
+<div id="splashScreen">
 
-<div class="score">
-Score:
-<span id="score">0</span>/100
+<img
+src="assets/innovone-logo.png"
+class="logo"
+alt="Innovone Logo">
+
+<div class="logoTitle">
+
+Innovone Interactive Learning
+
 </div>
 
-<div id="cardArea" class="cardArea"></div>
+<button
+class="startBtn"
+onclick="showStory()">
 
-<div class="tableArea">
+START
 
-<div class="column animal">
+</button>
 
-<h2>Animal Cell</h2>
+</div>
+
+<!-- =========================
+     STORY SCREEN
+========================= -->
+
+<div id="storyScreen">
+
+<div class="storyCard">
+
+<div class="storyImage">
+
+🌱 🔬
+
+</div>
+
+<h1>
+
+Cell Sort Challenge
+
+</h1>
+
+<p>
+
+Oh no!
+
+Animal Cell and Plant Cell have forgotten who they are.
+
+Their features are all mixed up.
+
+Can you help them remember by placing each feature in the correct cell type?
+
+</p>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+HELP THE CELLS
+
+</button>
+
+</div>
+
+</div>
+
+<!-- =========================
+     GAME SCREEN
+========================= -->
+
+<div id="gameScreen">
+
+<div class="gameContainer">
+
+<div class="topBar">
+
+<div class="scoreBox">
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
+</div>
+
+<div class="progressBox">
+
+Features Sorted:
+<span id="sortedCount">
+
+0
+
+</span>/10
+
+</div>
+
+</div>
+
+<h1 class="gameTitle">
+
+🔬 Cell Sort Challenge
+
+</h1>
+
+<div class="instructionBox">
+
+👉 Tap on a statement card and then tap on the correct cell type.
+
+</div>
+
+<div class="cellArea">
+
+<div class="cellPanel">
+
+<div class="cellTitle">
+
+Animal Cell
+
+</div>
+
+<img
+src="assets/animal-cell.png"
+alt="Animal Cell">
 
 <button
 class="dropBtn"
 onclick="placeCard('animal')">
-Place Here
+
+Place in Animal Cell
+
 </button>
 
-<div id="animalList"></div>
+<div
+id="animalList"
+class="filledList">
 
 </div>
 
-<div class="column plant">
+</div>
 
-<h2>Plant Cell</h2>
+<div class="cellPanel">
+
+<div class="cellTitle">
+
+Plant Cell
+
+</div>
+
+<img
+src="assets/plant-cell.png"
+alt="Plant Cell">
 
 <button
 class="dropBtn"
 onclick="placeCard('plant')">
-Place Here
+
+Place in Plant Cell
+
 </button>
 
-<div id="plantList"></div>
+<div
+id="plantList"
+class="filledList">
+
+</div>
 
 </div>
 
 </div>
 
 <div
+id="cardArea"
+class="cardArea">
+
+</div>
+
+<div
 id="feedback"
 class="feedback">
-Select a statement card.
+
+Select a statement card to begin.
+
+</div>
+
 </div>
 
 </div>
 
 <script>
+
+/* =========================
+   SCREEN FLOW
+========================= */
+
+function showStory(){
+
+document.getElementById(
+"splashScreen"
+).style.display="none";
+
+document.getElementById(
+"storyScreen"
+).style.display="flex";
+
+}
+
+function startGame(){
+
+document.getElementById(
+"storyScreen"
+).style.display="none";
+
+document.getElementById(
+"gameScreen"
+).style.display="block";
+
+}
+/* =========================
+   GAME DATA
+========================= */
 
 const statements = [
 
@@ -232,11 +790,23 @@ type:"plant"
 
 ];
 
+/* =========================
+   RANDOMIZE CARDS
+========================= */
+
+statements.sort(
+()=>Math.random()-0.5
+);
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
 let selectedCard = null;
 
 let score = 0;
 
-let completed = 0;
+let sortedCount = 0;
 
 /* =========================
    RENDER CARDS
@@ -263,7 +833,7 @@ document.createElement(
 card.className =
 "card";
 
-card.innerText =
+card.innerHTML =
 item.text;
 
 card.onclick = ()=>{
@@ -303,15 +873,13 @@ column
 ){
 
 if(
-selectedCard === null
+selectedCard===null
 ){
 
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
-"⚠️ Select a statement first.";
+showFeedback(
+"⚠️ Please select a statement card first.",
+"#ef6c00"
+);
 
 return;
 
@@ -322,18 +890,36 @@ statements[
 selectedCard
 ];
 
-const feedback =
-document.getElementById(
-"feedback"
-);
-
 if(
 item.type === column
 ){
 
+handleCorrect(
+item,
+column
+);
+
+}
+else{
+
+handleWrong();
+
+}
+
+}
+
+/* =========================
+   CORRECT ANSWER
+========================= */
+
+function handleCorrect(
+item,
+column
+){
+
 score += 10;
 
-completed++;
+sortedCount++;
 
 document
 .getElementById(
@@ -342,33 +928,21 @@ document
 .innerHTML =
 score;
 
-feedback.style.color =
-"green";
-
-feedback.innerHTML =
-
-`
-✔ Correct!
-
-<br><br>
-
-"${item.text}"
-
-belongs to
-
-<b>
-${column === "animal"
-? "Animal Cell"
-: "Plant Cell"}
-</b>.
-`;
+document
+.getElementById(
+"sortedCount"
+)
+.innerHTML =
+sortedCount;
 
 const targetList =
 document.getElementById(
 
-column === "animal"
-? "animalList"
-: "plantList"
+column==="animal"
+?
+"animalList"
+:
+"plantList"
 
 );
 
@@ -380,7 +954,7 @@ document.createElement(
 entry.className =
 "filledItem";
 
-entry.innerText =
+entry.innerHTML =
 item.text;
 
 targetList.appendChild(
@@ -389,6 +963,23 @@ entry
 
 item.used = true;
 
+showFeedback(
+
+`🎉 Correct! <br><br>
+<b>${item.text}</b>
+belongs to the
+<b>${
+column==="animal"
+?
+"Animal Cell"
+:
+"Plant Cell"
+}</b>.`,
+
+"#2e7d32"
+
+);
+
 selectedCard = null;
 
 renderCards();
@@ -396,22 +987,21 @@ renderCards();
 checkCompletion();
 
 }
-else{
 
-feedback.style.color =
-"red";
+/* =========================
+   WRONG ANSWER
+========================= */
 
-feedback.innerHTML =
+function handleWrong(){
 
-`
-❌ Try Again!
+showFeedback(
 
-<br><br>
+`❌ Try Again!<br><br>
+Think carefully about which cell type has this feature.`,
 
-Think carefully about
-whether this feature belongs
-to an Animal Cell or Plant Cell.
-`;
+"#c62828"
+
+);
 
 selectedCard = null;
 
@@ -427,6 +1017,26 @@ c.classList.remove(
 
 }
 
+/* =========================
+   FEEDBACK
+========================= */
+
+function showFeedback(
+message,
+color
+){
+
+const box =
+document.getElementById(
+"feedback"
+);
+
+box.style.color =
+color;
+
+box.innerHTML =
+message;
+
 }
 
 /* =========================
@@ -436,7 +1046,7 @@ c.classList.remove(
 function checkCompletion(){
 
 if(
-completed !==
+sortedCount <
 statements.length
 ){
 
@@ -444,72 +1054,88 @@ return;
 
 }
 
+setTimeout(()=>{
+
+showCompletionScreen();
+
+},1000);
+
+}
+
+/* =========================
+   COMPLETION SCREEN
+========================= */
+
+function showCompletionScreen(){
+
 document
 .getElementById(
-"cardArea"
+"gameScreen"
 )
-.innerHTML = "";
-
-document
-.getElementById(
-"feedback"
-)
-.innerHTML = "";
-
-let message =
-"Great Job!";
-
-if(score === 100){
-
-message =
-"🏆 Cell Expert!";
-}
-else if(score >= 80){
-
-message =
-"🌟 Excellent Work!";
-}
-else{
-
-message =
-"👍 Keep Practising!";
-}
-
-document
-.querySelector(
-".container"
-)
-.innerHTML +=
+.innerHTML =
 
 `
-<div class="result">
+<div class="gameContainer">
 
-${message}
+<div
+style="
+text-align:center;
+padding:30px;
+">
 
-<br><br>
+<div
+style="
+font-size:90px;
+">
 
-Score:
+🏆
+
+</div>
+
+<h1
+style="
+color:#2e7d32;
+margin-bottom:20px;
+">
+
+Cell Expert
+
+</h1>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+">
+
+You successfully helped
+the Animal Cell and Plant Cell
+remember who they are!
+
+</p>
+
+<br>
+
+<h2>
+
+⭐ Final Score:
 ${score}/100
 
-<br><br>
+</h2>
+
+<br>
 
 <button
 
-onclick="restartGame()"
+class="startBtn"
 
-style="
-padding:15px 25px;
-border:none;
-border-radius:12px;
-background:#1976d2;
-color:white;
-font-weight:bold;
-cursor:pointer;
-">
+onclick="restartGame()">
 
 🔄 Play Again
 
 </button>
+
+</div>
 
 </div>
 `;
