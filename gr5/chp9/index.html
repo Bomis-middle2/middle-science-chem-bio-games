@@ -1,723 +1,1363 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Garden Planner Challenge</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+🚜 Farming Master
+
+</title>
 
 <style>
-*{box-sizing:border-box}
+
+/* =========================
+   RESET
+========================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#dfffd8,#b8ecff);
-  color:#203020;
-  overflow-x:hidden;
+
+font-family:
+'Segoe UI',
+sans-serif;
+
+background:
+linear-gradient(
+rgba(255,255,255,.88),
+rgba(255,255,255,.88)
+),
+url('assets/bg-farming.png');
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
 }
 
-#splash{
-  position:fixed;
-  inset:0;
-  background:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+#splashScreen{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
 }
 
-#splash img{
-  width:70%;
-  max-width:320px;
-  height:auto;
+#splashLogo{
+
+width:320px;
+max-width:85%;
+
+animation:
+logoZoom 1.5s ease;
+
 }
 
-#game{
-  display:none;
-  min-height:100vh;
-  padding:14px;
+@keyframes logoZoom{
+
+0%{
+opacity:0;
+transform:scale(.6);
 }
 
-.header{
-  text-align:center;
-  background:#ffffffee;
-  border-radius:18px;
-  padding:12px;
-  margin-bottom:12px;
-  box-shadow:0 4px 12px #00000022;
+100%{
+opacity:1;
+transform:scale(1);
 }
 
-h1{
-  margin:6px 0;
-  font-size:clamp(24px,5vw,42px);
-  color:#247a35;
 }
 
-.info{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
+/* =========================
+   INTRO SCREEN
+========================= */
+
+#introScreen{
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
 }
 
-.badge{
-  background:#fff7b8;
-  border:2px solid #f2d85b;
-  border-radius:20px;
-  padding:8px 14px;
-  font-weight:bold;
+.introCard{
+
+background:
+rgba(255,255,255,.97);
+
+max-width:1000px;
+width:100%;
+
+padding:35px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
 }
 
-.controls{
-  margin-top:10px;
+.logo{
+
+width:220px;
+
+margin-bottom:20px;
+
 }
 
-button{
-  border:none;
-  border-radius:18px;
-  padding:10px 18px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#35a852;
-  color:white;
-  box-shadow:0 4px 0 #1d7334;
+.title{
+
+font-size:3rem;
+
+font-weight:bold;
+
+color:#2e7d32;
+
+margin-bottom:20px;
+
 }
 
-button:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 #1d7334;
+.story{
+
+font-size:1.2rem;
+
+line-height:1.8;
+
+color:#444;
+
 }
 
-#volume{
-  width:130px;
-  vertical-align:middle;
+.startBtn{
+
+margin-top:25px;
+
+padding:
+18px 45px;
+
+border:none;
+
+border-radius:20px;
+
+background:#43a047;
+
+color:white;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-.screen{display:none}
-.screen.active{display:block}
+.startBtn:hover{
 
-.intro-card,.result-card{
-  max-width:760px;
-  margin:30px auto;
-  background:#ffffffee;
-  padding:24px;
-  border-radius:24px;
-  text-align:center;
-  box-shadow:0 6px 18px #00000025;
+transform:scale(1.05);
+
 }
 
-.intro-card p{
-  font-size:18px;
-  line-height:1.5;
+/* =========================
+   GAME SCREEN
+========================= */
+
+#gameScreen{
+
+display:none;
+
+padding:20px;
+
 }
 
-.game-area{
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  gap:14px;
+.gameHeader{
+
+text-align:center;
+
+margin-bottom:20px;
+
 }
 
-.task-box{
-  background:#ffffffee;
-  border-radius:18px;
-  padding:14px;
-  text-align:center;
-  box-shadow:0 4px 12px #00000022;
+.gameLogo{
+
+width:180px;
+
+margin-bottom:10px;
+
 }
 
-.task-box h2{
-  margin:4px;
-  color:#326b27;
+.gameTitle{
+
+font-size:2.8rem;
+
+font-weight:bold;
+
+color:#2e7d32;
+
 }
 
-.zones{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:12px;
+.mainCard{
+
+max-width:1500px;
+
+margin:auto;
+
+background:
+rgba(255,255,255,.97);
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
 }
 
-.zone{
-  min-height:180px;
-  border-radius:22px;
-  padding:10px;
-  border:3px dashed white;
-  text-align:center;
-  box-shadow:inset 0 0 12px #00000022;
-  transition:.2s;
+/* =========================
+   INSTRUCTIONS
+========================= */
+
+.instructions{
+
+background:#e8f5e9;
+
+padding:18px;
+
+border-radius:18px;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#1b5e20;
+
 }
 
-.zone h3{
-  margin:0 0 8px;
-  font-size:16px;
+/* =========================
+   FARM IMAGE
+========================= */
+
+.imageContainer{
+
+position:relative;
+
+max-width:1400px;
+
+margin:auto;
+
 }
 
-.zone.over{
-  transform:scale(1.03);
-  border-color:#1e7d35;
+.farmingImage{
+
+width:100%;
+
+display:block;
+
+border-radius:20px;
+
 }
 
-.sunny{background:#ffe680}
-.shade{background:#c9f0c5}
-.pond{background:#a8e7ff}
-.dry{background:#ffd1a8}
-.rich{background:#d8b28a}
+/* =========================
+   BLANK BOXES
+========================= */
 
-.plant-tray{
-  background:#ffffffee;
-  border-radius:22px;
-  padding:14px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  box-shadow:0 4px 12px #00000022;
+.dropBox{
+
+position:absolute;
+
+width:180px;
+height:45px;
+
+background:white;
+
+border:3px dashed #90caf9;
+
+border-radius:12px;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+font-size:.9rem;
+
+font-weight:bold;
+
+text-align:center;
+
+cursor:pointer;
+
+padding:5px;
+
+transition:.3s;
+
 }
 
-.plant{
-  background:white;
-  border:3px solid #7acb62;
-  border-radius:18px;
-  padding:12px;
-  width:130px;
-  min-height:95px;
-  text-align:center;
-  cursor:grab;
-  user-select:none;
-  touch-action:none;
-  box-shadow:0 5px 10px #00000022;
-  transition:transform .2s;
+.dropBox:hover{
+
+background:#f5fbff;
+
 }
 
-.plant:active{cursor:grabbing}
+.filled{
 
-.plant .emoji{
-  font-size:38px;
+border:3px solid #43a047;
+
+background:#e8f5e9;
+
 }
 
-.plant .name{
-  font-weight:bold;
-  margin-top:6px;
-  font-size:18px;
+/* =========================
+   WORD BANK
+========================= */
+
+.wordBank{
+
+margin-top:30px;
+
+padding:20px;
+
+background:#f5fff5;
+
+border-radius:20px;
+
 }
 
-.correct{
-  animation:pop .5s ease;
-  background:#d9ffd4;
+.wordTitle{
+
+font-size:1.3rem;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:15px;
+
+color:#2e7d32;
+
 }
 
-.wrong{
-  animation:shake .35s ease;
-  background:#ffdede;
+.wordsContainer{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:12px;
+
 }
 
-@keyframes pop{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.18)}
-  100%{transform:scale(1)}
+.wordTile{
+
+padding:
+12px 18px;
+
+background:#1976d2;
+
+color:white;
+
+border-radius:12px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  75%{transform:translateX(8px)}
+.wordTile:hover{
+
+transform:scale(1.05);
+
 }
 
-.sparkle{
-  position:fixed;
-  font-size:22px;
-  pointer-events:none;
-  animation:sparkle 900ms ease-out forwards;
-  z-index:9000;
+.wordSelected{
+
+background:#ef6c00 !important;
+
 }
 
-@keyframes sparkle{
-  from{opacity:1;transform:translateY(0) scale(1)}
-  to{opacity:0;transform:translateY(-60px) scale(1.8)}
+.wordUsed{
+
+display:none;
+
 }
 
-#feedback{
-  min-height:34px;
-  margin-top:8px;
-  font-size:18px;
-  font-weight:bold;
-  text-align:center;
+/* =========================
+   BUTTON
+========================= */
+
+.checkBtn{
+
+display:block;
+
+margin:25px auto;
+
+padding:
+16px 40px;
+
+border:none;
+
+border-radius:20px;
+
+background:#43a047;
+
+color:white;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
-.restart-wrap{
-  margin-top:20px;
-  text-align:center;
+.feedback{
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+min-height:50px;
+
 }
 
-.dragging-clone{
-  position:fixed;
-  z-index:10000;
-  pointer-events:none;
-  opacity:.9;
-  transform:scale(1.05);
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+.dropBox{
+
+width:90px;
+height:30px;
+
+font-size:.55rem;
+
 }
 
-@media(max-width:850px){
-  .zones{grid-template-columns:repeat(2,1fr)}
-  .zone{min-height:145px}
-  .plant{width:120px}
+.title{
+
+font-size:2rem;
+
 }
 
-@media(max-width:480px){
-  #game{padding:8px}
-  .zones{grid-template-columns:1fr}
-  .plant{
-    width:46%;
-    min-height:90px;
-    padding:8px;
-  }
-  .plant .emoji{font-size:30px}
-  .plant .name{font-size:15px}
-  button{
-    font-size:15px;
-    padding:9px 14px;
-  }
+.gameTitle{
+
+font-size:2rem;
+
 }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div id="splash">
-  <img src="assets/innovine-logo.png" alt="Innovine Logo">
-</div>
+<!-- SPLASH -->
 
-<div id="game">
+<div id="splashScreen">
 
-  <div class="header">
-    <h1>Garden Planner Challenge</h1>
-
-    <div class="info">
-      <div class="badge">Level: <span id="levelText">1</span>/10</div>
-      <div class="badge">Score: <span id="scoreText">0</span></div>
-      <div class="badge">Plants Placed: <span id="placedText">0</span>/<span id="totalText">0</span></div>
-    </div>
-
-    <div class="controls">
-      <button onclick="toggleMute()" id="muteBtn">Sound: On</button>
-      <label>
-        Volume
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-      </label>
-    </div>
-  </div>
-
-  <section id="intro" class="screen active">
-    <div class="intro-card">
-      <h2>Welcome, Garden Designer!</h2>
-      <p>
-        Drag each plant into the correct garden zone.
-        Think about sunlight, water, soil and where plants grow best.
-      </p>
-      <button onclick="startGame()">Start Garden Mission</button>
-    </div>
-  </section>
-
-  <section id="play" class="screen">
-    <div class="game-area">
-
-      <div class="task-box">
-        <h2 id="taskTitle">Place the plants in the correct garden zones.</h2>
-        <div id="feedback"></div>
-      </div>
-
-      <div class="zones">
-        <div class="zone sunny" data-zone="sunny"><h3>☀ Sunny Area</h3></div>
-        <div class="zone shade" data-zone="shade"><h3>🌳 Shady Area</h3></div>
-        <div class="zone pond" data-zone="pond"><h3>💧 Pond Area</h3></div>
-        <div class="zone dry" data-zone="dry"><h3>🌵 Dry Area</h3></div>
-        <div class="zone rich" data-zone="rich"><h3>🌱 Rich Soil Bed</h3></div>
-      </div>
-
-      <div class="plant-tray" id="plantTray"></div>
-
-    </div>
-  </section>
-
-  <section id="result" class="screen">
-    <div class="result-card">
-      <h2>Master Gardener Report</h2>
-      <h1 id="finalStars">⭐⭐⭐</h1>
-      <p id="finalScore"></p>
-      <p id="finalMessage"></p>
-      <div class="restart-wrap">
-        <button onclick="restartGame()">Restart Game</button>
-      </div>
-    </div>
-  </section>
+<img
+id="splashLogo"
+src="assets/innovine-logo.png">
 
 </div>
 
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/clapping.mp3"></audio>
+<!-- INTRO -->
+
+<div id="introScreen">
+
+<div class="introCard">
+
+<img
+src="assets/innovine-logo.png"
+class="logo">
+
+<h1 class="title">
+
+🚜 FARMING MASTER
+
+</h1>
+
+<div class="story">
+
+Observe the farming cycle carefully.
+
+<br><br>
+
+Tap a word from the Word Bank and then tap the correct blank below the image.
+
+<br><br>
+
+Fill all 8 farming steps correctly.
+
+</div>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+🚀 START GAME
+
+</button>
+
+</div>
+
+</div>
+
+<!-- GAME -->
+
+<div id="gameScreen">
+
+<div class="gameHeader">
+
+<img
+src="assets/innovine-logo.png"
+class="gameLogo">
+
+<div class="gameTitle">
+
+🚜 FARMING MASTER
+
+</div>
+
+</div>
+
+<div class="mainCard">
+
+<div class="instructions">
+
+Select a farming step from the Word Bank and place it in the correct blank.
+
+</div>
+
+<div class="imageContainer">
+
+<img
+src="assets/steps-of-farming.png"
+class="farmingImage">
+
+<!-- DROP BOXES WILL COME IN PART 2 -->
+<!-- =========================
+     DROP BOXES
+========================= -->
+
+<!-- TOP ROW -->
+
+<div
+class="dropBox"
+id="box1"
+style="
+left:2%;
+top:47%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box2"
+style="
+left:28%;
+top:47%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box3"
+style="
+left:53%;
+top:47%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box4"
+style="
+left:79%;
+top:47%;
+">
+</div>
+
+<!-- BOTTOM ROW -->
+
+<div
+class="dropBox"
+id="box5"
+style="
+left:79%;
+top:93%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box6"
+style="
+left:53%;
+top:93%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box7"
+style="
+left:28%;
+top:93%;
+">
+</div>
+
+<div
+class="dropBox"
+id="box8"
+style="
+left:2%;
+top:93%;
+">
+</div>
+
+</div>
+
+<!-- =========================
+     WORD BANK
+========================= -->
+
+<div class="wordBank">
+
+<div class="wordTitle">
+
+🌾 WORD BANK
+
+</div>
+
+<div
+id="wordsContainer"
+class="wordsContainer">
+
+</div>
+
+</div>
+
+<button
+class="checkBtn"
+onclick="checkAnswers()">
+
+✅ CHECK ANSWERS
+
+</button>
+
+<div
+id="feedback"
+class="feedback">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+     AUDIO
+========================= -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/clapping.mp3">
+</audio>
 
 <script>
-const levels=[
-  {
-    title:"Level 1: Match plants to their favourite places.",
-    plants:[
-      {name:"Cactus",emoji:"🌵",zone:"dry"},
-      {name:"Lotus",emoji:"🪷",zone:"pond"},
-      {name:"Sunflower",emoji:"🌻",zone:"sunny"}
-    ]
-  },
-  {
-    title:"Level 2: Choose the best growing conditions.",
-    plants:[
-      {name:"Fern",emoji:"🌿",zone:"shade"},
-      {name:"Tomato",emoji:"🍅",zone:"rich"},
-      {name:"Aloe Vera",emoji:"🪴",zone:"dry"}
-    ]
-  },
-  {
-    title:"Level 3: Think about water needs.",
-    plants:[
-      {name:"Water Lily",emoji:"🪷",zone:"pond"},
-      {name:"Rose",emoji:"🌹",zone:"rich"},
-      {name:"Moss",emoji:"🍃",zone:"shade"}
-    ]
-  },
-  {
-    title:"Level 4: Build a balanced garden.",
-    plants:[
-      {name:"Bamboo",emoji:"🎋",zone:"rich"},
-      {name:"Marigold",emoji:"🌼",zone:"sunny"},
-      {name:"Cactus",emoji:"🌵",zone:"dry"}
-    ]
-  },
-  {
-    title:"Level 5: Plants have different habitats.",
-    plants:[
-      {name:"Duckweed",emoji:"🌱",zone:"pond"},
-      {name:"Mint",emoji:"🌿",zone:"rich"},
-      {name:"Fern",emoji:"🍃",zone:"shade"}
-    ]
-  },
-  {
-    title:"Level 6: Use plant knowledge carefully.",
-    plants:[
-      {name:"Hibiscus",emoji:"🌺",zone:"sunny"},
-      {name:"Aloe Vera",emoji:"🪴",zone:"dry"},
-      {name:"Lotus",emoji:"🪷",zone:"pond"}
-    ]
-  },
-  {
-    title:"Level 7: Soil matters too.",
-    plants:[
-      {name:"Wheat",emoji:"🌾",zone:"rich"},
-      {name:"Mushroom",emoji:"🍄",zone:"shade"},
-      {name:"Sunflower",emoji:"🌻",zone:"sunny"}
-    ]
-  },
-  {
-    title:"Level 8: Plan like a scientist.",
-    plants:[
-      {name:"Rice",emoji:"🌾",zone:"pond"},
-      {name:"Bougainvillea",emoji:"🌸",zone:"sunny"},
-      {name:"Cactus",emoji:"🌵",zone:"dry"}
-    ]
-  },
-  {
-    title:"Level 9: Advanced garden challenge.",
-    plants:[
-      {name:"Money Plant",emoji:"🪴",zone:"shade"},
-      {name:"Carrot",emoji:"🥕",zone:"rich"},
-      {name:"Water Lily",emoji:"🪷",zone:"pond"}
-    ]
-  },
-  {
-    title:"Final Level: Complete the science garden.",
-    plants:[
-      {name:"Rose",emoji:"🌹",zone:"rich"},
-      {name:"Fern",emoji:"🌿",zone:"shade"},
-      {name:"Sunflower",emoji:"🌻",zone:"sunny"},
-      {name:"Aloe Vera",emoji:"🪴",zone:"dry"},
-      {name:"Lotus",emoji:"🪷",zone:"pond"}
-    ]
-  }
-];
 
-let currentLevel=0;
-let score=0;
-let placed=0;
-let totalInLevel=0;
-let muted=false;
-let draggedElement=null;
-let touchClone=null;
+/* =========================
+   SPLASH SCREEN
+========================= */
 
-const correctSound=document.getElementById("correctSound");
-const wrongSound=document.getElementById("wrongSound");
-const clapSound=document.getElementById("clapSound");
-const volume=document.getElementById("volume");
+setTimeout(()=>{
 
-window.addEventListener("load",function(){
-  document.getElementById("game").style.display="none";
+document.getElementById(
+"splashScreen"
+).style.display="none";
 
-  setTimeout(function(){
-    document.getElementById("splash").style.display="none";
-    document.getElementById("game").style.display="block";
-  },5000);
-});
+document.getElementById(
+"introScreen"
+).style.display="flex";
 
-volume.addEventListener("input",function(){
-  correctSound.volume=volume.value;
-  wrongSound.volume=volume.value;
-  clapSound.volume=volume.value;
-});
+},1500);
 
-function playSound(sound){
-  if(muted)return;
-  sound.currentTime=0;
-  sound.volume=volume.value;
-  sound.play().catch(function(){});
-}
-
-function toggleMute(){
-  muted=!muted;
-  document.getElementById("muteBtn").textContent=muted?"Sound: Off":"Sound: On";
-}
-
-function showScreen(id){
-  document.querySelectorAll(".screen").forEach(function(screen){
-    screen.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
-}
+/* =========================
+   START GAME
+========================= */
 
 function startGame(){
-  currentLevel=0;
-  score=0;
-  loadLevel();
-  showScreen("play");
+
+document.getElementById(
+"introScreen"
+).style.display="none";
+
+document.getElementById(
+"gameScreen"
+).style.display="block";
+
+createWordBank();
+
 }
 
-function shuffle(array){
-  for(let i=array.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [array[i],array[j]]=[array[j],array[i]];
-  }
-  return array;
+/* =========================
+   CORRECT ANSWERS
+========================= */
+
+const correctAnswers = {
+
+box1:
+"Preparation of Soil",
+
+box2:
+"Sowing",
+
+box3:
+"Adding Manures & Fertilisers",
+
+box4:
+"Irrigation",
+
+box5:
+"Weeding",
+
+box6:
+"Harvesting",
+
+box7:
+"Threshing",
+
+box8:
+"Storage"
+
+};
+
+/* =========================
+   WORD LIST
+========================= */
+
+const words = [
+
+"Preparation of Soil",
+
+"Sowing",
+
+"Adding Manures & Fertilisers",
+
+"Irrigation",
+
+"Weeding",
+
+"Harvesting",
+
+"Threshing",
+
+"Storage"
+
+];
+
+let selectedWord = null;
+let selectedTile = null;
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffleArray(array){
+
+const copy = [...array];
+
+for(
+let i=copy.length-1;
+i>0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+copy[i],
+copy[j]
+]
+=
+[
+copy[j],
+copy[i]
+];
+
 }
 
-function loadLevel(){
-  placed=0;
-  clearZones();
+return copy;
 
-  const level=levels[currentLevel];
-  const plants=shuffle([...level.plants]);
-  totalInLevel=plants.length;
-
-  document.getElementById("taskTitle").textContent=level.title;
-  document.getElementById("levelText").textContent=currentLevel+1;
-  document.getElementById("scoreText").textContent=score;
-  document.getElementById("placedText").textContent=placed;
-  document.getElementById("totalText").textContent=totalInLevel;
-  document.getElementById("feedback").textContent="";
-
-  const tray=document.getElementById("plantTray");
-  tray.innerHTML="";
-
-  plants.forEach(function(plant,index){
-    const card=document.createElement("div");
-    card.className="plant";
-    card.draggable=true;
-    card.dataset.zone=plant.zone;
-    card.dataset.name=plant.name;
-    card.id="plant-"+currentLevel+"-"+index;
-
-    card.innerHTML=
-      '<div class="emoji">'+plant.emoji+'</div>'+
-      '<div class="name">'+plant.name+'</div>';
-
-    addDragEvents(card);
-    addTouchEvents(card);
-    tray.appendChild(card);
-  });
 }
 
-function clearZones(){
-  document.querySelectorAll(".zone").forEach(function(zone){
-    zone.classList.remove("over");
-    const heading=zone.querySelector("h3").outerHTML;
-    zone.innerHTML=heading;
-  });
-}
+/* =========================
+   WORD BANK
+========================= */
 
-function addDragEvents(card){
-  card.addEventListener("dragstart",function(e){
-    draggedElement=card;
-    e.dataTransfer.setData("text/plain",card.id);
-  });
+function createWordBank(){
 
-  card.addEventListener("dragend",function(){
-    draggedElement=null;
-  });
-}
+const container =
+document.getElementById(
+"wordsContainer"
+);
 
-document.querySelectorAll(".zone").forEach(function(zone){
-  zone.addEventListener("dragover",function(e){
-    e.preventDefault();
-    zone.classList.add("over");
-  });
+container.innerHTML="";
 
-  zone.addEventListener("dragleave",function(){
-    zone.classList.remove("over");
-  });
+const shuffled =
+shuffleArray(words);
 
-  zone.addEventListener("drop",function(e){
-    e.preventDefault();
-    zone.classList.remove("over");
+shuffled.forEach(word=>{
 
-    const id=e.dataTransfer.getData("text/plain");
-    const plant=document.getElementById(id);
-    checkPlacement(plant,zone);
-  });
+const tile =
+document.createElement(
+"div"
+);
+
+tile.className =
+"wordTile";
+
+tile.innerHTML =
+word;
+
+tile.onclick =
+()=>selectWord(
+tile,
+word
+);
+
+container.appendChild(
+tile
+);
+
 });
 
-function checkPlacement(plant,zone){
-  if(!plant || plant.classList.contains("placed"))return;
+}
+/* =========================
+   SELECT WORD
+========================= */
 
-  const correctZone=plant.dataset.zone;
-  const droppedZone=zone.dataset.zone;
+function selectWord(
+tile,
+word
+){
 
-  if(correctZone===droppedZone){
-    plant.classList.add("correct","placed");
-    plant.draggable=false;
-    zone.appendChild(plant);
+document
+.querySelectorAll(
+".wordTile"
+)
+.forEach(
+t=>t.classList.remove(
+"wordSelected"
+)
+);
 
-    score+=10;
-    placed++;
+tile.classList.add(
+"wordSelected"
+);
 
-    playSound(correctSound);
-    sparkleBurst();
-    document.getElementById("feedback").textContent="Correct! The plant has been placed well.";
-  }else{
-    plant.classList.add("wrong");
-    playSound(wrongSound);
-    document.getElementById("feedback").textContent="Try again. Choose another garden zone.";
+selectedWord =
+word;
 
-    setTimeout(function(){
-      plant.classList.remove("wrong");
-    },500);
-  }
+selectedTile =
+tile;
 
-  updateScore();
-
-  if(placed===totalInLevel){
-    setTimeout(nextLevel,1200);
-  }
 }
 
-function updateScore(){
-  document.getElementById("scoreText").textContent=score;
-  document.getElementById("placedText").textContent=placed;
+/* =========================
+   DROP BOX CLICK EVENTS
+========================= */
+
+document
+.querySelectorAll(
+".dropBox"
+)
+.forEach(box=>{
+
+box.addEventListener(
+"click",
+()=>placeWord(box)
+);
+
+});
+
+/* =========================
+   PLACE WORD
+========================= */
+
+function placeWord(
+box
+){
+
+if(
+!selectedWord
+){
+
+document
+.getElementById(
+"feedback"
+)
+.innerHTML =
+
+"⚠️ Select a word first.";
+
+return;
+
 }
 
-function nextLevel(){
-  currentLevel++;
+/* RETURN OLD WORD */
 
-  if(currentLevel>=levels.length){
-    endGame();
-  }else{
-    loadLevel();
-  }
+if(
+box.dataset.word
+){
+
+restoreWord(
+box.dataset.word
+);
+
 }
 
-function endGame(){
-  showScreen("result");
-  playSound(clapSound);
+/* PLACE NEW WORD */
 
-  const maxScore=levels.reduce(function(sum,level){
-    return sum+level.plants.length*10;
-  },0);
+box.innerHTML =
+selectedWord;
 
-  const percent=Math.round((score/maxScore)*100);
+box.dataset.word =
+selectedWord;
 
-  let stars="⭐";
-  let message="Good effort! Revise where different plants grow best.";
+box.classList.add(
+"filled"
+);
 
-  if(percent>=90){
-    stars="⭐⭐⭐";
-    message="Excellent! You planned a healthy science garden.";
-  }else if(percent>=70){
-    stars="⭐⭐";
-    message="Well done! Your garden shows good plant knowledge.";
-  }
+/* REMOVE TILE */
 
-  document.getElementById("finalStars").textContent=stars;
-  document.getElementById("finalScore").textContent="Final Score: "+score+" / "+maxScore;
-  document.getElementById("finalMessage").textContent=message;
+selectedTile.classList.add(
+"wordUsed"
+);
+
+selectedTile.classList.remove(
+"wordSelected"
+);
+
+selectedWord = null;
+selectedTile = null;
+
+document
+.getElementById(
+"feedback"
+)
+.innerHTML =
+
+"";
+
 }
 
-function restartGame(){
-  currentLevel=0;
-  score=0;
-  loadLevel();
-  showScreen("play");
+/* =========================
+   RESTORE WORD
+========================= */
+
+function restoreWord(
+word
+){
+
+const tiles =
+document.querySelectorAll(
+".wordTile"
+);
+
+tiles.forEach(tile=>{
+
+if(
+tile.innerHTML ===
+word
+){
+
+tile.classList.remove(
+"wordUsed"
+);
+
 }
 
-function sparkleBurst(){
-  for(let i=0;i<14;i++){
-    const sparkle=document.createElement("div");
-    sparkle.className="sparkle";
-    sparkle.textContent=["🌟","✨","🌼","🍃"][Math.floor(Math.random()*4)];
-    sparkle.style.left=Math.random()*window.innerWidth+"px";
-    sparkle.style.top=(window.innerHeight*0.35+Math.random()*160)+"px";
-    document.body.appendChild(sparkle);
+});
 
-    setTimeout(function(){
-      sparkle.remove();
-    },900);
-  }
 }
 
-function addTouchEvents(card){
-  card.addEventListener("touchstart",function(e){
-    if(card.classList.contains("placed"))return;
+/* =========================
+   RESET BOXES
+========================= */
 
-    draggedElement=card;
-    touchClone=card.cloneNode(true);
-    touchClone.classList.add("dragging-clone");
-    document.body.appendChild(touchClone);
+function clearHighlights(){
 
-    moveTouchClone(e.touches[0]);
-  },{passive:false});
+document
+.querySelectorAll(
+".dropBox"
+)
+.forEach(box=>{
 
-  card.addEventListener("touchmove",function(e){
-    if(!touchClone)return;
-    e.preventDefault();
-    moveTouchClone(e.touches[0]);
-  },{passive:false});
+box.style.border =
+"3px dashed #90caf9";
 
-  card.addEventListener("touchend",function(e){
-    if(!touchClone || !draggedElement)return;
+box.style.background =
+"white";
 
-    const touch=e.changedTouches[0];
-    const target=document.elementFromPoint(touch.clientX,touch.clientY);
-    const zone=target?target.closest(".zone"):null;
+});
 
-    touchClone.remove();
-    touchClone=null;
-
-    if(zone){
-      checkPlacement(draggedElement,zone);
-    }
-
-    draggedElement=null;
-  },{passive:false});
 }
 
-function moveTouchClone(touch){
-  touchClone.style.left=touch.clientX-60+"px";
-  touchClone.style.top=touch.clientY-50+"px";
+/* =========================
+   COUNT FILLED BOXES
+========================= */
+
+function countFilledBoxes(){
+
+let count = 0;
+
+document
+.querySelectorAll(
+".dropBox"
+)
+.forEach(box=>{
+
+if(
+box.dataset.word
+){
+
+count++;
+
 }
+
+});
+
+return count;
+
+}
+/* =========================
+   CHECK ANSWERS
+========================= */
+
+function checkAnswers(){
+
+clearHighlights();
+
+if(
+countFilledBoxes() < 8
+){
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+"⚠️ Fill all 8 blanks first.";
+
+return;
+
+}
+
+let allCorrect = true;
+
+Object.keys(
+correctAnswers
+).forEach(boxId=>{
+
+const box =
+document.getElementById(
+boxId
+);
+
+const userAnswer =
+box.dataset.word;
+
+const correctAnswer =
+correctAnswers[
+boxId
+];
+
+if(
+userAnswer ===
+correctAnswer
+){
+
+box.style.background =
+"#e8f5e9";
+
+box.style.border =
+"3px solid #43a047";
+
+}
+else{
+
+box.style.background =
+"#ffebee";
+
+box.style.border =
+"3px solid #e53935";
+
+allCorrect = false;
+
+}
+
+});
+
+/* =========================
+   ALL CORRECT
+========================= */
+
+if(allCorrect){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+"🎉 Excellent! All farming steps are correct.";
+
+setTimeout(()=>{
+
+showCertificate();
+
+},1800);
+
+}
+
+/* =========================
+   SOME WRONG
+========================= */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+"❌ Some answers are incorrect. Check the red boxes and try again.";
+
+}
+
+}
+
+/* =========================
+   CERTIFICATE
+========================= */
+
+function showCertificate(){
+
+const clapSound =
+document.getElementById(
+"clapSound"
+);
+
+clapSound.currentTime = 0;
+
+clapSound.play().catch(()=>{});
+
+document.querySelector(
+".mainCard"
+).innerHTML =
+
+`
+<div
+style="
+text-align:center;
+padding:20px;
+">
+
+<img
+src="assets/innovine-logo.png"
+style="
+width:220px;
+margin-bottom:20px;
+">
+
+<h1
+style="
+font-size:3rem;
+color:#2e7d32;
+margin-bottom:15px;
+">
+
+🏆 FARMING MASTER
+
+</h1>
+
+<div
+style="
+font-size:4rem;
+margin-bottom:20px;
+">
+
+🚜 🌱 💧 🌾
+
+</div>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+max-width:800px;
+margin:auto;
+">
+
+Congratulations!
+
+<br><br>
+
+You successfully identified all stages of crop production.
+
+</p>
+
+<br>
+
+<div
+style="
+font-size:1.2rem;
+line-height:2;
+color:#2e7d32;
+font-weight:bold;
+">
+
+1. Preparation of Soil<br>
+2. Sowing<br>
+3. Adding Manures & Fertilisers<br>
+4. Irrigation<br>
+5. Weeding<br>
+6. Harvesting<br>
+7. Threshing<br>
+8. Storage
+
+</div>
+
+<br>
+
+<button
+
+onclick="playAgain()"
+
+style="
+padding:18px 40px;
+border:none;
+border-radius:20px;
+background:#43a047;
+color:white;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 PLAY AGAIN
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =========================
+   PLAY AGAIN
+========================= */
+
+function playAgain(){
+
+location.reload();
+
+}
+
 </script>
 
 </body>
