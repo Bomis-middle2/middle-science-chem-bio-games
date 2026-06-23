@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Habitat Explorer Adventure</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+🕵️ Adaptation Detective
+
+</title>
 
 <style>
+
+/* =========================
+   RESET
+========================= */
 
 *{
 margin:0;
@@ -17,16 +29,24 @@ box-sizing:border-box;
 
 body{
 
-font-family:'Trebuchet MS',sans-serif;
+font-family:
+'Trebuchet MS',
+sans-serif;
 
 min-height:100vh;
 
+/* FADED BACKGROUND */
+
 background:
-url('assets/bg (1).png')
-center center
-/ cover
-no-repeat
-fixed;
+linear-gradient(
+rgba(255,255,255,.82),
+rgba(255,255,255,.82)
+),
+url('assets/bg (1).png');
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 
 overflow-x:hidden;
 
@@ -51,7 +71,6 @@ background:white;
 display:flex;
 
 justify-content:center;
-
 align-items:center;
 
 z-index:9999;
@@ -60,24 +79,28 @@ z-index:9999;
 
 #splashLogo{
 
-width:350px;
-
+width:320px;
 max-width:85%;
 
-animation:logoZoom 1.5s ease;
+animation:
+logoZoom 1.5s ease;
 
 }
 
 @keyframes logoZoom{
 
 0%{
+
 opacity:0;
-transform:scale(.7);
+transform:scale(.6);
+
 }
 
 100%{
+
 opacity:1;
 transform:scale(1);
+
 }
 
 }
@@ -93,7 +116,6 @@ display:none;
 min-height:100vh;
 
 justify-content:center;
-
 align-items:center;
 
 padding:20px;
@@ -102,22 +124,21 @@ padding:20px;
 
 .instructionCard{
 
-max-width:900px;
+background:
+rgba(255,255,255,.96);
 
+max-width:1000px;
 width:100%;
 
-background:
-rgba(255,255,255,.95);
-
-padding:40px;
-
 border-radius:30px;
+
+padding:35px;
 
 text-align:center;
 
 box-shadow:
 0 10px 30px
-rgba(0,0,0,.25);
+rgba(0,0,0,.20);
 
 }
 
@@ -129,17 +150,19 @@ margin-bottom:20px;
 
 }
 
-.title{
+.mainTitle{
 
-font-size:2.5rem;
+font-size:3rem;
+
+font-weight:bold;
 
 color:#2e7d32;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
 
-.instructions{
+.subtitle{
 
 font-size:1.2rem;
 
@@ -147,19 +170,42 @@ line-height:1.8;
 
 color:#444;
 
-margin-bottom:30px;
+max-width:800px;
+
+margin:auto;
+
+}
+
+.professorBox{
+
+margin-top:25px;
+
+background:#f5fff5;
+
+padding:20px;
+
+border-radius:20px;
+
+border:2px solid #a5d6a7;
+
+font-size:1.15rem;
+
+line-height:1.8;
 
 }
 
 .startBtn{
 
-padding:16px 40px;
+margin-top:25px;
+
+padding:
+18px 45px;
 
 border:none;
 
 border-radius:20px;
 
-background:#1976d2;
+background:#43a047;
 
 color:white;
 
@@ -191,17 +237,59 @@ padding:20px;
 
 }
 
-/* HUD */
+/* =========================
+   HEADER
+========================= */
+
+.gameHeader{
+
+max-width:1200px;
+
+margin:auto;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.gameLogo{
+
+width:180px;
+
+margin-bottom:10px;
+
+}
+
+.gameTitle{
+
+font-size:2.7rem;
+
+font-weight:bold;
+
+color:#ef6c00;
+
+text-shadow:
+2px 2px 0 white;
+
+}
+
+/* =========================
+   HUD
+========================= */
 
 .hud{
 
-display:flex;
+display:grid;
 
-justify-content:center;
+grid-template-columns:
+repeat(4,1fr);
 
 gap:15px;
 
-flex-wrap:wrap;
+max-width:1200px;
+
+margin:auto;
 
 margin-bottom:20px;
 
@@ -209,45 +297,92 @@ margin-bottom:20px;
 
 .hudBox{
 
-background:
-rgba(255,255,255,.95);
+padding:18px;
 
-padding:12px 20px;
-
-border-radius:15px;
+border-radius:18px;
 
 font-weight:bold;
 
-font-size:1.05rem;
+font-size:1.2rem;
+
+text-align:center;
+
+color:white;
 
 box-shadow:
-0 3px 10px
-rgba(0,0,0,.2);
+0 5px 15px
+rgba(0,0,0,.15);
 
 }
 
-/* GAME CARD */
+.scoreBox{
 
-.gameCard{
+background:#1976d2;
 
-max-width:1100px;
+}
+
+.lifeBox{
+
+background:#e53935;
+
+}
+
+.badgeBox{
+
+background:#8e24aa;
+
+}
+
+.questionBox{
+
+background:#43a047;
+
+}
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.mainCard{
+
+max-width:1200px;
 
 margin:auto;
 
 background:
-rgba(255,255,255,.95);
-
-padding:25px;
+rgba(255,255,255,.96);
 
 border-radius:30px;
 
+padding:25px;
+
 box-shadow:
-0 10px 25px
-rgba(0,0,0,.25);
+0 10px 30px
+rgba(0,0,0,.20);
 
 }
 
-.questionTitle{
+/* QUESTION */
+
+.questionLabel{
+
+background:#4caf50;
+
+color:white;
+
+padding:10px 20px;
+
+border-radius:20px;
+
+display:inline-block;
+
+font-weight:bold;
+
+margin-bottom:20px;
+
+}
+
+.questionText{
 
 text-align:center;
 
@@ -255,17 +390,24 @@ font-size:2rem;
 
 font-weight:bold;
 
-color:#5d4037;
+color:#333;
 
-margin-bottom:20px;
+line-height:1.4;
+
+margin-bottom:25px;
 
 }
 
-.habitatFrame{
+/* HABITAT AREA */
 
-display:flex;
+.habitatSection{
 
-justify-content:center;
+display:grid;
+
+grid-template-columns:
+2fr 1fr;
+
+gap:25px;
 
 margin-bottom:25px;
 
@@ -273,9 +415,7 @@ margin-bottom:25px;
 
 .habitatImage{
 
-width:650px;
-
-max-width:100%;
+width:100%;
 
 border-radius:20px;
 
@@ -283,91 +423,160 @@ border:5px solid #fbc02d;
 
 }
 
-/* OPTIONS */
+.professorPanel{
 
-.optionArea{
+background:#fffde7;
+
+border:2px solid #fbc02d;
+
+border-radius:20px;
+
+padding:20px;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+font-size:1.1rem;
+
+line-height:1.8;
+
+font-weight:bold;
+
+color:#5d4037;
+
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.optionsGrid{
 
 display:grid;
 
-grid-template-columns:1fr 1fr;
+grid-template-columns:
+1fr 1fr;
 
-gap:20px;
+gap:15px;
 
 margin-top:20px;
 
 }
 
-.optionBtn{
+.optionCard{
 
-padding:20px;
+padding:18px;
 
-border:none;
-
-border-radius:20px;
-
-font-size:1.3rem;
-
-font-weight:bold;
+border-radius:18px;
 
 cursor:pointer;
-
-color:white;
-
-transition:.2s;
-
-}
-
-.optionBtn:hover{
-
-transform:scale(1.03);
-
-}
-
-.aquaticBtn{
-
-background:#2196f3;
-
-}
-
-.terrestrialBtn{
-
-background:#43a047;
-
-}
-
-/* FEEDBACK */
-
-#feedback{
-
-margin-top:25px;
-
-min-height:90px;
 
 font-size:1.15rem;
 
 font-weight:bold;
 
-text-align:center;
+border:none;
+
+transition:.3s;
+
+text-align:left;
 
 }
 
-/* MOBILE */
+.optionCard:hover{
 
-@media(max-width:768px){
+transform:translateY(-3px);
 
-.optionArea{
+}
+
+.optionA{
+
+background:#e8f5e9;
+
+}
+
+.optionB{
+
+background:#e3f2fd;
+
+}
+
+.optionC{
+
+background:#fff8e1;
+
+}
+
+.optionD{
+
+background:#fce4ec;
+
+}
+
+/* =========================
+   FEEDBACK
+========================= */
+
+#feedbackArea{
+
+margin-top:25px;
+
+min-height:120px;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+.habitatSection{
 
 grid-template-columns:1fr;
 
 }
 
-.questionTitle{
+.hud{
+
+grid-template-columns:
+1fr 1fr;
+
+}
+
+.questionText{
 
 font-size:1.4rem;
 
 }
 
-.title{
+.gameTitle{
+
+font-size:2rem;
+
+}
+
+}
+
+@media(max-width:650px){
+
+.optionsGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.hud{
+
+grid-template-columns:1fr;
+
+}
+
+.mainTitle{
 
 font-size:2rem;
 
@@ -387,41 +596,57 @@ font-size:2rem;
 
 <img
 id="splashLogo"
-src="assets/innovine-logo.png"
-alt="Innovine Logo">
+src="assets/innovine-logo.png">
 
 </div>
 
-<!-- INSTRUCTION SCREEN -->
+<!-- INSTRUCTIONS -->
 
 <div id="instructionScreen">
 
 <div class="instructionCard">
 
 <img
-class="logo"
 src="assets/innovine-logo.png"
-alt="Innovine Logo">
+class="logo">
 
-<h1 class="title">
+<h1 class="mainTitle">
 
-🌍 Habitat Explorer Adventure
+🕵️ ADAPTATION DETECTIVE
 
 </h1>
 
-<div class="instructions">
+<div class="subtitle">
 
-Professor Habitat needs your help!
-
-<br><br>
-
-Explore different habitats, collect habitat badges, and become a
-
-<b>Master Habitat Explorer</b> 🏆
+Look carefully at each habitat.
 
 <br><br>
 
-Identify whether each habitat belongs to the Aquatic or Terrestrial category.
+Identify the adaptation that would best help an animal survive there.
+
+<br><br>
+
+Collect adaptation badges and become a
+
+<b>
+
+Master Adaptation Detective
+
+</b>
+
+🏆
+
+</div>
+
+<div class="professorBox">
+
+🦉 <b>Professor Habitat says:</b>
+
+<br><br>
+
+"A good detective doesn't guess.
+
+Observe the habitat carefully and think about what adaptation would help an animal survive there."
 
 </div>
 
@@ -429,7 +654,7 @@ Identify whether each habitat belongs to the Aquatic or Terrestrial category.
 class="startBtn"
 onclick="startGame()">
 
-START EXPLORING
+🚀 START ADVENTURE
 
 </button>
 
@@ -441,79 +666,117 @@ START EXPLORING
 
 <div id="gameScreen">
 
+<div class="gameHeader">
+
+<img
+src="assets/innovine-logo.png"
+class="gameLogo">
+
+<div class="gameTitle">
+
+🕵️ ADAPTATION DETECTIVE
+
+</div>
+
+</div>
+
 <div class="hud">
 
-<div class="hudBox">
+<div class="hudBox scoreBox">
 
 ⭐ Score:
-<span id="score">0</span>
+<span id="score">
+
+0
+
+</span>
 
 </div>
 
-<div class="hudBox">
+<div class="hudBox lifeBox">
 
 ❤️ Chances:
-<span id="chances">2</span>
+<span id="chances">
+
+2
+
+</span>
 
 </div>
 
-<div class="hudBox">
+<div class="hudBox badgeBox">
 
 🏅 Badges:
-<span id="badgeCount">0</span>
+<span id="badges">
+
+0
+
+</span>
 
 </div>
 
-<div class="hudBox">
+<div class="hudBox questionBox">
 
-🌍 Question:
-<span id="questionNo">1</span>/5
+📋 Question:
+<span id="questionNo">
+
+1
+
+</span>/5
 
 </div>
 
 </div>
 
-<div class="gameCard">
+<div class="mainCard">
+
+<center>
+
+<div class="questionLabel">
+
+LOOK AT THE HABITAT IMAGE CAREFULLY
+
+</div>
+
+</center>
 
 <div
-id="questionTitle"
-class="questionTitle">
+id="questionText"
+class="questionText">
 
 Loading...
 
 </div>
 
-<div class="habitatFrame">
+<div class="habitatSection">
+
+<div>
 
 <img
 id="habitatImage"
-class="habitatImage"
-src=""
-alt="Habitat">
+class="habitatImage">
 
 </div>
 
-<div class="optionArea">
+<div
+id="professorPanel"
+class="professorPanel">
 
-<button
-class="optionBtn aquaticBtn"
-onclick="checkAnswer('aquatic')">
+Think like a detective.
 
-🌊 AQUATIC
-
-</button>
-
-<button
-class="optionBtn terrestrialBtn"
-onclick="checkAnswer('terrestrial')">
-
-🌿 TERRESTRIAL
-
-</button>
+Choose the adaptation that best helps an animal survive in this habitat.
 
 </div>
 
-<div id="feedback">
+</div>
+
+<div
+id="optionsGrid"
+class="optionsGrid">
+
+</div>
+
+<div id="feedbackArea">
 
 </div>
 
@@ -540,39 +803,36 @@ src="assets/freesound_community-claps-44774.mp3">
 
 <script>
 
-/* =========================
-   SPLASH
-========================= */
+/* SPLASH */
 
 setTimeout(()=>{
 
 document.getElementById(
 "splashScreen"
-).style.display = "none";
+).style.display="none";
 
 document.getElementById(
 "instructionScreen"
-).style.display = "flex";
+).style.display="flex";
 
 },1500);
 
-/* =========================
-   START GAME
-========================= */
+/* START */
 
 function startGame(){
 
 document.getElementById(
 "instructionScreen"
-).style.display = "none";
+).style.display="none";
 
 document.getElementById(
 "gameScreen"
-).style.display = "block";
+).style.display="block";
 
 loadQuestion();
 
 }
+
 /* =========================
    GAME VARIABLES
 ========================= */
@@ -588,60 +848,150 @@ let currentQuestion = 0;
 let waiting = false;
 
 /* =========================
-   HABITAT QUESTIONS
+   QUESTION BANK
 ========================= */
 
 const questions = [
 
 {
-name:"Desert Habitat",
+habitat:"Desert Habitat",
+
 image:"assets/desert.png",
-answer:"terrestrial",
-badge:"🏜️",
+
 animal:"🐪 Camel Guide",
-fact:"Deserts are terrestrial habitats with very little rainfall."
+
+fact:
+"Long eyelashes protect desert animals from blowing sand.",
+
+answer:
+"👁️ Long eyelashes to keep out sand",
+
+options:[
+
+"👁️ Long eyelashes to keep out sand",
+
+"🐟 Gills for breathing underwater",
+
+"🐻 Thick blubber for warmth",
+
+"🦆 Webbed feet for swimming"
+
+]
+
 },
 
 {
-name:"Aquatic Habitat",
+habitat:"Aquatic Habitat",
+
 image:"assets/aquatic.png",
-answer:"aquatic",
-badge:"🌊",
+
 animal:"🐠 Fish Guide",
-fact:"Aquatic habitats are found in water."
+
+fact:
+"Gills help aquatic animals obtain oxygen from water.",
+
+answer:
+"🐟 Gills for breathing underwater",
+
+options:[
+
+"👁️ Long eyelashes to keep out sand",
+
+"🐟 Gills for breathing underwater",
+
+"🐻 Thick blubber for warmth",
+
+"🦶 Strong claws for digging"
+
+]
+
 },
 
 {
-name:"Grassland Habitat",
-image:"assets/grassland.png",
-answer:"terrestrial",
-badge:"🌾",
-animal:"🦒 Giraffe Guide",
-fact:"Grasslands are terrestrial habitats with large open fields."
-},
+habitat:"Polar Habitat",
 
-{
-name:"Polar Habitat",
 image:"assets/polar.png",
-answer:"terrestrial",
-badge:"❄️",
+
 animal:"🐧 Penguin Guide",
-fact:"Polar regions are cold terrestrial habitats."
+
+fact:
+"Blubber keeps animals warm in freezing temperatures.",
+
+answer:
+"🐻 Thick blubber for warmth",
+
+options:[
+
+"🐻 Thick blubber for warmth",
+
+"👁️ Long eyelashes to keep out sand",
+
+"🐟 Gills for breathing underwater",
+
+"🦶 Strong claws for digging"
+
+]
+
 },
 
 {
-name:"Rainforest Habitat",
+habitat:"Rainforest Habitat",
+
 image:"assets/rainforest.png",
-answer:"terrestrial",
-badge:"🌴",
+
 animal:"🐒 Monkey Guide",
-fact:"Rainforests are dense terrestrial habitats with heavy rainfall."
+
+fact:
+"A grasping tail helps animals move between branches.",
+
+answer:
+"🐒 Grasping tail for climbing trees",
+
+options:[
+
+"🐒 Grasping tail for climbing trees",
+
+"🐻 Thick blubber for warmth",
+
+"👁️ Long eyelashes to keep out sand",
+
+"🐟 Gills for breathing underwater"
+
+]
+
+},
+
+{
+habitat:"Grassland Habitat",
+
+image:"assets/grassland.png",
+
+animal:"🦒 Giraffe Guide",
+
+fact:
+"Eyes on the sides of the head help animals spot predators quickly.",
+
+answer:
+"👀 Eyes on the sides of the head",
+
+options:[
+
+"👀 Eyes on the sides of the head",
+
+"🐟 Gills for breathing underwater",
+
+"🐻 Thick blubber for warmth",
+
+"👁️ Long eyelashes to keep out sand"
+
+]
+
 }
 
 ];
 
 /* =========================
-   RANDOMIZE QUESTIONS
+   SHUFFLE QUESTIONS
 ========================= */
 
 function shuffleQuestions(){
@@ -674,6 +1024,44 @@ questions[i]
 shuffleQuestions();
 
 /* =========================
+   SHUFFLE OPTIONS
+========================= */
+
+function shuffleArray(
+array
+){
+
+const copy =
+[...array];
+
+for(
+let i = copy.length - 1;
+i > 0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+[
+copy[i],
+copy[j]
+]
+=
+[
+copy[j],
+copy[i]
+];
+
+}
+
+return copy;
+
+}
+
+/* =========================
    UPDATE HUD
 ========================= */
 
@@ -690,17 +1078,14 @@ document.getElementById(
 chances;
 
 document.getElementById(
-"badgeCount"
+"badges"
 ).innerHTML =
 badges;
 
 document.getElementById(
 "questionNo"
 ).innerHTML =
-Math.min(
-currentQuestion + 1,
-5
-);
+currentQuestion + 1;
 
 }
 
@@ -715,25 +1100,25 @@ currentQuestion >=
 questions.length
 ){
 
-showTreeChallenge();
+showFinalChallenge();
 
 return;
 
 }
+
+updateHUD();
 
 const q =
 questions[
 currentQuestion
 ];
 
-updateHUD();
-
 document.getElementById(
-"questionTitle"
+"questionText"
 ).innerHTML =
 
 `
-Which type of habitat is this?
+Which adaptation would best help an animal survive in this habitat?
 
 <br><br>
 
@@ -743,7 +1128,7 @@ color:#1976d2;
 font-size:1.3rem;
 ">
 
-${q.name}
+${q.habitat}
 
 </span>
 `;
@@ -754,103 +1139,60 @@ document.getElementById(
 q.image;
 
 document.getElementById(
-"feedback"
-).innerHTML =
+"feedbackArea"
+).innerHTML = "";
 
-`
-<div
-style="
-color:#555;
-">
-
-Look carefully at the habitat image and choose the correct category.
-
-</div>
-`;
-
-}
-
-/* =========================
-   BADGE REWARD
-========================= */
-
-function earnBadge(){
-
-badges++;
-
-updateHUD();
-
-}
-
-/* =========================
-   ANIMAL FEEDBACK
-========================= */
-
-function showAnimalFeedback(
-animal,
-fact,
-isCorrect
-){
-
-const feedback =
+const optionsGrid =
 document.getElementById(
-"feedback"
+"optionsGrid"
 );
 
-if(isCorrect){
+optionsGrid.innerHTML = "";
 
-feedback.innerHTML =
+const shuffledOptions =
+shuffleArray(
+q.options
+);
 
-`
-<div
-style="
-background:#e8f5e9;
-padding:15px;
-border-radius:15px;
-color:#2e7d32;
-">
+const classes = [
 
-<h3>
+"optionA",
+"optionB",
+"optionC",
+"optionD"
 
-${animal}
+];
 
-</h3>
+shuffledOptions.forEach(
 
-<br>
+(
+option,
+index
+)=>{
 
-✅ ${fact}
+const btn =
+document.createElement(
+"button"
+);
 
-</div>
-`;
+btn.className =
+`optionCard ${classes[index]}`;
 
-}
-else{
+btn.innerHTML =
+option;
 
-feedback.innerHTML =
+btn.onclick =
+()=>checkAnswer(
+option
+);
 
-`
-<div
-style="
-background:#ffebee;
-padding:15px;
-border-radius:15px;
-color:#c62828;
-">
-
-<h3>
-
-${animal}
-
-</h3>
-
-<br>
-
-❌ That's not correct.
-
-</div>
-`;
+optionsGrid.appendChild(
+btn
+);
 
 }
+
+);
 
 }
 
@@ -859,7 +1201,7 @@ ${animal}
 ========================= */
 
 function checkAnswer(
-selectedAnswer
+selectedOption
 ){
 
 if(waiting){
@@ -880,7 +1222,7 @@ currentQuestion
 ========================= */
 
 if(
-selectedAnswer ===
+selectedOption ===
 q.answer
 ){
 
@@ -895,15 +1237,68 @@ correctSound.play().catch(()=>{});
 
 score += 10;
 
-earnBadge();
+badges++;
 
 updateHUD();
 
-showAnimalFeedback(
-q.animal,
-q.fact,
-true
-);
+document.getElementById(
+"feedbackArea"
+).innerHTML =
+
+`
+<div
+style="
+background:#e8f5e9;
+border:3px solid #4caf50;
+padding:20px;
+border-radius:20px;
+text-align:center;
+">
+
+<h2
+style="
+color:#2e7d32;
+margin-bottom:10px;
+">
+
+✅ Excellent Detective Work!
+
+</h2>
+
+<div
+style="
+font-size:1.2rem;
+font-weight:bold;
+margin-bottom:10px;
+">
+
+${q.animal}
+
+</div>
+
+<div
+style="
+font-size:1.1rem;
+line-height:1.7;
+">
+
+${q.fact}
+
+</div>
+
+<br>
+
+<div
+style="
+font-size:1.4rem;
+">
+
+🏅 Habitat Badge Earned!
+
+</div>
+
+</div>
+`;
 
 setTimeout(()=>{
 
@@ -913,7 +1308,7 @@ waiting = false;
 
 loadQuestion();
 
-},2200);
+},2500);
 
 }
 
@@ -936,60 +1331,144 @@ chances--;
 
 updateHUD();
 
-showAnimalFeedback(
-q.animal,
-q.fact,
-false
-);
-
 /* =========================
-   NO CHANCES LEFT
+   ONE CHANCE LEFT
 ========================= */
 
 if(
-chances <= 0
+chances > 0
 ){
 
-setTimeout(()=>{
-
 document.getElementById(
-"feedback"
+"feedbackArea"
 ).innerHTML =
 
 `
 <div
 style="
-background:#fff3e0;
-padding:18px;
-border-radius:15px;
-color:#5d4037;
+background:#ffebee;
+border:3px solid #e53935;
+padding:20px;
+border-radius:20px;
+text-align:center;
 ">
 
-<h3>
+<h2
+style="
+color:#c62828;
+margin-bottom:10px;
+">
 
-📚 Habitat Fact
+❌ Not Quite!
 
-</h3>
+</h2>
+
+<div
+style="
+font-size:1.2rem;
+font-weight:bold;
+margin-bottom:10px;
+">
+
+${q.animal}
+
+</div>
+
+<div
+style="
+font-size:1.1rem;
+line-height:1.7;
+">
+
+Look carefully at the habitat and think again.
+
+</div>
 
 <br>
 
-<b>
+<div
+style="
+font-size:1.1rem;
+color:#d32f2f;
+">
+
+❤️ One chance remaining!
+
+</div>
+
+</div>
+`;
+
+setTimeout(()=>{
+
+waiting = false;
+
+},1000);
+
+}
+
+/* =========================
+   NO CHANCES LEFT
+========================= */
+
+else{
+
+document.getElementById(
+"feedbackArea"
+).innerHTML =
+
+`
+<div
+style="
+background:#fff8e1;
+border:3px solid #ffb300;
+padding:20px;
+border-radius:20px;
+text-align:center;
+">
+
+<h2
+style="
+color:#ef6c00;
+margin-bottom:10px;
+">
+
+📚 Detective Note
+
+</h2>
+
+<div
+style="
+font-size:1.2rem;
+font-weight:bold;
+margin-bottom:10px;
+">
+
+${q.animal}
+
+</div>
+
+<div
+style="
+font-size:1.1rem;
+line-height:1.7;
+">
 
 Correct Answer:
 
-${
-q.answer === "aquatic"
-?
-"🌊 Aquatic"
-:
-"🌿 Terrestrial"
-}
+<br><br>
+
+<b>
+
+${q.answer}
 
 </b>
 
 <br><br>
 
 ${q.fact}
+
+</div>
 
 </div>
 `;
@@ -1006,46 +1485,72 @@ waiting = false;
 
 loadQuestion();
 
-},2500);
+},3500);
 
-},1200);
+}
+
+}
 
 }
 
 /* =========================
-   ONE CHANCE LEFT
+   FINAL CHALLENGE
 ========================= */
 
-else{
-
-setTimeout(()=>{
+function showFinalChallenge(){
 
 document.getElementById(
-"feedback"
-).innerHTML +=
+"questionText"
+).innerHTML =
 
 `
+🏆 FINAL DETECTIVE CHALLENGE
+`;
+
+document.querySelector(
+".habitatSection"
+).style.display =
+"none";
+
+document.getElementById(
+"optionsGrid"
+).innerHTML = "";
+
+document.getElementById(
+"feedbackArea"
+).innerHTML =
+
+`
+<div
+style="
+background:#fffde7;
+padding:25px;
+border-radius:20px;
+text-align:center;
+">
+
+<h2>
+
+🌍 Habitat Classification Challenge
+
+</h2>
 
 <br>
 
-<div
-style="
-color:#c62828;
-">
+Arrange the habitats into the correct category.
 
-❤️ One chance remaining!
+<br><br>
+
+The challenge will begin next.
 
 </div>
-
 `;
 
-waiting = false;
+setTimeout(()=>{
 
-},1000);
+showTreeChallenge();
 
-}
-
-}
+},2500);
 
 }
 
@@ -1053,100 +1558,86 @@ waiting = false;
    TREE CHALLENGE
 ========================= */
 
+let selectedHabitat = null;
+
+const habitatCards = [
+
+{
+name:"Aquatic",
+group:"aquatic",
+emoji:"🌊"
+},
+
+{
+name:"Desert",
+group:"terrestrial",
+emoji:"🏜️"
+},
+
+{
+name:"Grassland",
+group:"terrestrial",
+emoji:"🌾"
+},
+
+{
+name:"Rainforest",
+group:"terrestrial",
+emoji:"🌴"
+},
+
+{
+name:"Polar",
+group:"terrestrial",
+emoji:"❄️"
+}
+
+];
+
+/* =========================
+   SHOW TREE CHALLENGE
+========================= */
+
 function showTreeChallenge(){
 
 document.querySelector(
-".gameCard"
+".habitatSection"
+).style.display =
+"none";
+
+document.getElementById(
+"optionsGrid"
+).innerHTML = "";
+
+document.getElementById(
+"feedbackArea"
 ).innerHTML =
 
 `
-
-<h1
+<div
 style="
 text-align:center;
+">
+
+<h2
+style="
 color:#2e7d32;
 margin-bottom:20px;
 ">
 
-🌳 Final Habitat Tree Challenge
+🌍 Habitat Classification Challenge
 
-</h1>
+</h2>
 
 <p
 style="
-text-align:center;
 font-size:1.1rem;
-margin-bottom:25px;
+margin-bottom:20px;
 ">
 
-Complete the habitat classification tree.
+Tap a habitat card and then tap the correct category.
 
 </p>
-
-<div
-style="
-text-align:center;
-font-size:1.6rem;
-font-weight:bold;
-margin-bottom:25px;
-">
-
-HABITAT
-
-</div>
-
-<div
-style="
-display:flex;
-justify-content:center;
-gap:30px;
-flex-wrap:wrap;
-margin-bottom:30px;
-">
-
-<div
-id="box1"
-onclick="placeCard(1)"
-style="
-width:220px;
-height:90px;
-border:3px dashed #2196f3;
-border-radius:15px;
-display:flex;
-justify-content:center;
-align-items:center;
-background:white;
-font-weight:bold;
-font-size:1.1rem;
-cursor:pointer;
-">
-
-?
-
-</div>
-
-<div
-id="box2"
-onclick="placeCard(2)"
-style="
-width:220px;
-height:90px;
-border:3px dashed #43a047;
-border-radius:15px;
-display:flex;
-justify-content:center;
-align-items:center;
-background:white;
-font-weight:bold;
-font-size:1.1rem;
-cursor:pointer;
-">
-
-?
-
-</div>
-
-</div>
 
 <div
 style="
@@ -1154,67 +1645,141 @@ display:flex;
 justify-content:center;
 gap:20px;
 flex-wrap:wrap;
+margin-bottom:25px;
 ">
 
-<button
-id="aquaticCard"
-class="optionBtn aquaticBtn"
-onclick="selectCard('aquatic')">
+<div
+id="aquaticZone"
+onclick="placeHabitat('aquatic')"
+style="
+width:240px;
+min-height:120px;
+padding:20px;
+background:#e3f2fd;
+border:3px dashed #2196f3;
+border-radius:20px;
+font-weight:bold;
+">
 
-🌊 Aquatic
-
-</button>
-
-<button
-id="terrestrialCard"
-class="optionBtn terrestrialBtn"
-onclick="selectCard('terrestrial')">
-
-🌿 Terrestrial
-
-</button>
+🌊 AQUATIC
 
 </div>
 
 <div
-id="treeFeedback"
+id="terrestrialZone"
+onclick="placeHabitat('terrestrial')"
 style="
-margin-top:25px;
-text-align:center;
-font-size:1.2rem;
+width:240px;
+min-height:120px;
+padding:20px;
+background:#e8f5e9;
+border:3px dashed #43a047;
+border-radius:20px;
 font-weight:bold;
 ">
 
-Tap a card and then tap a box.
+🌿 TERRESTRIAL
 
 </div>
 
+</div>
+
+<div
+id="habitatCards"
+style="
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+">
+
+</div>
+
+<div
+id="treeMessage"
+style="
+margin-top:20px;
+font-size:1.1rem;
+font-weight:bold;
+">
+
+Select a habitat card.
+
+</div>
+
+</div>
 `;
+
+renderHabitatCards();
 
 }
 
 /* =========================
-   TREE VARIABLES
+   RENDER CARDS
 ========================= */
 
-let selectedCard = null;
+function renderHabitatCards(){
 
-let aquaticPlaced = false;
+const container =
+document.getElementById(
+"habitatCards"
+);
 
-let terrestrialPlaced = false;
+container.innerHTML = "";
+
+habitatCards.forEach(
+
+(card,index)=>{
+
+if(card.placed){
+
+return;
+
+}
+
+const btn =
+document.createElement(
+"button"
+);
+
+btn.className =
+"optionCard optionA";
+
+btn.style.minWidth =
+"160px";
+
+btn.innerHTML =
+
+`${card.emoji} ${card.name}`;
+
+btn.onclick =
+()=>selectHabitat(
+index
+);
+
+container.appendChild(
+btn
+);
+
+}
+
+);
+
+}
 
 /* =========================
    SELECT CARD
 ========================= */
 
-function selectCard(
-card
+function selectHabitat(
+index
 ){
 
-selectedCard = card;
+selectedHabitat =
+index;
 
 document.getElementById(
-"treeFeedback"
+"treeMessage"
 ).innerHTML =
 
 `
@@ -1222,88 +1787,79 @@ Selected:
 
 <b>
 
-${
-card === "aquatic"
-?
-"🌊 Aquatic"
-:
-"🌿 Terrestrial"
-}
+${habitatCards[index].emoji}
+${habitatCards[index].name}
 
 </b>
 
 <br>
 
-Now tap a box.
+Now tap a category.
 `;
 
 }
 
 /* =========================
-   PLACE CARD
+   PLACE HABITAT
 ========================= */
 
-function placeCard(
-boxNumber
+function placeHabitat(
+targetGroup
 ){
 
 if(
-!selectedCard
+selectedHabitat === null
 ){
-
-document.getElementById(
-"treeFeedback"
-).innerHTML =
-
-"⚠️ Select a card first.";
 
 return;
 
 }
 
-/* =========================
-   AQUATIC BOX
-========================= */
+const card =
+habitatCards[
+selectedHabitat
+];
 
 if(
-boxNumber === 1
+card.group ===
+targetGroup
 ){
 
-if(
-selectedCard === "aquatic"
-&&
-!aquaticPlaced
-){
-
-document.getElementById(
-"box1"
-).innerHTML =
-
-"🌊 Aquatic";
-
-document.getElementById(
-"aquaticCard"
-).style.display =
-"none";
-
-aquaticPlaced = true;
-
-const correctSound =
 document.getElementById(
 "correctSound"
-);
+).play().catch(()=>{});
 
-correctSound.currentTime = 0;
+card.placed = true;
 
-correctSound.play().catch(()=>{});
+const zoneId =
+targetGroup === "aquatic"
+?
+"aquaticZone"
+:
+"terrestrialZone";
 
 document.getElementById(
-"treeFeedback"
+zoneId
+).innerHTML +=
+
+`
+<br>
+
+${card.emoji}
+${card.name}
+`;
+
+renderHabitatCards();
+
+document.getElementById(
+"treeMessage"
 ).innerHTML =
 
-"✅ Aquatic placed correctly!";
+"✅ Correct!";
 
-selectedCard = null;
+selectedHabitat = null;
+
+checkTreeCompletion();
 
 }
 else{
@@ -1318,7 +1874,7 @@ wrongSound.currentTime = 0;
 wrongSound.play().catch(()=>{});
 
 document.getElementById(
-"treeFeedback"
+"treeMessage"
 ).innerHTML =
 
 "❌ Try again.";
@@ -1328,80 +1884,19 @@ document.getElementById(
 }
 
 /* =========================
-   TERRESTRIAL BOX
+   COMPLETION CHECK
 ========================= */
 
-if(
-boxNumber === 2
-){
+function checkTreeCompletion(){
 
-if(
-selectedCard === "terrestrial"
-&&
-!terrestrialPlaced
-){
+const completed =
+habitatCards.every(
 
-document.getElementById(
-"box2"
-).innerHTML =
+card => card.placed
 
-"🌿 Terrestrial";
-
-document.getElementById(
-"terrestrialCard"
-).style.display =
-"none";
-
-terrestrialPlaced = true;
-
-const correctSound =
-document.getElementById(
-"correctSound"
 );
 
-correctSound.currentTime = 0;
-
-correctSound.play().catch(()=>{});
-
-document.getElementById(
-"treeFeedback"
-).innerHTML =
-
-"✅ Terrestrial placed correctly!";
-
-selectedCard = null;
-
-}
-else{
-
-const wrongSound =
-document.getElementById(
-"wrongSound"
-);
-
-wrongSound.currentTime = 0;
-
-wrongSound.play().catch(()=>{});
-
-document.getElementById(
-"treeFeedback"
-).innerHTML =
-
-"❌ Try again.";
-
-}
-
-}
-
-/* =========================
-   COMPLETED TREE
-========================= */
-
-if(
-aquaticPlaced
-&&
-terrestrialPlaced
-){
+if(completed){
 
 setTimeout(()=>{
 
@@ -1429,11 +1924,10 @@ clapSound.currentTime = 0;
 clapSound.play().catch(()=>{});
 
 document.querySelector(
-".gameCard"
+".mainCard"
 ).innerHTML =
 
 `
-
 <div
 style="
 text-align:center;
@@ -1452,10 +1946,10 @@ margin-bottom:20px;
 style="
 font-size:3rem;
 color:#2e7d32;
-margin-bottom:20px;
+margin-bottom:15px;
 ">
 
-🏆 MASTER HABITAT EXPLORER
+🏆 MASTER ADAPTATION DETECTIVE
 
 </h1>
 
@@ -1465,31 +1959,23 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🐪 🐧 🐠 🐒 🦒
+🐪 🐠 🐧 🐒 🦒
 
 </div>
 
 <p
 style="
-font-size:1.3rem;
+font-size:1.2rem;
 line-height:1.8;
 max-width:700px;
 margin:auto;
 ">
 
-Congratulations!
+You carefully observed habitats,
+identified useful adaptations,
+and completed the final habitat challenge.
 
-You successfully explored and classified different habitats.
-
-You are now a
-
-<b>
-
-Master Habitat Explorer
-
-</b>
-
-🌍
+Excellent detective work!
 
 </p>
 
@@ -1509,10 +1995,10 @@ ${score}
 
 <h2
 style="
-color:#ff9800;
+color:#8e24aa;
 ">
 
-🏅 Habitat Badges Collected:
+🏅 Badges Earned:
 ${badges}
 
 </h2>
@@ -1539,7 +2025,6 @@ cursor:pointer;
 </button>
 
 </div>
-
 `;
 
 }
