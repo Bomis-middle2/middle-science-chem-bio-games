@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-
-Habitat Explorer Adventure
-
-</title>
+<title>Habitat Explorer Adventure</title>
 
 <style>
 
@@ -25,18 +17,12 @@ box-sizing:border-box;
 
 body{
 
-font-family:
-'Trebuchet MS',
-sans-serif;
+font-family:'Trebuchet MS',sans-serif;
 
 min-height:100vh;
 
 background:
-
-url(
-'assets/bg (1).png'
-)
-
+url('assets/bg (1).png')
 center center
 / cover
 no-repeat
@@ -46,9 +32,9 @@ overflow-x:hidden;
 
 }
 
-/* =====================
-SPLASH
-===================== */
+/* =========================
+   SPLASH SCREEN
+========================= */
 
 #splashScreen{
 
@@ -76,38 +62,29 @@ z-index:9999;
 
 width:350px;
 
-max-width:80%;
+max-width:85%;
 
-animation:
-zoomIn 1.5s ease;
+animation:logoZoom 1.5s ease;
 
 }
 
-@keyframes zoomIn{
+@keyframes logoZoom{
 
 0%{
-
 opacity:0;
-
-transform:
-scale(.6);
-
+transform:scale(.7);
 }
 
 100%{
-
 opacity:1;
-
-transform:
-scale(1);
-
+transform:scale(1);
 }
 
 }
 
-/* =====================
-INSTRUCTION SCREEN
-===================== */
+/* =========================
+   INSTRUCTION SCREEN
+========================= */
 
 #instructionScreen{
 
@@ -125,36 +102,26 @@ padding:20px;
 
 .instructionCard{
 
-background:
-rgba(
-255,
-255,
-255,
-0.95
-);
-
 max-width:900px;
 
 width:100%;
 
-border-radius:30px;
+background:
+rgba(255,255,255,.95);
 
 padding:40px;
+
+border-radius:30px;
 
 text-align:center;
 
 box-shadow:
 0 10px 30px
-rgba(
-0,
-0,
-0,
-0.2
-);
+rgba(0,0,0,.25);
 
 }
 
-.instructionLogo{
+.logo{
 
 width:220px;
 
@@ -162,7 +129,7 @@ margin-bottom:20px;
 
 }
 
-.instructionTitle{
+.title{
 
 font-size:2.5rem;
 
@@ -172,7 +139,7 @@ margin-bottom:20px;
 
 }
 
-.instructionText{
+.instructions{
 
 font-size:1.2rem;
 
@@ -186,15 +153,13 @@ margin-bottom:30px;
 
 .startBtn{
 
-padding:
-16px 40px;
+padding:16px 40px;
 
 border:none;
 
-border-radius:18px;
+border-radius:20px;
 
-background:
-#1976d2;
+background:#1976d2;
 
 color:white;
 
@@ -210,14 +175,13 @@ transition:.3s;
 
 .startBtn:hover{
 
-transform:
-scale(1.05);
+transform:scale(1.05);
 
 }
 
-/* =====================
-GAME SCREEN
-===================== */
+/* =========================
+   GAME SCREEN
+========================= */
 
 #gameScreen{
 
@@ -235,7 +199,7 @@ display:flex;
 
 justify-content:center;
 
-gap:20px;
+gap:15px;
 
 flex-wrap:wrap;
 
@@ -246,34 +210,23 @@ margin-bottom:20px;
 .hudBox{
 
 background:
-rgba(
-255,
-255,
-255,
-0.92
-);
+rgba(255,255,255,.95);
 
-padding:
-15px 25px;
+padding:12px 20px;
 
 border-radius:15px;
 
 font-weight:bold;
 
-font-size:1.1rem;
+font-size:1.05rem;
 
 box-shadow:
 0 3px 10px
-rgba(
-0,
-0,
-0,
-0.2
-);
+rgba(0,0,0,.2);
 
 }
 
-/* MAIN CARD */
+/* GAME CARD */
 
 .gameCard{
 
@@ -282,29 +235,17 @@ max-width:1100px;
 margin:auto;
 
 background:
-rgba(
-255,
-255,
-255,
-0.95
-);
-
-border-radius:30px;
+rgba(255,255,255,.95);
 
 padding:25px;
 
+border-radius:30px;
+
 box-shadow:
 0 10px 25px
-rgba(
-0,
-0,
-0,
-0.25
-);
+rgba(0,0,0,.25);
 
 }
-
-/* QUESTION */
 
 .questionTitle{
 
@@ -319,8 +260,6 @@ color:#5d4037;
 margin-bottom:20px;
 
 }
-
-/* HABITAT IMAGE */
 
 .habitatFrame{
 
@@ -350,8 +289,7 @@ border:5px solid #fbc02d;
 
 display:grid;
 
-grid-template-columns:
-1fr 1fr;
+grid-template-columns:1fr 1fr;
 
 gap:20px;
 
@@ -375,6 +313,14 @@ cursor:pointer;
 
 color:white;
 
+transition:.2s;
+
+}
+
+.optionBtn:hover{
+
+transform:scale(1.03);
+
 }
 
 .aquaticBtn{
@@ -395,13 +341,13 @@ background:#43a047;
 
 margin-top:25px;
 
-text-align:center;
+min-height:90px;
 
-font-size:1.2rem;
+font-size:1.15rem;
 
 font-weight:bold;
 
-min-height:80px;
+text-align:center;
 
 }
 
@@ -421,6 +367,12 @@ font-size:1.4rem;
 
 }
 
+.title{
+
+font-size:2rem;
+
+}
+
 }
 
 </style>
@@ -435,43 +387,41 @@ font-size:1.4rem;
 
 <img
 id="splashLogo"
-src="assets/innovine-logo.png">
+src="assets/innovine-logo.png"
+alt="Innovine Logo">
 
 </div>
 
-<!-- INSTRUCTIONS -->
+<!-- INSTRUCTION SCREEN -->
 
 <div id="instructionScreen">
 
 <div class="instructionCard">
 
 <img
-class="instructionLogo"
-src="assets/innovine-logo.png">
+class="logo"
+src="assets/innovine-logo.png"
+alt="Innovine Logo">
 
-<h1 class="instructionTitle">
+<h1 class="title">
 
 🌍 Habitat Explorer Adventure
 
 </h1>
 
-<div class="instructionText">
+<div class="instructions">
 
 Professor Habitat needs your help!
 
 <br><br>
 
-Explore different habitats,
-collect habitat badges,
-and become a
+Explore different habitats, collect habitat badges, and become a
 
-<b>
+<b>Master Habitat Explorer</b> 🏆
 
-Master Habitat Explorer
+<br><br>
 
-</b>
-
-🏆
+Identify whether each habitat belongs to the Aquatic or Terrestrial category.
 
 </div>
 
@@ -487,7 +437,7 @@ START EXPLORING
 
 </div>
 
-<!-- GAME -->
+<!-- GAME SCREEN -->
 
 <div id="gameScreen">
 
@@ -496,44 +446,28 @@ START EXPLORING
 <div class="hudBox">
 
 ⭐ Score:
-<span id="score">
-
-0
-
-</span>
+<span id="score">0</span>
 
 </div>
 
 <div class="hudBox">
 
 ❤️ Chances:
-<span id="chances">
-
-2
-
-</span>
+<span id="chances">2</span>
 
 </div>
 
 <div class="hudBox">
 
 🏅 Badges:
-<span id="badges">
-
-0
-
-</span>
+<span id="badgeCount">0</span>
 
 </div>
 
 <div class="hudBox">
 
 🌍 Question:
-<span id="questionNo">
-
-1
-
-</span>/5
+<span id="questionNo">1</span>/5
 
 </div>
 
@@ -542,19 +476,20 @@ START EXPLORING
 <div class="gameCard">
 
 <div
-class="questionTitle"
-id="questionTitle">
+id="questionTitle"
+class="questionTitle">
 
 Loading...
 
 </div>
 
-<div
-class="habitatFrame">
+<div class="habitatFrame">
 
 <img
 id="habitatImage"
-class="habitatImage">
+class="habitatImage"
+src=""
+alt="Habitat">
 
 </div>
 
@@ -605,29 +540,37 @@ src="assets/freesound_community-claps-44774.mp3">
 
 <script>
 
-/* SPLASH */
+/* =========================
+   SPLASH
+========================= */
 
 setTimeout(()=>{
 
 document.getElementById(
 "splashScreen"
-).style.display="none";
+).style.display = "none";
 
 document.getElementById(
 "instructionScreen"
-).style.display="flex";
+).style.display = "flex";
 
 },1500);
+
+/* =========================
+   START GAME
+========================= */
 
 function startGame(){
 
 document.getElementById(
 "instructionScreen"
-).style.display="none";
+).style.display = "none";
 
 document.getElementById(
 "gameScreen"
-).style.display="block";
+).style.display = "block";
+
+loadQuestion();
 
 }
 /* =========================
@@ -701,6 +644,8 @@ fact:"Rainforests are dense terrestrial habitats with heavy rainfall."
    RANDOMIZE QUESTIONS
 ========================= */
 
+function shuffleQuestions(){
+
 for(
 let i = questions.length - 1;
 i > 0;
@@ -721,6 +666,41 @@ questions[j]
 questions[j],
 questions[i]
 ];
+
+}
+
+}
+
+shuffleQuestions();
+
+/* =========================
+   UPDATE HUD
+========================= */
+
+function updateHUD(){
+
+document.getElementById(
+"score"
+).innerHTML =
+score;
+
+document.getElementById(
+"chances"
+).innerHTML =
+chances;
+
+document.getElementById(
+"badgeCount"
+).innerHTML =
+badges;
+
+document.getElementById(
+"questionNo"
+).innerHTML =
+Math.min(
+currentQuestion + 1,
+5
+);
 
 }
 
@@ -746,62 +726,47 @@ questions[
 currentQuestion
 ];
 
-document
-.getElementById(
-"questionNo"
-)
-innerHTML =
-currentQuestion + 1;
+updateHUD();
 
-document
-.getElementById(
+document.getElementById(
 "questionTitle"
-)
-innerHTML =
+).innerHTML =
 
-"Which type of habitat is this?";
+`
+Which type of habitat is this?
 
-document
-.getElementById(
+<br><br>
+
+<span
+style="
+color:#1976d2;
+font-size:1.3rem;
+">
+
+${q.name}
+
+</span>
+`;
+
+document.getElementById(
 "habitatImage"
-)
-src =
+).src =
 q.image;
 
-document
-.getElementById(
+document.getElementById(
 "feedback"
-)
-innerHTML = "";
+).innerHTML =
 
-}
+`
+<div
+style="
+color:#555;
+">
 
-/* =========================
-   UPDATE HUD
-========================= */
+Look carefully at the habitat image and choose the correct category.
 
-function updateHUD(){
-
-document
-.getElementById(
-"score"
-)
-innerHTML =
-score;
-
-document
-.getElementById(
-"chances"
-)
-innerHTML =
-chances;
-
-document
-.getElementById(
-"badges"
-)
-innerHTML =
-badges;
+</div>
+`;
 
 }
 
@@ -809,7 +774,7 @@ badges;
    BADGE REWARD
 ========================= */
 
-function awardBadge(){
+function earnBadge(){
 
 badges++;
 
@@ -821,22 +786,18 @@ updateHUD();
    ANIMAL FEEDBACK
 ========================= */
 
-function showAnimalMessage(
+function showAnimalFeedback(
 animal,
 fact,
-correct
+isCorrect
 ){
 
 const feedback =
-document
-.getElementById(
+document.getElementById(
 "feedback"
 );
 
-if(correct){
-
-feedback.style.color =
-"#2e7d32";
+if(isCorrect){
 
 feedback.innerHTML =
 
@@ -846,6 +807,7 @@ style="
 background:#e8f5e9;
 padding:15px;
 border-radius:15px;
+color:#2e7d32;
 ">
 
 <h3>
@@ -864,9 +826,6 @@ ${animal}
 }
 else{
 
-feedback.style.color =
-"#c62828";
-
 feedback.innerHTML =
 
 `
@@ -875,6 +834,7 @@ style="
 background:#ffebee;
 padding:15px;
 border-radius:15px;
+color:#c62828;
 ">
 
 <h3>
@@ -885,7 +845,7 @@ ${animal}
 
 <br>
 
-❌ Try Again!
+❌ That's not correct.
 
 </div>
 `;
@@ -893,14 +853,6 @@ ${animal}
 }
 
 }
-
-/* =========================
-   START FIRST QUESTION
-========================= */
-
-updateHUD();
-
-loadQuestion();
 
 /* =========================
    CHECK ANSWER
@@ -943,11 +895,11 @@ correctSound.play().catch(()=>{});
 
 score += 10;
 
-awardBadge();
+earnBadge();
 
 updateHUD();
 
-showAnimalMessage(
+showAnimalFeedback(
 q.animal,
 q.fact,
 true
@@ -984,14 +936,14 @@ chances--;
 
 updateHUD();
 
-showAnimalMessage(
+showAnimalFeedback(
 q.animal,
 q.fact,
 false
 );
 
 /* =========================
-   OUT OF CHANCES
+   NO CHANCES LEFT
 ========================= */
 
 if(
@@ -1000,11 +952,9 @@ chances <= 0
 
 setTimeout(()=>{
 
-document
-.getElementById(
+document.getElementById(
 "feedback"
-)
-innerHTML =
+).innerHTML =
 
 `
 <div
@@ -1012,11 +962,12 @@ style="
 background:#fff3e0;
 padding:18px;
 border-radius:15px;
+color:#5d4037;
 ">
 
 <h3>
 
-📚 Correct Answer
+📚 Habitat Fact
 
 </h3>
 
@@ -1024,8 +975,10 @@ border-radius:15px;
 
 <b>
 
+Correct Answer:
+
 ${
-q.answer==="aquatic"
+q.answer === "aquatic"
 ?
 "🌊 Aquatic"
 :
@@ -1060,32 +1013,33 @@ loadQuestion();
 }
 
 /* =========================
-   TRY AGAIN
+   ONE CHANCE LEFT
 ========================= */
 
 else{
 
 setTimeout(()=>{
 
-waiting = false;
-
-document
-.getElementById(
+document.getElementById(
 "feedback"
-)
-innerHTML +=
+).innerHTML +=
 
 `
 
 <br>
 
-<b>
+<div
+style="
+color:#c62828;
+">
 
 ❤️ One chance remaining!
 
-</b>
+</div>
 
 `;
+
+waiting = false;
 
 },1000);
 
@@ -1096,27 +1050,25 @@ innerHTML +=
 }
 
 /* =========================
-   FINAL TREE CHALLENGE
+   TREE CHALLENGE
 ========================= */
 
 function showTreeChallenge(){
 
-document
-.querySelector(
+document.querySelector(
 ".gameCard"
-)
-innerHTML =
+).innerHTML =
 
 `
 
 <h1
 style="
 text-align:center;
-color:#5d4037;
+color:#2e7d32;
 margin-bottom:20px;
 ">
 
-🌳 FINAL CHALLENGE
+🌳 Final Habitat Tree Challenge
 
 </h1>
 
@@ -1127,14 +1079,14 @@ font-size:1.1rem;
 margin-bottom:25px;
 ">
 
-Complete the Habitat Tree.
+Complete the habitat classification tree.
 
 </p>
 
 <div
 style="
 text-align:center;
-font-size:1.4rem;
+font-size:1.6rem;
 font-weight:bold;
 margin-bottom:25px;
 ">
@@ -1148,8 +1100,8 @@ style="
 display:flex;
 justify-content:center;
 gap:30px;
-margin-bottom:25px;
 flex-wrap:wrap;
+margin-bottom:30px;
 ">
 
 <div
@@ -1158,13 +1110,15 @@ onclick="placeCard(1)"
 style="
 width:220px;
 height:90px;
-border:3px dashed #1976d2;
+border:3px dashed #2196f3;
 border-radius:15px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-weight:bold;
 background:white;
+font-weight:bold;
+font-size:1.1rem;
+cursor:pointer;
 ">
 
 ?
@@ -1182,8 +1136,10 @@ border-radius:15px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-weight:bold;
 background:white;
+font-weight:bold;
+font-size:1.1rem;
+cursor:pointer;
 ">
 
 ?
@@ -1202,8 +1158,8 @@ flex-wrap:wrap;
 
 <button
 id="aquaticCard"
-onclick="selectCard('aquatic')"
-class="optionBtn aquaticBtn">
+class="optionBtn aquaticBtn"
+onclick="selectCard('aquatic')">
 
 🌊 Aquatic
 
@@ -1211,8 +1167,8 @@ class="optionBtn aquaticBtn">
 
 <button
 id="terrestrialCard"
-onclick="selectCard('terrestrial')"
-class="optionBtn terrestrialBtn">
+class="optionBtn terrestrialBtn"
+onclick="selectCard('terrestrial')">
 
 🌿 Terrestrial
 
@@ -1225,8 +1181,8 @@ id="treeFeedback"
 style="
 margin-top:25px;
 text-align:center;
-font-weight:bold;
 font-size:1.2rem;
+font-weight:bold;
 ">
 
 Tap a card and then tap a box.
@@ -1236,6 +1192,10 @@ Tap a card and then tap a box.
 `;
 
 }
+
+/* =========================
+   TREE VARIABLES
+========================= */
 
 let selectedCard = null;
 
@@ -1253,18 +1213,17 @@ card
 
 selectedCard = card;
 
-document
-.getElementById(
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 `
 Selected:
+
 <b>
 
 ${
-card==="aquatic"
+card === "aquatic"
 ?
 "🌊 Aquatic"
 :
@@ -1279,6 +1238,7 @@ Now tap a box.
 `;
 
 }
+
 /* =========================
    PLACE CARD
 ========================= */
@@ -1291,11 +1251,9 @@ if(
 !selectedCard
 ){
 
-document
-.getElementById(
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 "⚠️ Select a card first.";
 
@@ -1303,7 +1261,9 @@ return;
 
 }
 
-/* BOX 1 = AQUATIC */
+/* =========================
+   AQUATIC BOX
+========================= */
 
 if(
 boxNumber === 1
@@ -1315,45 +1275,51 @@ selectedCard === "aquatic"
 !aquaticPlaced
 ){
 
-document
-.getElementById(
+document.getElementById(
 "box1"
-)
-innerHTML =
+).innerHTML =
 
 "🌊 Aquatic";
 
-aquaticPlaced = true;
-
-document
-.getElementById(
+document.getElementById(
 "aquaticCard"
-)
-style.display =
+).style.display =
 "none";
 
-document
-.getElementById(
+aquaticPlaced = true;
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 "✅ Aquatic placed correctly!";
-
-playCorrect();
 
 selectedCard = null;
 
 }
 else{
 
-playWrong();
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
 
-document
-.getElementById(
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 "❌ Try again.";
 
@@ -1361,7 +1327,9 @@ innerHTML =
 
 }
 
-/* BOX 2 = TERRESTRIAL */
+/* =========================
+   TERRESTRIAL BOX
+========================= */
 
 if(
 boxNumber === 2
@@ -1373,45 +1341,51 @@ selectedCard === "terrestrial"
 !terrestrialPlaced
 ){
 
-document
-.getElementById(
+document.getElementById(
 "box2"
-)
-innerHTML =
+).innerHTML =
 
 "🌿 Terrestrial";
 
-terrestrialPlaced = true;
-
-document
-.getElementById(
+document.getElementById(
 "terrestrialCard"
-)
-style.display =
+).style.display =
 "none";
 
-document
-.getElementById(
+terrestrialPlaced = true;
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 "✅ Terrestrial placed correctly!";
-
-playCorrect();
 
 selectedCard = null;
 
 }
 else{
 
-playWrong();
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
 
-document
-.getElementById(
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
 "treeFeedback"
-)
-innerHTML =
+).innerHTML =
 
 "❌ Try again.";
 
@@ -1419,7 +1393,9 @@ innerHTML =
 
 }
 
-/* COMPLETED */
+/* =========================
+   COMPLETED TREE
+========================= */
 
 if(
 aquaticPlaced
@@ -1438,55 +1414,23 @@ showCompletionScreen();
 }
 
 /* =========================
-   AUDIO HELPERS
-========================= */
-
-function playCorrect(){
-
-const audio =
-document.getElementById(
-"correctSound"
-);
-
-audio.currentTime = 0;
-
-audio.play().catch(()=>{});
-
-}
-
-function playWrong(){
-
-const audio =
-document.getElementById(
-"wrongSound"
-);
-
-audio.currentTime = 0;
-
-audio.play().catch(()=>{});
-
-}
-
-/* =========================
    COMPLETION SCREEN
 ========================= */
 
 function showCompletionScreen(){
 
-const clap =
+const clapSound =
 document.getElementById(
 "clapSound"
 );
 
-clap.currentTime = 0;
+clapSound.currentTime = 0;
 
-clap.play().catch(()=>{});
+clapSound.play().catch(()=>{});
 
-document
-.querySelector(
+document.querySelector(
 ".gameCard"
-)
-innerHTML =
+).innerHTML =
 
 `
 
@@ -1521,7 +1465,7 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🐪 🐧 🐠 🐒 🦅
+🐪 🐧 🐠 🐒 🦒
 
 </div>
 
@@ -1535,7 +1479,17 @@ margin:auto;
 
 Congratulations!
 
-You successfully explored different habitats and completed all challenges.
+You successfully explored and classified different habitats.
+
+You are now a
+
+<b>
+
+Master Habitat Explorer
+
+</b>
+
+🌍
 
 </p>
 
@@ -1558,7 +1512,7 @@ style="
 color:#ff9800;
 ">
 
-🏅 Habitat Badges:
+🏅 Habitat Badges Collected:
 ${badges}
 
 </h2>
