@@ -5,12 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cell Sort Challenge</title>
+<title>Innovine Cell Sort Challenge</title>
 
 <style>
 
 /* =========================
-   GLOBAL
+   RESET
 ========================= */
 
 *{
@@ -26,14 +26,16 @@ font-family:'Trebuchet MS',sans-serif;
 background:
 linear-gradient(
 135deg,
-#e8f5e9 0%,
-#f5fff7 50%,
-#e3f2fd 100%
+#edf7ee 0%,
+#f8fffa 50%,
+#e8f4ff 100%
 );
 
 min-height:100vh;
 
-overflow:hidden;
+overflow-x:hidden;
+
+position:relative;
 
 }
 
@@ -59,25 +61,25 @@ justify-content:center;
 
 align-items:center;
 
-z-index:1000;
+z-index:9999;
 
 }
 
 #splashLogo{
 
-width:320px;
+width:350px;
 
-max-width:80%;
+max-width:85%;
 
-animation:logoPulse 2s ease-in-out;
+animation:fadeZoom 2s ease;
 
 }
 
-@keyframes logoPulse{
+@keyframes fadeZoom{
 
 0%{
 opacity:0;
-transform:scale(.8);
+transform:scale(.7);
 }
 
 100%{
@@ -88,55 +90,57 @@ transform:scale(1);
 }
 
 /* =========================
-   FLOATING BACKGROUND
+   FLOATING SCIENCE ICONS
 ========================= */
 
 .bgIcon{
 
-position:absolute;
+position:fixed;
 
-font-size:80px;
+font-size:90px;
 
-opacity:.06;
+opacity:.05;
+
+pointer-events:none;
 
 animation:float 14s infinite ease-in-out;
 
-pointer-events:none;
+z-index:0;
 
 }
 
 .i1{
 top:5%;
-left:5%;
+left:3%;
 }
 
 .i2{
-top:15%;
-right:8%;
+top:12%;
+right:4%;
 animation-delay:2s;
 }
 
 .i3{
-bottom:15%;
-left:8%;
+bottom:10%;
+left:6%;
 animation-delay:4s;
 }
 
 .i4{
-bottom:10%;
-right:10%;
+bottom:8%;
+right:8%;
 animation-delay:6s;
 }
 
 .i5{
-top:45%;
-left:2%;
+top:50%;
+left:1%;
 animation-delay:3s;
 }
 
 .i6{
 top:55%;
-right:3%;
+right:1%;
 animation-delay:5s;
 }
 
@@ -163,7 +167,7 @@ rotate(0deg);
 }
 
 /* =========================
-   GAME AREA
+   MAIN GAME
 ========================= */
 
 #gameContainer{
@@ -174,18 +178,18 @@ position:relative;
 
 z-index:10;
 
-max-width:1200px;
+max-width:1300px;
 
 margin:20px auto;
 
 background:white;
 
+border-radius:30px;
+
 padding:25px;
 
-border-radius:25px;
-
 box-shadow:
-0 10px 25px rgba(0,0,0,.15);
+0 12px 30px rgba(0,0,0,.12);
 
 }
 
@@ -201,13 +205,15 @@ margin-bottom:20px;
 
 }
 
-.header h1{
+.gameTitle{
+
+font-size:2.3rem;
 
 color:#2e7d32;
 
-font-size:2.2rem;
+font-weight:bold;
 
-margin-bottom:10px;
+margin-bottom:15px;
 
 }
 
@@ -215,13 +221,15 @@ margin-bottom:10px;
 
 background:#fff8e1;
 
+border:2px solid #ffd54f;
+
 padding:15px;
 
-border-radius:12px;
+border-radius:15px;
 
 font-weight:bold;
 
-border:2px solid #ffd54f;
+font-size:1rem;
 
 }
 
@@ -235,11 +243,11 @@ display:flex;
 
 justify-content:space-between;
 
-margin:20px 0;
+flex-wrap:wrap;
 
 gap:10px;
 
-flex-wrap:wrap;
+margin:20px 0;
 
 }
 
@@ -253,6 +261,8 @@ border-radius:12px;
 
 font-weight:bold;
 
+font-size:1rem;
+
 }
 
 /* =========================
@@ -261,23 +271,23 @@ font-weight:bold;
 
 .featureCard{
 
+max-width:700px;
+
+margin:25px auto;
+
 background:#1976d2;
 
 color:white;
 
 padding:25px;
 
-border-radius:20px;
+border-radius:22px;
 
 text-align:center;
 
-font-size:1.4rem;
+font-size:1.5rem;
 
 font-weight:bold;
-
-max-width:700px;
-
-margin:20px auto;
 
 box-shadow:
 0 5px 15px rgba(0,0,0,.2);
@@ -285,10 +295,10 @@ box-shadow:
 }
 
 /* =========================
-   CELL CHOICES
+   CELL OPTIONS
 ========================= */
 
-.cellChoices{
+.cellArea{
 
 display:grid;
 
@@ -296,7 +306,7 @@ grid-template-columns:1fr 1fr;
 
 gap:25px;
 
-margin-top:25px;
+margin-top:20px;
 
 }
 
@@ -306,7 +316,7 @@ background:#fafafa;
 
 border:3px solid #dbeafe;
 
-border-radius:20px;
+border-radius:25px;
 
 padding:20px;
 
@@ -324,23 +334,27 @@ transform:scale(1.02);
 
 }
 
-.cellCard img{
-
-width:260px;
-
-max-width:100%;
-
-}
-
 .cellTitle{
 
-font-size:1.5rem;
+font-size:1.7rem;
 
 font-weight:bold;
 
+color:#1565c0;
+
 margin-bottom:10px;
 
-color:#1565c0;
+}
+
+.cellImage{
+
+width:280px;
+
+max-width:100%;
+
+display:block;
+
+margin:auto;
 
 }
 
@@ -356,7 +370,7 @@ font-size:1.2rem;
 
 font-weight:bold;
 
-min-height:70px;
+min-height:80px;
 
 margin-top:20px;
 
@@ -368,7 +382,7 @@ margin-top:20px;
 
 @media(max-width:768px){
 
-.cellChoices{
+.cellArea{
 
 grid-template-columns:1fr;
 
@@ -376,7 +390,13 @@ grid-template-columns:1fr;
 
 .featureCard{
 
-font-size:1.1rem;
+font-size:1.15rem;
+
+}
+
+.gameTitle{
+
+font-size:1.8rem;
 
 }
 
@@ -388,7 +408,7 @@ font-size:1.1rem;
 
 <body>
 
-<!-- SPLASH -->
+<!-- SPLASH SCREEN -->
 
 <div id="splashScreen">
 
@@ -408,13 +428,13 @@ alt="Innovine Logo">
 <div class="bgIcon i5">🧫</div>
 <div class="bgIcon i6">🔍</div>
 
-<!-- GAME -->
+<!-- MAIN GAME -->
 
 <div id="gameContainer">
 
 <div class="header">
 
-<h1>
+<h1 class="gameTitle">
 
 🔬 Cell Sort Challenge
 
@@ -422,7 +442,7 @@ alt="Innovine Logo">
 
 <div class="instruction">
 
-Tap the correct cell type for the feature shown below.
+👉 Read the feature carefully and tap the correct cell type.
 
 </div>
 
@@ -433,22 +453,14 @@ Tap the correct cell type for the feature shown below.
 <div class="stat">
 
 ⭐ Score:
-<span id="score">
-
-0
-
-</span>
+<span id="score">0</span>
 
 </div>
 
 <div class="stat">
 
 Question:
-<span id="questionNumber">
-
-1
-
-</span>/10
+<span id="questionNumber">1</span>/10
 
 </div>
 
@@ -462,7 +474,7 @@ Loading...
 
 </div>
 
-<div class="cellChoices">
+<div class="cellArea">
 
 <div
 class="cellCard"
@@ -476,6 +488,7 @@ Animal Cell
 
 <img
 src="assets/animal-cell.png"
+class="cellImage"
 alt="Animal Cell">
 
 </div>
@@ -492,6 +505,7 @@ Plant Cell
 
 <img
 src="assets/plant-cell.png"
+class="cellImage"
 alt="Plant Cell">
 
 </div>
@@ -505,6 +519,23 @@ class="feedback">
 </div>
 
 </div>
+
+<!-- AUDIO -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/freesound_community-claps-44774.mp3">
+</audio>
 
 <script>
 
@@ -584,6 +615,7 @@ type:"plant"
 
 let currentQuestion = 0;
 let score = 0;
+let answering = false;
 
 /* =========================
    RANDOMIZE QUESTIONS
@@ -658,13 +690,15 @@ document
    CHECK ANSWER
 ========================= */
 
-let answering = false;
-
 function checkAnswer(
 selectedType
 ){
 
-if(answering) return;
+if(answering){
+
+return;
+
+}
 
 answering = true;
 
@@ -678,10 +712,21 @@ document.getElementById(
 "feedback"
 );
 
+/* CORRECT */
+
 if(
 selectedType ===
 current.type
 ){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
 
 score += 10;
 
@@ -718,7 +763,19 @@ selectedType==="animal"
 `;
 
 }
+
+/* WRONG */
+
 else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
 
 feedback.style.color =
 "#c62828";
@@ -747,7 +804,7 @@ current.type==="animal"
 
 }
 
-/* AUTO NEXT */
+/* NEXT QUESTION */
 
 setTimeout(()=>{
 
@@ -766,6 +823,15 @@ loadQuestion();
 ========================= */
 
 function showCompletionScreen(){
+
+const clapSound =
+document.getElementById(
+"clapSound"
+);
+
+clapSound.currentTime = 0;
+
+clapSound.play().catch(()=>{});
 
 let badge =
 "🌟";
