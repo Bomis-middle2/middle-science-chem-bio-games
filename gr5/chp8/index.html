@@ -4,22 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
-
-🚀 Atmosphere Explorer
-
+🌍 Atmosphere Explorer
 </title>
 
 <style>
-
-/* =========================
-   RESET
-========================= */
 
 *{
 margin:0;
@@ -29,26 +20,22 @@ box-sizing:border-box;
 
 body{
 
-font-family:
-'Segoe UI',
-sans-serif;
-
-min-height:100vh;
+font-family:'Segoe UI',sans-serif;
 
 background:
 linear-gradient(
 180deg,
 #dff4ff 0%,
-#eef8ff 100%
+#f5fbff 100%
 );
+
+min-height:100vh;
 
 overflow-x:hidden;
 
 }
 
-/* =========================
-   SPLASH SCREEN
-========================= */
+/* SPLASH */
 
 #splashScreen{
 
@@ -76,8 +63,7 @@ z-index:9999;
 width:320px;
 max-width:85%;
 
-animation:
-zoomLogo 1.5s ease;
+animation:zoomLogo 1.5s ease;
 
 }
 
@@ -95,9 +81,7 @@ transform:scale(1);
 
 }
 
-/* =========================
-   INTRO SCREEN
-========================= */
+/* INTRO */
 
 #introScreen{
 
@@ -109,12 +93,6 @@ justify-content:center;
 align-items:center;
 
 padding:20px;
-
-background:
-linear-gradient(
-rgba(255,255,255,.85),
-rgba(255,255,255,.85)
-);
 
 }
 
@@ -132,8 +110,7 @@ border-radius:30px;
 text-align:center;
 
 box-shadow:
-0 10px 35px
-rgba(0,0,0,.15);
+0 10px 30px rgba(0,0,0,.15);
 
 }
 
@@ -145,7 +122,7 @@ margin-bottom:20px;
 
 }
 
-.mainTitle{
+.title{
 
 font-size:3rem;
 
@@ -165,40 +142,17 @@ line-height:1.8;
 
 color:#444;
 
-max-width:800px;
-
-margin:auto;
-
-}
-
-.professorBox{
-
-margin-top:25px;
-
-background:#e3f2fd;
-
-padding:20px;
-
-border-radius:20px;
-
-border:2px solid #64b5f6;
-
-font-size:1.1rem;
-
-line-height:1.8;
-
 }
 
 .startBtn{
 
 margin-top:25px;
 
-padding:
-18px 45px;
+padding:18px 45px;
 
 border:none;
 
-border-radius:18px;
+border-radius:20px;
 
 background:#1976d2;
 
@@ -210,19 +164,9 @@ font-weight:bold;
 
 cursor:pointer;
 
-transition:.3s;
-
 }
 
-.startBtn:hover{
-
-transform:scale(1.05);
-
-}
-
-/* =========================
-   GAME SCREEN
-========================= */
+/* GAME */
 
 #gameScreen{
 
@@ -232,15 +176,7 @@ padding:20px;
 
 }
 
-/* =========================
-   HEADER
-========================= */
-
 .gameHeader{
-
-max-width:1200px;
-
-margin:auto;
 
 text-align:center;
 
@@ -266,13 +202,9 @@ color:#1565c0;
 
 }
 
-/* =========================
-   MAIN CARD
-========================= */
-
 .mainCard{
 
-max-width:1100px;
+max-width:1200px;
 
 margin:auto;
 
@@ -283,56 +215,51 @@ padding:25px;
 border-radius:30px;
 
 box-shadow:
-0 10px 30px
-rgba(0,0,0,.15);
+0 10px 30px rgba(0,0,0,.15);
 
 }
 
-.instructionTag{
-
-display:inline-block;
+.promptBox{
 
 background:#1976d2;
 
 color:white;
 
-padding:12px 25px;
+padding:15px;
 
-border-radius:25px;
-
-font-weight:bold;
-
-margin-bottom:20px;
-
-}
-
-.questionText{
-
-text-align:center;
+border-radius:20px;
 
 font-size:1.4rem;
 
 font-weight:bold;
 
-line-height:1.5;
+text-align:center;
 
-margin-bottom:25px;
-
-color:#333;
+margin-bottom:20px;
 
 }
 
-/* =========================
-   ATMOSPHERE IMAGE AREA
-========================= */
+.scoreBox{
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+margin-bottom:20px;
+
+color:#2e7d32;
+
+}
+
+/* IMAGE */
 
 .atmosphereContainer{
 
 position:relative;
 
-width:100%;
-
-max-width:800px;
+max-width:900px;
 
 margin:auto;
 
@@ -348,166 +275,78 @@ border-radius:20px;
 
 }
 
-/* =========================
-   INPUT BOXES
-========================= */
+/* LAYER BUTTONS */
 
-.layerInput{
+.layerBtn{
 
 position:absolute;
 
-width:180px;
+width:250px;
 
-height:42px;
+height:70px;
 
-border:3px solid #90caf9;
+border-radius:40px;
 
-border-radius:25px;
-
-text-align:center;
-
-font-size:1rem;
-
-font-weight:bold;
+border:3px solid #0d47a1;
 
 background:white;
 
-outline:none;
+font-size:1.8rem;
+
+font-weight:bold;
+
+color:#0d47a1;
+
+cursor:pointer;
 
 transition:.3s;
 
 }
 
-.layerInput:focus{
+.layerBtn:hover{
 
-border-color:#1976d2;
+transform:scale(1.03);
 
 }
 
-/* CORRECT */
+.filled{
 
-.correct{
-
-border:3px solid #43a047 !important;
 background:#e8f5e9 !important;
 
-}
+border:3px solid #43a047 !important;
 
-/* WRONG */
+color:#2e7d32 !important;
 
-.wrong{
-
-border:3px solid #e53935 !important;
-background:#ffebee !important;
+font-size:1rem !important;
 
 }
 
-/* =========================
-   WORD BANK
-========================= */
+.feedback{
 
-.wordBank{
-
-margin-top:25px;
-
-padding:20px;
-
-background:#f5f5f5;
-
-border-radius:20px;
+margin-top:20px;
 
 text-align:center;
-
-}
-
-.wordTitle{
-
-font-weight:bold;
-
-margin-bottom:15px;
-
-font-size:1.1rem;
-
-}
-
-.word{
-
-display:inline-block;
-
-padding:10px 15px;
-
-margin:5px;
-
-background:#e3f2fd;
-
-border-radius:15px;
-
-font-weight:bold;
-
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.checkBtn{
-
-margin-top:25px;
-
-padding:
-18px 45px;
-
-border:none;
-
-border-radius:18px;
-
-background:#43a047;
-
-color:white;
 
 font-size:1.2rem;
 
 font-weight:bold;
 
-cursor:pointer;
+min-height:40px;
 
 }
-
-.checkBtn:hover{
-
-transform:scale(1.05);
-
-}
-
-/* =========================
-   FEEDBACK
-========================= */
-
-#feedbackArea{
-
-margin-top:25px;
-
-text-align:center;
-
-min-height:80px;
-
-}
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:768px){
 
-.layerInput{
+.layerBtn{
 
-width:120px;
-height:34px;
-font-size:.8rem;
+width:150px;
+height:45px;
+
+font-size:1rem;
 
 }
 
-.mainTitle{
+.title{
 
 font-size:2rem;
 
@@ -527,8 +366,6 @@ font-size:2rem;
 
 <body>
 
-<!-- SPLASH -->
-
 <div id="splashScreen">
 
 <img
@@ -536,8 +373,6 @@ id="splashLogo"
 src="assets/innovine-logo.png">
 
 </div>
-
-<!-- INTRO SCREEN -->
 
 <div id="introScreen">
 
@@ -547,9 +382,9 @@ src="assets/innovine-logo.png">
 src="assets/innovine-logo.png"
 class="logo">
 
-<h1 class="mainTitle">
+<h1 class="title">
 
-🚀 ATMOSPHERE EXPLORER
+🌍 ATMOSPHERE EXPLORER
 
 </h1>
 
@@ -559,17 +394,7 @@ Professor Sky has lost the names of Earth's atmospheric layers.
 
 <br><br>
 
-Can you help label all five layers correctly?
-
-</div>
-
-<div class="professorBox">
-
-🛰️ <b>Professor Sky says:</b>
-
-<br><br>
-
-Observe the atmosphere carefully and type the correct layer names in the blank spaces.
+Tap the correct layer position for each atmospheric layer.
 
 </div>
 
@@ -584,8 +409,6 @@ onclick="startGame()">
 </div>
 
 </div>
-
-<!-- GAME SCREEN -->
 
 <div id="gameScreen">
 
@@ -605,19 +428,23 @@ class="gameLogo">
 
 <div class="mainCard">
 
-<center>
+<div
+id="promptBox"
+class="promptBox">
 
-<div class="instructionTag">
-
-TYPE THE CORRECT ATMOSPHERIC LAYER
+Loading...
 
 </div>
 
-</center>
+<div
+class="scoreBox">
 
-<div class="questionText">
+⭐ Score:
+<span id="score">
 
-Label the layers of Earth's atmosphere.
+0
+
+</span>
 
 </div>
 
@@ -627,120 +454,83 @@ Label the layers of Earth's atmosphere.
 src="assets/atmosphere.png"
 class="atmosphereImage">
 
-<!-- Input positions will be added in Part 2 -->
+<!-- Layer buttons added in Part 2 -->
 <!-- =========================
-     INPUT BOXES
+     LAYER BUTTONS
 ========================= -->
-
-<input
-id="exosphere"
-class="layerInput"
-style="
-top:10%;
-left:50%;
-transform:translateX(-50%);
-"
-placeholder="?">
-
-<input
-id="thermosphere"
-class="layerInput"
-style="
-top:24%;
-left:50%;
-transform:translateX(-50%);
-"
-placeholder="?">
-
-<input
-id="mesosphere"
-class="layerInput"
-style="
-top:40%;
-left:50%;
-transform:translateX(-50%);
-"
-placeholder="?">
-
-<input
-id="stratosphere"
-class="layerInput"
-style="
-top:56%;
-left:50%;
-transform:translateX(-50%);
-"
-placeholder="?">
-
-<input
-id="troposphere"
-class="layerInput"
-style="
-top:72%;
-left:50%;
-transform:translateX(-50%);
-"
-placeholder="?">
-
-</div>
-
-<!-- =========================
-     WORD BANK
-========================= -->
-
-<div class="wordBank">
-
-<div class="wordTitle">
-
-💡 Word Bank
-
-</div>
-
-<div class="word">
-
-EXOSPHERE
-
-</div>
-
-<div class="word">
-
-THERMOSPHERE
-
-</div>
-
-<div class="word">
-
-MESOSPHERE
-
-</div>
-
-<div class="word">
-
-STRATOSPHERE
-
-</div>
-
-<div class="word">
-
-TROPOSPHERE
-
-</div>
-
-</div>
-
-<center>
 
 <button
-class="checkBtn"
-onclick="checkAnswers()">
+id="layerA"
+class="layerBtn"
+style="
+top:5%;
+left:50%;
+transform:translateX(-50%);
+">
 
-✅ CHECK ANSWERS
+E
 
 </button>
 
-</center>
+<button
+id="layerB"
+class="layerBtn"
+style="
+top:17%;
+left:50%;
+transform:translateX(-50%);
+">
 
-<div id="feedbackArea">
+D
+
+</button>
+
+<button
+id="layerC"
+class="layerBtn"
+style="
+top:31%;
+left:50%;
+transform:translateX(-50%);
+">
+
+C
+
+</button>
+
+<button
+id="layerD"
+class="layerBtn"
+style="
+top:49%;
+left:50%;
+transform:translateX(-50%);
+">
+
+B
+
+</button>
+
+<button
+id="layerE"
+class="layerBtn"
+style="
+top:66%;
+left:50%;
+transform:translateX(-50%);
+">
+
+A
+
+</button>
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+
+Tap the correct layer.
 
 </div>
 
@@ -770,7 +560,7 @@ src="assets/freesound_community-claps-44774.mp3">
 <script>
 
 /* =========================
-   SPLASH SCREEN
+   SPLASH
 ========================= */
 
 setTimeout(()=>{
@@ -803,107 +593,158 @@ document.getElementById(
 ).style.display =
 "block";
 
+startRound();
+
 }
 
 /* =========================
-   NORMALIZE TEXT
+   SCORE
 ========================= */
 
-function normalize(
-text
+let score = 0;
+
+/* =========================
+   LAYER DATA
+========================= */
+
+const layers = [
+
+{
+name:"Troposphere",
+target:"layerE"
+},
+
+{
+name:"Stratosphere",
+target:"layerD"
+},
+
+{
+name:"Mesosphere",
+target:"layerC"
+},
+
+{
+name:"Thermosphere",
+target:"layerB"
+},
+
+{
+name:"Exosphere",
+target:"layerA"
+}
+
+];
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffle(array){
+
+for(
+let i=array.length-1;
+i>0;
+i--
 ){
 
-return text
-.trim()
-.toLowerCase();
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[array[i],array[j]]
+=
+[array[j],array[i]];
 
 }
+
+return array;
+
+}
+
+let gameLayers =
+shuffle(
+[...layers]
+);
+
+let currentIndex = 0;
+
 /* =========================
-   CHECK ANSWERS
+   START ROUND
 ========================= */
 
-function checkAnswers(){
+function startRound(){
 
-let allCorrect = true;
+if(
+currentIndex >=
+gameLayers.length
+){
 
-/* CORRECT ANSWERS */
+showCertificate();
 
-const answers = {
+return;
 
-exosphere:
-"exosphere",
+}
 
-thermosphere:
-"thermosphere",
-
-mesosphere:
-"mesosphere",
-
-stratosphere:
-"stratosphere",
-
-troposphere:
-"troposphere"
-
-};
-
-/* CHECK EACH BOX */
-
-Object.keys(
-answers
-).forEach(
-
-id => {
-
-const input =
 document.getElementById(
-id
-);
+"promptBox"
+).innerHTML =
 
-const userAnswer =
-normalize(
-input.value
-);
+`
+Place:
 
-const correctAnswer =
-answers[id];
+<b>
 
-input.classList.remove(
-"correct",
-"wrong"
-);
+${gameLayers[currentIndex].name}
 
-if(
-userAnswer ===
-correctAnswer
-){
-
-input.classList.add(
-"correct"
-);
+</b>
+`;
 
 }
-else{
-
-input.classList.add(
-"wrong"
-);
-
-allCorrect = false;
-
-}
-
-}
-
-);
-
 /* =========================
-   ALL CORRECT
+   CLICK EVENTS
 ========================= */
 
-if(
-allCorrect
+document
+.getElementById("layerA")
+.onclick = ()=>checkLayer("layerA");
+
+document
+.getElementById("layerB")
+.onclick = ()=>checkLayer("layerB");
+
+document
+.getElementById("layerC")
+.onclick = ()=>checkLayer("layerC");
+
+document
+.getElementById("layerD")
+.onclick = ()=>checkLayer("layerD");
+
+document
+.getElementById("layerE")
+.onclick = ()=>checkLayer("layerE");
+
+/* =========================
+   CHECK LAYER
+========================= */
+
+function checkLayer(
+selectedLayer
 ){
+
+const currentLayer =
+gameLayers[
+currentIndex
+];
+
+if(
+selectedLayer ===
+currentLayer.target
+){
+
+/* CORRECT */
 
 const correctSound =
 document.getElementById(
@@ -914,44 +755,51 @@ correctSound.currentTime = 0;
 
 correctSound.play().catch(()=>{});
 
+score += 10;
+
 document.getElementById(
-"feedbackArea"
+"score"
+).innerHTML =
+score;
+
+/* FILL THE BOX */
+
+const button =
+document.getElementById(
+selectedLayer
+);
+
+button.innerHTML =
+currentLayer.name;
+
+button.classList.add(
+"filled"
+);
+
+button.disabled = true;
+
+/* FEEDBACK */
+
+document.getElementById(
+"feedback"
 ).innerHTML =
 
 `
-<div
-style="
-background:#e8f5e9;
-padding:20px;
-border-radius:20px;
-border:3px solid #43a047;
-font-size:1.2rem;
-font-weight:bold;
-color:#2e7d32;
-">
-
-✅ Outstanding!
-
-<br><br>
-
-You correctly identified all five layers of Earth's atmosphere.
-
-</div>
+✅ Correct!
 `;
+
+currentIndex++;
 
 setTimeout(()=>{
 
-showCertificate();
+startRound();
 
-},1800);
+},1000);
 
 }
-
-/* =========================
-   SOME WRONG
-========================= */
-
 else{
+
+/* WRONG */
 
 const wrongSound =
 document.getElementById(
@@ -963,28 +811,11 @@ wrongSound.currentTime = 0;
 wrongSound.play().catch(()=>{});
 
 document.getElementById(
-"feedbackArea"
+"feedback"
 ).innerHTML =
 
 `
-<div
-style="
-background:#ffebee;
-padding:20px;
-border-radius:20px;
-border:3px solid #e53935;
-font-size:1.1rem;
-font-weight:bold;
-color:#c62828;
-">
-
-❌ Some labels are incorrect.
-
-<br><br>
-
-Check the red boxes and try again.
-
-</div>
+❌ Try Again
 `;
 
 }
@@ -992,7 +823,7 @@ Check the red boxes and try again.
 }
 
 /* =========================
-   CERTIFICATE SCREEN
+   CERTIFICATE
 ========================= */
 
 function showCertificate(){
@@ -1041,13 +872,13 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🌍 ☁️ 🛰️ ☄️ ✈️
+🌍 ☁️ ✈️ ☄️ 🛰️
 
 </div>
 
 <p
 style="
-font-size:1.2rem;
+font-size:1.3rem;
 line-height:1.8;
 max-width:700px;
 margin:auto;
@@ -1057,7 +888,7 @@ Excellent Work!
 
 <br><br>
 
-You successfully identified all layers of Earth's atmosphere.
+You correctly identified all layers of Earth's atmosphere.
 
 </p>
 
@@ -1071,13 +902,25 @@ color:#1565c0;
 font-weight:bold;
 ">
 
-Exosphere<br>
-Thermosphere<br>
-Mesosphere<br>
-Stratosphere<br>
-Troposphere
+E → Exosphere<br>
+D → Thermosphere<br>
+C → Mesosphere<br>
+B → Stratosphere<br>
+A → Troposphere
 
 </div>
+
+<br>
+
+<h2
+style="
+color:#2e7d32;
+">
+
+⭐ Final Score:
+${score}
+
+</h2>
 
 <br>
 
