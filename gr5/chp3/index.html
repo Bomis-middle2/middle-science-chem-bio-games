@@ -1,1 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Cell Sort Challenge</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#eef8f0;
+padding:20px;
+margin:0;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+h1{
+text-align:center;
+color:#2e7d32;
+}
+
+.score{
+text-align:center;
+font-size:1.2rem;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.cardArea{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.card{
+background:#1976d2;
+color:white;
+padding:12px 18px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.card.selected{
+background:#ff9800;
+}
+
+.tableArea{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.column{
+border:3px solid #ccc;
+border-radius:15px;
+padding:15px;
+min-height:300px;
+}
+
+.animal{
+background:#e3f2fd;
+}
+
+.plant{
+background:#e8f5e9;
+}
+
+.column h2{
+text-align:center;
+}
+
+.dropBtn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+.feedback{
+text-align:center;
+font-weight:bold;
+font-size:1.1rem;
+margin-top:15px;
+min-height:40px;
+}
+
+.filledItem{
+background:white;
+padding:8px;
+margin:6px 0;
+border-radius:8px;
+}
+
+.result{
+text-align:center;
+font-size:2rem;
+padding:30px;
+}
+
+@media(max-width:768px){
+
+.tableArea{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🔬 Cell Sort Challenge</h1>
+
+<div class="score">
+Score:
+<span id="score">0</span>/100
+</div>
+
+<div id="cardArea" class="cardArea"></div>
+
+<div class="tableArea">
+
+<div class="column animal">
+
+<h2>Animal Cell</h2>
+
+<button
+class="dropBtn"
+onclick="placeCard('animal')">
+Place Here
+</button>
+
+<div id="animalList"></div>
+
+</div>
+
+<div class="column plant">
+
+<h2>Plant Cell</h2>
+
+<button
+class="dropBtn"
+onclick="placeCard('plant')">
+Place Here
+</button>
+
+<div id="plantList"></div>
+
+</div>
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+Select a statement card.
+</div>
+
+</div>
+
+<script>
+
+const statements = [
+
+{
+text:"Smaller in size",
+type:"animal"
+},
+
+{
+text:"Do not have a cell wall",
+type:"animal"
+},
+
+{
+text:"Vacuoles are absent or small",
+type:"animal"
+},
+
+{
+text:"Do not have chloroplast",
+type:"animal"
+},
+
+{
+text:"Store food as glycogen",
+type:"animal"
+},
+
+{
+text:"Larger in size",
+type:"plant"
+},
+
+{
+text:"Have a cell wall",
+type:"plant"
+},
+
+{
+text:"Large central vacuole",
+type:"plant"
+},
+
+{
+text:"Contain chloroplast",
+type:"plant"
+},
+
+{
+text:"Store food as starch",
+type:"plant"
+}
+
+];
+
+let selectedCard = null;
+
+let score = 0;
+
+let completed = 0;
+
+/* =========================
+   RENDER CARDS
+========================= */
+
+function renderCards(){
+
+const cardArea =
+document.getElementById(
+"cardArea"
+);
+
+cardArea.innerHTML = "";
+
+statements.forEach((item,index)=>{
+
+if(item.used) return;
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+card.innerText =
+item.text;
+
+card.onclick = ()=>{
+
+document
+.querySelectorAll(
+".card"
+)
+.forEach(c=>
+c.classList.remove(
+"selected"
+)
+);
+
+card.classList.add(
+"selected"
+);
+
+selectedCard = index;
+
+};
+
+cardArea.appendChild(
+card
+);
+
+});
+
+}
+
+/* =========================
+   PLACE CARD
+========================= */
+
+function placeCard(
+column
+){
+
+if(
+selectedCard === null
+){
+
+document
+.getElementById(
+"feedback"
+)
+.innerHTML =
+"⚠️ Select a statement first.";
+
+return;
+
+}
+
+const item =
+statements[
+selectedCard
+];
+
+const feedback =
+document.getElementById(
+"feedback"
+);
+
+if(
+item.type === column
+){
+
+score += 10;
+
+completed++;
+
+document
+.getElementById(
+"score"
+)
+.innerHTML =
+score;
+
+feedback.style.color =
+"green";
+
+feedback.innerHTML =
+
+`
+✔ Correct!
+
+<br><br>
+
+"${item.text}"
+
+belongs to
+
+<b>
+${column === "animal"
+? "Animal Cell"
+: "Plant Cell"}
+</b>.
+`;
+
+const targetList =
+document.getElementById(
+
+column === "animal"
+? "animalList"
+: "plantList"
+
+);
+
+const entry =
+document.createElement(
+"div"
+);
+
+entry.className =
+"filledItem";
+
+entry.innerText =
+item.text;
+
+targetList.appendChild(
+entry
+);
+
+item.used = true;
+
+selectedCard = null;
+
+renderCards();
+
+checkCompletion();
+
+}
+else{
+
+feedback.style.color =
+"red";
+
+feedback.innerHTML =
+
+`
+❌ Try Again!
+
+<br><br>
+
+Think carefully about
+whether this feature belongs
+to an Animal Cell or Plant Cell.
+`;
+
+selectedCard = null;
+
+document
+.querySelectorAll(
+".card"
+)
+.forEach(c=>
+c.classList.remove(
+"selected"
+)
+);
+
+}
+
+}
+
+/* =========================
+   CHECK COMPLETION
+========================= */
+
+function checkCompletion(){
+
+if(
+completed !==
+statements.length
+){
+
+return;
+
+}
+
+document
+.getElementById(
+"cardArea"
+)
+.innerHTML = "";
+
+document
+.getElementById(
+"feedback"
+)
+.innerHTML = "";
+
+let message =
+"Great Job!";
+
+if(score === 100){
+
+message =
+"🏆 Cell Expert!";
+}
+else if(score >= 80){
+
+message =
+"🌟 Excellent Work!";
+}
+else{
+
+message =
+"👍 Keep Practising!";
+}
+
+document
+.querySelector(
+".container"
+)
+.innerHTML +=
+
+`
+<div class="result">
+
+${message}
+
+<br><br>
+
+Score:
+${score}/100
+
+<br><br>
+
+<button
+
+onclick="restartGame()"
+
+style="
+padding:15px 25px;
+border:none;
+border-radius:12px;
+background:#1976d2;
+color:white;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 Play Again
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =========================
+   RESTART
+========================= */
+
+function restartGame(){
+
+location.reload();
+
+}
+
+/* =========================
+   START GAME
+========================= */
+
+renderCards();
+
+</script>
+
+</body>
+</html>
