@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Innovine Cell Sort Challenge</title>
+<title>Cell Sort Challenge</title>
 
 <style>
 
@@ -33,62 +33,108 @@ linear-gradient(
 
 min-height:100vh;
 
-overflow-x:hidden;
-
-position:relative;
+overflow:hidden;
 
 }
 
 /* =========================
-   FLOATING BIOLOGY ICONS
+   SPLASH SCREEN
 ========================= */
 
-.floating{
+#splashScreen{
 
 position:fixed;
 
-font-size:70px;
+top:0;
+left:0;
 
-opacity:.08;
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:1000;
+
+}
+
+#splashLogo{
+
+width:320px;
+
+max-width:80%;
+
+animation:logoPulse 2s ease-in-out;
+
+}
+
+@keyframes logoPulse{
+
+0%{
+opacity:0;
+transform:scale(.8);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* =========================
+   FLOATING BACKGROUND
+========================= */
+
+.bgIcon{
+
+position:absolute;
+
+font-size:80px;
+
+opacity:.06;
+
+animation:float 14s infinite ease-in-out;
 
 pointer-events:none;
 
-z-index:0;
-
-animation:float 12s infinite ease-in-out;
-
 }
 
-.f1{
-top:8%;
+.i1{
+top:5%;
 left:5%;
 }
 
-.f2{
+.i2{
 top:15%;
 right:8%;
 animation-delay:2s;
 }
 
-.f3{
-bottom:12%;
-left:10%;
+.i3{
+bottom:15%;
+left:8%;
 animation-delay:4s;
 }
 
-.f4{
+.i4{
 bottom:10%;
-right:12%;
+right:10%;
 animation-delay:6s;
 }
 
-.f5{
+.i5{
 top:45%;
 left:2%;
 animation-delay:3s;
 }
 
-.f6{
+.i6{
 top:55%;
 right:3%;
 animation-delay:5s;
@@ -117,91 +163,87 @@ rotate(0deg);
 }
 
 /* =========================
-   MAIN CONTAINER
+   GAME AREA
 ========================= */
 
-.gameContainer{
+#gameContainer{
+
+display:none;
+
+position:relative;
+
+z-index:10;
 
 max-width:1200px;
 
 margin:20px auto;
 
-padding:25px;
-
 background:white;
+
+padding:25px;
 
 border-radius:25px;
 
 box-shadow:
 0 10px 25px rgba(0,0,0,.15);
 
-position:relative;
-
-z-index:10;
-
 }
 
 /* =========================
-   LOGO
+   HEADER
 ========================= */
 
-.logo{
+.header{
 
-display:block;
-
-margin:auto;
-
-width:240px;
-
-max-width:90%;
+text-align:center;
 
 margin-bottom:20px;
 
 }
 
-/* =========================
-   STORY
-========================= */
-
-.story{
-
-text-align:center;
-
-font-size:1.15rem;
-
-line-height:1.8;
-
-color:#444;
-
-margin-bottom:25px;
-
-}
-
-.story strong{
+.header h1{
 
 color:#2e7d32;
 
+font-size:2.2rem;
+
+margin-bottom:10px;
+
+}
+
+.instruction{
+
+background:#fff8e1;
+
+padding:15px;
+
+border-radius:12px;
+
+font-weight:bold;
+
+border:2px solid #ffd54f;
+
 }
 
 /* =========================
-   TOP BAR
+   SCORE BAR
 ========================= */
 
-.topBar{
+.scoreBar{
 
 display:flex;
 
 justify-content:space-between;
 
-flex-wrap:wrap;
+margin:20px 0;
 
 gap:10px;
 
-margin-bottom:25px;
+flex-wrap:wrap;
 
 }
 
-.statBox{
+.stat{
 
 background:#e3f2fd;
 
@@ -211,15 +253,42 @@ border-radius:12px;
 
 font-weight:bold;
 
-font-size:1rem;
+}
+
+/* =========================
+   FEATURE CARD
+========================= */
+
+.featureCard{
+
+background:#1976d2;
+
+color:white;
+
+padding:25px;
+
+border-radius:20px;
+
+text-align:center;
+
+font-size:1.4rem;
+
+font-weight:bold;
+
+max-width:700px;
+
+margin:20px auto;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.2);
 
 }
 
 /* =========================
-   CELL AREA
+   CELL CHOICES
 ========================= */
 
-.cellArea{
+.cellChoices{
 
 display:grid;
 
@@ -227,7 +296,7 @@ grid-template-columns:1fr 1fr;
 
 gap:25px;
 
-margin-bottom:30px;
+margin-top:25px;
 
 }
 
@@ -255,70 +324,23 @@ transform:scale(1.02);
 
 }
 
-.cellTitle{
-
-font-size:1.6rem;
-
-font-weight:bold;
-
-color:#1565c0;
-
-margin-bottom:15px;
-
-}
-
-.cellImage{
+.cellCard img{
 
 width:260px;
 
 max-width:100%;
 
-height:auto;
-
-margin:auto;
-
-display:block;
-
 }
 
-/* =========================
-   FEATURE CARD
-========================= */
+.cellTitle{
 
-.featureCard{
-
-max-width:700px;
-
-margin:20px auto;
-
-background:#1976d2;
-
-color:white;
-
-padding:20px;
-
-border-radius:18px;
-
-font-size:1.2rem;
+font-size:1.5rem;
 
 font-weight:bold;
 
-text-align:center;
+margin-bottom:10px;
 
-box-shadow:
-0 4px 12px rgba(0,0,0,.2);
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.featureCard.active{
-
-background:#ff9800;
-
-transform:scale(1.03);
+color:#1565c0;
 
 }
 
@@ -330,7 +352,7 @@ transform:scale(1.03);
 
 text-align:center;
 
-font-size:1.15rem;
+font-size:1.2rem;
 
 font-weight:bold;
 
@@ -346,21 +368,15 @@ margin-top:20px;
 
 @media(max-width:768px){
 
-.cellArea{
+.cellChoices{
 
 grid-template-columns:1fr;
 
 }
 
-.logo{
-
-width:180px;
-
-}
-
 .featureCard{
 
-font-size:1rem;
+font-size:1.1rem;
 
 }
 
@@ -372,65 +388,81 @@ font-size:1rem;
 
 <body>
 
-<!-- FLOATING ICONS -->
+<!-- SPLASH -->
 
-<div class="floating f1">🧬</div>
-<div class="floating f2">🔬</div>
-<div class="floating f3">🌿</div>
-<div class="floating f4">🦠</div>
-<div class="floating f5">🧫</div>
-<div class="floating f6">🔍</div>
-
-<div class="gameContainer">
-
-<!-- LOGO -->
+<div id="splashScreen">
 
 <img
 src="assets/innovine-logo.png"
-class="logo"
+id="splashLogo"
 alt="Innovine Logo">
 
-<!-- STORY -->
+</div>
 
-<div class="story">
+<!-- FLOATING ICONS -->
 
-<strong>🌱 Cell Sort Challenge</strong>
+<div class="bgIcon i1">🧬</div>
+<div class="bgIcon i2">🔬</div>
+<div class="bgIcon i3">🌿</div>
+<div class="bgIcon i4">🦠</div>
+<div class="bgIcon i5">🧫</div>
+<div class="bgIcon i6">🔍</div>
 
-<br><br>
+<!-- GAME -->
 
-Animal cells and plant cells have forgotten their characteristics.
+<div id="gameContainer">
 
-Help them remember by sorting each feature into the correct cell type.
+<div class="header">
 
-<br><br>
+<h1>
 
-👉 <strong>Tap the feature card and then tap the correct cell.</strong>
+🔬 Cell Sort Challenge
+
+</h1>
+
+<div class="instruction">
+
+Tap the correct cell type for the feature shown below.
 
 </div>
 
-<!-- SCORE -->
+</div>
 
-<div class="topBar">
+<div class="scoreBar">
 
-<div class="statBox">
+<div class="stat">
 
 ⭐ Score:
-<span id="score">0</span>
+<span id="score">
+
+0
+
+</span>
 
 </div>
 
-<div class="statBox">
+<div class="stat">
 
-Features Sorted:
-<span id="progress">0</span>/10
+Question:
+<span id="questionNumber">
+
+1
+
+</span>/10
 
 </div>
 
 </div>
 
-<!-- CELLS -->
+<div
+id="featureCard"
+class="featureCard">
 
-<div class="cellArea">
+Loading...
+
+</div>
+
+<div class="cellChoices">
 
 <div
 class="cellCard"
@@ -444,7 +476,6 @@ Animal Cell
 
 <img
 src="assets/animal-cell.png"
-class="cellImage"
 alt="Animal Cell">
 
 </div>
@@ -461,34 +492,37 @@ Plant Cell
 
 <img
 src="assets/plant-cell.png"
-class="cellImage"
 alt="Plant Cell">
 
 </div>
 
 </div>
 
-<!-- FEATURE CARD -->
-
-<div
-id="featureCard"
-class="featureCard">
-
-Loading...
-
-</div>
-
-<!-- FEEDBACK -->
-
 <div
 id="feedback"
 class="feedback">
 
-Tap the blue card to begin.
+</div>
 
 </div>
 
 <script>
+
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+setTimeout(()=>{
+
+document.getElementById(
+"splashScreen"
+).style.display="none";
+
+document.getElementById(
+"gameContainer"
+).style.display="block";
+
+},2000);
 
 /* =========================
    GAME DATA
@@ -548,14 +582,11 @@ type:"plant"
 
 ];
 
-let currentFeature = 0;
-
+let currentQuestion = 0;
 let score = 0;
 
-let cardSelected = false;
-
 /* =========================
-   RANDOMIZE FEATURES
+   RANDOMIZE QUESTIONS
 ========================= */
 
 for(
@@ -582,13 +613,13 @@ features[i]
 }
 
 /* =========================
-   LOAD FEATURE
+   LOAD QUESTION
 ========================= */
 
-function loadFeature(){
+function loadQuestion(){
 
 if(
-currentFeature >=
+currentQuestion >=
 features.length
 ){
 
@@ -598,15 +629,12 @@ return;
 
 }
 
-cardSelected = false;
-
 document
 .getElementById(
-"featureCard"
+"questionNumber"
 )
-.classList.remove(
-"active"
-);
+.innerHTML =
+currentQuestion + 1;
 
 document
 .getElementById(
@@ -615,97 +643,40 @@ document
 .innerHTML =
 
 features[
-currentFeature
+currentQuestion
 ].text;
 
 document
 .getElementById(
 "feedback"
 )
-.innerHTML =
-
-"Tap the blue card to select it.";
-
-document
-.getElementById(
-"feedback"
-)
-.style.color =
-"#444";
+.innerHTML = "";
 
 }
-
-/* =========================
-   SELECT FEATURE CARD
-========================= */
-
-document
-.getElementById(
-"featureCard"
-)
-.addEventListener(
-"click",
-function(){
-
-cardSelected = true;
-
-this.classList.add(
-"active"
-);
-
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
-
-"✅ Great! Now tap Animal Cell or Plant Cell.";
-
-document
-.getElementById(
-"feedback"
-)
-.style.color =
-"#1565c0";
-
-}
-);
 
 /* =========================
    CHECK ANSWER
 ========================= */
 
+let answering = false;
+
 function checkAnswer(
 selectedType
 ){
 
-if(
-!cardSelected
-){
+if(answering) return;
 
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
-
-"⚠️ First tap the feature card.";
-
-document
-.getElementById(
-"feedback"
-)
-.style.color =
-"#ef6c00";
-
-return;
-
-}
+answering = true;
 
 const current =
 features[
-currentFeature
+currentQuestion
 ];
+
+const feedback =
+document.getElementById(
+"feedback"
+);
 
 if(
 selectedType ===
@@ -721,26 +692,19 @@ document
 .innerHTML =
 score;
 
-document
-.getElementById(
-"progress"
-)
-.innerHTML =
-currentFeature + 1;
+feedback.style.color =
+"#2e7d32";
 
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
+feedback.innerHTML =
 
-`🎉 Correct!
+`
+🎉 Correct!
 
 <br><br>
 
 <b>${current.text}</b>
 
-belongs to the
+belongs to
 
 <b>
 ${
@@ -750,56 +714,50 @@ selectedType==="animal"
 :
 "Plant Cell"
 }
-</b>.`;
-
-document
-.getElementById(
-"feedback"
-)
-.style.color =
-"#2e7d32";
-
-setTimeout(()=>{
-
-currentFeature++;
-
-loadFeature();
-
-},1500);
+</b>
+`;
 
 }
 else{
 
-document
-.getElementById(
-"feedback"
-)
-.innerHTML =
+feedback.style.color =
+"#c62828";
 
-`❌ Try Again!
+feedback.innerHTML =
+
+`
+❌ Not Quite!
 
 <br><br>
 
-Think carefully before choosing.`;
+<b>${current.text}</b>
 
-document
-.getElementById(
-"feedback"
-)
-.style.color =
-"#c62828";
+belongs to
 
-cardSelected = false;
-
-document
-.getElementById(
-"featureCard"
-)
-.classList.remove(
-"active"
-);
+<b>
+${
+current.type==="animal"
+?
+"Animal Cell"
+:
+"Plant Cell"
+}
+</b>
+`;
 
 }
+
+/* AUTO NEXT */
+
+setTimeout(()=>{
+
+currentQuestion++;
+
+answering = false;
+
+loadQuestion();
+
+},1800);
 
 }
 
@@ -809,9 +767,34 @@ document
 
 function showCompletionScreen(){
 
+let badge =
+"🌟";
+
+let title =
+"Cell Learner";
+
+if(score >= 80){
+
+badge =
+"🏆";
+
+title =
+"Cell Expert";
+
+}
+else if(score >= 60){
+
+badge =
+"🥇";
+
+title =
+"Cell Champion";
+
+}
+
 document
-.querySelector(
-".gameContainer"
+.getElementById(
+"gameContainer"
 )
 .innerHTML =
 
@@ -826,6 +809,7 @@ padding:40px;
 src="assets/innovine-logo.png"
 style="
 width:220px;
+max-width:80%;
 margin-bottom:25px;
 ">
 
@@ -834,17 +818,17 @@ style="
 font-size:100px;
 ">
 
-🏆
+${badge}
 
 </div>
 
 <h1
 style="
 color:#2e7d32;
-margin-bottom:20px;
+margin-bottom:15px;
 ">
 
-Cell Expert
+${title}
 
 </h1>
 
@@ -856,9 +840,7 @@ max-width:700px;
 margin:auto;
 ">
 
-You successfully helped
-Animal Cells and Plant Cells
-remember their characteristics.
+You helped Animal Cells and Plant Cells remember their characteristics.
 
 Excellent work!
 
@@ -916,7 +898,7 @@ location.reload();
    START GAME
 ========================= */
 
-loadFeature();
+loadQuestion();
 
 </script>
 
