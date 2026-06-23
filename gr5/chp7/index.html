@@ -30,12 +30,10 @@ box-sizing:border-box;
 body{
 
 font-family:
-'Trebuchet MS',
+'Segoe UI',
 sans-serif;
 
 min-height:100vh;
-
-/* FADED BACKGROUND */
 
 background:
 linear-gradient(
@@ -83,24 +81,20 @@ width:320px;
 max-width:85%;
 
 animation:
-logoZoom 1.5s ease;
+zoomLogo 1.5s ease;
 
 }
 
-@keyframes logoZoom{
+@keyframes zoomLogo{
 
 0%{
-
 opacity:0;
 transform:scale(.6);
-
 }
 
 100%{
-
 opacity:1;
 transform:scale(1);
-
 }
 
 }
@@ -125,20 +119,20 @@ padding:20px;
 .instructionCard{
 
 background:
-rgba(255,255,255,.96);
+rgba(255,255,255,.95);
 
 max-width:1000px;
 width:100%;
 
-border-radius:30px;
-
 padding:35px;
+
+border-radius:30px;
 
 text-align:center;
 
 box-shadow:
-0 10px 30px
-rgba(0,0,0,.20);
+0 10px 35px
+rgba(0,0,0,.15);
 
 }
 
@@ -150,19 +144,19 @@ margin-bottom:20px;
 
 }
 
-.mainTitle{
+.title{
 
 font-size:3rem;
 
 font-weight:bold;
 
-color:#2e7d32;
+color:#ef6c00;
 
-margin-bottom:15px;
+margin-bottom:20px;
 
 }
 
-.subtitle{
+.story{
 
 font-size:1.2rem;
 
@@ -180,15 +174,15 @@ margin:auto;
 
 margin-top:25px;
 
-background:#f5fff5;
+background:#fff8e1;
 
 padding:20px;
 
 border-radius:20px;
 
-border:2px solid #a5d6a7;
+border:2px solid #ffca28;
 
-font-size:1.15rem;
+font-size:1.1rem;
 
 line-height:1.8;
 
@@ -203,7 +197,7 @@ padding:
 
 border:none;
 
-border-radius:20px;
+border-radius:18px;
 
 background:#43a047;
 
@@ -263,14 +257,11 @@ margin-bottom:10px;
 
 .gameTitle{
 
-font-size:2.7rem;
+font-size:2.8rem;
 
 font-weight:bold;
 
 color:#ef6c00;
-
-text-shadow:
-2px 2px 0 white;
 
 }
 
@@ -301,17 +292,13 @@ padding:18px;
 
 border-radius:18px;
 
-font-weight:bold;
-
-font-size:1.2rem;
-
 text-align:center;
 
-color:white;
+font-size:1.1rem;
 
-box-shadow:
-0 5px 15px
-rgba(0,0,0,.15);
+font-weight:bold;
+
+color:white;
 
 }
 
@@ -350,31 +337,29 @@ max-width:1200px;
 margin:auto;
 
 background:
-rgba(255,255,255,.96);
-
-border-radius:30px;
+rgba(255,255,255,.95);
 
 padding:25px;
 
+border-radius:30px;
+
 box-shadow:
 0 10px 30px
-rgba(0,0,0,.20);
+rgba(0,0,0,.15);
 
 }
 
-/* QUESTION */
-
 .questionLabel{
 
-background:#4caf50;
+display:inline-block;
+
+background:#43a047;
 
 color:white;
 
-padding:10px 20px;
+padding:12px 25px;
 
-border-radius:20px;
-
-display:inline-block;
+border-radius:25px;
 
 font-weight:bold;
 
@@ -390,15 +375,17 @@ font-size:2rem;
 
 font-weight:bold;
 
-color:#333;
-
-line-height:1.4;
+line-height:1.5;
 
 margin-bottom:25px;
 
+color:#333;
+
 }
 
-/* HABITAT AREA */
+/* =========================
+   HABITAT AREA
+========================= */
 
 .habitatSection{
 
@@ -416,6 +403,10 @@ margin-bottom:25px;
 .habitatImage{
 
 width:100%;
+
+max-height:450px;
+
+object-fit:cover;
 
 border-radius:20px;
 
@@ -446,8 +437,6 @@ line-height:1.8;
 
 font-weight:bold;
 
-color:#5d4037;
-
 }
 
 /* =========================
@@ -463,27 +452,25 @@ grid-template-columns:
 
 gap:15px;
 
-margin-top:20px;
-
 }
 
 .optionCard{
 
 padding:18px;
 
+border:none;
+
 border-radius:18px;
 
 cursor:pointer;
 
-font-size:1.15rem;
+font-size:1.1rem;
 
 font-weight:bold;
 
-border:none;
+text-align:left;
 
 transition:.3s;
-
-text-align:left;
 
 }
 
@@ -494,27 +481,19 @@ transform:translateY(-3px);
 }
 
 .optionA{
-
 background:#e8f5e9;
-
 }
 
 .optionB{
-
 background:#e3f2fd;
-
 }
 
 .optionC{
-
 background:#fff8e1;
-
 }
 
 .optionD{
-
 background:#fce4ec;
-
 }
 
 /* =========================
@@ -526,6 +505,34 @@ background:#fce4ec;
 margin-top:25px;
 
 min-height:120px;
+
+}
+
+/* =========================
+   FINAL CHALLENGE ZONES
+========================= */
+
+.habitatZone{
+
+background:white;
+
+padding:10px;
+
+border-radius:20px;
+
+border:3px dashed #43a047;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+.habitatZone:hover{
+
+transform:scale(1.03);
 
 }
 
@@ -550,13 +557,7 @@ grid-template-columns:
 
 .questionText{
 
-font-size:1.4rem;
-
-}
-
-.gameTitle{
-
-font-size:2rem;
+font-size:1.5rem;
 
 }
 
@@ -576,7 +577,13 @@ grid-template-columns:1fr;
 
 }
 
-.mainTitle{
+.title{
+
+font-size:2rem;
+
+}
+
+.gameTitle{
 
 font-size:2rem;
 
@@ -610,23 +617,25 @@ src="assets/innovine-logo.png">
 src="assets/innovine-logo.png"
 class="logo">
 
-<h1 class="mainTitle">
+<h1 class="title">
 
 🕵️ ADAPTATION DETECTIVE
 
 </h1>
 
-<div class="subtitle">
+<div class="story">
 
-Look carefully at each habitat.
-
-<br><br>
-
-Identify the adaptation that would best help an animal survive there.
+Professor Habitat needs your help!
 
 <br><br>
 
-Collect adaptation badges and become a
+Look carefully at each habitat image.
+
+Choose the adaptation that would best help an animal survive there.
+
+<br><br>
+
+Earn badges and become a
 
 <b>
 
@@ -644,9 +653,9 @@ Master Adaptation Detective
 
 <br><br>
 
-"A good detective doesn't guess.
+A good detective observes carefully.
 
-Observe the habitat carefully and think about what adaptation would help an animal survive there."
+Look at the habitat and think about what special feature would help an animal survive there.
 
 </div>
 
@@ -685,44 +694,28 @@ class="gameLogo">
 <div class="hudBox scoreBox">
 
 ⭐ Score:
-<span id="score">
-
-0
-
-</span>
+<span id="score">0</span>
 
 </div>
 
 <div class="hudBox lifeBox">
 
 ❤️ Chances:
-<span id="chances">
-
-2
-
-</span>
+<span id="chances">2</span>
 
 </div>
 
 <div class="hudBox badgeBox">
 
 🏅 Badges:
-<span id="badges">
-
-0
-
-</span>
+<span id="badges">0</span>
 
 </div>
 
 <div class="hudBox questionBox">
 
 📋 Question:
-<span id="questionNo">
-
-1
-
-</span>/5
+<span id="questionNo">1</span>/5
 
 </div>
 
@@ -734,7 +727,7 @@ class="gameLogo">
 
 <div class="questionLabel">
 
-LOOK AT THE HABITAT IMAGE CAREFULLY
+🕵️ DETECTIVE MISSION
 
 </div>
 
@@ -762,9 +755,7 @@ class="habitatImage">
 id="professorPanel"
 class="professorPanel">
 
-Think like a detective.
-
-Choose the adaptation that best helps an animal survive in this habitat.
+Observe carefully and choose the best adaptation.
 
 </div>
 
@@ -784,8 +775,6 @@ class="optionsGrid">
 
 </div>
 
-<!-- AUDIO -->
-
 <audio
 id="correctSound"
 src="assets/correct.mp3">
@@ -803,31 +792,39 @@ src="assets/freesound_community-claps-44774.mp3">
 
 <script>
 
-/* SPLASH */
+/* =========================
+   SPLASH
+========================= */
 
 setTimeout(()=>{
 
 document.getElementById(
 "splashScreen"
-).style.display="none";
+).style.display =
+"none";
 
 document.getElementById(
 "instructionScreen"
-).style.display="flex";
+).style.display =
+"flex";
 
 },1500);
 
-/* START */
+/* =========================
+   START GAME
+========================= */
 
 function startGame(){
 
 document.getElementById(
 "instructionScreen"
-).style.display="none";
+).style.display =
+"none";
 
 document.getElementById(
 "gameScreen"
-).style.display="block";
+).style.display =
+"block";
 
 loadQuestion();
 
@@ -854,11 +851,14 @@ let waiting = false;
 const questions = [
 
 {
-habitat:"Desert Habitat",
+habitat:"🏜️ Desert Habitat",
 
 image:"assets/desert.png",
 
-animal:"🐪 Camel Guide",
+guide:"🐪 Camel Guide",
+
+guideMessage:
+"Look at the dry sandy environment carefully.",
 
 fact:
 "Long eyelashes protect desert animals from blowing sand.",
@@ -881,11 +881,14 @@ options:[
 },
 
 {
-habitat:"Aquatic Habitat",
+habitat:"🌊 Aquatic Habitat",
 
 image:"assets/aquatic.png",
 
-animal:"🐠 Fish Guide",
+guide:"🐠 Fish Guide",
+
+guideMessage:
+"Notice that this habitat is completely surrounded by water.",
 
 fact:
 "Gills help aquatic animals obtain oxygen from water.",
@@ -908,11 +911,14 @@ options:[
 },
 
 {
-habitat:"Polar Habitat",
+habitat:"❄️ Polar Habitat",
 
 image:"assets/polar.png",
 
-animal:"🐧 Penguin Guide",
+guide:"🐧 Penguin Guide",
+
+guideMessage:
+"Observe the snow and ice carefully.",
 
 fact:
 "Blubber keeps animals warm in freezing temperatures.",
@@ -935,11 +941,14 @@ options:[
 },
 
 {
-habitat:"Rainforest Habitat",
+habitat:"🌴 Rainforest Habitat",
 
 image:"assets/rainforest.png",
 
-animal:"🐒 Monkey Guide",
+guide:"🐒 Monkey Guide",
+
+guideMessage:
+"Notice the dense trees and thick vegetation.",
 
 fact:
 "A grasping tail helps animals move between branches.",
@@ -962,11 +971,14 @@ options:[
 },
 
 {
-habitat:"Grassland Habitat",
+habitat:"🌾 Grassland Habitat",
 
 image:"assets/grassland.png",
 
-animal:"🦒 Giraffe Guide",
+guide:"🦒 Giraffe Guide",
+
+guideMessage:
+"Observe the wide open grassy plains.",
 
 fact:
 "Eyes on the sides of the head help animals spot predators quickly.",
@@ -1028,11 +1040,11 @@ shuffleQuestions();
 ========================= */
 
 function shuffleArray(
-array
+arr
 ){
 
 const copy =
-[...array];
+[...arr];
 
 for(
 let i = copy.length - 1;
@@ -1085,7 +1097,10 @@ badges;
 document.getElementById(
 "questionNo"
 ).innerHTML =
-currentQuestion + 1;
+Math.min(
+currentQuestion + 1,
+questions.length
+);
 
 }
 
@@ -1100,7 +1115,7 @@ currentQuestion >=
 questions.length
 ){
 
-showFinalChallenge();
+showFinalMission();
 
 return;
 
@@ -1112,6 +1127,8 @@ const q =
 questions[
 currentQuestion
 ];
+
+/* QUESTION */
 
 document.getElementById(
 "questionText"
@@ -1125,7 +1142,7 @@ Which adaptation would best help an animal survive in this habitat?
 <span
 style="
 color:#1976d2;
-font-size:1.3rem;
+font-size:1.2rem;
 ">
 
 ${q.habitat}
@@ -1133,14 +1150,44 @@ ${q.habitat}
 </span>
 `;
 
+/* IMAGE */
+
 document.getElementById(
 "habitatImage"
 ).src =
 q.image;
 
+/* GUIDE PANEL */
+
+document.getElementById(
+"professorPanel"
+).innerHTML =
+
+`
+<div>
+
+<div
+style="
+font-size:1.4rem;
+margin-bottom:10px;
+">
+
+${q.guide}
+
+</div>
+
+${q.guideMessage}
+
+</div>
+`;
+
+/* CLEAR FEEDBACK */
+
 document.getElementById(
 "feedbackArea"
 ).innerHTML = "";
+
+/* OPTIONS */
 
 const optionsGrid =
 document.getElementById(
@@ -1154,7 +1201,7 @@ shuffleArray(
 q.options
 );
 
-const classes = [
+const cardStyles = [
 
 "optionA",
 "optionB",
@@ -1170,24 +1217,25 @@ option,
 index
 )=>{
 
-const btn =
+const button =
 document.createElement(
 "button"
 );
 
-btn.className =
-`optionCard ${classes[index]}`;
+button.className =
 
-btn.innerHTML =
+`optionCard ${cardStyles[index]}`;
+
+button.innerHTML =
 option;
 
-btn.onclick =
+button.onclick =
 ()=>checkAnswer(
 option
 );
 
 optionsGrid.appendChild(
-btn
+button
 );
 
 }
@@ -1255,13 +1303,23 @@ border-radius:20px;
 text-align:center;
 ">
 
+<div
+style="
+font-size:1.8rem;
+margin-bottom:10px;
+">
+
+🎉
+
+</div>
+
 <h2
 style="
 color:#2e7d32;
 margin-bottom:10px;
 ">
 
-✅ Excellent Detective Work!
+Excellent Detective Work!
 
 </h2>
 
@@ -1272,14 +1330,14 @@ font-weight:bold;
 margin-bottom:10px;
 ">
 
-${q.animal}
+${q.guide}
 
 </div>
 
 <div
 style="
 font-size:1.1rem;
-line-height:1.7;
+line-height:1.8;
 ">
 
 ${q.fact}
@@ -1290,10 +1348,12 @@ ${q.fact}
 
 <div
 style="
-font-size:1.4rem;
+font-size:1.2rem;
+color:#ff9800;
+font-weight:bold;
 ">
 
-🏅 Habitat Badge Earned!
+🏅 Adaptation Badge Earned!
 
 </div>
 
@@ -1353,13 +1413,23 @@ border-radius:20px;
 text-align:center;
 ">
 
+<div
+style="
+font-size:1.8rem;
+margin-bottom:10px;
+">
+
+🤔
+
+</div>
+
 <h2
 style="
 color:#c62828;
 margin-bottom:10px;
 ">
 
-❌ Not Quite!
+Not Quite!
 
 </h2>
 
@@ -1370,17 +1440,17 @@ font-weight:bold;
 margin-bottom:10px;
 ">
 
-${q.animal}
+${q.guide}
 
 </div>
 
 <div
 style="
-font-size:1.1rem;
-line-height:1.7;
+font-size:1.05rem;
+line-height:1.8;
 ">
 
-Look carefully at the habitat and think again.
+Look carefully at the habitat image and think again.
 
 </div>
 
@@ -1389,6 +1459,7 @@ Look carefully at the habitat and think again.
 <div
 style="
 font-size:1.1rem;
+font-weight:bold;
 color:#d32f2f;
 ">
 
@@ -1427,13 +1498,23 @@ border-radius:20px;
 text-align:center;
 ">
 
+<div
+style="
+font-size:1.8rem;
+margin-bottom:10px;
+">
+
+📚
+
+</div>
+
 <h2
 style="
 color:#ef6c00;
 margin-bottom:10px;
 ">
 
-📚 Detective Note
+Detective Note
 
 </h2>
 
@@ -1444,14 +1525,14 @@ font-weight:bold;
 margin-bottom:10px;
 ">
 
-${q.animal}
+${q.guide}
 
 </div>
 
 <div
 style="
-font-size:1.1rem;
-line-height:1.7;
+line-height:1.8;
+font-size:1.05rem;
 ">
 
 Correct Answer:
@@ -1494,17 +1575,17 @@ loadQuestion();
 }
 
 /* =========================
-   FINAL CHALLENGE
+   TRANSITION SCREEN
 ========================= */
 
-function showFinalChallenge(){
+function showFinalMission(){
 
 document.getElementById(
 "questionText"
 ).innerHTML =
 
 `
-🏆 FINAL DETECTIVE CHALLENGE
+🏆 FINAL DETECTIVE MISSION
 `;
 
 document.querySelector(
@@ -1527,87 +1608,103 @@ background:#fffde7;
 padding:25px;
 border-radius:20px;
 text-align:center;
+border:3px solid #fbc02d;
 ">
 
-<h2>
+<div
+style="
+font-size:3rem;
+margin-bottom:10px;
+">
 
-🌍 Habitat Classification Challenge
+🚨
+
+</div>
+
+<h2
+style="
+color:#ef6c00;
+margin-bottom:15px;
+">
+
+Emergency Detective Alert!
 
 </h2>
 
-<br>
+<p
+style="
+font-size:1.1rem;
+line-height:1.8;
+">
 
-Arrange the habitats into the correct category.
+The animals have wandered away from their homes.
 
 <br><br>
 
-The challenge will begin next.
+Use everything you have learned about habitats and adaptations.
+
+<br><br>
+
+Help each animal find its correct habitat.
+
+</p>
 
 </div>
 `;
 
 setTimeout(()=>{
 
-showTreeChallenge();
+showLostAnimalsMission();
 
-},2500);
+},3000);
 
 }
 
 /* =========================
-   TREE CHALLENGE
+   LOST ANIMALS MISSION
 ========================= */
 
-let selectedHabitat = null;
+let selectedAnimal = null;
 
-const habitatCards = [
+const animalCards = [
 
 {
-name:"Aquatic",
-group:"aquatic",
-emoji:"🌊"
+animal:"🐪 Camel",
+habitat:"desert",
+fact:"Camels use long eyelashes to protect their eyes from blowing sand."
 },
 
 {
-name:"Desert",
-group:"terrestrial",
-emoji:"🏜️"
+animal:"🐟 Fish",
+habitat:"aquatic",
+fact:"Fish use gills to obtain oxygen from water."
 },
 
 {
-name:"Grassland",
-group:"terrestrial",
-emoji:"🌾"
+animal:"🐧 Penguin",
+habitat:"polar",
+fact:"Penguins are adapted to survive in cold polar regions."
 },
 
 {
-name:"Rainforest",
-group:"terrestrial",
-emoji:"🌴"
+animal:"🐒 Monkey",
+habitat:"rainforest",
+fact:"A grasping tail helps monkeys move through rainforest trees."
 },
 
 {
-name:"Polar",
-group:"terrestrial",
-emoji:"❄️"
+animal:"🦒 Giraffe",
+habitat:"grassland",
+fact:"Giraffes live in open grasslands and savannas."
 }
 
 ];
 
 /* =========================
-   SHOW TREE CHALLENGE
+   SHOW LOST ANIMALS MISSION
 ========================= */
 
-function showTreeChallenge(){
-
-document.querySelector(
-".habitatSection"
-).style.display =
-"none";
-
-document.getElementById(
-"optionsGrid"
-).innerHTML = "";
+function showLostAnimalsMission(){
 
 document.getElementById(
 "feedbackArea"
@@ -1625,7 +1722,7 @@ color:#2e7d32;
 margin-bottom:20px;
 ">
 
-🌍 Habitat Classification Challenge
+🏡 Help the Animals Find Their Homes
 
 </h2>
 
@@ -1635,57 +1732,123 @@ font-size:1.1rem;
 margin-bottom:20px;
 ">
 
-Tap a habitat card and then tap the correct category.
+Tap an animal card and then tap its habitat.
 
 </p>
 
 <div
 style="
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 margin-bottom:25px;
 ">
 
 <div
-id="aquaticZone"
-onclick="placeHabitat('aquatic')"
+class="habitatZone"
+onclick="placeAnimal('desert')"
+id="desertZone">
+
+<img
+src="assets/desert.png"
 style="
-width:240px;
-min-height:120px;
-padding:20px;
-background:#e3f2fd;
-border:3px dashed #2196f3;
-border-radius:20px;
-font-weight:bold;
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
 ">
 
-🌊 AQUATIC
+<br><br>
+
+🏜️ Desert
 
 </div>
 
 <div
-id="terrestrialZone"
-onclick="placeHabitat('terrestrial')"
+class="habitatZone"
+onclick="placeAnimal('aquatic')"
+id="aquaticZone">
+
+<img
+src="assets/aquatic.png"
 style="
-width:240px;
-min-height:120px;
-padding:20px;
-background:#e8f5e9;
-border:3px dashed #43a047;
-border-radius:20px;
-font-weight:bold;
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
 ">
 
-🌿 TERRESTRIAL
+<br><br>
+
+🌊 Aquatic
+
+</div>
+
+<div
+class="habitatZone"
+onclick="placeAnimal('polar')"
+id="polarZone">
+
+<img
+src="assets/polar.png"
+style="
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
+">
+
+<br><br>
+
+❄️ Polar
+
+</div>
+
+<div
+class="habitatZone"
+onclick="placeAnimal('rainforest')"
+id="rainforestZone">
+
+<img
+src="assets/rainforest.png"
+style="
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
+">
+
+<br><br>
+
+🌴 Rainforest
+
+</div>
+
+<div
+class="habitatZone"
+onclick="placeAnimal('grassland')"
+id="grasslandZone">
+
+<img
+src="assets/grassland.png"
+style="
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
+">
+
+<br><br>
+
+🌾 Grassland
 
 </div>
 
 </div>
 
 <div
-id="habitatCards"
+id="animalCardArea"
 style="
 display:flex;
 justify-content:center;
@@ -1696,38 +1859,38 @@ flex-wrap:wrap;
 </div>
 
 <div
-id="treeMessage"
+id="missionMessage"
 style="
 margin-top:20px;
 font-size:1.1rem;
 font-weight:bold;
 ">
 
-Select a habitat card.
+Select an animal card.
 
 </div>
 
 </div>
 `;
 
-renderHabitatCards();
+renderAnimalCards();
 
 }
 
 /* =========================
-   RENDER CARDS
+   RENDER ANIMALS
 ========================= */
 
-function renderHabitatCards(){
+function renderAnimalCards(){
 
-const container =
+const area =
 document.getElementById(
-"habitatCards"
+"animalCardArea"
 );
 
-container.innerHTML = "";
+area.innerHTML = "";
 
-habitatCards.forEach(
+animalCards.forEach(
 
 (card,index)=>{
 
@@ -1746,18 +1909,17 @@ btn.className =
 "optionCard optionA";
 
 btn.style.minWidth =
-"160px";
+"180px";
 
 btn.innerHTML =
-
-`${card.emoji} ${card.name}`;
+card.animal;
 
 btn.onclick =
-()=>selectHabitat(
+()=>selectAnimal(
 index
 );
 
-container.appendChild(
+area.appendChild(
 btn
 );
 
@@ -1768,18 +1930,18 @@ btn
 }
 
 /* =========================
-   SELECT CARD
+   SELECT ANIMAL
 ========================= */
 
-function selectHabitat(
+function selectAnimal(
 index
 ){
 
-selectedHabitat =
+selectedAnimal =
 index;
 
 document.getElementById(
-"treeMessage"
+"missionMessage"
 ).innerHTML =
 
 `
@@ -1787,79 +1949,94 @@ Selected:
 
 <b>
 
-${habitatCards[index].emoji}
-${habitatCards[index].name}
+${animalCards[index].animal}
 
 </b>
 
 <br>
 
-Now tap a category.
+Now tap its habitat.
 `;
 
 }
 
 /* =========================
-   PLACE HABITAT
+   PLACE ANIMAL
 ========================= */
 
-function placeHabitat(
-targetGroup
+function placeAnimal(
+targetHabitat
 ){
 
 if(
-selectedHabitat === null
+selectedAnimal === null
 ){
 
 return;
 
 }
 
-const card =
-habitatCards[
-selectedHabitat
+const animal =
+animalCards[
+selectedAnimal
 ];
 
 if(
-card.group ===
-targetGroup
+animal.habitat ===
+targetHabitat
 ){
 
+const correctSound =
 document.getElementById(
 "correctSound"
-).play().catch(()=>{});
+);
 
-card.placed = true;
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+animal.placed = true;
 
 const zoneId =
-targetGroup === "aquatic"
-?
-"aquaticZone"
-:
-"terrestrialZone";
+targetHabitat + "Zone";
 
 document.getElementById(
 zoneId
 ).innerHTML +=
 
 `
+
 <br>
 
-${card.emoji}
-${card.name}
+<div
+style="
+font-size:1.4rem;
+margin-top:8px;
+">
+
+${animal.animal}
+
+</div>
+
 `;
 
-renderHabitatCards();
-
 document.getElementById(
-"treeMessage"
+"missionMessage"
 ).innerHTML =
 
-"✅ Correct!";
+`
+✅ Correct!
 
-selectedHabitat = null;
+<br><br>
 
-checkTreeCompletion();
+${animal.fact}
+`;
+
+selectedAnimal = null;
+
+renderAnimalCards();
+
+checkMissionComplete();
 
 }
 else{
@@ -1874,25 +2051,25 @@ wrongSound.currentTime = 0;
 wrongSound.play().catch(()=>{});
 
 document.getElementById(
-"treeMessage"
+"missionMessage"
 ).innerHTML =
 
-"❌ Try again.";
+"❌ Try Again Detective!";
 
 }
 
 }
 
 /* =========================
-   COMPLETION CHECK
+   CHECK COMPLETION
 ========================= */
 
-function checkTreeCompletion(){
+function checkMissionComplete(){
 
 const completed =
-habitatCards.every(
+animalCards.every(
 
-card => card.placed
+animal => animal.placed
 
 );
 
@@ -1902,7 +2079,7 @@ setTimeout(()=>{
 
 showCompletionScreen();
 
-},1200);
+},1500);
 
 }
 
@@ -1938,7 +2115,6 @@ padding:20px;
 src="assets/innovine-logo.png"
 style="
 width:220px;
-max-width:80%;
 margin-bottom:20px;
 ">
 
@@ -1959,7 +2135,7 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🐪 🐠 🐧 🐒 🦒
+🐪 🐟 🐧 🐒 🦒
 
 </div>
 
@@ -1971,11 +2147,9 @@ max-width:700px;
 margin:auto;
 ">
 
-You carefully observed habitats,
-identified useful adaptations,
-and completed the final habitat challenge.
+Congratulations!
 
-Excellent detective work!
+You observed habitats, identified adaptations, rescued the lost animals, and completed every detective mission.
 
 </p>
 
@@ -1983,7 +2157,7 @@ Excellent detective work!
 
 <h2
 style="
-color:#1565c0;
+color:#1976d2;
 ">
 
 ⭐ Final Score:
