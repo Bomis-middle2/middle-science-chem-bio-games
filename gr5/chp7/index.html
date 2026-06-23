@@ -1,1 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Habitat Explorer Adventure
+
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:
+'Trebuchet MS',
+sans-serif;
+
+min-height:100vh;
+
+background:
+
+url(
+'assets/bg (1).png'
+)
+
+center center
+/ cover
+no-repeat
+fixed;
+
+overflow-x:hidden;
+
+}
+
+/* =====================
+SPLASH
+===================== */
+
+#splashScreen{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+#splashLogo{
+
+width:350px;
+
+max-width:80%;
+
+animation:
+zoomIn 1.5s ease;
+
+}
+
+@keyframes zoomIn{
+
+0%{
+
+opacity:0;
+
+transform:
+scale(.6);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:
+scale(1);
+
+}
+
+}
+
+/* =====================
+INSTRUCTION SCREEN
+===================== */
+
+#instructionScreen{
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.instructionCard{
+
+background:
+rgba(
+255,
+255,
+255,
+0.95
+);
+
+max-width:900px;
+
+width:100%;
+
+border-radius:30px;
+
+padding:40px;
+
+text-align:center;
+
+box-shadow:
+0 10px 30px
+rgba(
+0,
+0,
+0,
+0.2
+);
+
+}
+
+.instructionLogo{
+
+width:220px;
+
+margin-bottom:20px;
+
+}
+
+.instructionTitle{
+
+font-size:2.5rem;
+
+color:#2e7d32;
+
+margin-bottom:20px;
+
+}
+
+.instructionText{
+
+font-size:1.2rem;
+
+line-height:1.8;
+
+color:#444;
+
+margin-bottom:30px;
+
+}
+
+.startBtn{
+
+padding:
+16px 40px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+#1976d2;
+
+color:white;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.startBtn:hover{
+
+transform:
+scale(1.05);
+
+}
+
+/* =====================
+GAME SCREEN
+===================== */
+
+#gameScreen{
+
+display:none;
+
+padding:20px;
+
+}
+
+/* HUD */
+
+.hud{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+margin-bottom:20px;
+
+}
+
+.hudBox{
+
+background:
+rgba(
+255,
+255,
+255,
+0.92
+);
+
+padding:
+15px 25px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+font-size:1.1rem;
+
+box-shadow:
+0 3px 10px
+rgba(
+0,
+0,
+0,
+0.2
+);
+
+}
+
+/* MAIN CARD */
+
+.gameCard{
+
+max-width:1100px;
+
+margin:auto;
+
+background:
+rgba(
+255,
+255,
+255,
+0.95
+);
+
+border-radius:30px;
+
+padding:25px;
+
+box-shadow:
+0 10px 25px
+rgba(
+0,
+0,
+0,
+0.25
+);
+
+}
+
+/* QUESTION */
+
+.questionTitle{
+
+text-align:center;
+
+font-size:2rem;
+
+font-weight:bold;
+
+color:#5d4037;
+
+margin-bottom:20px;
+
+}
+
+/* HABITAT IMAGE */
+
+.habitatFrame{
+
+display:flex;
+
+justify-content:center;
+
+margin-bottom:25px;
+
+}
+
+.habitatImage{
+
+width:650px;
+
+max-width:100%;
+
+border-radius:20px;
+
+border:5px solid #fbc02d;
+
+}
+
+/* OPTIONS */
+
+.optionArea{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.optionBtn{
+
+padding:20px;
+
+border:none;
+
+border-radius:20px;
+
+font-size:1.3rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+.aquaticBtn{
+
+background:#2196f3;
+
+}
+
+.terrestrialBtn{
+
+background:#43a047;
+
+}
+
+/* FEEDBACK */
+
+#feedback{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+min-height:80px;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.optionArea{
+
+grid-template-columns:1fr;
+
+}
+
+.questionTitle{
+
+font-size:1.4rem;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SPLASH -->
+
+<div id="splashScreen">
+
+<img
+id="splashLogo"
+src="assets/innovine-logo.png">
+
+</div>
+
+<!-- INSTRUCTIONS -->
+
+<div id="instructionScreen">
+
+<div class="instructionCard">
+
+<img
+class="instructionLogo"
+src="assets/innovine-logo.png">
+
+<h1 class="instructionTitle">
+
+🌍 Habitat Explorer Adventure
+
+</h1>
+
+<div class="instructionText">
+
+Professor Habitat needs your help!
+
+<br><br>
+
+Explore different habitats,
+collect habitat badges,
+and become a
+
+<b>
+
+Master Habitat Explorer
+
+</b>
+
+🏆
+
+</div>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+START EXPLORING
+
+</button>
+
+</div>
+
+</div>
+
+<!-- GAME -->
+
+<div id="gameScreen">
+
+<div class="hud">
+
+<div class="hudBox">
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
+</div>
+
+<div class="hudBox">
+
+❤️ Chances:
+<span id="chances">
+
+2
+
+</span>
+
+</div>
+
+<div class="hudBox">
+
+🏅 Badges:
+<span id="badges">
+
+0
+
+</span>
+
+</div>
+
+<div class="hudBox">
+
+🌍 Question:
+<span id="questionNo">
+
+1
+
+</span>/5
+
+</div>
+
+</div>
+
+<div class="gameCard">
+
+<div
+class="questionTitle"
+id="questionTitle">
+
+Loading...
+
+</div>
+
+<div
+class="habitatFrame">
+
+<img
+id="habitatImage"
+class="habitatImage">
+
+</div>
+
+<div class="optionArea">
+
+<button
+class="optionBtn aquaticBtn"
+onclick="checkAnswer('aquatic')">
+
+🌊 AQUATIC
+
+</button>
+
+<button
+class="optionBtn terrestrialBtn"
+onclick="checkAnswer('terrestrial')">
+
+🌿 TERRESTRIAL
+
+</button>
+
+</div>
+
+<div id="feedback">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/freesound_community-claps-44774.mp3">
+</audio>
+
+<script>
+
+/* SPLASH */
+
+setTimeout(()=>{
+
+document.getElementById(
+"splashScreen"
+).style.display="none";
+
+document.getElementById(
+"instructionScreen"
+).style.display="flex";
+
+},1500);
+
+function startGame(){
+
+document.getElementById(
+"instructionScreen"
+).style.display="none";
+
+document.getElementById(
+"gameScreen"
+).style.display="block";
+
+}
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let score = 0;
+
+let chances = 2;
+
+let badges = 0;
+
+let currentQuestion = 0;
+
+let waiting = false;
+
+/* =========================
+   HABITAT QUESTIONS
+========================= */
+
+const questions = [
+
+{
+name:"Desert Habitat",
+image:"assets/desert.png",
+answer:"terrestrial",
+badge:"🏜️",
+animal:"🐪 Camel Guide",
+fact:"Deserts are terrestrial habitats with very little rainfall."
+},
+
+{
+name:"Aquatic Habitat",
+image:"assets/aquatic.png",
+answer:"aquatic",
+badge:"🌊",
+animal:"🐠 Fish Guide",
+fact:"Aquatic habitats are found in water."
+},
+
+{
+name:"Grassland Habitat",
+image:"assets/grassland.png",
+answer:"terrestrial",
+badge:"🌾",
+animal:"🦒 Giraffe Guide",
+fact:"Grasslands are terrestrial habitats with large open fields."
+},
+
+{
+name:"Polar Habitat",
+image:"assets/polar.png",
+answer:"terrestrial",
+badge:"❄️",
+animal:"🐧 Penguin Guide",
+fact:"Polar regions are cold terrestrial habitats."
+},
+
+{
+name:"Rainforest Habitat",
+image:"assets/rainforest.png",
+answer:"terrestrial",
+badge:"🌴",
+animal:"🐒 Monkey Guide",
+fact:"Rainforests are dense terrestrial habitats with heavy rainfall."
+}
+
+];
+
+/* =========================
+   RANDOMIZE QUESTIONS
+========================= */
+
+for(
+let i = questions.length - 1;
+i > 0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+[
+questions[i],
+questions[j]
+]
+=
+[
+questions[j],
+questions[i]
+];
+
+}
+
+/* =========================
+   LOAD QUESTION
+========================= */
+
+function loadQuestion(){
+
+if(
+currentQuestion >=
+questions.length
+){
+
+showTreeChallenge();
+
+return;
+
+}
+
+const q =
+questions[
+currentQuestion
+];
+
+document
+.getElementById(
+"questionNo"
+)
+innerHTML =
+currentQuestion + 1;
+
+document
+.getElementById(
+"questionTitle"
+)
+innerHTML =
+
+"Which type of habitat is this?";
+
+document
+.getElementById(
+"habitatImage"
+)
+src =
+q.image;
+
+document
+.getElementById(
+"feedback"
+)
+innerHTML = "";
+
+}
+
+/* =========================
+   UPDATE HUD
+========================= */
+
+function updateHUD(){
+
+document
+.getElementById(
+"score"
+)
+innerHTML =
+score;
+
+document
+.getElementById(
+"chances"
+)
+innerHTML =
+chances;
+
+document
+.getElementById(
+"badges"
+)
+innerHTML =
+badges;
+
+}
+
+/* =========================
+   BADGE REWARD
+========================= */
+
+function awardBadge(){
+
+badges++;
+
+updateHUD();
+
+}
+
+/* =========================
+   ANIMAL FEEDBACK
+========================= */
+
+function showAnimalMessage(
+animal,
+fact,
+correct
+){
+
+const feedback =
+document
+.getElementById(
+"feedback"
+);
+
+if(correct){
+
+feedback.style.color =
+"#2e7d32";
+
+feedback.innerHTML =
+
+`
+<div
+style="
+background:#e8f5e9;
+padding:15px;
+border-radius:15px;
+">
+
+<h3>
+
+${animal}
+
+</h3>
+
+<br>
+
+✅ ${fact}
+
+</div>
+`;
+
+}
+else{
+
+feedback.style.color =
+"#c62828";
+
+feedback.innerHTML =
+
+`
+<div
+style="
+background:#ffebee;
+padding:15px;
+border-radius:15px;
+">
+
+<h3>
+
+${animal}
+
+</h3>
+
+<br>
+
+❌ Try Again!
+
+</div>
+`;
+
+}
+
+}
+
+/* =========================
+   START FIRST QUESTION
+========================= */
+
+updateHUD();
+
+loadQuestion();
+
+/* =========================
+   CHECK ANSWER
+========================= */
+
+function checkAnswer(
+selectedAnswer
+){
+
+if(waiting){
+
+return;
+
+}
+
+waiting = true;
+
+const q =
+questions[
+currentQuestion
+];
+
+/* =========================
+   CORRECT ANSWER
+========================= */
+
+if(
+selectedAnswer ===
+q.answer
+){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+score += 10;
+
+awardBadge();
+
+updateHUD();
+
+showAnimalMessage(
+q.animal,
+q.fact,
+true
+);
+
+setTimeout(()=>{
+
+currentQuestion++;
+
+waiting = false;
+
+loadQuestion();
+
+},2200);
+
+}
+
+/* =========================
+   WRONG ANSWER
+========================= */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+chances--;
+
+updateHUD();
+
+showAnimalMessage(
+q.animal,
+q.fact,
+false
+);
+
+/* =========================
+   OUT OF CHANCES
+========================= */
+
+if(
+chances <= 0
+){
+
+setTimeout(()=>{
+
+document
+.getElementById(
+"feedback"
+)
+innerHTML =
+
+`
+<div
+style="
+background:#fff3e0;
+padding:18px;
+border-radius:15px;
+">
+
+<h3>
+
+📚 Correct Answer
+
+</h3>
+
+<br>
+
+<b>
+
+${
+q.answer==="aquatic"
+?
+"🌊 Aquatic"
+:
+"🌿 Terrestrial"
+}
+
+</b>
+
+<br><br>
+
+${q.fact}
+
+</div>
+`;
+
+setTimeout(()=>{
+
+currentQuestion++;
+
+chances = 2;
+
+updateHUD();
+
+waiting = false;
+
+loadQuestion();
+
+},2500);
+
+},1200);
+
+}
+
+/* =========================
+   TRY AGAIN
+========================= */
+
+else{
+
+setTimeout(()=>{
+
+waiting = false;
+
+document
+.getElementById(
+"feedback"
+)
+innerHTML +=
+
+`
+
+<br>
+
+<b>
+
+❤️ One chance remaining!
+
+</b>
+
+`;
+
+},1000);
+
+}
+
+}
+
+}
+
+/* =========================
+   FINAL TREE CHALLENGE
+========================= */
+
+function showTreeChallenge(){
+
+document
+.querySelector(
+".gameCard"
+)
+innerHTML =
+
+`
+
+<h1
+style="
+text-align:center;
+color:#5d4037;
+margin-bottom:20px;
+">
+
+🌳 FINAL CHALLENGE
+
+</h1>
+
+<p
+style="
+text-align:center;
+font-size:1.1rem;
+margin-bottom:25px;
+">
+
+Complete the Habitat Tree.
+
+</p>
+
+<div
+style="
+text-align:center;
+font-size:1.4rem;
+font-weight:bold;
+margin-bottom:25px;
+">
+
+HABITAT
+
+</div>
+
+<div
+style="
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:25px;
+flex-wrap:wrap;
+">
+
+<div
+id="box1"
+onclick="placeCard(1)"
+style="
+width:220px;
+height:90px;
+border:3px dashed #1976d2;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+background:white;
+">
+
+?
+
+</div>
+
+<div
+id="box2"
+onclick="placeCard(2)"
+style="
+width:220px;
+height:90px;
+border:3px dashed #43a047;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+background:white;
+">
+
+?
+
+</div>
+
+</div>
+
+<div
+style="
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+">
+
+<button
+id="aquaticCard"
+onclick="selectCard('aquatic')"
+class="optionBtn aquaticBtn">
+
+🌊 Aquatic
+
+</button>
+
+<button
+id="terrestrialCard"
+onclick="selectCard('terrestrial')"
+class="optionBtn terrestrialBtn">
+
+🌿 Terrestrial
+
+</button>
+
+</div>
+
+<div
+id="treeFeedback"
+style="
+margin-top:25px;
+text-align:center;
+font-weight:bold;
+font-size:1.2rem;
+">
+
+Tap a card and then tap a box.
+
+</div>
+
+`;
+
+}
+
+let selectedCard = null;
+
+let aquaticPlaced = false;
+
+let terrestrialPlaced = false;
+
+/* =========================
+   SELECT CARD
+========================= */
+
+function selectCard(
+card
+){
+
+selectedCard = card;
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+`
+Selected:
+<b>
+
+${
+card==="aquatic"
+?
+"🌊 Aquatic"
+:
+"🌿 Terrestrial"
+}
+
+</b>
+
+<br>
+
+Now tap a box.
+`;
+
+}
+/* =========================
+   PLACE CARD
+========================= */
+
+function placeCard(
+boxNumber
+){
+
+if(
+!selectedCard
+){
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+"⚠️ Select a card first.";
+
+return;
+
+}
+
+/* BOX 1 = AQUATIC */
+
+if(
+boxNumber === 1
+){
+
+if(
+selectedCard === "aquatic"
+&&
+!aquaticPlaced
+){
+
+document
+.getElementById(
+"box1"
+)
+innerHTML =
+
+"🌊 Aquatic";
+
+aquaticPlaced = true;
+
+document
+.getElementById(
+"aquaticCard"
+)
+style.display =
+"none";
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+"✅ Aquatic placed correctly!";
+
+playCorrect();
+
+selectedCard = null;
+
+}
+else{
+
+playWrong();
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+"❌ Try again.";
+
+}
+
+}
+
+/* BOX 2 = TERRESTRIAL */
+
+if(
+boxNumber === 2
+){
+
+if(
+selectedCard === "terrestrial"
+&&
+!terrestrialPlaced
+){
+
+document
+.getElementById(
+"box2"
+)
+innerHTML =
+
+"🌿 Terrestrial";
+
+terrestrialPlaced = true;
+
+document
+.getElementById(
+"terrestrialCard"
+)
+style.display =
+"none";
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+"✅ Terrestrial placed correctly!";
+
+playCorrect();
+
+selectedCard = null;
+
+}
+else{
+
+playWrong();
+
+document
+.getElementById(
+"treeFeedback"
+)
+innerHTML =
+
+"❌ Try again.";
+
+}
+
+}
+
+/* COMPLETED */
+
+if(
+aquaticPlaced
+&&
+terrestrialPlaced
+){
+
+setTimeout(()=>{
+
+showCompletionScreen();
+
+},1200);
+
+}
+
+}
+
+/* =========================
+   AUDIO HELPERS
+========================= */
+
+function playCorrect(){
+
+const audio =
+document.getElementById(
+"correctSound"
+);
+
+audio.currentTime = 0;
+
+audio.play().catch(()=>{});
+
+}
+
+function playWrong(){
+
+const audio =
+document.getElementById(
+"wrongSound"
+);
+
+audio.currentTime = 0;
+
+audio.play().catch(()=>{});
+
+}
+
+/* =========================
+   COMPLETION SCREEN
+========================= */
+
+function showCompletionScreen(){
+
+const clap =
+document.getElementById(
+"clapSound"
+);
+
+clap.currentTime = 0;
+
+clap.play().catch(()=>{});
+
+document
+.querySelector(
+".gameCard"
+)
+innerHTML =
+
+`
+
+<div
+style="
+text-align:center;
+padding:20px;
+">
+
+<img
+src="assets/innovine-logo.png"
+style="
+width:220px;
+max-width:80%;
+margin-bottom:20px;
+">
+
+<h1
+style="
+font-size:3rem;
+color:#2e7d32;
+margin-bottom:20px;
+">
+
+🏆 MASTER HABITAT EXPLORER
+
+</h1>
+
+<div
+style="
+font-size:4rem;
+margin-bottom:20px;
+">
+
+🐪 🐧 🐠 🐒 🦅
+
+</div>
+
+<p
+style="
+font-size:1.3rem;
+line-height:1.8;
+max-width:700px;
+margin:auto;
+">
+
+Congratulations!
+
+You successfully explored different habitats and completed all challenges.
+
+</p>
+
+<br>
+
+<h2
+style="
+color:#1565c0;
+">
+
+⭐ Final Score:
+${score}
+
+</h2>
+
+<br>
+
+<h2
+style="
+color:#ff9800;
+">
+
+🏅 Habitat Badges:
+${badges}
+
+</h2>
+
+<br>
+
+<button
+
+onclick="playAgain()"
+
+style="
+padding:18px 40px;
+border:none;
+border-radius:20px;
+background:#43a047;
+color:white;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 PLAY AGAIN
+
+</button>
+
+</div>
+
+`;
+
+}
+
+/* =========================
+   PLAY AGAIN
+========================= */
+
+function playAgain(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
