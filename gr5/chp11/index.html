@@ -11,7 +11,7 @@ content="width=device-width, initial-scale=1.0">
 
 <title>
 
-🌍 Waste Warrior
+🌍 Waste Warrior Deluxe
 
 </title>
 
@@ -29,11 +29,18 @@ font-family:
 'Segoe UI',
 sans-serif;
 
+/* FADED PARTY BACKGROUND */
+
 background:
 linear-gradient(
-#eef8ff,
-#ffffff
-);
+rgba(255,255,255,.70),
+rgba(255,255,255,.70)
+),
+url('assets/chp11bg.png');
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 
 min-height:100vh;
 
@@ -41,7 +48,9 @@ overflow-x:hidden;
 
 }
 
-/* SPLASH */
+/* =========================
+   SPLASH
+========================= */
 
 #splashScreen{
 
@@ -66,7 +75,7 @@ z-index:9999;
 
 #splashLogo{
 
-width:320px;
+width:350px;
 
 max-width:85%;
 
@@ -89,7 +98,9 @@ transform:scale(1);
 
 }
 
-/* INTRO */
+/* =========================
+   INTRO SCREEN
+========================= */
 
 #introScreen{
 
@@ -106,21 +117,25 @@ padding:20px;
 
 .introCard{
 
-background:white;
+background:
+rgba(255,255,255,.92);
 
-max-width:1000px;
+backdrop-filter:
+blur(5px);
+
+max-width:900px;
 
 width:100%;
 
 padding:35px;
 
-border-radius:30px;
+border-radius:35px;
 
 text-align:center;
 
 box-shadow:
-0 10px 30px
-rgba(0,0,0,.15);
+0 15px 40px
+rgba(0,0,0,.18);
 
 }
 
@@ -148,9 +163,9 @@ margin-bottom:20px;
 
 font-size:1.2rem;
 
-line-height:1.9;
+line-height:2;
 
-color:#444;
+color:#333;
 
 }
 
@@ -159,7 +174,7 @@ color:#444;
 margin-top:25px;
 
 padding:
-18px 45px;
+18px 50px;
 
 border:none;
 
@@ -175,9 +190,19 @@ font-weight:bold;
 
 cursor:pointer;
 
+transition:.3s;
+
 }
 
-/* GAME */
+.startBtn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* =========================
+   GAME SCREEN
+========================= */
 
 #gameScreen{
 
@@ -185,19 +210,23 @@ display:none;
 
 padding:20px;
 
+min-height:100vh;
+
 }
+
+/* HEADER */
 
 .gameHeader{
 
 text-align:center;
 
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
 .gameLogo{
 
-width:180px;
+width:170px;
 
 margin-bottom:10px;
 
@@ -205,22 +234,37 @@ margin-bottom:10px;
 
 .gameTitle{
 
-font-size:2.8rem;
+font-size:3rem;
 
 font-weight:bold;
 
 color:#2e7d32;
 
+text-shadow:
+2px 2px 6px
+rgba(255,255,255,.8);
+
 }
 
-/* HUD */
+.subTitle{
 
-.hud{
+font-size:1.1rem;
 
-display:grid;
+font-weight:bold;
 
-grid-template-columns:
-1fr 1fr;
+color:#444;
+
+margin-top:10px;
+
+}
+
+/* SCORE BADGES */
+
+.topBadges{
+
+display:flex;
+
+justify-content:space-between;
 
 gap:15px;
 
@@ -232,13 +276,11 @@ margin-bottom:20px;
 
 }
 
-.hudBox{
+.badge{
 
-padding:18px;
+padding:15px 25px;
 
 border-radius:18px;
-
-text-align:center;
 
 font-size:1.2rem;
 
@@ -246,71 +288,52 @@ font-weight:bold;
 
 color:white;
 
+min-width:180px;
+
+text-align:center;
+
 }
 
-.scoreBox{
+.scoreBadge{
 
 background:#43a047;
 
 }
 
-.progressBox{
+.progressBadge{
 
 background:#1565c0;
 
 }
 
-/* CARD */
+/* MAIN GAME AREA */
 
-.mainCard{
+.gameArea{
 
 max-width:1100px;
 
 margin:auto;
 
-background:white;
+}
+
+/* QUESTION CARD */
+
+.questionCard{
+
+background:
+rgba(255,255,255,.95);
+
+border-radius:30px;
 
 padding:25px;
 
-border-radius:30px;
+text-align:center;
+
+margin-bottom:30px;
 
 box-shadow:
 0 10px 30px
 rgba(0,0,0,.15);
-
-}
-
-/* IMAGE */
-
-.partyImage{
-
-width:100%;
-
-max-width:900px;
-
-display:block;
-
-margin:auto;
-
-border-radius:20px;
-
-margin-bottom:25px;
-
-}
-
-/* QUESTION */
-
-.questionBox{
-
-background:#f1f8e9;
-
-padding:20px;
-
-border-radius:20px;
-
-text-align:center;
-
-margin-bottom:20px;
 
 }
 
@@ -324,68 +347,96 @@ color:#666;
 
 .questionItem{
 
-font-size:2rem;
+font-size:2.3rem;
 
 font-weight:bold;
 
 color:#2e7d32;
 
-margin-top:10px;
+margin-top:15px;
 
 }
 
-/* BUTTONS */
+/* BIN AREA */
 
-.buttonGrid{
+.binArea{
 
 display:grid;
 
 grid-template-columns:
 1fr 1fr;
 
-gap:15px;
+gap:25px;
 
 }
 
-.answerBtn{
+.bin{
 
-padding:20px;
+padding:35px 20px;
 
-border:none;
-
-border-radius:18px;
-
-font-size:1.2rem;
-
-font-weight:bold;
+border-radius:30px;
 
 cursor:pointer;
 
+text-align:center;
+
+font-weight:bold;
+
 transition:.3s;
 
-}
-
-.answerBtn:hover{
-
-transform:scale(1.03);
+box-shadow:
+0 10px 25px
+rgba(0,0,0,.15);
 
 }
 
-.bioBtn{
+.bin:hover{
 
-background:#c8e6c9;
+transform:
+translateY(-5px)
+scale(1.03);
+
+}
+
+.greenBin{
+
+background:
+linear-gradient(
+#c8e6c9,
+#81c784
+);
 
 }
 
-.nonBioBtn{
+.blueBin{
 
-background:#bbdefb;
+background:
+linear-gradient(
+#bbdefb,
+#64b5f6
+);
 
 }
+
+.binEmoji{
+
+font-size:4rem;
+
+}
+
+.binText{
+
+font-size:1.5rem;
+
+margin-top:15px;
+
+}
+
+/* FEEDBACK */
 
 .feedback{
 
-margin-top:20px;
+margin-top:25px;
 
 text-align:center;
 
@@ -393,19 +444,13 @@ font-size:1.2rem;
 
 font-weight:bold;
 
-min-height:80px;
+min-height:90px;
 
 }
 
 /* MOBILE */
 
 @media(max-width:768px){
-
-.title{
-
-font-size:2rem;
-
-}
 
 .gameTitle{
 
@@ -415,19 +460,25 @@ font-size:2rem;
 
 .questionItem{
 
-font-size:1.4rem;
+font-size:1.5rem;
 
 }
 
-.buttonGrid{
+.binArea{
 
 grid-template-columns:1fr;
 
 }
 
-.hud{
+.topBadges{
 
-grid-template-columns:1fr;
+flex-direction:column;
+
+}
+
+.badge{
+
+width:100%;
 
 }
 
@@ -439,6 +490,8 @@ grid-template-columns:1fr;
 
 <body>
 
+<!-- SPLASH -->
+
 <div id="splashScreen">
 
 <img
@@ -446,6 +499,8 @@ id="splashLogo"
 src="assets/innovine-logo.png">
 
 </div>
+
+<!-- INTRO -->
 
 <div id="introScreen">
 
@@ -467,15 +522,19 @@ class="logo">
 
 <br><br>
 
-After the party, lots of waste was left behind.
+After the party, different kinds of waste were left behind.
 
 <br><br>
 
-Help Rohan segregate the waste correctly for proper disposal.
+Help Rohan sort the waste into the correct dustbin.
 
 <br><br>
 
-Choose whether each item is biodegradable or non-biodegradable.
+🟢 Green Dustbin → Biodegradable Waste
+
+<br><br>
+
+🔵 Blue Dustbin → Non-Biodegradable Waste
 
 </div>
 
@@ -491,6 +550,8 @@ onclick="startGame()">
 
 </div>
 
+<!-- GAME -->
+
 <div id="gameScreen">
 
 <div class="gameHeader">
@@ -505,11 +566,18 @@ class="gameLogo">
 
 </div>
 
+<div class="subTitle">
+
+Help Rohan segregate the waste correctly!
+
 </div>
 
-<div class="hud">
+</div>
 
-<div class="hudBox scoreBox">
+<div class="topBadges">
+
+<div
+class="badge scoreBadge">
 
 ⭐ Score:
 <span id="score">
@@ -520,7 +588,8 @@ class="gameLogo">
 
 </div>
 
-<div class="hudBox progressBox">
+<div
+class="badge progressBadge">
 
 📦 Sorted:
 <span id="progress">
@@ -533,17 +602,13 @@ class="gameLogo">
 
 </div>
 
-<div class="mainCard">
+<div class="gameArea">
 
-<img
-src="assets/chp11bg.png"
-class="partyImage">
-
-<div class="questionBox">
+<div class="questionCard">
 
 <div class="questionTitle">
 
-🎯 SORT THIS ITEM
+👦 ROHAN FOUND
 
 </div>
 
@@ -557,23 +622,43 @@ Loading...
 
 </div>
 
-<div class="buttonGrid">
+<div class="binArea">
 
-<button
-class="answerBtn bioBtn"
+<div
+class="bin greenBin"
 onclick="checkAnswer('bio')">
 
-🟢 BIODEGRADABLE
+<div class="binEmoji">
 
-</button>
+🟢🗑️
 
-<button
-class="answerBtn nonBioBtn"
+</div>
+
+<div class="binText">
+
+BIODEGRADABLE
+
+</div>
+
+</div>
+
+<div
+class="bin blueBin"
 onclick="checkAnswer('nonbio')">
 
-🔵 NON-BIODEGRADABLE
+<div class="binEmoji">
 
-</button>
+🔵🗑️
+
+</div>
+
+<div class="binText">
+
+NON-BIODEGRADABLE
+
+</div>
+
+</div>
 
 </div>
 
@@ -621,7 +706,7 @@ document.getElementById(
 ).style.display =
 "flex";
 
-},1500);
+},3000);
 
 /* =========================
    GAME VARIABLES
@@ -646,13 +731,19 @@ fact:"Banana peels decompose naturally and enrich the soil."
 {
 item:"🍎 Apple Core",
 type:"bio",
-fact:"Apple cores break down naturally and are biodegradable."
+fact:"Apple cores decompose naturally and become part of the soil."
 },
 
 {
 item:"🧻 Paper Napkin",
 type:"bio",
-fact:"Paper napkins decompose naturally over time."
+fact:"Paper napkins break down naturally over time."
+},
+
+{
+item:"🎂 Paper Plate",
+type:"bio",
+fact:"Paper plates can decompose naturally and are biodegradable."
 },
 
 {
@@ -677,12 +768,6 @@ fact:"Juice boxes contain plastic and aluminium layers that do not decompose nat
 item:"🥤 Plastic Straw",
 type:"nonbio",
 fact:"Plastic straws are non-biodegradable and can harm the environment."
-},
-
-{
-item:"🎂 Paper Plate",
-type:"bio",
-fact:"This paper plate is biodegradable and can break down naturally."
 }
 
 ];
@@ -762,11 +847,22 @@ document.getElementById(
 "currentItem"
 ).innerHTML =
 
-"Rohan found: <br><br>" +
+`
+${wasteItems[currentItemIndex].item}
 
-wasteItems[
-currentItemIndex
-].item;
+<br><br>
+
+<span
+style="
+font-size:1rem;
+color:#666;
+font-weight:normal;
+">
+
+Which dustbin should it go into?
+
+</span>
+`;
 
 document.getElementById(
 "progress"
@@ -793,7 +889,7 @@ currentItemIndex
 ];
 
 /* =========================
-   CORRECT
+   CORRECT ANSWER
 ========================= */
 
 if(
@@ -810,12 +906,16 @@ correctSound.currentTime = 0;
 
 correctSound.play().catch(()=>{});
 
+/* UPDATE SCORE */
+
 score += 10;
 
 document.getElementById(
 "score"
 ).innerHTML =
 score;
+
+/* SHOW FACT */
 
 document.getElementById(
 "feedback"
@@ -824,7 +924,13 @@ document.getElementById(
 `
 <div
 style="
+background:#e8f5e9;
+padding:18px;
+border-radius:18px;
+border:3px solid #43a047;
 color:#2e7d32;
+max-width:900px;
+margin:auto;
 ">
 
 ✅ Correct!
@@ -835,6 +941,8 @@ ${currentItem.fact}
 
 </div>
 `;
+
+/* NEXT ITEM */
 
 currentItemIndex++;
 
@@ -847,7 +955,7 @@ loadItem();
 }
 
 /* =========================
-   WRONG
+   WRONG ANSWER
 ========================= */
 
 else{
@@ -868,14 +976,22 @@ document.getElementById(
 `
 <div
 style="
+background:#ffebee;
+padding:18px;
+border-radius:18px;
+border:3px solid #e53935;
 color:#c62828;
+max-width:900px;
+margin:auto;
 ">
 
 ❌ Not Quite!
 
 <br><br>
 
-Think about whether this item breaks down naturally.
+Think carefully.
+
+Does this item break down naturally?
 
 </div>
 `;
@@ -883,6 +999,51 @@ Think about whether this item breaks down naturally.
 }
 
 }
+
+/* =========================
+   KEYBOARD SUPPORT
+========================= */
+
+document.addEventListener(
+
+"keydown",
+
+(event)=>{
+
+if(
+document.getElementById(
+"gameScreen"
+).style.display !==
+"block"
+){
+
+return;
+
+}
+
+if(
+event.key === "1"
+){
+
+checkAnswer(
+"bio"
+);
+
+}
+
+if(
+event.key === "2"
+){
+
+checkAnswer(
+"nonbio"
+);
+
+}
+
+}
+
+);
 /* =========================
    CERTIFICATE SCREEN
 ========================= */
@@ -905,10 +1066,10 @@ document.querySelector(
 ).style.display =
 "none";
 
-/* SHOW CERTIFICATE */
+/* CERTIFICATE */
 
 document.querySelector(
-".mainCard"
+".gameArea"
 ).innerHTML =
 
 `
@@ -922,7 +1083,9 @@ padding:20px;
 style="
 font-size:3rem;
 color:#2e7d32;
-margin-bottom:15px;
+margin-bottom:20px;
+text-shadow:
+2px 2px 6px rgba(255,255,255,.8);
 ">
 
 🏆 WASTE WARRIOR
@@ -931,31 +1094,48 @@ margin-bottom:15px;
 
 <div
 style="
-font-size:4rem;
+font-size:5rem;
 margin-bottom:20px;
 ">
 
-🌍 ♻️ 🎉
+♻️ 🌍 🎉
 
 </div>
 
-<p
+<div
 style="
-font-size:1.2rem;
-line-height:1.8;
-max-width:700px;
+background:
+rgba(255,255,255,.92);
+
+padding:30px;
+
+border-radius:30px;
+
+max-width:800px;
+
 margin:auto;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
 ">
 
-Congratulations!
+<p
+style="
+font-size:1.25rem;
+line-height:2;
+color:#333;
+">
+
+🎉 Congratulations!
 
 <br><br>
 
-You helped Rohan segregate the waste correctly after his birthday party.
+You helped Rohan clean up after his birthday party and sorted all the waste correctly.
 
 <br><br>
 
-You now know that biodegradable waste breaks down naturally, while non-biodegradable waste remains in the environment for a long time.
+Now you know that:
 
 </p>
 
@@ -963,38 +1143,27 @@ You now know that biodegradable waste breaks down naturally, while non-biodegrad
 
 <div
 style="
-background:#f1f8e9;
-padding:20px;
-border-radius:20px;
-max-width:550px;
-margin:auto;
-font-size:1.1rem;
+font-size:1.15rem;
 line-height:2;
 font-weight:bold;
 color:#2e7d32;
 ">
 
-🟢 Biodegradable<br>
+🟢 Biodegradable waste breaks down naturally.
 
-🍌 Banana Peel<br>
+</div>
 
-🍎 Apple Core<br>
+<br>
 
-🧻 Paper Napkin<br>
+<div
+style="
+font-size:1.15rem;
+line-height:2;
+font-weight:bold;
+color:#1565c0;
+">
 
-🎂 Paper Plate
-
-<br><br>
-
-🔵 Non-Biodegradable<br>
-
-🥄 Plastic Spoon<br>
-
-🍫 Chocolate Wrapper<br>
-
-🧃 Juice Box<br>
-
-🥤 Plastic Straw
+🔵 Non-biodegradable waste remains in the environment for a long time.
 
 </div>
 
@@ -1002,7 +1171,7 @@ color:#2e7d32;
 
 <h2
 style="
-color:#1565c0;
+color:#ef6c00;
 font-size:2rem;
 ">
 
@@ -1017,10 +1186,10 @@ ${score}/80
 style="
 font-size:1.3rem;
 font-weight:bold;
-color:#ef6c00;
+color:#2e7d32;
 ">
 
-🎉 Excellent Cleanup Work!
+🌟 Master Waste Warrior!
 
 </div>
 
@@ -1031,19 +1200,28 @@ color:#ef6c00;
 onclick="playAgain()"
 
 style="
-padding:18px 40px;
+padding:18px 45px;
+
 border:none;
+
 border-radius:20px;
+
 background:#2e7d32;
+
 color:white;
+
 font-size:1.2rem;
+
 font-weight:bold;
+
 cursor:pointer;
 ">
 
 🔄 PLAY AGAIN
 
 </button>
+
+</div>
 
 </div>
 `;
