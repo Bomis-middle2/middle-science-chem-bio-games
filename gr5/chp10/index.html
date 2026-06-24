@@ -11,15 +11,11 @@ content="width=device-width, initial-scale=1.0">
 
 <title>
 
-🦴 Skeleton Detective
+🦴 Skeleton Explorer
 
 </title>
 
 <style>
-
-/* =========================
-RESET
-========================= */
 
 *{
 margin:0;
@@ -45,9 +41,7 @@ overflow-x:hidden;
 
 }
 
-/* =========================
-SPLASH SCREEN
-========================= */
+/* SPLASH */
 
 #splashScreen{
 
@@ -95,9 +89,7 @@ transform:scale(1);
 
 }
 
-/* =========================
-INTRO SCREEN
-========================= */
+/* INTRO */
 
 #introScreen{
 
@@ -183,19 +175,9 @@ font-weight:bold;
 
 cursor:pointer;
 
-transition:.3s;
-
 }
 
-.startBtn:hover{
-
-transform:scale(1.05);
-
-}
-
-/* =========================
-GAME SCREEN
-========================= */
+/* GAME */
 
 #gameScreen{
 
@@ -231,22 +213,18 @@ color:#1565c0;
 
 }
 
-/* =========================
-HUD
-========================= */
-
 .hud{
-
-max-width:1100px;
-
-margin:auto;
 
 display:grid;
 
 grid-template-columns:
-repeat(2,1fr);
+1fr 1fr;
 
 gap:15px;
+
+max-width:1100px;
+
+margin:auto;
 
 margin-bottom:20px;
 
@@ -274,15 +252,11 @@ background:#43a047;
 
 }
 
-.progressBox{
+.questionBox{
 
 background:#1976d2;
 
 }
-
-/* =========================
-MAIN CARD
-========================= */
 
 .mainCard{
 
@@ -302,110 +276,90 @@ rgba(0,0,0,.15);
 
 }
 
-/* =========================
-CURRENT BONE
-========================= */
+/* SKELETON IMAGE */
 
-.currentBone{
+.skeletonImage{
 
-background:#1565c0;
+display:block;
 
-color:white;
+margin:auto;
 
-padding:20px;
+max-width:450px;
 
-border-radius:20px;
-
-text-align:center;
+width:100%;
 
 margin-bottom:20px;
 
 }
 
-.currentBoneTitle{
+/* QUESTION */
 
-font-size:1rem;
+.questionText{
 
-opacity:.95;
-
-}
-
-.currentBoneName{
-
-font-size:2.2rem;
+font-size:1.8rem;
 
 font-weight:bold;
 
-margin-top:10px;
+text-align:center;
+
+margin-bottom:25px;
+
+color:#1565c0;
 
 }
 
-/* =========================
-SKELETON AREA
-========================= */
+/* OPTIONS */
 
-.skeletonContainer{
+.optionsGrid{
 
-position:relative;
+display:grid;
 
-max-width:700px;
+grid-template-columns:
+1fr 1fr;
 
-margin:auto;
-
-}
-
-.skeletonImage{
-
-width:100%;
-
-display:block;
+gap:15px;
 
 }
 
-/* =========================
-HOTSPOTS
-========================= */
+.optionBtn{
 
-.hotspot{
+padding:18px;
 
-position:absolute;
+border:none;
 
-width:100px;
-height:100px;
+border-radius:18px;
 
-border-radius:50%;
+font-size:1.1rem;
+
+font-weight:bold;
 
 cursor:pointer;
-
-/* INVISIBLE */
-
-background:transparent;
 
 transition:.3s;
 
 }
 
-.hotspot:hover{
+.optionBtn:hover{
 
-background:
-rgba(33,150,243,.12);
-
-}
-
-.found{
-
-background:
-rgba(76,175,80,.35)
-!important;
-
-border:
-3px solid #2e7d32;
+transform:translateY(-2px);
 
 }
 
-/* =========================
-FEEDBACK
-========================= */
+.optionA{
+background:#e8f5e9;
+}
+
+.optionB{
+background:#e3f2fd;
+}
+
+.optionC{
+background:#fff8e1;
+}
+
+.optionD{
+background:#fce4ec;
+}
 
 .feedback{
 
@@ -413,25 +367,19 @@ margin-top:20px;
 
 text-align:center;
 
-font-size:1.2rem;
+font-size:1.15rem;
 
 font-weight:bold;
 
 min-height:80px;
 
-line-height:1.8;
-
 }
-
-/* =========================
-MOBILE
-========================= */
 
 @media(max-width:900px){
 
-.gameTitle{
+.optionsGrid{
 
-font-size:2rem;
+grid-template-columns:1fr;
 
 }
 
@@ -441,22 +389,15 @@ font-size:2rem;
 
 }
 
-.currentBoneName{
+.gameTitle{
 
-font-size:1.4rem;
-
-}
-
-.hotspot{
-
-width:80px;
-height:80px;
+font-size:2rem;
 
 }
 
-.hud{
+.questionText{
 
-grid-template-columns:1fr;
+font-size:1.3rem;
 
 }
 
@@ -468,8 +409,6 @@ grid-template-columns:1fr;
 
 <body>
 
-<!-- SPLASH -->
-
 <div id="splashScreen">
 
 <img
@@ -477,8 +416,6 @@ id="splashLogo"
 src="assets/innovine-logo.png">
 
 </div>
-
-<!-- INTRO -->
 
 <div id="introScreen">
 
@@ -490,29 +427,25 @@ class="logo">
 
 <h1 class="title">
 
-🦴 SKELETON DETECTIVE
+🦴 SKELETON EXPLORER
 
 </h1>
 
 <div class="story">
 
-A bone name will appear at the top.
+Study the skeleton carefully.
 
 <br><br>
 
-👆 Click on the correct bone in the skeleton.
+Read each question and choose the correct answer.
 
 <br><br>
 
-✅ Correct answers will highlight the bone.
+Learn about the important bones of the human body.
 
 <br><br>
 
-📚 Learn interesting facts about each bone.
-
-<br><br>
-
-🏆 Find all 9 bones to become a Master Skeleton Detective.
+🏆 Score points and become a Skeleton Explorer!
 
 </div>
 
@@ -528,8 +461,6 @@ onclick="startGame()">
 
 </div>
 
-<!-- GAME -->
-
 <div id="gameScreen">
 
 <div class="gameHeader">
@@ -540,7 +471,7 @@ class="gameLogo">
 
 <div class="gameTitle">
 
-🦴 SKELETON DETECTIVE
+🦴 SKELETON EXPLORER
 
 </div>
 
@@ -559,12 +490,12 @@ class="gameLogo">
 
 </div>
 
-<div class="hudBox progressBox">
+<div class="hudBox questionBox">
 
-🦴 Bones Found:
-<span id="progress">
+📚 Question:
+<span id="questionNo">
 
-0
+1
 
 </span>/9
 
@@ -574,141 +505,29 @@ class="gameLogo">
 
 <div class="mainCard">
 
-<div class="currentBone">
-
-<div class="currentBoneTitle">
-
-🔍 FIND THIS BONE
-
-</div>
+<img
+src="assets/skeleton.png"
+class="skeletonImage">
 
 <div
-id="boneName"
-class="currentBoneName">
+id="questionText"
+class="questionText">
 
 Loading...
 
 </div>
 
-</div>
-
-<div class="skeletonContainer">
-
-<img
-src="assets/skeleton.png"
-class="skeletonImage">
-
-<!-- HOTSPOTS IN PART 2 -->
-<!-- =========================
-     HOTSPOTS
-========================= -->
-
-<!-- SKULL -->
-
 <div
-id="skull"
-class="hotspot"
-style="
-left:43%;
-top:0%;
-">
-</div>
-
-<!-- RIBS -->
-
-<div
-id="ribs"
-class="hotspot"
-style="
-left:40%;
-top:18%;
-">
-</div>
-
-<!-- BACKBONE -->
-
-<div
-id="backbone"
-class="hotspot"
-style="
-left:43%;
-top:33%;
-">
-</div>
-
-<!-- HUMERUS -->
-
-<div
-id="humerus"
-class="hotspot"
-style="
-left:23%;
-top:25%;
-">
-</div>
-
-<!-- RADIUS -->
-
-<div
-id="radius"
-class="hotspot"
-style="
-left:18%;
-top:42%;
-">
-</div>
-
-<!-- ULNA -->
-
-<div
-id="ulna"
-class="hotspot"
-style="
-left:68%;
-top:42%;
-">
-</div>
-
-<!-- FEMUR -->
-
-<div
-id="femur"
-class="hotspot"
-style="
-left:40%;
-top:56%;
-">
-</div>
-
-<!-- TIBIA -->
-
-<div
-id="tibia"
-class="hotspot"
-style="
-left:37%;
-top:76%;
-">
-</div>
-
-<!-- FIBULA -->
-
-<div
-id="fibula"
-class="hotspot"
-style="
-left:49%;
-top:76%;
-">
-</div>
+id="optionsGrid"
+class="optionsGrid">
 
 </div>
 
 <div
 id="feedback"
 class="feedback">
-</div>
 
+</div>
 </div>
 
 </div>
@@ -733,7 +552,7 @@ src="assets/clapping.mp3">
 <script>
 
 /* =========================
-   SPLASH SCREEN
+   SPLASH
 ========================= */
 
 setTimeout(()=>{
@@ -751,6 +570,225 @@ document.getElementById(
 },1500);
 
 /* =========================
+   GAME VARIABLES
+========================= */
+
+let score = 0;
+
+let currentQuestion = 0;
+
+/* =========================
+   QUESTION BANK
+========================= */
+
+const questions = [
+
+{
+question:
+"Which bone protects the brain?",
+
+answer:
+"Skull",
+
+fact:
+"🧠 The skull protects the brain.",
+
+options:[
+"Femur",
+"Skull",
+"Ribs",
+"Tibia"
+]
+
+},
+
+{
+question:
+"Which bones protect the heart and lungs?",
+
+answer:
+"Ribs",
+
+fact:
+"❤️ The ribs protect the heart and lungs.",
+
+options:[
+"Radius",
+"Femur",
+"Ribs",
+"Ulna"
+]
+
+},
+
+{
+question:
+"Which bone supports the body and helps us stand upright?",
+
+answer:
+"Backbone",
+
+fact:
+"🏃 The backbone supports the body and keeps us upright.",
+
+options:[
+"Backbone",
+"Fibula",
+"Femur",
+"Radius"
+]
+
+},
+
+{
+question:
+"Which bone is found in the upper arm?",
+
+answer:
+"Humerus",
+
+fact:
+"💪 The humerus is the upper arm bone.",
+
+options:[
+"Humerus",
+"Tibia",
+"Fibula",
+"Ribs"
+]
+
+},
+
+{
+question:
+"Which forearm bone helps the arm rotate?",
+
+answer:
+"Radius",
+
+fact:
+"✋ The radius helps the forearm rotate.",
+
+options:[
+"Ulna",
+"Radius",
+"Femur",
+"Backbone"
+]
+
+},
+
+{
+question:
+"Which forearm bone supports the forearm?",
+
+answer:
+"Ulna",
+
+fact:
+"🦾 The ulna supports the forearm.",
+
+options:[
+"Radius",
+"Humerus",
+"Ulna",
+"Ribs"
+]
+
+},
+
+{
+question:
+"Which is the longest bone in the human body?",
+
+answer:
+"Femur",
+
+fact:
+"🦵 The femur is the longest bone in the body.",
+
+options:[
+"Tibia",
+"Femur",
+"Ulna",
+"Skull"
+]
+
+},
+
+{
+question:
+"Which is the larger shin bone?",
+
+answer:
+"Tibia",
+
+fact:
+"🚶 The tibia is the larger shin bone.",
+
+options:[
+"Fibula",
+"Tibia",
+"Radius",
+"Backbone"
+]
+
+},
+
+{
+question:
+"Which bone supports the lower leg beside the tibia?",
+
+answer:
+"Fibula",
+
+fact:
+"🦶 The fibula supports the lower leg.",
+
+options:[
+"Femur",
+"Fibula",
+"Ribs",
+"Humerus"
+]
+
+}
+
+];
+
+/* =========================
+   SHUFFLE QUESTIONS
+========================= */
+
+function shuffleQuestions(){
+
+for(
+let i=
+questions.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+questions[i],
+questions[j]
+]
+=
+[
+questions[j],
+questions[i]
+];
+
+}
+
+}
+
+/* =========================
    START GAME
 ========================= */
 
@@ -766,115 +804,59 @@ document.getElementById(
 ).style.display =
 "block";
 
-shuffleBones();
+shuffleQuestions();
 
-showNextBone();
+loadQuestion();
 
 }
-
 /* =========================
-   GAME DATA
+   SHUFFLE OPTIONS
 ========================= */
 
-const bones = [
+function shuffleArray(
+array
+){
 
-{
-name:"Skull",
-target:"skull"
-},
-
-{
-name:"Ribs",
-target:"ribs"
-},
-
-{
-name:"Backbone",
-target:"backbone"
-},
-
-{
-name:"Humerus",
-target:"humerus"
-},
-
-{
-name:"Radius",
-target:"radius"
-},
-
-{
-name:"Ulna",
-target:"ulna"
-},
-
-{
-name:"Femur",
-target:"femur"
-},
-
-{
-name:"Tibia",
-target:"tibia"
-},
-
-{
-name:"Fibula",
-target:"fibula"
-}
-
-];
-
-let gameBones = [];
-
-let currentBoneIndex = 0;
-
-let score = 0;
-
-/* =========================
-   SHUFFLE BONES
-========================= */
-
-function shuffleBones(){
-
-gameBones =
-[...bones];
+const copy =
+[...array];
 
 for(
 let i=
-gameBones.length-1;
+copy.length-1;
 i>0;
 i--
 ){
 
-const j =
+const j=
 Math.floor(
 Math.random()*(i+1)
 );
 
 [
-gameBones[i],
-gameBones[j]
+copy[i],
+copy[j]
 ]
 =
 [
-gameBones[j],
-gameBones[i]
+copy[j],
+copy[i]
 ];
 
 }
 
+return copy;
+
 }
 
 /* =========================
-   SHOW NEXT BONE
+   LOAD QUESTION
 ========================= */
 
-function showNextBone(){
+function loadQuestion(){
 
 if(
-currentBoneIndex >=
-gameBones.length
+currentQuestion >=
+questions.length
 ){
 
 showCertificate();
@@ -883,55 +865,7 @@ return;
 
 }
 
-document.getElementById(
-"boneName"
-).innerHTML =
-
-gameBones[
-currentBoneIndex
-].name;
-
-}
-/* =========================
-   BONE FACTS
-========================= */
-
-const boneFacts = {
-
-"Skull":
-"🧠 The skull protects the brain.",
-
-"Ribs":
-"❤️ The ribs protect the heart and lungs.",
-
-"Backbone":
-"🏃 The backbone supports the body and helps us stand upright.",
-
-"Humerus":
-"💪 The humerus is the upper arm bone.",
-
-"Radius":
-"✋ The radius helps the forearm rotate.",
-
-"Ulna":
-"🦾 The ulna supports the forearm.",
-
-"Femur":
-"🦵 The femur is the longest bone in the human body.",
-
-"Tibia":
-"🚶 The tibia is the larger shin bone.",
-
-"Fibula":
-"🦶 The fibula supports the lower leg."
-
-};
-
-/* =========================
-   UPDATE HUD
-========================= */
-
-function updateHUD(){
+/* UPDATE HUD */
 
 document.getElementById(
 "score"
@@ -939,58 +873,110 @@ document.getElementById(
 score;
 
 document.getElementById(
-"progress"
+"questionNo"
 ).innerHTML =
-currentBoneIndex;
+currentQuestion + 1;
 
-}
+/* GET QUESTION */
 
-/* =========================
-   HOTSPOT EVENTS
-========================= */
-
-document
-.querySelectorAll(
-".hotspot"
-)
-.forEach(
-
-hotspot=>{
-
-hotspot.addEventListener(
-
-"click",
-
-()=>checkBone(
-hotspot.id
-)
-
-);
-
-}
-
-);
-
-/* =========================
-   CHECK BONE
-========================= */
-
-function checkBone(
-selectedBone
-){
-
-const currentBone =
-gameBones[
-currentBoneIndex
+const q =
+questions[
+currentQuestion
 ];
 
+/* QUESTION */
+
+document.getElementById(
+"questionText"
+).innerHTML =
+q.question;
+
+/* CLEAR FEEDBACK */
+
+document.getElementById(
+"feedback"
+).innerHTML =
+"";
+
+/* OPTIONS */
+
+const optionsGrid =
+document.getElementById(
+"optionsGrid"
+);
+
+optionsGrid.innerHTML =
+"";
+
+/* SHUFFLE OPTIONS */
+
+const shuffledOptions =
+shuffleArray(
+q.options
+);
+
+const classes = [
+
+"optionA",
+"optionB",
+"optionC",
+"optionD"
+
+];
+
+/* CREATE BUTTONS */
+
+shuffledOptions.forEach(
+
+(
+option,
+index
+)=>{
+
+const btn =
+document.createElement(
+"button"
+);
+
+btn.className =
+`optionBtn ${classes[index]}`;
+
+btn.innerHTML =
+option;
+
+btn.onclick =
+()=>checkAnswer(
+option
+);
+
+optionsGrid.appendChild(
+btn
+);
+
+}
+
+);
+
+}
+
 /* =========================
-   CORRECT ANSWER
+   CHECK ANSWER
 ========================= */
 
+function checkAnswer(
+selectedOption
+){
+
+const q =
+questions[
+currentQuestion
+];
+
+/* CORRECT */
+
 if(
-selectedBone ===
-currentBone.target
+selectedOption ===
+q.answer
 ){
 
 const correctSound =
@@ -1002,31 +988,12 @@ correctSound.currentTime = 0;
 
 correctSound.play().catch(()=>{});
 
-const hotspot =
-document.getElementById(
-selectedBone
-);
-
-/* HIGHLIGHT */
-
-hotspot.classList.add(
-"found"
-);
-
-/* DISABLE */
-
-hotspot.style.pointerEvents =
-"none";
-
-/* SCORE */
-
 score += 10;
 
-currentBoneIndex++;
-
-updateHUD();
-
-/* FEEDBACK */
+document.getElementById(
+"score"
+).innerHTML =
+score;
 
 document.getElementById(
 "feedback"
@@ -1042,26 +1009,22 @@ color:#2e7d32;
 
 <br><br>
 
-${boneFacts[
-currentBone.name
-]}
+${q.fact}
 
 </div>
 `;
 
-/* NEXT BONE */
-
 setTimeout(()=>{
 
-showNextBone();
+currentQuestion++;
+
+loadQuestion();
 
 },1800);
 
 }
 
-/* =========================
-   WRONG ANSWER
-========================= */
+/* WRONG */
 
 else{
 
@@ -1084,7 +1047,7 @@ style="
 color:#c62828;
 ">
 
-❌ That's not the correct bone.
+❌ Incorrect
 
 <br><br>
 
@@ -1102,8 +1065,7 @@ Try again carefully.
 
 function showCertificate(){
 
-/* HIDE HEADER
-   Prevent duplicate title/logo */
+/* HIDE HEADER */
 
 document.querySelector(
 ".gameHeader"
@@ -1121,7 +1083,7 @@ clapSound.currentTime = 0;
 
 clapSound.play().catch(()=>{});
 
-/* CERTIFICATE */
+/* SHOW CERTIFICATE */
 
 document.querySelector(
 ".mainCard"
@@ -1141,7 +1103,7 @@ color:#1565c0;
 margin-bottom:15px;
 ">
 
-🏆 MASTER SKELETON DETECTIVE
+🏆 MASTER SKELETON EXPLORER
 
 </h1>
 
@@ -1151,7 +1113,7 @@ font-size:4rem;
 margin-bottom:20px;
 ">
 
-🦴 🧠 💪 🦵
+🦴 🧠 ❤️ 💪 🦵
 
 </div>
 
@@ -1167,7 +1129,7 @@ Congratulations!
 
 <br><br>
 
-You successfully identified all the major bones of the human skeleton.
+You successfully explored the major bones of the human skeleton and answered all the questions correctly.
 
 </p>
 
@@ -1228,7 +1190,7 @@ font-weight:bold;
 color:#ef6c00;
 ">
 
-🎉 Excellent Detective Work!
+🎉 Excellent Work!
 
 </div>
 
