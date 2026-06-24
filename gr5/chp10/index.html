@@ -17,6 +17,10 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* =========================
+RESET
+========================= */
+
 *{
 margin:0;
 padding:0;
@@ -41,7 +45,9 @@ overflow-x:hidden;
 
 }
 
-/* SPLASH */
+/* =========================
+SPLASH SCREEN
+========================= */
 
 #splashScreen{
 
@@ -89,7 +95,9 @@ transform:scale(1);
 
 }
 
-/* INTRO */
+/* =========================
+INTRO SCREEN
+========================= */
 
 #introScreen{
 
@@ -175,9 +183,19 @@ font-weight:bold;
 
 cursor:pointer;
 
+transition:.3s;
+
 }
 
-/* GAME */
+.startBtn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* =========================
+GAME SCREEN
+========================= */
 
 #gameScreen{
 
@@ -213,9 +231,62 @@ color:#1565c0;
 
 }
 
+/* =========================
+HUD
+========================= */
+
+.hud{
+
+max-width:1100px;
+
+margin:auto;
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.hudBox{
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+color:white;
+
+}
+
+.scoreBox{
+
+background:#43a047;
+
+}
+
+.progressBox{
+
+background:#1976d2;
+
+}
+
+/* =========================
+MAIN CARD
+========================= */
+
 .mainCard{
 
-max-width:1000px;
+max-width:1100px;
 
 margin:auto;
 
@@ -230,6 +301,10 @@ box-shadow:
 rgba(0,0,0,.15);
 
 }
+
+/* =========================
+CURRENT BONE
+========================= */
 
 .currentBone{
 
@@ -251,13 +326,13 @@ margin-bottom:20px;
 
 font-size:1rem;
 
-opacity:.9;
+opacity:.95;
 
 }
 
 .currentBoneName{
 
-font-size:2rem;
+font-size:2.2rem;
 
 font-weight:bold;
 
@@ -265,7 +340,9 @@ margin-top:10px;
 
 }
 
-/* SKELETON */
+/* =========================
+SKELETON AREA
+========================= */
 
 .skeletonContainer{
 
@@ -285,23 +362,24 @@ display:block;
 
 }
 
-/* HOTSPOTS */
+/* =========================
+HOTSPOTS
+========================= */
 
 .hotspot{
 
 position:absolute;
 
-width:60px;
-height:60px;
+width:100px;
+height:100px;
 
 border-radius:50%;
 
 cursor:pointer;
 
-background:
-rgba(255,0,0,.35);
+/* INVISIBLE */
 
-border:2px solid red;
+background:transparent;
 
 transition:.3s;
 
@@ -310,14 +388,14 @@ transition:.3s;
 .hotspot:hover{
 
 background:
-rgba(25,118,210,.25);
+rgba(33,150,243,.12);
 
 }
 
 .found{
 
 background:
-rgba(76,175,80,.40)
+rgba(76,175,80,.35)
 !important;
 
 border:
@@ -325,7 +403,13 @@ border:
 
 }
 
+/* =========================
+FEEDBACK
+========================= */
+
 .feedback{
+
+margin-top:20px;
 
 text-align:center;
 
@@ -333,13 +417,29 @@ font-size:1.2rem;
 
 font-weight:bold;
 
-margin-top:20px;
+min-height:80px;
 
-min-height:60px;
+line-height:1.8;
 
 }
 
+/* =========================
+MOBILE
+========================= */
+
 @media(max-width:900px){
+
+.gameTitle{
+
+font-size:2rem;
+
+}
+
+.title{
+
+font-size:2rem;
+
+}
 
 .currentBoneName{
 
@@ -349,8 +449,14 @@ font-size:1.4rem;
 
 .hotspot{
 
-width:50px;
-height:50px;
+width:80px;
+height:80px;
+
+}
+
+.hud{
+
+grid-template-columns:1fr;
 
 }
 
@@ -362,6 +468,8 @@ height:50px;
 
 <body>
 
+<!-- SPLASH -->
+
 <div id="splashScreen">
 
 <img
@@ -369,6 +477,8 @@ id="splashLogo"
 src="assets/innovine-logo.png">
 
 </div>
+
+<!-- INTRO -->
 
 <div id="introScreen">
 
@@ -398,7 +508,11 @@ A bone name will appear at the top.
 
 <br><br>
 
-🏆 Find all 9 bones to become a Skeleton Detective.
+📚 Learn interesting facts about each bone.
+
+<br><br>
+
+🏆 Find all 9 bones to become a Master Skeleton Detective.
 
 </div>
 
@@ -413,6 +527,8 @@ onclick="startGame()">
 </div>
 
 </div>
+
+<!-- GAME -->
 
 <div id="gameScreen">
 
@@ -430,14 +546,39 @@ class="gameLogo">
 
 </div>
 
+<div class="hud">
+
+<div class="hudBox scoreBox">
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
+</div>
+
+<div class="hudBox progressBox">
+
+🦴 Bones Found:
+<span id="progress">
+
+0
+
+</span>/9
+
+</div>
+
+</div>
+
 <div class="mainCard">
 
-<div
-class="currentBone">
+<div class="currentBone">
 
 <div class="currentBoneTitle">
 
-🦴 FIND THIS BONE
+🔍 FIND THIS BONE
 
 </div>
 
@@ -468,8 +609,8 @@ class="skeletonImage">
 id="skull"
 class="hotspot"
 style="
-left:46%;
-top:2%;
+left:43%;
+top:0%;
 ">
 </div>
 
@@ -479,8 +620,8 @@ top:2%;
 id="ribs"
 class="hotspot"
 style="
-left:46%;
-top:24%;
+left:40%;
+top:18%;
 ">
 </div>
 
@@ -490,8 +631,8 @@ top:24%;
 id="backbone"
 class="hotspot"
 style="
-left:46%;
-top:42%;
+left:43%;
+top:33%;
 ">
 </div>
 
@@ -501,8 +642,8 @@ top:42%;
 id="humerus"
 class="hotspot"
 style="
-left:30%;
-top:34%;
+left:23%;
+top:25%;
 ">
 </div>
 
@@ -512,8 +653,8 @@ top:34%;
 id="radius"
 class="hotspot"
 style="
-left:24%;
-top:50%;
+left:18%;
+top:42%;
 ">
 </div>
 
@@ -523,8 +664,8 @@ top:50%;
 id="ulna"
 class="hotspot"
 style="
-left:67%;
-top:50%;
+left:68%;
+top:42%;
 ">
 </div>
 
@@ -534,8 +675,8 @@ top:50%;
 id="femur"
 class="hotspot"
 style="
-left:43%;
-top:67%;
+left:40%;
+top:56%;
 ">
 </div>
 
@@ -545,8 +686,8 @@ top:67%;
 id="tibia"
 class="hotspot"
 style="
-left:43%;
-top:84%;
+left:37%;
+top:76%;
 ">
 </div>
 
@@ -556,8 +697,8 @@ top:84%;
 id="fibula"
 class="hotspot"
 style="
-left:50%;
-top:84%;
+left:49%;
+top:76%;
 ">
 </div>
 
@@ -592,7 +733,7 @@ src="assets/clapping.mp3">
 <script>
 
 /* =========================
-   SPLASH
+   SPLASH SCREEN
 ========================= */
 
 setTimeout(()=>{
@@ -632,7 +773,7 @@ showNextBone();
 }
 
 /* =========================
-   BONES
+   GAME DATA
 ========================= */
 
 const bones = [
@@ -691,7 +832,7 @@ let currentBoneIndex = 0;
 let score = 0;
 
 /* =========================
-   SHUFFLE
+   SHUFFLE BONES
 ========================= */
 
 function shuffleBones(){
@@ -726,7 +867,7 @@ gameBones[i]
 }
 
 /* =========================
-   SHOW BONE
+   SHOW NEXT BONE
 ========================= */
 
 function showNextBone(){
@@ -776,7 +917,7 @@ const boneFacts = {
 "🦾 The ulna supports the forearm.",
 
 "Femur":
-"🦵 The femur is the longest bone in the body.",
+"🦵 The femur is the longest bone in the human body.",
 
 "Tibia":
 "🚶 The tibia is the larger shin bone.",
@@ -787,6 +928,24 @@ const boneFacts = {
 };
 
 /* =========================
+   UPDATE HUD
+========================= */
+
+function updateHUD(){
+
+document.getElementById(
+"score"
+).innerHTML =
+score;
+
+document.getElementById(
+"progress"
+).innerHTML =
+currentBoneIndex;
+
+}
+
+/* =========================
    HOTSPOT EVENTS
 ========================= */
 
@@ -794,16 +953,23 @@ document
 .querySelectorAll(
 ".hotspot"
 )
-.forEach(hotspot=>{
+.forEach(
+
+hotspot=>{
 
 hotspot.addEventListener(
+
 "click",
+
 ()=>checkBone(
 hotspot.id
 )
+
 );
 
-});
+}
+
+);
 
 /* =========================
    CHECK BONE
@@ -819,7 +985,7 @@ currentBoneIndex
 ];
 
 /* =========================
-   CORRECT
+   CORRECT ANSWER
 ========================= */
 
 if(
@@ -841,20 +1007,37 @@ document.getElementById(
 selectedBone
 );
 
+/* HIGHLIGHT */
+
 hotspot.classList.add(
 "found"
 );
 
+/* DISABLE */
+
 hotspot.style.pointerEvents =
 "none";
 
-score++;
+/* SCORE */
+
+score += 10;
+
+currentBoneIndex++;
+
+updateHUD();
+
+/* FEEDBACK */
 
 document.getElementById(
 "feedback"
 ).innerHTML =
 
 `
+<div
+style="
+color:#2e7d32;
+">
+
 ✅ Correct!
 
 <br><br>
@@ -862,9 +1045,11 @@ document.getElementById(
 ${boneFacts[
 currentBone.name
 ]}
+
+</div>
 `;
 
-currentBoneIndex++;
+/* NEXT BONE */
 
 setTimeout(()=>{
 
@@ -875,7 +1060,7 @@ showNextBone();
 }
 
 /* =========================
-   WRONG
+   WRONG ANSWER
 ========================= */
 
 else{
@@ -894,21 +1079,38 @@ document.getElementById(
 ).innerHTML =
 
 `
-❌ Try Again
+<div
+style="
+color:#c62828;
+">
+
+❌ That's not the correct bone.
 
 <br><br>
 
-Look carefully at the skeleton.
+Try again carefully.
+
+</div>
 `;
 
 }
 
 }
 /* =========================
-   CERTIFICATE
+   CERTIFICATE SCREEN
 ========================= */
 
 function showCertificate(){
+
+/* HIDE HEADER
+   Prevent duplicate title/logo */
+
+document.querySelector(
+".gameHeader"
+).style.display =
+"none";
+
+/* PLAY CLAPS */
 
 const clapSound =
 document.getElementById(
@@ -918,6 +1120,8 @@ document.getElementById(
 clapSound.currentTime = 0;
 
 clapSound.play().catch(()=>{});
+
+/* CERTIFICATE */
 
 document.querySelector(
 ".mainCard"
@@ -930,13 +1134,6 @@ text-align:center;
 padding:20px;
 ">
 
-<img
-src="assets/innovine-logo.png"
-style="
-width:220px;
-margin-bottom:20px;
-">
-
 <h1
 style="
 font-size:3rem;
@@ -944,7 +1141,7 @@ color:#1565c0;
 margin-bottom:15px;
 ">
 
-🏆 SKELETON DETECTIVE
+🏆 MASTER SKELETON DETECTIVE
 
 </h1>
 
@@ -978,37 +1175,64 @@ You successfully identified all the major bones of the human skeleton.
 
 <div
 style="
-font-size:1.2rem;
+background:#eef8ff;
+padding:20px;
+border-radius:20px;
+max-width:500px;
+margin:auto;
+font-size:1.1rem;
 line-height:2;
 font-weight:bold;
 color:#1565c0;
 ">
 
-Skull<br>
-Ribs<br>
-Backbone<br>
-Humerus<br>
-Radius<br>
-Ulna<br>
-Femur<br>
-Tibia<br>
-Fibula
+🦴 Skull<br>
+
+🦴 Ribs<br>
+
+🦴 Backbone<br>
+
+🦴 Humerus<br>
+
+🦴 Radius<br>
+
+🦴 Ulna<br>
+
+🦴 Femur<br>
+
+🦴 Tibia<br>
+
+🦴 Fibula
 
 </div>
 
-<br>
+<br><br>
 
 <h2
 style="
 color:#2e7d32;
+font-size:2rem;
 ">
 
 ⭐ Final Score:
-${score} / 9
+${score}/90
 
 </h2>
 
 <br>
+
+<div
+style="
+font-size:1.2rem;
+font-weight:bold;
+color:#ef6c00;
+">
+
+🎉 Excellent Detective Work!
+
+</div>
+
+<br><br>
 
 <button
 
@@ -1047,4 +1271,5 @@ location.reload();
 </script>
 
 </body>
+
 </html>
