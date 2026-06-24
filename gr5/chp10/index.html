@@ -1,1 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+🦴 Skeleton Detective
+
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:
+'Segoe UI',
+sans-serif;
+
+background:
+linear-gradient(
+#eef8ff,
+#ffffff
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+/* SPLASH */
+
+#splashScreen{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+#splashLogo{
+
+width:320px;
+
+max-width:85%;
+
+animation:
+logoZoom 1.5s ease;
+
+}
+
+@keyframes logoZoom{
+
+0%{
+opacity:0;
+transform:scale(.6);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* INTRO */
+
+#introScreen{
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
+}
+
+.introCard{
+
+background:white;
+
+max-width:1000px;
+
+width:100%;
+
+padding:35px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
+}
+
+.logo{
+
+width:220px;
+
+margin-bottom:20px;
+
+}
+
+.title{
+
+font-size:3rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
+margin-bottom:20px;
+
+}
+
+.story{
+
+font-size:1.2rem;
+
+line-height:1.9;
+
+color:#444;
+
+}
+
+.startBtn{
+
+margin-top:25px;
+
+padding:
+18px 45px;
+
+border:none;
+
+border-radius:20px;
+
+background:#1976d2;
+
+color:white;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+/* GAME */
+
+#gameScreen{
+
+display:none;
+
+padding:20px;
+
+}
+
+.gameHeader{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.gameLogo{
+
+width:180px;
+
+margin-bottom:10px;
+
+}
+
+.gameTitle{
+
+font-size:2.8rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
+}
+
+.mainCard{
+
+max-width:1000px;
+
+margin:auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
+}
+
+.currentBone{
+
+background:#1565c0;
+
+color:white;
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.currentBoneTitle{
+
+font-size:1rem;
+
+opacity:.9;
+
+}
+
+.currentBoneName{
+
+font-size:2rem;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+/* SKELETON */
+
+.skeletonContainer{
+
+position:relative;
+
+max-width:700px;
+
+margin:auto;
+
+}
+
+.skeletonImage{
+
+width:100%;
+
+display:block;
+
+}
+
+/* HOTSPOTS */
+
+.hotspot{
+
+position:absolute;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+background:
+rgba(255,0,0,.35);
+
+border:2px solid red;
+
+transition:.3s;
+
+}
+
+.hotspot:hover{
+
+background:
+rgba(25,118,210,.25);
+
+}
+
+.found{
+
+background:
+rgba(76,175,80,.40)
+!important;
+
+border:
+3px solid #2e7d32;
+
+}
+
+.feedback{
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+margin-top:20px;
+
+min-height:60px;
+
+}
+
+@media(max-width:900px){
+
+.currentBoneName{
+
+font-size:1.4rem;
+
+}
+
+.hotspot{
+
+width:50px;
+height:50px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="splashScreen">
+
+<img
+id="splashLogo"
+src="assets/innovine-logo.png">
+
+</div>
+
+<div id="introScreen">
+
+<div class="introCard">
+
+<img
+src="assets/innovine-logo.png"
+class="logo">
+
+<h1 class="title">
+
+🦴 SKELETON DETECTIVE
+
+</h1>
+
+<div class="story">
+
+A bone name will appear at the top.
+
+<br><br>
+
+👆 Click on the correct bone in the skeleton.
+
+<br><br>
+
+✅ Correct answers will highlight the bone.
+
+<br><br>
+
+🏆 Find all 9 bones to become a Skeleton Detective.
+
+</div>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+🚀 START GAME
+
+</button>
+
+</div>
+
+</div>
+
+<div id="gameScreen">
+
+<div class="gameHeader">
+
+<img
+src="assets/innovine-logo.png"
+class="gameLogo">
+
+<div class="gameTitle">
+
+🦴 SKELETON DETECTIVE
+
+</div>
+
+</div>
+
+<div class="mainCard">
+
+<div
+class="currentBone">
+
+<div class="currentBoneTitle">
+
+🦴 FIND THIS BONE
+
+</div>
+
+<div
+id="boneName"
+class="currentBoneName">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="skeletonContainer">
+
+<img
+src="assets/skeleton.png"
+class="skeletonImage">
+
+<!-- HOTSPOTS IN PART 2 -->
+<!-- =========================
+     HOTSPOTS
+========================= -->
+
+<!-- SKULL -->
+
+<div
+id="skull"
+class="hotspot"
+style="
+left:46%;
+top:2%;
+">
+</div>
+
+<!-- RIBS -->
+
+<div
+id="ribs"
+class="hotspot"
+style="
+left:46%;
+top:24%;
+">
+</div>
+
+<!-- BACKBONE -->
+
+<div
+id="backbone"
+class="hotspot"
+style="
+left:46%;
+top:42%;
+">
+</div>
+
+<!-- HUMERUS -->
+
+<div
+id="humerus"
+class="hotspot"
+style="
+left:30%;
+top:34%;
+">
+</div>
+
+<!-- RADIUS -->
+
+<div
+id="radius"
+class="hotspot"
+style="
+left:24%;
+top:50%;
+">
+</div>
+
+<!-- ULNA -->
+
+<div
+id="ulna"
+class="hotspot"
+style="
+left:67%;
+top:50%;
+">
+</div>
+
+<!-- FEMUR -->
+
+<div
+id="femur"
+class="hotspot"
+style="
+left:43%;
+top:67%;
+">
+</div>
+
+<!-- TIBIA -->
+
+<div
+id="tibia"
+class="hotspot"
+style="
+left:43%;
+top:84%;
+">
+</div>
+
+<!-- FIBULA -->
+
+<div
+id="fibula"
+class="hotspot"
+style="
+left:50%;
+top:84%;
+">
+</div>
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+</div>
+
+</div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/clapping.mp3">
+</audio>
+
+<script>
+
+/* =========================
+   SPLASH
+========================= */
+
+setTimeout(()=>{
+
+document.getElementById(
+"splashScreen"
+).style.display =
+"none";
+
+document.getElementById(
+"introScreen"
+).style.display =
+"flex";
+
+},1500);
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+document.getElementById(
+"introScreen"
+).style.display =
+"none";
+
+document.getElementById(
+"gameScreen"
+).style.display =
+"block";
+
+shuffleBones();
+
+showNextBone();
+
+}
+
+/* =========================
+   BONES
+========================= */
+
+const bones = [
+
+{
+name:"Skull",
+target:"skull"
+},
+
+{
+name:"Ribs",
+target:"ribs"
+},
+
+{
+name:"Backbone",
+target:"backbone"
+},
+
+{
+name:"Humerus",
+target:"humerus"
+},
+
+{
+name:"Radius",
+target:"radius"
+},
+
+{
+name:"Ulna",
+target:"ulna"
+},
+
+{
+name:"Femur",
+target:"femur"
+},
+
+{
+name:"Tibia",
+target:"tibia"
+},
+
+{
+name:"Fibula",
+target:"fibula"
+}
+
+];
+
+let gameBones = [];
+
+let currentBoneIndex = 0;
+
+let score = 0;
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffleBones(){
+
+gameBones =
+[...bones];
+
+for(
+let i=
+gameBones.length-1;
+i>0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+gameBones[i],
+gameBones[j]
+]
+=
+[
+gameBones[j],
+gameBones[i]
+];
+
+}
+
+}
+
+/* =========================
+   SHOW BONE
+========================= */
+
+function showNextBone(){
+
+if(
+currentBoneIndex >=
+gameBones.length
+){
+
+showCertificate();
+
+return;
+
+}
+
+document.getElementById(
+"boneName"
+).innerHTML =
+
+gameBones[
+currentBoneIndex
+].name;
+
+}
+/* =========================
+   BONE FACTS
+========================= */
+
+const boneFacts = {
+
+"Skull":
+"🧠 The skull protects the brain.",
+
+"Ribs":
+"❤️ The ribs protect the heart and lungs.",
+
+"Backbone":
+"🏃 The backbone supports the body and helps us stand upright.",
+
+"Humerus":
+"💪 The humerus is the upper arm bone.",
+
+"Radius":
+"✋ The radius helps the forearm rotate.",
+
+"Ulna":
+"🦾 The ulna supports the forearm.",
+
+"Femur":
+"🦵 The femur is the longest bone in the body.",
+
+"Tibia":
+"🚶 The tibia is the larger shin bone.",
+
+"Fibula":
+"🦶 The fibula supports the lower leg."
+
+};
+
+/* =========================
+   HOTSPOT EVENTS
+========================= */
+
+document
+.querySelectorAll(
+".hotspot"
+)
+.forEach(hotspot=>{
+
+hotspot.addEventListener(
+"click",
+()=>checkBone(
+hotspot.id
+)
+);
+
+});
+
+/* =========================
+   CHECK BONE
+========================= */
+
+function checkBone(
+selectedBone
+){
+
+const currentBone =
+gameBones[
+currentBoneIndex
+];
+
+/* =========================
+   CORRECT
+========================= */
+
+if(
+selectedBone ===
+currentBone.target
+){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+const hotspot =
+document.getElementById(
+selectedBone
+);
+
+hotspot.classList.add(
+"found"
+);
+
+hotspot.style.pointerEvents =
+"none";
+
+score++;
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+✅ Correct!
+
+<br><br>
+
+${boneFacts[
+currentBone.name
+]}
+`;
+
+currentBoneIndex++;
+
+setTimeout(()=>{
+
+showNextBone();
+
+},1800);
+
+}
+
+/* =========================
+   WRONG
+========================= */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+❌ Try Again
+
+<br><br>
+
+Look carefully at the skeleton.
+`;
+
+}
+
+}
+/* =========================
+   CERTIFICATE
+========================= */
+
+function showCertificate(){
+
+const clapSound =
+document.getElementById(
+"clapSound"
+);
+
+clapSound.currentTime = 0;
+
+clapSound.play().catch(()=>{});
+
+document.querySelector(
+".mainCard"
+).innerHTML =
+
+`
+<div
+style="
+text-align:center;
+padding:20px;
+">
+
+<img
+src="assets/innovine-logo.png"
+style="
+width:220px;
+margin-bottom:20px;
+">
+
+<h1
+style="
+font-size:3rem;
+color:#1565c0;
+margin-bottom:15px;
+">
+
+🏆 SKELETON DETECTIVE
+
+</h1>
+
+<div
+style="
+font-size:4rem;
+margin-bottom:20px;
+">
+
+🦴 🧠 💪 🦵
+
+</div>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+max-width:700px;
+margin:auto;
+">
+
+Congratulations!
+
+<br><br>
+
+You successfully identified all the major bones of the human skeleton.
+
+</p>
+
+<br>
+
+<div
+style="
+font-size:1.2rem;
+line-height:2;
+font-weight:bold;
+color:#1565c0;
+">
+
+Skull<br>
+Ribs<br>
+Backbone<br>
+Humerus<br>
+Radius<br>
+Ulna<br>
+Femur<br>
+Tibia<br>
+Fibula
+
+</div>
+
+<br>
+
+<h2
+style="
+color:#2e7d32;
+">
+
+⭐ Final Score:
+${score} / 9
+
+</h2>
+
+<br>
+
+<button
+
+onclick="playAgain()"
+
+style="
+padding:18px 40px;
+border:none;
+border-radius:20px;
+background:#1976d2;
+color:white;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 PLAY AGAIN
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =========================
+   PLAY AGAIN
+========================= */
+
+function playAgain(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
