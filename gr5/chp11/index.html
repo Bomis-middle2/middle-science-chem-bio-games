@@ -1,1 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+🌍 Waste Warrior
+
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:
+'Segoe UI',
+sans-serif;
+
+background:
+linear-gradient(
+#eef8ff,
+#ffffff
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+/* SPLASH */
+
+#splashScreen{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+#splashLogo{
+
+width:320px;
+
+max-width:85%;
+
+animation:
+logoZoom 1.5s ease;
+
+}
+
+@keyframes logoZoom{
+
+0%{
+opacity:0;
+transform:scale(.6);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* INTRO */
+
+#introScreen{
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
+}
+
+.introCard{
+
+background:white;
+
+max-width:1000px;
+
+width:100%;
+
+padding:35px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
+}
+
+.logo{
+
+width:220px;
+
+margin-bottom:20px;
+
+}
+
+.title{
+
+font-size:3rem;
+
+font-weight:bold;
+
+color:#2e7d32;
+
+margin-bottom:20px;
+
+}
+
+.story{
+
+font-size:1.2rem;
+
+line-height:1.9;
+
+color:#444;
+
+}
+
+.startBtn{
+
+margin-top:25px;
+
+padding:
+18px 45px;
+
+border:none;
+
+border-radius:20px;
+
+background:#2e7d32;
+
+color:white;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+/* GAME */
+
+#gameScreen{
+
+display:none;
+
+padding:20px;
+
+}
+
+.gameHeader{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.gameLogo{
+
+width:180px;
+
+margin-bottom:10px;
+
+}
+
+.gameTitle{
+
+font-size:2.8rem;
+
+font-weight:bold;
+
+color:#2e7d32;
+
+}
+
+/* HUD */
+
+.hud{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:15px;
+
+max-width:1100px;
+
+margin:auto;
+
+margin-bottom:20px;
+
+}
+
+.hudBox{
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+color:white;
+
+}
+
+.scoreBox{
+
+background:#43a047;
+
+}
+
+.progressBox{
+
+background:#1565c0;
+
+}
+
+/* CARD */
+
+.mainCard{
+
+max-width:1100px;
+
+margin:auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
+}
+
+/* IMAGE */
+
+.partyImage{
+
+width:100%;
+
+max-width:900px;
+
+display:block;
+
+margin:auto;
+
+border-radius:20px;
+
+margin-bottom:25px;
+
+}
+
+/* QUESTION */
+
+.questionBox{
+
+background:#f1f8e9;
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.questionTitle{
+
+font-size:1rem;
+
+color:#666;
+
+}
+
+.questionItem{
+
+font-size:2rem;
+
+font-weight:bold;
+
+color:#2e7d32;
+
+margin-top:10px;
+
+}
+
+/* BUTTONS */
+
+.buttonGrid{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:15px;
+
+}
+
+.answerBtn{
+
+padding:20px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.answerBtn:hover{
+
+transform:scale(1.03);
+
+}
+
+.bioBtn{
+
+background:#c8e6c9;
+
+}
+
+.nonBioBtn{
+
+background:#bbdefb;
+
+}
+
+.feedback{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+min-height:80px;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.title{
+
+font-size:2rem;
+
+}
+
+.gameTitle{
+
+font-size:2rem;
+
+}
+
+.questionItem{
+
+font-size:1.4rem;
+
+}
+
+.buttonGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.hud{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="splashScreen">
+
+<img
+id="splashLogo"
+src="assets/innovine-logo.png">
+
+</div>
+
+<div id="introScreen">
+
+<div class="introCard">
+
+<img
+src="assets/innovine-logo.png"
+class="logo">
+
+<h1 class="title">
+
+🌍 WASTE WARRIOR
+
+</h1>
+
+<div class="story">
+
+🎉 Rohan celebrated his birthday with his friends.
+
+<br><br>
+
+After the party, lots of waste was left behind.
+
+<br><br>
+
+Help Rohan segregate the waste correctly for proper disposal.
+
+<br><br>
+
+Choose whether each item is biodegradable or non-biodegradable.
+
+</div>
+
+<button
+class="startBtn"
+onclick="startGame()">
+
+🚀 START CLEANUP
+
+</button>
+
+</div>
+
+</div>
+
+<div id="gameScreen">
+
+<div class="gameHeader">
+
+<img
+src="assets/innovine-logo.png"
+class="gameLogo">
+
+<div class="gameTitle">
+
+🌍 WASTE WARRIOR
+
+</div>
+
+</div>
+
+<div class="hud">
+
+<div class="hudBox scoreBox">
+
+⭐ Score:
+<span id="score">
+
+0
+
+</span>
+
+</div>
+
+<div class="hudBox progressBox">
+
+📦 Sorted:
+<span id="progress">
+
+0
+
+</span>/8
+
+</div>
+
+</div>
+
+<div class="mainCard">
+
+<img
+src="assets/chp11bg.png"
+class="partyImage">
+
+<div class="questionBox">
+
+<div class="questionTitle">
+
+🎯 SORT THIS ITEM
+
+</div>
+
+<div
+id="currentItem"
+class="questionItem">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="buttonGrid">
+
+<button
+class="answerBtn bioBtn"
+onclick="checkAnswer('bio')">
+
+🟢 BIODEGRADABLE
+
+</button>
+
+<button
+class="answerBtn nonBioBtn"
+onclick="checkAnswer('nonbio')">
+
+🔵 NON-BIODEGRADABLE
+
+</button>
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+
+</div>
+</div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/clapping.mp3">
+</audio>
+
+<script>
+
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+setTimeout(()=>{
+
+document.getElementById(
+"splashScreen"
+).style.display =
+"none";
+
+document.getElementById(
+"introScreen"
+).style.display =
+"flex";
+
+},1500);
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let score = 0;
+
+let currentItemIndex = 0;
+
+/* =========================
+   WASTE ITEMS
+========================= */
+
+const wasteItems = [
+
+{
+item:"🍌 Banana Peel",
+type:"bio",
+fact:"Banana peels decompose naturally and enrich the soil."
+},
+
+{
+item:"🍎 Apple Core",
+type:"bio",
+fact:"Apple cores break down naturally and are biodegradable."
+},
+
+{
+item:"🧻 Paper Napkin",
+type:"bio",
+fact:"Paper napkins decompose naturally over time."
+},
+
+{
+item:"🥄 Plastic Spoon",
+type:"nonbio",
+fact:"Plastic spoons take hundreds of years to break down."
+},
+
+{
+item:"🍫 Chocolate Wrapper",
+type:"nonbio",
+fact:"Chocolate wrappers are usually made of plastic or foil and do not decompose easily."
+},
+
+{
+item:"🧃 Juice Box",
+type:"nonbio",
+fact:"Juice boxes contain plastic and aluminium layers that do not decompose naturally."
+},
+
+{
+item:"🥤 Plastic Straw",
+type:"nonbio",
+fact:"Plastic straws are non-biodegradable and can harm the environment."
+},
+
+{
+item:"🎂 Paper Plate",
+type:"bio",
+fact:"This paper plate is biodegradable and can break down naturally."
+}
+
+];
+
+/* =========================
+   SHUFFLE ITEMS
+========================= */
+
+function shuffleItems(){
+
+for(
+let i=
+wasteItems.length-1;
+i>0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+wasteItems[i],
+wasteItems[j]
+]
+=
+[
+wasteItems[j],
+wasteItems[i]
+];
+
+}
+
+}
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+document.getElementById(
+"introScreen"
+).style.display =
+"none";
+
+document.getElementById(
+"gameScreen"
+).style.display =
+"block";
+
+shuffleItems();
+
+loadItem();
+
+}
+
+/* =========================
+   LOAD ITEM
+========================= */
+
+function loadItem(){
+
+if(
+currentItemIndex >=
+wasteItems.length
+){
+
+showCertificate();
+
+return;
+
+}
+
+document.getElementById(
+"currentItem"
+).innerHTML =
+
+wasteItems[
+currentItemIndex
+].item;
+
+document.getElementById(
+"progress"
+).innerHTML =
+
+currentItemIndex;
+
+document.getElementById(
+"feedback"
+).innerHTML = "";
+
+}
+/* =========================
+   CHECK ANSWER
+========================= */
+
+function checkAnswer(
+selectedType
+){
+
+const currentItem =
+wasteItems[
+currentItemIndex
+];
+
+/* =========================
+   CORRECT
+========================= */
+
+if(
+selectedType ===
+currentItem.type
+){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+score += 10;
+
+document.getElementById(
+"score"
+).innerHTML =
+score;
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+<div
+style="
+color:#2e7d32;
+">
+
+✅ Correct!
+
+<br><br>
+
+${currentItem.fact}
+
+</div>
+`;
+
+currentItemIndex++;
+
+setTimeout(()=>{
+
+loadItem();
+
+},1800);
+
+}
+
+/* =========================
+   WRONG
+========================= */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+<div
+style="
+color:#c62828;
+">
+
+❌ Not Quite!
+
+<br><br>
+
+Think about whether this item breaks down naturally.
+
+</div>
+`;
+
+}
+
+}
+/* =========================
+   CERTIFICATE SCREEN
+========================= */
+
+function showCertificate(){
+
+const clapSound =
+document.getElementById(
+"clapSound"
+);
+
+clapSound.currentTime = 0;
+
+clapSound.play().catch(()=>{});
+
+/* HIDE HEADER */
+
+document.querySelector(
+".gameHeader"
+).style.display =
+"none";
+
+/* SHOW CERTIFICATE */
+
+document.querySelector(
+".mainCard"
+).innerHTML =
+
+`
+<div
+style="
+text-align:center;
+padding:20px;
+">
+
+<h1
+style="
+font-size:3rem;
+color:#2e7d32;
+margin-bottom:15px;
+">
+
+🏆 WASTE WARRIOR
+
+</h1>
+
+<div
+style="
+font-size:4rem;
+margin-bottom:20px;
+">
+
+🌍 ♻️ 🎉
+
+</div>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+max-width:700px;
+margin:auto;
+">
+
+Congratulations!
+
+<br><br>
+
+You helped Rohan segregate the waste correctly after his birthday party.
+
+<br><br>
+
+You now know that biodegradable waste breaks down naturally, while non-biodegradable waste remains in the environment for a long time.
+
+</p>
+
+<br>
+
+<div
+style="
+background:#f1f8e9;
+padding:20px;
+border-radius:20px;
+max-width:550px;
+margin:auto;
+font-size:1.1rem;
+line-height:2;
+font-weight:bold;
+color:#2e7d32;
+">
+
+🟢 Biodegradable<br>
+
+🍌 Banana Peel<br>
+
+🍎 Apple Core<br>
+
+🧻 Paper Napkin<br>
+
+🎂 Paper Plate
+
+<br><br>
+
+🔵 Non-Biodegradable<br>
+
+🥄 Plastic Spoon<br>
+
+🍫 Chocolate Wrapper<br>
+
+🧃 Juice Box<br>
+
+🥤 Plastic Straw
+
+</div>
+
+<br><br>
+
+<h2
+style="
+color:#1565c0;
+font-size:2rem;
+">
+
+⭐ Final Score:
+${score}/80
+
+</h2>
+
+<br>
+
+<div
+style="
+font-size:1.3rem;
+font-weight:bold;
+color:#ef6c00;
+">
+
+🎉 Excellent Cleanup Work!
+
+</div>
+
+<br><br>
+
+<button
+
+onclick="playAgain()"
+
+style="
+padding:18px 40px;
+border:none;
+border-radius:20px;
+background:#2e7d32;
+color:white;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 PLAY AGAIN
+
+</button>
+
+</div>
+`;
+
+}
+
+/* =========================
+   PLAY AGAIN
+========================= */
+
+function playAgain(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+
+</html>
