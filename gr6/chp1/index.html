@@ -6,21 +6,28 @@
 <title>Nutrient Detective</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ================= GLOBAL ================= */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:Segoe UI,sans-serif;
+
+/* FIXED BACKGROUND (NOT OVER-FADED) */
 background:
-radial-gradient(circle at center,
-rgba(255,255,255,0.75),
-rgba(255,255,255,0.92)),
+linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.75)),
 url("assets/clinic-bg.png");
+
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
 }
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -32,14 +39,26 @@ justify-content:center;
 z-index:9999;
 }
 
-#splash img{width:220px;}
+#splash img{
+width:220px;
+}
 
-/* SCREENS */
-.screen{display:none;padding:15px;}
+/* ================= SCREEN CENTER FIX ================= */
+.screen{
+display:none;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:15px;
+}
 
+/* ================= CARD ================= */
 .card{
-background:rgba(255,255,255,0.96);
+background:white;
 max-width:900px;
+width:95%;
 margin:auto;
 padding:18px;
 border-radius:18px;
@@ -47,7 +66,7 @@ box-shadow:0 8px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 button{
 padding:14px;
 border:none;
@@ -59,31 +78,33 @@ width:100%;
 
 .start{background:#2e7d32;color:white;}
 
-/* LAYOUT */
+/* ================= GAME WRAPPER ================= */
 .game-wrapper{
 display:grid;
 grid-template-columns:1fr;
 gap:15px;
 max-width:1100px;
+width:95%;
 margin:auto;
 }
 
-/* HUD */
+/* ================= HUD ================= */
 .hud{
 display:flex;
 justify-content:space-between;
 flex-wrap:wrap;
 font-weight:bold;
 font-size:14px;
-background:rgba(255,255,255,0.85);
+background:rgba(255,255,255,0.9);
 padding:10px;
 border-radius:12px;
 margin-bottom:10px;
+width:95%;
 }
 
-/* CASE */
+/* ================= CASE ================= */
 .case-panel{
-background:rgba(255,255,255,0.95);
+background:white;
 padding:15px;
 border-radius:16px;
 box-shadow:0 6px 15px rgba(0,0,0,0.12);
@@ -98,7 +119,7 @@ margin-bottom:10px;
 font-weight:bold;
 }
 
-/* OPTIONS */
+/* ================= OPTIONS ================= */
 .option{
 margin:8px 0;
 padding:12px;
@@ -107,48 +128,18 @@ border-radius:10px;
 cursor:pointer;
 }
 
-/* FEEDBACK */
+/* ================= FEEDBACK ================= */
 .correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
 .wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
 .hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
 
-/* WHEEL */
-#wheelModal{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
-z-index:99999;
-}
-
-#wheelBox{
-background:white;
-padding:20px;
-border-radius:15px;
-text-align:center;
-width:260px;
-}
-
-#wheel{
-width:160px;
-height:160px;
-border-radius:50%;
-border:8px solid #1976d2;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-margin:15px auto;
-transition:transform 3s ease;
-}
-
-/* DESKTOP */
+/* ================= DESKTOP FIX ================= */
 @media(min-width:900px){
-.game-wrapper{grid-template-columns:1fr 1fr;}
+.game-wrapper{
+grid-template-columns:1fr 1fr;
 }
+}
+
 </style>
 </head>
 
@@ -203,36 +194,23 @@ transition:transform 3s ease;
 </div>
 </div>
 
-<!-- WHEEL -->
-<div id="wheelModal">
-<div id="wheelBox">
-<h3>🎡 Spin Reward</h3>
-<div id="wheel">SPIN</div>
-<button onclick="spinWheel()">SPIN</button>
-</div>
-</div>
-
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-
 <script>
 
-/* ================= SPLASH (FIXED) ================= */
+/* ================= SPLASH FIX ================= */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="block";
+document.getElementById("intro").style.display="flex";
 },3000);
 }
 
-/* ================= STATE ================= */
+/* ================= GAME DATA ================= */
 let score=0;
 let life=2;
 let qIndex=0;
 let attempt=1;
 let lock=false;
 
-/* ================= QUESTIONS ================= */
 const data=[
 {
 q:"Night blindness detected",
@@ -260,7 +238,7 @@ hint:"Think blood ❤️"
 /* ================= START ================= */
 function startGame(){
 document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
+document.getElementById("game").style.display="flex";
 loadQ();
 }
 
@@ -299,7 +277,6 @@ let q=data[qIndex];
 
 if(ans===q.a){
 
-document.getElementById("correctSound").play();
 score+=10;
 lock=true;
 
@@ -309,17 +286,10 @@ setTimeout(()=>{
 qIndex++;
 updateHUD();
 loadQ();
-
-/* SAFE WHEEL TRIGGER */
-if(qIndex>0 && qIndex%2===0){
-showWheel();
-}
-
-},1000);
+},900);
 
 }else{
 
-document.getElementById("wrongSound").play();
 life--;
 updateHUD();
 
@@ -334,7 +304,7 @@ lock=true;
 setTimeout(()=>{
 qIndex++;
 loadQ();
-},1200);
+},1000);
 }
 
 if(life<0) end();
@@ -348,39 +318,10 @@ document.getElementById("life").innerText=life;
 document.getElementById("qno").innerText=qIndex+1;
 }
 
-/* ================= WHEEL ================= */
-let rewards=["+10","+5","Life","Nothing"];
-
-function showWheel(){
-document.getElementById("wheelModal").style.display="flex";
-}
-
-function spinWheel(){
-
-let wheel=document.getElementById("wheel");
-let deg=Math.floor(Math.random()*360)+720;
-
-wheel.style.transform=`rotate(${deg}deg)`;
-
-setTimeout(()=>{
-
-let r=rewards[Math.floor(Math.random()*rewards.length)];
-
-if(r==="+10") score+=10;
-if(r==="+5") score+=5;
-if(r==="Life") life++;
-
-updateHUD();
-
-document.getElementById("wheelModal").style.display="none";
-
-},2500);
-}
-
 /* ================= END ================= */
 function end(){
 document.getElementById("game").style.display="none";
-document.getElementById("result").style.display="block";
+document.getElementById("result").style.display="flex";
 document.getElementById("final").innerText=score;
 }
 
