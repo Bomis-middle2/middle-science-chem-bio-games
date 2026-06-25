@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Detective Clean Engine</title>
+<title>Life Detective Image Game</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -24,19 +24,18 @@ justify-content:center;
 z-index:9999;
 }
 
-/* 🟡 SCREEN SYSTEM (IMPORTANT) */
+/* 🟡 SCREEN SYSTEM */
 .screen{
 display:none;
-width:100%;
 height:100vh;
+width:100%;
 }
 
-/* ACTIVE SCREEN ONLY */
+/* ACTIVE SCREEN */
 .active{
 display:flex;
 align-items:center;
 justify-content:center;
-flex-direction:column;
 }
 
 /* 🧠 INTRO */
@@ -47,38 +46,45 @@ border-radius:16px;
 width:90%;
 max-width:800px;
 text-align:center;
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* 🌿 STORY SCREEN */
-#storyScreen{
-background:url("assets/living-story-background.png") center/cover no-repeat;
+/* 🌿 GAME LAYOUT */
+.game-container{
+display:flex;
+width:95%;
+max-width:1100px;
+gap:15px;
 }
 
-#storyBox{
-background:rgba(255,255,255,0.88);
-padding:20px;
-border-radius:14px;
-width:85%;
-max-width:850px;
-font-size:18px;
-line-height:1.6;
-}
-
-/* ❓ QUESTION SCREEN */
-#questionScreen{
-background:#eaf6ff;
-}
-
-.qbox{
+/* 🖼 IMAGE PANEL */
+.image-box{
+flex:1;
 background:white;
-padding:20px;
 border-radius:16px;
-width:90%;
-max-width:850px;
-text-align:center;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
+.image-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* ❓ QUESTION PANEL */
+.qbox{
+flex:1;
+background:white;
+border-radius:16px;
+padding:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+/* WORD BANK */
 .wordbank{
 display:flex;
 flex-wrap:wrap;
@@ -94,6 +100,7 @@ border-radius:8px;
 font-size:14px;
 }
 
+/* INPUT */
 input{
 width:100%;
 padding:12px;
@@ -116,6 +123,13 @@ font-size:16px;
 cursor:pointer;
 }
 
+/* MOBILE */
+@media(max-width:900px){
+.game-container{
+flex-direction:column;
+}
+}
+
 </style>
 </head>
 
@@ -131,19 +145,22 @@ cursor:pointer;
 <div class="box">
 <img src="assets/innovine-logo.png" style="width:120px;">
 <h2>🧬 Life Detective</h2>
-<p>Learn characteristics of living things through real-world observation.</p>
-<p>✔ Listen → ✔ Observe → ✔ Answer</p>
+<p>Observe the image and identify characteristics of living things.</p>
 <button onclick="startGame()">START</button>
 </div>
 </div>
 
-<!-- 🌿 STORY -->
-<div id="storyScreen" class="screen">
-<div id="storyBox"></div>
+<!-- 🌿 GAME -->
+<div id="game" class="screen">
+
+<div class="game-container">
+
+<!-- IMAGE -->
+<div class="image-box">
+<img id="sceneImg" src="">
 </div>
 
-<!-- ❓ QUESTION -->
-<div id="questionScreen" class="screen">
+<!-- QUESTION -->
 <div class="qbox">
 
 <div class="wordbank">
@@ -165,82 +182,59 @@ cursor:pointer;
 <p id="feedback"></p>
 
 </div>
+
+</div>
+
 </div>
 
 <script>
 
-let index = 0;
-let score = 0;
-
-/* 🌿 STORY */
-const story = `
-A bright sun rises over a lively playground. Children are running and playing. Birds are chirping in trees. Plants are growing taller every day. A Mimosa plant closes its leaves when touched.
-`;
-
-/* ❓ QUESTIONS */
-const questions = [
+/* 🧠 DATA (IMAGE + QUESTION) */
+const data=[
 {
-q:"You saw that the boy was running in the playground. Type the correct living characteristic:",
+img:"assets/living-story-background.png",
+q:"You saw that the boy was running in the playground. Type the correct living characteristic.",
 a:"locomotion"
 },
 {
-q:"Plants are growing taller every day. Type the correct characteristic:",
+img:"assets/living-story-background.png",
+q:"Plants are growing taller every day. Type the correct characteristic.",
 a:"growth"
 },
 {
-q:"Birds respond to movement and sound. Type the correct characteristic:",
+img:"assets/living-story-background.png",
+q:"A Mimosa plant closes its leaves when touched. Type the correct characteristic.",
 a:"sensitivity"
-},
-{
-q:"Bird eggs have hatched into chicks. Type the correct characteristic:",
-a:"reproduction"
-},
-{
-q:"A child breathes faster after running. Type the correct characteristic:",
-a:"respiration"
-},
-{
-q:"A child eats food for energy. Type the correct characteristic:",
-a:"nutrition"
-},
-{
-q:"The body removes waste through sweat. Type the correct characteristic:",
-a:"excretion"
 }
 ];
 
-/* 🚀 SPLASH */
-window.onload = function(){
+let index=0;
+
+/* 🔵 SPLASH */
+window.onload=function(){
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
+document.getElementById("intro").classList.add("active");
 },3000);
-};
+}
 
 /* 🚀 START */
 function startGame(){
-show("storyScreen");
-
-document.getElementById("storyBox").innerText = story;
-
-/* TTS */
-let speech = new SpeechSynthesisUtterance(story);
-speech.rate = 0.9;
-
-/* AFTER STORY → QUESTION */
-speech.onend = function(){
-show("questionScreen");
+showGame();
 loadQ();
-};
-
-speechSynthesis.cancel();
-speechSynthesis.speak(speech);
 }
 
-/* ❓ LOAD QUESTION */
-function loadQ(){
-document.getElementById("questionText").innerText =
-questions[index].q;
+/* 🧩 SHOW GAME */
+function showGame(){
+document.getElementById("intro").classList.remove("active");
+document.getElementById("game").classList.add("active");
+}
 
+/* 🖼 LOAD QUESTION */
+function loadQ(){
+
+document.getElementById("sceneImg").src=data[index].img;
+document.getElementById("questionText").innerText=data[index].q;
 document.getElementById("answer").value="";
 document.getElementById("feedback").innerText="";
 }
@@ -248,37 +242,27 @@ document.getElementById("feedback").innerText="";
 /* ✔ CHECK */
 function checkAnswer(){
 
-let user = document.getElementById("answer").value.toLowerCase().trim();
-let correct = questions[index].a;
+let user=document.getElementById("answer").value.toLowerCase().trim();
+let correct=data[index].a;
 
-if(user === correct){
-score += 10;
-document.getElementById("feedback").innerText = "✅ Correct!";
+if(user===correct){
+document.getElementById("feedback").innerText="✅ Correct!";
 }else{
-document.getElementById("feedback").innerText = "❌ Try again!";
+document.getElementById("feedback").innerText="❌ Try again!";
 return;
 }
 
 setTimeout(()=>{
 index++;
 
-if(index >= questions.length){
-alert("Game Complete! Score: " + score);
+if(index>=data.length){
+alert("Game Completed!");
 location.reload();
 }else{
 loadQ();
 }
 },1000);
-}
 
-/* 🧠 SCREEN ENGINE */
-function show(id){
-
-document.querySelectorAll(".screen").forEach(s=>{
-s.classList.remove("active");
-});
-
-document.getElementById(id).classList.add("active");
 }
 
 </script>
