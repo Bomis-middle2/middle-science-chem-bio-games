@@ -18,7 +18,7 @@ background-position:center;
 background-attachment:fixed;
 }
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -30,9 +30,7 @@ justify-content:center;
 z-index:99999;
 }
 
-#splash img{width:220px;}
-
-/* SCREENS */
+/* ================= SCREENS ================= */
 .screen{
 display:none;
 min-height:100vh;
@@ -42,7 +40,7 @@ flex-direction:column;
 padding:20px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card{
 background:white;
 max-width:900px;
@@ -53,7 +51,7 @@ box-shadow:0 10px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 button{
 padding:14px;
 border:none;
@@ -65,7 +63,7 @@ width:100%;
 
 .start{background:#2e7d32;color:white;}
 
-/* GAME LAYOUT */
+/* ================= GAME LAYOUT ================= */
 .game-wrapper{
 display:grid;
 grid-template-columns:1fr;
@@ -74,7 +72,7 @@ width:95%;
 max-width:1100px;
 }
 
-/* HUD */
+/* ================= HUD ================= */
 .hud{
 display:flex;
 justify-content:space-between;
@@ -87,7 +85,7 @@ border-radius:12px;
 margin-bottom:10px;
 }
 
-/* CASE */
+/* ================= CASE ================= */
 .case-panel{
 background:white;
 padding:15px;
@@ -104,7 +102,7 @@ margin-bottom:10px;
 font-weight:bold;
 }
 
-/* QUESTION */
+/* ================= QUESTION ================= */
 .q-panel{
 background:white;
 padding:15px;
@@ -120,12 +118,12 @@ border-radius:10px;
 cursor:pointer;
 }
 
-/* FEEDBACK */
+/* ================= FEEDBACK ================= */
 .correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
 .wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
 .hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
 
-/* DESKTOP */
+/* ================= DESKTOP ================= */
 @media(min-width:900px){
 .game-wrapper{grid-template-columns:1fr 1fr;}
 }
@@ -134,29 +132,29 @@ cursor:pointer;
 
 <body>
 
-<!-- SPLASH -->
+<!-- ================= SPLASH ================= -->
 <div id="splash">
-<img src="assets/innovine-logo.png">
+<img src="assets/innovine-logo.png" style="width:220px;">
 </div>
 
-<!-- INTRO -->
+<!-- ================= INTRO ================= -->
 <div class="screen" id="intro">
 <div class="card">
 <img src="assets/innovine-logo.png" style="width:120px;">
-<h2>🏥 Nutrient Detective</h2>
-<p>Identify deficiencies & suggest correct food</p>
+<h2>🏥 Nutrient Detective Mission</h2>
+<p>You are a junior doctor. Diagnose patients & suggest correct food.</p>
 
-<p style="margin-top:10px;text-align:left;">
-✔ Diagnose patient cases<br>
-✔ Select correct nutrient<br>
-✔ Suggest correct food in final rounds
-</p>
+<div style="text-align:left;margin:15px 0;">
+✔ Identify nutrient deficiency<br>
+✔ Choose correct diagnosis<br>
+✔ Suggest correct food (final rounds)
+</div>
 
 <button class="start" onclick="startGame()">START MISSION</button>
 </div>
 </div>
 
-<!-- GAME -->
+<!-- ================= GAME ================= -->
 <div class="screen" id="game">
 
 <div class="hud">
@@ -181,7 +179,7 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- RESULT -->
+<!-- ================= RESULT ================= -->
 <div class="screen" id="result">
 <div class="card">
 <h2>🏁 Mission Completed</h2>
@@ -202,7 +200,7 @@ let lock=false;
 /* ================= 10 QUESTIONS ================= */
 const data=[
 
-/* ===== 7 DIAGNOSIS ===== */
+/* 7 DIAGNOSIS */
 {
 q:"Night blindness detected",
 case:"Patient cannot see in dim light.",
@@ -246,7 +244,7 @@ o:["Protein/Vitamin D","Vitamin C","Iron","Sugar"],
 a:"Protein/Vitamin D"
 },
 
-/* ===== 3 FOOD ADVICE ===== */
+/* 3 FOOD ADVICE */
 {
 q:"Food for night blindness?",
 case:"Doctor suggests improving eyesight.",
@@ -267,7 +265,7 @@ a:"Milk & Curd"
 }
 ];
 
-/* ================= SPLASH ================= */
+/* ================= SPLASH TIMER ================= */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
