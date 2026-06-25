@@ -10,18 +10,10 @@
 
 body{
 font-family:Segoe UI,sans-serif;
-
-/* FADED BACKGROUND */
-background:
-linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.85)),
-url("assets/living-story-background.png");
-
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
+background:#eaf6ff;
 }
 
-/* SPLASH */
+/* ================= SPLASH ================= */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -33,9 +25,7 @@ justify-content:center;
 z-index:99999;
 }
 
-#splash img{width:220px;}
-
-/* SCREENS */
+/* ================= SCREENS ================= */
 .screen{
 display:none;
 min-height:100vh;
@@ -45,18 +35,18 @@ flex-direction:column;
 padding:20px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card{
 background:white;
 width:95%;
 max-width:900px;
 padding:20px;
-border-radius:16px;
+border-radius:18px;
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 button{
 padding:14px;
 border:none;
@@ -68,24 +58,47 @@ width:100%;
 
 .start{background:#2e7d32;color:white;}
 
-/* STORY BOX */
-.story{
-font-size:18px;
-margin:10px 0;
-padding:10px;
-background:#f1f8ff;
-border-radius:10px;
+/* ================= WORD BANK ================= */
+.wordbank{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:10px;
 }
 
-/* INPUT */
+.word{
+background:#d6ecff;
+padding:8px 12px;
+border-radius:8px;
+font-weight:bold;
+}
+
+/* ================= INPUT ================= */
 input{
 width:100%;
 padding:12px;
+font-size:16px;
+text-align:center;
 margin-top:10px;
 border-radius:10px;
 border:1px solid #ccc;
-font-size:16px;
-text-align:center;
+}
+
+/* ================= HUD ================= */
+.hud{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+font-weight:bold;
+}
+
+.story{
+background:#f2f9ff;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px;
+line-height:1.6;
 }
 
 </style>
@@ -93,60 +106,87 @@ text-align:center;
 
 <body>
 
-<!-- SPLASH -->
+<!-- 🔵 SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png">
+<img src="assets/innovine-logo.png" style="width:220px;">
 </div>
 
-<!-- INTRO -->
+<!-- 🟡 INTRO -->
 <div class="screen" id="intro">
 <div class="card">
-
-<img src="assets/innovine-logo.png" style="width:120px;margin-bottom:10px;">
-
+<img src="assets/innovine-logo.png" style="width:120px;">
 <h2>🧬 Life Detective</h2>
 
-<p style="margin:10px 0;">
-Observe the story and identify characteristics of living things
+<p style="text-align:left;margin:10px 0;">
+✔ Read the story carefully<br>
+✔ Observe living things<br>
+✔ Use word bank to answer<br>
+✔ Type correct characteristic
 </p>
 
-<button class="start" onclick="startGame()">START</button>
-
+<button class="start" onclick="startGame()">START MISSION</button>
 </div>
 </div>
 
-<!-- GAME -->
+<!-- 🟢 GAME -->
 <div class="screen" id="game">
 
 <div class="card">
 
-<h3 id="storyText" class="story"></h3>
+<div class="hud">
+<div>⭐ Score: <span id="score">0</span></div>
+<div>❤️ Lives: <span id="life">2</span></div>
+</div>
+
+<div id="story" class="story"></div>
+
+<div class="wordbank">
+<div class="word">locomotion</div>
+<div class="word">growth</div>
+<div class="word">respiration</div>
+<div class="word">reproduction</div>
+<div class="word">sensitivity</div>
+<div class="word">nutrition</div>
+<div class="word">excretion</div>
+</div>
 
 <h3 id="question"></h3>
 
-<input id="answerBox" placeholder="Type your answer here...">
+<input id="answer" placeholder="Type your answer here...">
 
 <button onclick="checkAnswer()">SUBMIT</button>
 
 <p id="feedback"></p>
 
 </div>
-
 </div>
 
-<!-- RESULT -->
+<!-- 🏁 RESULT -->
 <div class="screen" id="result">
 <div class="card">
 <h2>🏁 Mission Completed</h2>
-<p>Great Job Scientist!</p>
+<p>Final Score: <span id="final"></span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 </div>
 
+<!-- 🔊 AUDIO -->
 <audio id="correctSound" src="assets/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/wrong.mp3"></audio>
 
 <script>
+
+/* ================= DATA ================= */
+let score=0;
+let life=2;
+let index=0;
+
+const stories=[
+{
+text:`A bright morning sun lights up the school playground where children are happily playing. Some boys are running while birds are chirping in the trees. Plants are growing taller every day. A Mimosa plant closes its leaves when touched.`,
+answer:"locomotion"
+}
+];
 
 /* ================= SPLASH ================= */
 window.onload=function(){
@@ -156,36 +196,6 @@ document.getElementById("intro").style.display="flex";
 },3000);
 }
 
-/* ================= STORY DATA ================= */
-const stories=[
-{
-text:"The sun shines brightly over a lively playground. Children are running and playing. Birds are chirping in the trees.",
-answer:"locomotion"
-},
-{
-text:"A small plant is growing taller every day in the garden.",
-answer:"growth"
-},
-{
-text:"A bird lays eggs and they hatch into chicks.",
-answer:"reproduction"
-},
-{
-text:"A child eats food to get energy for playing.",
-answer:"nutrition"
-},
-{
-text:"A child breathes heavily after running.",
-answer:"respiration"
-},
-{
-text:"A Mimosa plant closes its leaves when touched.",
-answer:"sensitivity"
-}
-];
-
-let index=0;
-
 /* ================= START ================= */
 function startGame(){
 document.getElementById("intro").style.display="none";
@@ -193,57 +203,57 @@ document.getElementById("game").style.display="flex";
 loadStory();
 }
 
-/* ================= LOAD STORY ================= */
+/* ================= STORY ================= */
 function loadStory(){
-
-if(index>=stories.length){
-endGame();
-return;
-}
 
 let s=stories[index];
 
-document.getElementById("storyText").innerText=s.text;
+document.getElementById("story").innerText=s.text;
 document.getElementById("question").innerText=
-"Type the correct characteristic of living things:";
+"You saw that the boy was running in the playground. Type in the correct living characteristic from the word bank.";
 
-document.getElementById("answerBox").value="";
-document.getElementById("feedback").innerText="";
+speechSynthesis.cancel();
 
-/* 🔊 AUTO READ STORY */
 let speech=new SpeechSynthesisUtterance(s.text);
 speech.rate=0.9;
-speech.pitch=1;
 speechSynthesis.speak(speech);
 }
 
 /* ================= CHECK ================= */
 function checkAnswer(){
 
-let user=document.getElementById("answerBox").value.toLowerCase().trim();
-let correct=stories[index].answer.toLowerCase();
+let user=document.getElementById("answer").value.toLowerCase().trim();
+let correct=stories[index].answer;
 
 if(user===correct){
-
 document.getElementById("correctSound").play().catch(()=>{});
+score+=10;
 document.getElementById("feedback").innerText="✅ Correct!";
-
-setTimeout(()=>{
-index++;
-loadStory();
-},1200);
-
-}else{
-
-document.getElementById("wrongSound").play().catch(()=>{});
-document.getElementById("feedback").innerText="❌ Try again!";
 }
+else{
+document.getElementById("wrongSound").play().catch(()=>{});
+life--;
+document.getElementById("feedback").innerText="❌ Try Again!";
+}
+
+updateHUD();
+
+if(life<0){
+endGame();
+}
+}
+
+/* ================= HUD ================= */
+function updateHUD(){
+document.getElementById("score").innerText=score;
+document.getElementById("life").innerText=life;
 }
 
 /* ================= END ================= */
 function endGame(){
 document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
+document.getElementById("final").innerText=score;
 }
 
 </script>
