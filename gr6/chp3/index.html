@@ -1,1 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Detective</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Segoe UI,sans-serif;
+
+/* FADED BACKGROUND */
+background:
+linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.85)),
+url("assets/living-story-background.png");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+#splash img{width:220px;}
+
+/* SCREENS */
+.screen{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+width:95%;
+max-width:900px;
+padding:20px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+text-align:center;
+}
+
+/* BUTTON */
+button{
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+width:100%;
+}
+
+.start{background:#2e7d32;color:white;}
+
+/* STORY BOX */
+.story{
+font-size:18px;
+margin:10px 0;
+padding:10px;
+background:#f1f8ff;
+border-radius:10px;
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png">
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="intro">
+<div class="card">
+
+<img src="assets/innovine-logo.png" style="width:120px;margin-bottom:10px;">
+
+<h2>🧬 Life Detective</h2>
+
+<p style="margin:10px 0;">
+Observe the story and identify characteristics of living things
+</p>
+
+<button class="start" onclick="startGame()">START</button>
+
+</div>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="game">
+
+<div class="card">
+
+<h3 id="storyText" class="story"></h3>
+
+<h3 id="question"></h3>
+
+<input id="answerBox" placeholder="Type your answer here...">
+
+<button onclick="checkAnswer()">SUBMIT</button>
+
+<p id="feedback"></p>
+
+</div>
+
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="result">
+<div class="card">
+<h2>🏁 Mission Completed</h2>
+<p>Great Job Scientist!</p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+
+<script>
+
+/* ================= SPLASH ================= */
+window.onload=function(){
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+}
+
+/* ================= STORY DATA ================= */
+const stories=[
+{
+text:"The sun shines brightly over a lively playground. Children are running and playing. Birds are chirping in the trees.",
+answer:"locomotion"
+},
+{
+text:"A small plant is growing taller every day in the garden.",
+answer:"growth"
+},
+{
+text:"A bird lays eggs and they hatch into chicks.",
+answer:"reproduction"
+},
+{
+text:"A child eats food to get energy for playing.",
+answer:"nutrition"
+},
+{
+text:"A child breathes heavily after running.",
+answer:"respiration"
+},
+{
+text:"A Mimosa plant closes its leaves when touched.",
+answer:"sensitivity"
+}
+];
+
+let index=0;
+
+/* ================= START ================= */
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="flex";
+loadStory();
+}
+
+/* ================= LOAD STORY ================= */
+function loadStory(){
+
+if(index>=stories.length){
+endGame();
+return;
+}
+
+let s=stories[index];
+
+document.getElementById("storyText").innerText=s.text;
+document.getElementById("question").innerText=
+"Type the correct characteristic of living things:";
+
+document.getElementById("answerBox").value="";
+document.getElementById("feedback").innerText="";
+
+/* 🔊 AUTO READ STORY */
+let speech=new SpeechSynthesisUtterance(s.text);
+speech.rate=0.9;
+speech.pitch=1;
+speechSynthesis.speak(speech);
+}
+
+/* ================= CHECK ================= */
+function checkAnswer(){
+
+let user=document.getElementById("answerBox").value.toLowerCase().trim();
+let correct=stories[index].answer.toLowerCase();
+
+if(user===correct){
+
+document.getElementById("correctSound").play().catch(()=>{});
+document.getElementById("feedback").innerText="✅ Correct!";
+
+setTimeout(()=>{
+index++;
+loadStory();
+},1200);
+
+}else{
+
+document.getElementById("wrongSound").play().catch(()=>{});
+document.getElementById("feedback").innerText="❌ Try again!";
+}
+}
+
+/* ================= END ================= */
+function endGame(){
+document.getElementById("game").style.display="none";
+document.getElementById("result").style.display="flex";
+}
+
+</script>
+
+</body>
+</html>
