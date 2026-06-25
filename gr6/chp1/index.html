@@ -1,6 +1,208 @@
-const data=[
-/* ================= 7 DIAGNOSIS QUESTIONS ================= */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrient Detective</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Segoe UI,sans-serif;
+background:
+linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.80)),
+url("assets/clinic-bg.png");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+#splash img{width:220px;}
+
+/* SCREENS */
+.screen{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+max-width:900px;
+width:95%;
+padding:20px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+text-align:center;
+}
+
+/* BUTTON */
+button{
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+width:100%;
+}
+
+.start{background:#2e7d32;color:white;}
+
+/* GAME LAYOUT */
+.game-wrapper{
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
+width:95%;
+max-width:1100px;
+}
+
+/* HUD */
+.hud{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+font-weight:bold;
+font-size:14px;
+background:rgba(255,255,255,0.9);
+padding:10px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+/* CASE */
+.case-panel{
+background:white;
+padding:15px;
+border-radius:16px;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+}
+
+.case-title{
+background:#1976d2;
+color:white;
+padding:8px;
+border-radius:10px;
+margin-bottom:10px;
+font-weight:bold;
+}
+
+/* QUESTION */
+.q-panel{
+background:white;
+padding:15px;
+border-radius:16px;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+}
+
+.option{
+margin:8px 0;
+padding:12px;
+background:#e3f2fd;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* FEEDBACK */
+.correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
+.wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
+.hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
+
+/* DESKTOP */
+@media(min-width:900px){
+.game-wrapper{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png">
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="intro">
+<div class="card">
+<img src="assets/innovine-logo.png" style="width:120px;">
+<h2>🏥 Nutrient Detective</h2>
+<p>Identify deficiencies & suggest correct food</p>
+
+<p style="margin-top:10px;text-align:left;">
+✔ Diagnose patient cases<br>
+✔ Select correct nutrient<br>
+✔ Suggest correct food in final rounds
+</p>
+
+<button class="start" onclick="startGame()">START MISSION</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="game">
+
+<div class="hud">
+<div>⭐ Score: <span id="score">0</span></div>
+<div>❤️ Lives: <span id="life">2</span></div>
+<div>📌 Q: <span id="qno">1</span></div>
+</div>
+
+<div class="game-wrapper">
+
+<div class="case-panel">
+<div class="case-title">🏥 CASE FILE</div>
+<div id="caseText"></div>
+</div>
+
+<div class="q-panel">
+<h3 id="question"></h3>
+<div id="options"></div>
+<div id="feedback"></div>
+</div>
+
+</div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="result">
+<div class="card">
+<h2>🏁 Mission Completed</h2>
+<p>Final Score: <span id="final"></span></p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+</div>
+
+<script>
+
+/* ================= STATE ================= */
+let score=0;
+let life=2;
+let qIndex=0;
+let attempt=1;
+let lock=false;
+
+/* ================= 10 QUESTIONS ================= */
+const data=[
+
+/* ===== 7 DIAGNOSIS ===== */
 {
 q:"Night blindness detected",
 case:"Patient cannot see in dim light.",
@@ -8,60 +210,162 @@ o:["Vitamin A","Vitamin C","Iron","Calcium"],
 a:"Vitamin A"
 },
 {
-q:"Bleeding gums observed",
-case:"Patient has slow wound healing and gum bleeding.",
+q:"Bleeding gums",
+case:"Patient has gum bleeding.",
 o:["Vitamin C","Vitamin A","Iron","Calcium"],
 a:"Vitamin C"
 },
 {
 q:"Pale skin and fatigue",
-case:"Patient feels weak and breathless.",
+case:"Patient feels weak.",
 o:["Iron","Calcium","Vitamin A","Iodine"],
 a:"Iron"
 },
 {
 q:"Swollen thyroid gland",
-case:"Neck swelling and slow growth observed.",
+case:"Neck swelling observed.",
 o:["Iodine","Iron","Vitamin C","Calcium"],
 a:"Iodine"
 },
 {
-q:"Weak bones and frequent fractures",
-case:"Patient has fragile bones and tooth decay.",
+q:"Weak bones",
+case:"Frequent fractures and tooth decay.",
 o:["Calcium","Iron","Vitamin A","Vitamin C"],
 a:"Calcium"
 },
 {
-q:"Poor immunity and frequent infections",
-case:"Patient falls sick very often.",
+q:"Frequent infections",
+case:"Low immunity observed.",
 o:["Vitamin C","Vitamin A","Iron","Calcium"],
 a:"Vitamin C"
 },
 {
-q:"Delayed growth in children",
-case:"Child is shorter than expected age growth.",
+q:"Poor growth in child",
+case:"Child growth is slow.",
 o:["Protein/Vitamin D","Vitamin C","Iron","Sugar"],
 a:"Protein/Vitamin D"
 },
 
-/* ================= 3 FOOD ADVICE QUESTIONS ================= */
-
+/* ===== 3 FOOD ADVICE ===== */
 {
-q:"What food should be given for night blindness?",
-case:"Doctor suggests improving vision health.",
-o:["Carrots & Papaya","Rice & Sugar","Bread & Butter","Tea & Coffee"],
+q:"Food for night blindness?",
+case:"Doctor suggests improving eyesight.",
+o:["Carrots & Papaya","Rice & Sugar","Bread","Tea"],
 a:"Carrots & Papaya"
 },
 {
-q:"Best food for anemia (iron deficiency)?",
+q:"Food for anemia?",
 case:"Patient is weak and pale.",
-o:["Spinach & Beetroot","Ice cream","Chips","Soda"],
+o:["Spinach & Beetroot","Chips","Soda","Candy"],
 a:"Spinach & Beetroot"
 },
 {
 q:"Food for strong bones?",
-case:"Child needs bone development support.",
-o:["Milk & Curd","Candy & Chocolate","Soft drinks","Jam"],
+case:"Child needs bone strength.",
+o:["Milk & Curd","Ice cream","Soft drinks","Jam"],
 a:"Milk & Curd"
 }
 ];
+
+/* ================= SPLASH ================= */
+window.onload=function(){
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+}
+
+/* ================= START ================= */
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="flex";
+loadQ();
+}
+
+/* ================= LOAD ================= */
+function loadQ(){
+
+if(qIndex>=data.length){
+end();
+return;
+}
+
+attempt=1;
+lock=false;
+
+let q=data[qIndex];
+
+document.getElementById("qno").innerText=qIndex+1;
+document.getElementById("question").innerText=q.q;
+document.getElementById("caseText").innerText=q.case;
+
+let html="";
+q.o.forEach(opt=>{
+html+=`<div class="option" onclick="check('${opt}')">${opt}</div>`;
+});
+
+document.getElementById("options").innerHTML=html;
+document.getElementById("feedback").innerHTML="";
+}
+
+/* ================= CHECK ================= */
+function check(ans){
+
+if(lock) return;
+
+let q=data[qIndex];
+
+if(ans===q.a){
+
+score+=10;
+lock=true;
+
+document.getElementById("feedback").innerHTML="✅ Correct!";
+
+setTimeout(()=>{
+qIndex++;
+updateHUD();
+loadQ();
+},900);
+
+}else{
+
+life--;
+updateHUD();
+
+if(attempt===1){
+document.getElementById("feedback").innerHTML="💡 Try Again!";
+attempt=2;
+lock=false;
+}else{
+document.getElementById("feedback").innerHTML="❌ Answer: "+q.a;
+lock=true;
+
+setTimeout(()=>{
+qIndex++;
+loadQ();
+},1000);
+}
+
+if(life<0) end();
+}
+}
+
+/* ================= HUD ================= */
+function updateHUD(){
+document.getElementById("score").innerText=score;
+document.getElementById("life").innerText=life;
+document.getElementById("qno").innerText=qIndex+1;
+}
+
+/* ================= END ================= */
+function end(){
+document.getElementById("game").style.display="none";
+document.getElementById("result").style.display="flex";
+document.getElementById("final").innerText=score;
+}
+
+</script>
+
+</body>
+</html>
