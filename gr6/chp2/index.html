@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab Rescue Mission</title>
+<title>Lab Separation Mission</title>
 
 <style>
-
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Segoe UI,sans-serif;
 background:
-linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.80)),
-url("lab-background.png");
+linear-gradient(rgba(255,255,255,0.65), rgba(255,255,255,0.85)),
+url("assets/lab-background.png");
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
@@ -115,20 +114,12 @@ cursor:pointer;
 transition:0.2s;
 }
 
-.option:hover{
-transform:scale(1.02);
-}
-
-/* ================= FEEDBACK ================= */
-.correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
-.wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
-.hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
+.option:hover{transform:scale(1.02);}
 
 /* ================= DESKTOP ================= */
 @media(min-width:900px){
 .game-wrapper{grid-template-columns:1fr 1fr;}
 }
-
 </style>
 </head>
 
@@ -136,30 +127,31 @@ transform:scale(1.02);
 
 <!-- ================= SPLASH ================= -->
 <div id="splash">
-<img src="innovine-logo.png">
+<img src="assets/innovine-logo.png">
 </div>
 
-<!-- ================= INTRO ================= -->
+<!-- ================= INTRO SCREEN (FIXED) ================= -->
 <div class="screen" id="intro">
 
 <div class="card">
 
-<img src="innovine-logo.png" style="width:120px;">
+<img src="assets/innovine-logo.png" style="width:120px;margin-bottom:10px;">
 
-<h2>🧪 Lab Rescue Mission</h2>
+<h2>🧪 Lab Separation Mission</h2>
 
 <p style="margin:10px 0;">
-You are a Junior Scientist in a school lab.<br><br>
-
-🎯 Your mission:<br>
-Identify correct methods to separate mixtures.
+Welcome Junior Scientist!
 </p>
 
-<div style="text-align:left;margin:15px 0;">
-✔ Read each case carefully<br>
-✔ Choose correct separation method<br>
-✔ Save the experiment samples
-</div>
+<p style="text-align:left;margin:10px 0;">
+🎯 Your Mission:<br><br>
+
+You are working in a science lab where different mixtures are mixed by mistake.<br><br>
+
+✔ Identify correct separation method<br>
+✔ Save the materials<br>
+✔ Complete all lab cases successfully
+</p>
 
 <button class="start" onclick="startGame()">
 START MISSION
@@ -181,7 +173,7 @@ START MISSION
 <div class="game-wrapper">
 
 <div class="case-panel">
-<div class="case-title">🧪 LAB CASE FILE</div>
+<div class="case-title">🧪 LAB CASE</div>
 <div id="caseText"></div>
 </div>
 
@@ -220,63 +212,33 @@ const data=[
 
 {
 q:"Sand + Water mixture",
-case:"A beaker contains sand mixed with water.",
-o:["Filtration","Evaporation","Handpicking","Sieving"],
-a:"Filtration"
-},
-{
-q:"Salt dissolved in water",
-case:"Salt is completely mixed in water.",
-o:["Evaporation","Sieving","Magnet","Handpicking"],
-a:"Evaporation"
-},
-{
-q:"Iron filings + Sand",
-case:"Iron particles mixed with sand.",
-o:["Magnetic separation","Filtration","Evaporation","Decantation"],
-a:"Magnetic separation"
-},
-{
-q:"Rice + Stones",
-case:"Grains mixed with small stones.",
-o:["Handpicking","Filtration","Evaporation","Magnet"],
-a:"Handpicking"
-},
-{
-q:"Mud + Water",
-case:"Dirty muddy water in container.",
-o:["Sedimentation","Magnet","Sieving","Evaporation"],
-a:"Sedimentation"
-},
-{
-q:"Oil + Water",
-case:"Two layers visible in liquid mixture.",
-o:["Decantation","Filtration","Sieving","Handpicking"],
-a:"Decantation"
-},
-{
-q:"Tea leaves in tea",
-case:"Tea contains small leaves.",
+case:"Beaker contains sand and water.",
 o:["Filtration","Evaporation","Magnet","Sieving"],
 a:"Filtration"
 },
 {
-q:"Sugar dissolved in water",
-case:"Sugar is fully mixed in water.",
-o:["Evaporation","Magnet","Handpicking","Sieving"],
+q:"Salt dissolved in water",
+case:"Salt is fully mixed in water.",
+o:["Evaporation","Filtration","Magnet","Handpicking"],
 a:"Evaporation"
 },
 {
-q:"Grain + Husk",
-case:"Grains mixed with lighter husk.",
-o:["Winnowing","Filtration","Evaporation","Magnet"],
-a:"Winnowing"
+q:"Iron + Sand",
+case:"Iron particles mixed with sand.",
+o:["Magnetic separation","Filtration","Evaporation","Sieving"],
+a:"Magnetic separation"
 },
 {
-q:"Pebbles + Sand",
-case:"Large stones mixed with sand.",
-o:["Sieving","Evaporation","Magnet","Decantation"],
-a:"Sieving"
+q:"Rice + Stones",
+case:"Grains mixed with stones.",
+o:["Handpicking","Evaporation","Magnet","Filtration"],
+a:"Handpicking"
+},
+{
+q:"Oil + Water",
+case:"Two layers visible.",
+o:["Decantation","Filtration","Sieving","Handpicking"],
+a:"Decantation"
 }
 
 ];
