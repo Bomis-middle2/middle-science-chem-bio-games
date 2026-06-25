@@ -7,19 +7,15 @@
 
 <style>
 
-/* ================= GLOBAL ================= */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+/* ================= BASE ================= */
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Segoe UI,sans-serif;
 
-/* FIXED BACKGROUND (NOT OVER-FADED) */
+/* softer hospital feel */
 background:
-linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.75)),
+linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.80)),
 url("assets/clinic-bg.png");
 
 background-size:cover;
@@ -36,22 +32,17 @@ background:white;
 display:flex;
 align-items:center;
 justify-content:center;
-z-index:9999;
+z-index:99999;
 }
 
-#splash img{
-width:220px;
-}
-
-/* ================= SCREEN CENTER FIX ================= */
+/* ================= SCREENS ================= */
 .screen{
 display:none;
 min-height:100vh;
-display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-padding:15px;
+padding:20px;
 }
 
 /* ================= CARD ================= */
@@ -59,10 +50,9 @@ padding:15px;
 background:white;
 max-width:900px;
 width:95%;
-margin:auto;
-padding:18px;
+padding:20px;
 border-radius:18px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
@@ -78,14 +68,13 @@ width:100%;
 
 .start{background:#2e7d32;color:white;}
 
-/* ================= GAME WRAPPER ================= */
+/* ================= GAME LAYOUT ================= */
 .game-wrapper{
 display:grid;
 grid-template-columns:1fr;
 gap:15px;
-max-width:1100px;
 width:95%;
-margin:auto;
+max-width:1100px;
 }
 
 /* ================= HUD ================= */
@@ -99,10 +88,9 @@ background:rgba(255,255,255,0.9);
 padding:10px;
 border-radius:12px;
 margin-bottom:10px;
-width:95%;
 }
 
-/* ================= CASE ================= */
+/* ================= CASE PANEL ================= */
 .case-panel{
 background:white;
 padding:15px;
@@ -119,7 +107,14 @@ margin-bottom:10px;
 font-weight:bold;
 }
 
-/* ================= OPTIONS ================= */
+/* ================= QUESTION PANEL ================= */
+.q-panel{
+background:white;
+padding:15px;
+border-radius:16px;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+}
+
 .option{
 margin:8px 0;
 padding:12px;
@@ -128,12 +123,7 @@ border-radius:10px;
 cursor:pointer;
 }
 
-/* ================= FEEDBACK ================= */
-.correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
-.wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
-.hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
-
-/* ================= DESKTOP FIX ================= */
+/* ================= DESKTOP ================= */
 @media(min-width:900px){
 .game-wrapper{
 grid-template-columns:1fr 1fr;
@@ -145,22 +135,42 @@ grid-template-columns:1fr 1fr;
 
 <body>
 
-<!-- SPLASH -->
+<!-- ================= SPLASH (3 sec Innovine) ================= -->
 <div id="splash">
-<img src="assets/innovine-logo.png">
+<img src="assets/innovine-logo.png" style="width:220px;">
 </div>
 
-<!-- INTRO -->
+<!-- ================= INTRO SCREEN ================= -->
 <div class="screen" id="intro">
+
 <div class="card">
-<img src="assets/innovine-logo.png" style="width:140px;">
-<h2>🏥 Nutrient Detective</h2>
-<p>Diagnose patients using symptoms</p>
-<button class="start" onclick="startGame()">START</button>
-</div>
+
+<img src="assets/innovine-logo.png" style="width:120px;margin-bottom:10px;">
+
+<h2>🏥 Nutrient Detective Mission</h2>
+
+<p style="margin:10px 0;">
+You are a junior doctor in a hospital.<br><br>
+
+🧠 <b>Task:</b> Identify the deficient nutrient based on patient symptoms.<br>
+💡 Use clues from the case file to diagnose correctly.
+</p>
+
+<div style="text-align:left;margin:15px 0;">
+✔ Read symptoms carefully<br>
+✔ Choose correct nutrient<br>
+✔ Gain points for correct diagnosis<br>
 </div>
 
-<!-- GAME -->
+<button class="start" onclick="startGame()">
+START MISSION
+</button>
+
+</div>
+
+</div>
+
+<!-- ================= GAME ================= -->
 <div class="screen" id="game">
 
 <div class="hud">
@@ -171,12 +181,14 @@ grid-template-columns:1fr 1fr;
 
 <div class="game-wrapper">
 
+<!-- CASE -->
 <div class="case-panel">
 <div class="case-title">🏥 CASE FILE</div>
 <div id="caseText"></div>
 </div>
 
-<div class="card">
+<!-- QUESTION -->
+<div class="q-panel">
 <h3 id="question"></h3>
 <div id="options"></div>
 <div id="feedback"></div>
@@ -185,10 +197,10 @@ grid-template-columns:1fr 1fr;
 </div>
 </div>
 
-<!-- RESULT -->
+<!-- ================= RESULT ================= -->
 <div class="screen" id="result">
 <div class="card">
-<h2>🏁 Completed</h2>
+<h2>🏁 Mission Completed</h2>
 <p>Final Score: <span id="final"></span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
@@ -196,15 +208,7 @@ grid-template-columns:1fr 1fr;
 
 <script>
 
-/* ================= SPLASH FIX ================= */
-window.onload=function(){
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
-}
-
-/* ================= GAME DATA ================= */
+/* ================= DATA ================= */
 let score=0;
 let life=2;
 let qIndex=0;
@@ -216,24 +220,29 @@ const data=[
 q:"Night blindness detected",
 case:"Patient cannot see in dim light.",
 o:["Vitamin A","Vitamin C","Iron","Calcium"],
-a:"Vitamin A",
-hint:"Think eyes 👁️"
+a:"Vitamin A"
 },
 {
 q:"Bleeding gums",
 case:"Gums are bleeding.",
 o:["Vitamin C","Vitamin A","Iron","Calcium"],
-a:"Vitamin C",
-hint:"Think healing 🩹"
+a:"Vitamin C"
 },
 {
-q:"Pale skin",
-case:"Weak patient.",
+q:"Pale skin and fatigue",
+case:"Patient looks weak and tired.",
 o:["Iron","Calcium","Vitamin A","Iodine"],
-a:"Iron",
-hint:"Think blood ❤️"
+a:"Iron"
 }
 ];
+
+/* ================= SPLASH TIMER ================= */
+window.onload=function(){
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+}
 
 /* ================= START ================= */
 function startGame(){
@@ -280,7 +289,7 @@ if(ans===q.a){
 score+=10;
 lock=true;
 
-document.getElementById("feedback").innerHTML="✅ Correct!";
+document.getElementById("feedback").innerHTML="✅ Correct Diagnosis!";
 
 setTimeout(()=>{
 qIndex++;
@@ -294,17 +303,17 @@ life--;
 updateHUD();
 
 if(attempt===1){
-document.getElementById("feedback").innerHTML="💡 Hint: "+q.hint;
+document.getElementById("feedback").innerHTML="💡 Try Again!";
 attempt=2;
 lock=false;
 }else{
-document.getElementById("feedback").innerHTML="❌ Answer: "+q.a;
+document.getElementById("feedback").innerHTML="❌ Correct Answer: "+q.a;
 lock=true;
 
 setTimeout(()=>{
 qIndex++;
 loadQ();
-},1000);
+},1200);
 }
 
 if(life<0) end();
