@@ -6,14 +6,28 @@
 <title>Nutrient Detective</title>
 
 <style>
-body{
+
+/* ================= GLOBAL RESET ================= */
+*{
 margin:0;
-font-family:Segoe UI,sans-serif;
-background:url("assets/clinic-bg.png") center/cover fixed;
-overflow-x:hidden;
+padding:0;
+box-sizing:border-box;
 }
 
-/* SPLASH */
+body{
+font-family:Segoe UI,sans-serif;
+
+/* FADED BACKGROUND RULE */
+background:
+linear-gradient(rgba(255,255,255,0.88),rgba(255,255,255,0.92)),
+url("assets/clinic-bg.png");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+
+/* ================= SPLASH ================= */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -22,37 +36,43 @@ background:white;
 display:flex;
 align-items:center;
 justify-content:center;
-z-index:999;
-}
-#splash img{
-width:250px;
+z-index:9999;
 }
 
-/* SCREEN */
+#splash img{
+width:220px;
+animation:fade 1s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:scale(0.7);}
+to{opacity:1;transform:scale(1);}
+}
+
+/* ================= SCREENS ================= */
 .screen{
 display:none;
-padding:20px;
+padding:15px;
 text-align:center;
 }
 
-/* CARD */
 .card{
-background:rgba(255,255,255,0.95);
+background:rgba(255,255,255,0.96);
 max-width:900px;
 margin:auto;
-padding:20px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+padding:18px;
+border-radius:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
 }
 
-/* BUTTON */
+/* ================= BUTTONS ================= */
 button{
-padding:15px 25px;
-margin:10px;
+padding:14px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 font-size:16px;
 cursor:pointer;
+width:100%;
 }
 
 .start{
@@ -60,32 +80,37 @@ background:#2e7d32;
 color:white;
 }
 
-/* HUD */
+/* ================= HUD ================= */
 .hud{
 display:flex;
-justify-content:space-around;
-margin-bottom:15px;
+justify-content:space-between;
+flex-wrap:wrap;
 font-weight:bold;
-}
-
-/* OPTIONS */
-.option{
-display:block;
-width:100%;
-padding:15px;
-margin:10px 0;
-border-radius:12px;
-background:#e3f2fd;
-}
-
-/* FEEDBACK */
-.correct{background:#c8e6c9;}
-.wrong{background:#ffcdd2;}
-
-img.logo{
-width:160px;
 margin-bottom:10px;
+font-size:14px;
 }
+
+/* ================= OPTIONS ================= */
+.option{
+margin:8px 0;
+padding:12px;
+background:#e3f2fd;
+border-radius:10px;
+font-size:15px;
+}
+
+/* ================= FEEDBACK ================= */
+.correct{background:#c8e6c9;padding:10px;border-radius:10px;}
+.wrong{background:#ffcdd2;padding:10px;border-radius:10px;}
+.hint{background:#fff3cd;padding:10px;border-radius:10px;}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+.card{margin:10px;}
+.hud{font-size:13px;}
+button{font-size:15px;}
+}
+
 </style>
 </head>
 
@@ -96,18 +121,19 @@ margin-bottom:10px;
 <img src="assets/innovine-logo.png">
 </div>
 
-<!-- INSTRUCTION -->
+<!-- INTRO -->
 <div class="screen" id="intro">
 <div class="card">
-<img class="logo" src="assets/innovine-logo.png">
+<img src="assets/innovine-logo.png" style="width:140px;">
 <h2>🧪 Nutrient Detective</h2>
-<p>Find the missing nutrients from symptoms and food clues!</p>
-<button class="start" onclick="startGame()">Start</button>
+<p>Diagnose nutrient deficiencies using symptoms & food clues.</p>
+<button class="start" onclick="startGame()">START</button>
 </div>
 </div>
 
 <!-- GAME -->
 <div class="screen" id="game">
+
 <div class="hud">
 <div>⭐ Score: <span id="score">0</span></div>
 <div>❤️ Lives: <span id="life">2</span></div>
@@ -119,112 +145,166 @@ margin-bottom:10px;
 <div id="options"></div>
 <div id="feedback"></div>
 </div>
+
 </div>
 
 <!-- RESULT -->
 <div class="screen" id="result">
 <div class="card">
-<h2>🏁 Game Over</h2>
+<h2>🏁 Completed!</h2>
 <p>Final Score: <span id="final"></span></p>
-<button onclick="location.reload()">Play Again</button>
+<button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 </div>
 
+<!-- AUDIO -->
 <audio id="correctSound" src="assets/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/wrong.mp3"></audio>
 <audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
+/* ================= SPLASH 3s ================= */
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
 document.getElementById("intro").style.display="block";
-},1500);
+},3000);
 
+/* ================= START ================= */
 function startGame(){
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="block";
 loadQ();
 }
 
+/* ================= STATE ================= */
 let score=0;
 let life=2;
-let q=0;
+let qIndex=0;
+let attempt=1;
+let lock=false;
 
+/* ================= QUESTIONS ================= */
 const data=[
 {
 q:"A child cannot see in dim light. Which nutrient is missing?",
 o:["Vitamin A","Vitamin C","Iron","Calcium"],
-a:"Vitamin A"
+a:"Vitamin A",
+hint:"Think about vision 👁️"
 },
 {
 q:"Bleeding gums and slow healing?",
 o:["Vitamin C","Vitamin A","Iron","Calcium"],
-a:"Vitamin C"
+a:"Vitamin C",
+hint:"Think about wounds 🩹"
 },
 {
 q:"Pale skin and tiredness?",
 o:["Iron","Calcium","Vitamin A","Iodine"],
-a:"Iron"
+a:"Iron",
+hint:"Think about blood ❤️"
 },
 {
 q:"Swollen thyroid gland?",
 o:["Iodine","Iron","Vitamin C","Calcium"],
-a:"Iodine"
+a:"Iodine",
+hint:"Think neck gland 🧠"
 },
 {
 q:"Weak bones and teeth decay?",
 o:["Calcium","Iron","Vitamin A","Vitamin C"],
-a:"Calcium"
+a:"Calcium",
+hint:"Think bones 🦴"
 }
 ];
 
+/* ================= LOAD ================= */
 function loadQ(){
-if(q>=data.length){
+
+if(qIndex>=data.length){
 end();
 return;
 }
 
-document.getElementById("qno").innerText=q+1;
-document.getElementById("question").innerText=data[q].q;
+attempt=1;
+lock=false;
 
-let opt="";
-data[q].o.forEach(op=>{
-opt+=`<button class="option" onclick="check('${op}')">${op}</button>`;
+document.getElementById("qno").innerText=qIndex+1;
+document.getElementById("question").innerText=data[qIndex].q;
+
+let html="";
+data[qIndex].o.forEach(opt=>{
+html+=`<div class="option" onclick="check('${opt}')">${opt}</div>`;
 });
 
-document.getElementById("options").innerHTML=opt;
+document.getElementById("options").innerHTML=html;
 document.getElementById("feedback").innerHTML="";
 }
 
+/* ================= CHECK ================= */
 function check(ans){
-let d=data[q];
 
-if(ans===d.a){
+if(lock) return;
+
+let q=data[qIndex];
+
+if(ans===q.a){
+
 document.getElementById("correctSound").play();
+
 score+=10;
 document.getElementById("feedback").innerHTML="✅ Correct!";
 document.getElementById("feedback").className="correct";
-setTimeout(()=>{q++;loadQ();},1000);
-}
-else{
+
+lock=true;
+
+setTimeout(()=>{
+qIndex++;
+updateHUD();
+loadQ();
+},1000);
+
+}else{
+
 document.getElementById("wrongSound").play();
 life--;
-document.getElementById("feedback").innerHTML="❌ Try again!";
+updateHUD();
+
+if(attempt===1){
+
+document.getElementById("feedback").innerHTML="💡 Hint: "+q.hint;
+document.getElementById("feedback").className="hint";
+attempt=2;
+lock=false;
+
+}else{
+
+document.getElementById("feedback").innerHTML="❌ Answer: "+q.a;
 document.getElementById("feedback").className="wrong";
+
+lock=true;
+
+setTimeout(()=>{
+qIndex++;
+loadQ();
+},1500);
+
+}
 
 if(life<0){
 end();
 }
+
 }
-updateHUD();
 }
 
+/* ================= HUD ================= */
 function updateHUD(){
 document.getElementById("score").innerText=score;
 document.getElementById("life").innerText=life;
 }
 
+/* ================= END ================= */
 function end(){
 document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="block";
