@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Detective Image Game</title>
+<title>Life Detective Fixed Engine</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -13,7 +13,20 @@ font-family:Segoe UI;
 background:#eaf6ff;
 }
 
-/* 🔵 SPLASH */
+.screen{
+display:none;
+height:100vh;
+width:100%;
+}
+
+.active{
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+}
+
+/* SPLASH */
 #splash{
 position:fixed;
 inset:0;
@@ -24,22 +37,8 @@ justify-content:center;
 z-index:9999;
 }
 
-/* 🟡 SCREEN SYSTEM */
-.screen{
-display:none;
-height:100vh;
-width:100%;
-}
-
-/* ACTIVE SCREEN */
-.active{
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-/* 🧠 INTRO */
-#intro .box{
+/* INTRO */
+.box{
 background:white;
 padding:20px;
 border-radius:16px;
@@ -49,42 +48,36 @@ text-align:center;
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* 🌿 GAME LAYOUT */
-.game-container{
+/* GAME LAYOUT */
+.container{
 display:flex;
 width:95%;
 max-width:1100px;
 gap:15px;
 }
 
-/* 🖼 IMAGE PANEL */
-.image-box{
+/* IMAGE */
+.image{
 flex:1;
 background:white;
 border-radius:16px;
 overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
-.image-box img{
+.image img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* ❓ QUESTION PANEL */
+/* QUESTION */
 .qbox{
 flex:1;
 background:white;
 border-radius:16px;
 padding:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
-display:flex;
-flex-direction:column;
-justify-content:center;
 }
 
-/* WORD BANK */
 .wordbank{
 display:flex;
 flex-wrap:wrap;
@@ -97,18 +90,14 @@ margin-bottom:10px;
 background:#d6ecff;
 padding:6px 10px;
 border-radius:8px;
-font-size:14px;
 }
 
-/* INPUT */
 input{
 width:100%;
 padding:12px;
-margin-top:10px;
+text-align:center;
 border-radius:10px;
 border:1px solid #ccc;
-text-align:center;
-font-size:16px;
 }
 
 button{
@@ -120,14 +109,10 @@ border-radius:10px;
 background:#2e7d32;
 color:white;
 font-size:16px;
-cursor:pointer;
 }
 
-/* MOBILE */
 @media(max-width:900px){
-.game-container{
-flex-direction:column;
-}
+.container{flex-direction:column;}
 }
 
 </style>
@@ -135,32 +120,30 @@ flex-direction:column;
 
 <body>
 
-<!-- 🔵 SPLASH -->
+<!-- SPLASH -->
 <div id="splash">
 <img src="assets/innovine-logo.png" style="width:220px;">
 </div>
 
-<!-- 🟡 INTRO -->
+<!-- INTRO -->
 <div id="intro" class="screen active">
 <div class="box">
 <img src="assets/innovine-logo.png" style="width:120px;">
 <h2>🧬 Life Detective</h2>
-<p>Observe the image and identify characteristics of living things.</p>
+<p>Observe, Listen and Answer</p>
 <button onclick="startGame()">START</button>
 </div>
 </div>
 
-<!-- 🌿 GAME -->
+<!-- GAME -->
 <div id="game" class="screen">
 
-<div class="game-container">
+<div class="container">
 
-<!-- IMAGE -->
-<div class="image-box">
-<img id="sceneImg" src="">
+<div class="image">
+<img id="sceneImg">
 </div>
 
-<!-- QUESTION -->
 <div class="qbox">
 
 <div class="wordbank">
@@ -173,11 +156,11 @@ flex-direction:column;
 <div>excretion</div>
 </div>
 
-<h3 id="questionText"></h3>
+<h3 id="question"></h3>
 
-<input id="answer" placeholder="Type your answer">
+<input id="answer">
 
-<button onclick="checkAnswer()">SUBMIT</button>
+<button onclick="check()">SUBMIT</button>
 
 <p id="feedback"></p>
 
@@ -187,30 +170,47 @@ flex-direction:column;
 
 </div>
 
+<!-- END -->
+<div id="end" class="screen">
+<div class="box">
+<h2>🎉 Congratulations!</h2>
+<p>Your Score: <span id="score"></span></p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+</div>
+
+<!-- AUDIO -->
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+
 <script>
 
-/* 🧠 DATA (IMAGE + QUESTION) */
+let index=0;
+let score=0;
+
+/* QUESTIONS */
 const data=[
 {
 img:"assets/living-story-background.png",
-q:"You saw that the boy was running in the playground. Type the correct living characteristic.",
+story:"A boy is running in the playground.",
+q:"You saw the boy running. Type the characteristic.",
 a:"locomotion"
 },
 {
 img:"assets/living-story-background.png",
-q:"Plants are growing taller every day. Type the correct characteristic.",
+story:"Plants are growing every day.",
+q:"Plants are growing. Type the characteristic.",
 a:"growth"
 },
 {
 img:"assets/living-story-background.png",
-q:"A Mimosa plant closes its leaves when touched. Type the correct characteristic.",
+story:"Mimosa plant reacts when touched.",
+q:"Plant responds to touch. Type the characteristic.",
 a:"sensitivity"
 }
 ];
 
-let index=0;
-
-/* 🔵 SPLASH */
+/* SPLASH */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
@@ -218,36 +218,46 @@ document.getElementById("intro").classList.add("active");
 },3000);
 }
 
-/* 🚀 START */
+/* START */
 function startGame(){
-showGame();
-loadQ();
-}
-
-/* 🧩 SHOW GAME */
-function showGame(){
 document.getElementById("intro").classList.remove("active");
 document.getElementById("game").classList.add("active");
+load();
 }
 
-/* 🖼 LOAD QUESTION */
-function loadQ(){
+/* LOAD */
+function load(){
 
 document.getElementById("sceneImg").src=data[index].img;
-document.getElementById("questionText").innerText=data[index].q;
+document.getElementById("question").innerText=data[index].q;
 document.getElementById("answer").value="";
 document.getElementById("feedback").innerText="";
+
+/* FIX: STORY + VOICE ALWAYS RUNS */
+let speech=new SpeechSynthesisUtterance(data[index].story);
+speech.rate=0.9;
+
+speech.onend=function(){
+console.log("story finished");
+};
+
+speechSynthesis.cancel();
+speechSynthesis.speak(speech);
+
 }
 
-/* ✔ CHECK */
-function checkAnswer(){
+/* CHECK */
+function check(){
 
 let user=document.getElementById("answer").value.toLowerCase().trim();
 let correct=data[index].a;
 
 if(user===correct){
+document.getElementById("correctSound").play();
+score+=10;
 document.getElementById("feedback").innerText="✅ Correct!";
 }else{
+document.getElementById("wrongSound").play();
 document.getElementById("feedback").innerText="❌ Try again!";
 return;
 }
@@ -256,13 +266,19 @@ setTimeout(()=>{
 index++;
 
 if(index>=data.length){
-alert("Game Completed!");
-location.reload();
+endGame();
 }else{
-loadQ();
+load();
 }
-},1000);
+},1200);
 
+}
+
+/* END */
+function endGame(){
+document.getElementById("game").classList.remove("active");
+document.getElementById("end").classList.add("active");
+document.getElementById("score").innerText=score;
 }
 
 </script>
