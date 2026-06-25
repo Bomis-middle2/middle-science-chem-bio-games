@@ -18,7 +18,7 @@ background-position:center;
 background-attachment:fixed;
 }
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -32,7 +32,7 @@ z-index:99999;
 
 #splash img{width:220px;}
 
-/* ================= SCREENS ================= */
+/* SCREENS */
 .screen{
 display:none;
 min-height:100vh;
@@ -42,7 +42,7 @@ flex-direction:column;
 padding:20px;
 }
 
-/* ================= CARD ================= */
+/* CARD */
 .card{
 background:white;
 max-width:900px;
@@ -53,7 +53,7 @@ box-shadow:0 10px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-/* ================= BUTTON ================= */
+/* BUTTON */
 button{
 padding:14px;
 border:none;
@@ -65,7 +65,7 @@ width:100%;
 
 .start{background:#2e7d32;color:white;}
 
-/* ================= GAME LAYOUT ================= */
+/* GAME */
 .game-wrapper{
 display:grid;
 grid-template-columns:1fr;
@@ -74,7 +74,7 @@ width:95%;
 max-width:1100px;
 }
 
-/* ================= HUD ================= */
+/* HUD */
 .hud{
 display:flex;
 justify-content:space-between;
@@ -87,7 +87,7 @@ border-radius:12px;
 margin-bottom:10px;
 }
 
-/* ================= CASE ================= */
+/* CASE */
 .case-panel{
 background:white;
 padding:15px;
@@ -104,19 +104,16 @@ margin-bottom:10px;
 font-weight:bold;
 }
 
-/* ================= OPTIONS ================= */
+/* OPTIONS */
 .option{
 margin:8px 0;
 padding:12px;
 background:#e3f2fd;
 border-radius:10px;
 cursor:pointer;
-transition:0.2s;
 }
 
-.option:hover{transform:scale(1.02);}
-
-/* ================= DESKTOP ================= */
+/* DESKTOP */
 @media(min-width:900px){
 .game-wrapper{grid-template-columns:1fr 1fr;}
 }
@@ -125,43 +122,22 @@ transition:0.2s;
 
 <body>
 
-<!-- ================= SPLASH ================= -->
+<!-- SPLASH -->
 <div id="splash">
 <img src="assets/innovine-logo.png">
 </div>
 
-<!-- ================= INTRO SCREEN (FIXED) ================= -->
+<!-- INTRO -->
 <div class="screen" id="intro">
-
 <div class="card">
-
-<img src="assets/innovine-logo.png" style="width:120px;margin-bottom:10px;">
-
+<img src="assets/innovine-logo.png" style="width:120px;">
 <h2>🧪 Lab Separation Mission</h2>
-
-<p style="margin:10px 0;">
-Welcome Junior Scientist!
-</p>
-
-<p style="text-align:left;margin:10px 0;">
-🎯 Your Mission:<br><br>
-
-You are working in a science lab where different mixtures are mixed by mistake.<br><br>
-
-✔ Identify correct separation method<br>
-✔ Save the materials<br>
-✔ Complete all lab cases successfully
-</p>
-
-<button class="start" onclick="startGame()">
-START MISSION
-</button>
-
+<p>You are a Junior Scientist. Identify correct separation methods.</p>
+<button class="start" onclick="startGame()">START MISSION</button>
+</div>
 </div>
 
-</div>
-
-<!-- ================= GAME ================= -->
+<!-- GAME -->
 <div class="screen" id="game">
 
 <div class="hud">
@@ -184,66 +160,47 @@ START MISSION
 </div>
 
 </div>
-
 </div>
 
-<!-- ================= RESULT ================= -->
+<!-- RESULT -->
 <div class="screen" id="result">
-
 <div class="card">
 <h2>🏁 Mission Completed</h2>
 <p>Final Score: <span id="final"></span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
-
 </div>
+
+<!-- AUDIO -->
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
-/* ================= STATE ================= */
 let score=0;
 let life=2;
 let qIndex=0;
 let attempt=1;
 let lock=false;
 
-/* ================= QUESTIONS ================= */
+/* QUESTIONS */
 const data=[
-
-{
-q:"Sand + Water mixture",
-case:"Beaker contains sand and water.",
-o:["Filtration","Evaporation","Magnet","Sieving"],
-a:"Filtration"
-},
-{
-q:"Salt dissolved in water",
-case:"Salt is fully mixed in water.",
-o:["Evaporation","Filtration","Magnet","Handpicking"],
-a:"Evaporation"
-},
-{
-q:"Iron + Sand",
-case:"Iron particles mixed with sand.",
-o:["Magnetic separation","Filtration","Evaporation","Sieving"],
-a:"Magnetic separation"
-},
-{
-q:"Rice + Stones",
-case:"Grains mixed with stones.",
-o:["Handpicking","Evaporation","Magnet","Filtration"],
-a:"Handpicking"
-},
-{
-q:"Oil + Water",
-case:"Two layers visible.",
-o:["Decantation","Filtration","Sieving","Handpicking"],
-a:"Decantation"
-}
-
+{q:"Sand + Water",case:"Beaker contains sand and water.",o:["Filtration","Evaporation","Magnet","Sieving"],a:"Filtration"},
+{q:"Salt water",case:"Salt dissolved in water.",o:["Evaporation","Filtration","Magnet","Handpicking"],a:"Evaporation"},
+{q:"Iron + Sand",case:"Iron mixed with sand.",o:["Magnetic separation","Filtration","Evaporation","Sieving"],a:"Magnetic separation"},
+{q:"Rice + Stones",case:"Mixed grains and stones.",o:["Handpicking","Evaporation","Magnet","Filtration"],a:"Handpicking"},
+{q:"Oil + Water",case:"Two layers visible.",o:["Decantation","Filtration","Sieving","Handpicking"],a:"Decantation"}
 ];
 
-/* ================= SPLASH ================= */
+/* AUDIO FIX */
+function unlockAudio(){
+document.getElementById("correctSound").play().catch(()=>{});
+document.getElementById("wrongSound").play().catch(()=>{});
+document.getElementById("clapSound").play().catch(()=>{});
+}
+
+/* SPLASH */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
@@ -251,14 +208,15 @@ document.getElementById("intro").style.display="flex";
 },3000);
 }
 
-/* ================= START ================= */
+/* START */
 function startGame(){
+unlockAudio(); // FIX SOUND BLOCK
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="flex";
 loadQ();
 }
 
-/* ================= LOAD ================= */
+/* LOAD */
 function loadQ(){
 
 if(qIndex>=data.length){
@@ -284,7 +242,7 @@ document.getElementById("options").innerHTML=html;
 document.getElementById("feedback").innerHTML="";
 }
 
-/* ================= CHECK ================= */
+/* CHECK */
 function check(ans){
 
 if(lock) return;
@@ -293,6 +251,7 @@ let q=data[qIndex];
 
 if(ans===q.a){
 
+document.getElementById("correctSound").play().catch(()=>{});
 score+=10;
 lock=true;
 
@@ -300,14 +259,13 @@ document.getElementById("feedback").innerHTML="✅ Correct!";
 
 setTimeout(()=>{
 qIndex++;
-updateHUD();
 loadQ();
 },900);
 
 }else{
 
+document.getElementById("wrongSound").play().catch(()=>{});
 life--;
-updateHUD();
 
 if(attempt===1){
 document.getElementById("feedback").innerHTML="💡 Try Again!";
@@ -327,18 +285,12 @@ if(life<0) end();
 }
 }
 
-/* ================= HUD ================= */
-function updateHUD(){
-document.getElementById("score").innerText=score;
-document.getElementById("life").innerText=life;
-document.getElementById("qno").innerText=qIndex+1;
-}
-
-/* ================= END ================= */
+/* END */
 function end(){
 document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
 document.getElementById("final").innerText=score;
+document.getElementById("clapSound").play().catch(()=>{});
 }
 
 </script>
