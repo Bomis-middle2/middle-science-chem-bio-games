@@ -3,39 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Detective</title>
+<title>Life Detective Pro</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:Segoe UI,sans-serif;
+font-family:Segoe UI;
 background:#eaf6ff;
 }
 
-/* ================= SPLASH ================= */
-#splash{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:99999;
-}
-
-/* ================= SCREENS ================= */
+/* FULL SCREEN CENTER */
 .screen{
 display:none;
-min-height:100vh;
+height:100vh;
 align-items:center;
 justify-content:center;
 flex-direction:column;
 padding:20px;
 }
 
-/* ================= CARD ================= */
+/* CARD */
 .card{
 background:white;
 width:95%;
@@ -46,19 +34,28 @@ box-shadow:0 10px 25px rgba(0,0,0,0.15);
 text-align:center;
 }
 
-/* ================= BUTTON ================= */
+/* BUTTON */
 button{
 padding:14px;
 border:none;
 border-radius:10px;
-font-size:16px;
-cursor:pointer;
 width:100%;
+cursor:pointer;
+font-size:16px;
 }
 
 .start{background:#2e7d32;color:white;}
 
-/* ================= WORD BANK ================= */
+/* STORY */
+#storyBox{
+background:white;
+padding:20px;
+border-radius:12px;
+max-width:900px;
+line-height:1.6;
+}
+
+/* WORD BANK */
 .wordbank{
 display:flex;
 flex-wrap:wrap;
@@ -67,38 +64,21 @@ justify-content:center;
 margin-bottom:10px;
 }
 
-.word{
+.wordbank div{
 background:#d6ecff;
-padding:8px 12px;
+padding:6px 10px;
 border-radius:8px;
-font-weight:bold;
 }
 
-/* ================= INPUT ================= */
+/* INPUT */
 input{
 width:100%;
 padding:12px;
-font-size:16px;
-text-align:center;
 margin-top:10px;
+font-size:16px;
 border-radius:10px;
 border:1px solid #ccc;
-}
-
-/* ================= HUD ================= */
-.hud{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
-font-weight:bold;
-}
-
-.story{
-background:#f2f9ff;
-padding:15px;
-border-radius:12px;
-margin-bottom:10px;
-line-height:1.6;
+text-align:center;
 }
 
 </style>
@@ -106,53 +86,53 @@ line-height:1.6;
 
 <body>
 
-<!-- 🔵 SPLASH -->
-<div id="splash">
+<!-- 🟡 1. SPLASH -->
+<div class="screen" id="splash">
 <img src="assets/innovine-logo.png" style="width:220px;">
 </div>
 
-<!-- 🟡 INTRO -->
+<!-- 🟢 2. INTRO -->
 <div class="screen" id="intro">
 <div class="card">
+
 <img src="assets/innovine-logo.png" style="width:120px;">
+
 <h2>🧬 Life Detective</h2>
 
 <p style="text-align:left;margin:10px 0;">
-✔ Read the story carefully<br>
-✔ Observe living things<br>
-✔ Use word bank to answer<br>
-✔ Type correct characteristic
+✔ Watch story carefully<br>
+✔ Listen to narration<br>
+✔ Identify living characteristics<br>
+✔ Type answer from word bank
 </p>
 
 <button class="start" onclick="startGame()">START MISSION</button>
+
 </div>
 </div>
 
-<!-- 🟢 GAME -->
-<div class="screen" id="game">
+<!-- 🌿 3. STORY -->
+<div class="screen" id="storyScreen">
+<div id="storyBox"></div>
+</div>
 
+<!-- ❓ 4. QUESTION -->
+<div class="screen" id="questionScreen">
 <div class="card">
 
-<div class="hud">
-<div>⭐ Score: <span id="score">0</span></div>
-<div>❤️ Lives: <span id="life">2</span></div>
-</div>
-
-<div id="story" class="story"></div>
-
 <div class="wordbank">
-<div class="word">locomotion</div>
-<div class="word">growth</div>
-<div class="word">respiration</div>
-<div class="word">reproduction</div>
-<div class="word">sensitivity</div>
-<div class="word">nutrition</div>
-<div class="word">excretion</div>
+<div>locomotion</div>
+<div>growth</div>
+<div>respiration</div>
+<div>reproduction</div>
+<div>sensitivity</div>
+<div>nutrition</div>
+<div>excretion</div>
 </div>
 
-<h3 id="question"></h3>
+<h3 id="questionText"></h3>
 
-<input id="answer" placeholder="Type your answer here...">
+<input id="answer" placeholder="Type your answer here">
 
 <button onclick="checkAnswer()">SUBMIT</button>
 
@@ -161,99 +141,88 @@ line-height:1.6;
 </div>
 </div>
 
-<!-- 🏁 RESULT -->
+<!-- 🏁 5. RESULT -->
 <div class="screen" id="result">
 <div class="card">
-<h2>🏁 Mission Completed</h2>
-<p>Final Score: <span id="final"></span></p>
+<h2>🏁 Mission Complete</h2>
+<p>Score: <span id="score">0</span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 </div>
 
-<!-- 🔊 AUDIO -->
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-
 <script>
 
-/* ================= DATA ================= */
-let score=0;
-let life=2;
 let index=0;
+let score=0;
 
-const stories=[
+/* STORY DATA */
+const data=[
 {
-text:`A bright morning sun lights up the school playground where children are happily playing. Some boys are running while birds are chirping in the trees. Plants are growing taller every day. A Mimosa plant closes its leaves when touched.`,
-answer:"locomotion"
+story:`A bright sun shines over a playground. Children are running. Birds are chirping. Plants are growing taller. A Mimosa plant closes when touched.`,
+question:`You saw that the boy was running in the playground. Type the correct living characteristic.`,
+answer:`locomotion`
 }
 ];
 
-/* ================= SPLASH ================= */
+/* SPLASH */
 window.onload=function(){
 setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
+show("intro");
 },3000);
 }
 
-/* ================= START ================= */
+/* SCREEN CONTROL */
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="flex";
+}
+
+/* START */
 function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="flex";
-loadStory();
-}
+show("storyScreen");
 
-/* ================= STORY ================= */
-function loadStory(){
+let s=data[index].story;
 
-let s=stories[index];
+/* SHOW STORY */
+document.getElementById("storyBox").innerText=s;
 
-document.getElementById("story").innerText=s.text;
-document.getElementById("question").innerText=
-"You saw that the boy was running in the playground. Type in the correct living characteristic from the word bank.";
-
-speechSynthesis.cancel();
-
-let speech=new SpeechSynthesisUtterance(s.text);
+/* AUTO SPEECH (FEMALE VOICE DEFAULT BROWSER) */
+let speech=new SpeechSynthesisUtterance(s);
 speech.rate=0.9;
+speech.pitch=1;
 speechSynthesis.speak(speech);
+
+/* MOVE TO QUESTION AFTER 6 SEC */
+setTimeout(()=>{
+show("questionScreen");
+document.getElementById("questionText").innerText=data[index].question;
+},6000);
 }
 
-/* ================= CHECK ================= */
+/* CHECK ANSWER */
 function checkAnswer(){
 
 let user=document.getElementById("answer").value.toLowerCase().trim();
-let correct=stories[index].answer;
+let correct=data[index].answer;
 
 if(user===correct){
-document.getElementById("correctSound").play().catch(()=>{});
 score+=10;
 document.getElementById("feedback").innerText="✅ Correct!";
-}
-else{
-document.getElementById("wrongSound").play().catch(()=>{});
-life--;
-document.getElementById("feedback").innerText="❌ Try Again!";
+}else{
+document.getElementById("feedback").innerText="❌ Try again!";
 }
 
-updateHUD();
+/* NEXT */
+setTimeout(()=>{
+index++;
 
-if(life<0){
-endGame();
-}
-}
-
-/* ================= HUD ================= */
-function updateHUD(){
+if(index>=data.length){
 document.getElementById("score").innerText=score;
-document.getElementById("life").innerText=life;
+show("result");
+}else{
+startGame();
 }
-
-/* ================= END ================= */
-function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("result").style.display="flex";
-document.getElementById("final").innerText=score;
+},1500);
 }
 
 </script>
