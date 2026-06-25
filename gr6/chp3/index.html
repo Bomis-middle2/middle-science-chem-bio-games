@@ -10,10 +10,9 @@
 
 body{
 font-family:Segoe UI;
-background:#eaf6ff;
 }
 
-/* SPLASH */
+/* 🔵 SPLASH */
 #splash{
 position:fixed;
 top:0;left:0;
@@ -25,61 +24,68 @@ justify-content:center;
 z-index:99999;
 }
 
-/* SCREENS */
+/* 🟡 SCREEN BASE */
 .screen{
 display:none;
 height:100vh;
+width:100%;
+}
+
+/* 🧠 INTRO */
+#intro{
+display:flex;
 align-items:center;
 justify-content:center;
-flex-direction:column;
-padding:20px;
+background:#eaf6ff;
 }
 
-/* CARD */
 .card{
 background:white;
-width:95%;
-max-width:900px;
 padding:20px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
+border-radius:16px;
+width:90%;
+max-width:800px;
 text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* BUTTON */
-button{
-padding:14px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-width:100%;
+/* 🌿 STORY SCREEN FIX (IMPORTANT PART) */
+#storyScreen{
+position:relative;
+background:url("assets/living-story-background.png") center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.start{background:#2e7d32;color:white;}
+#storyOverlay{
+background:rgba(255,255,255,0.85);
+padding:20px;
+border-radius:16px;
+width:85%;
+max-width:850px;
+font-size:18px;
+line-height:1.6;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
 
-/* STORY BOX */
-#storyBox{
+/* ❓ QUESTION SCREEN */
+#questionScreen{
+background:#eaf6ff;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.qbox{
 background:white;
 padding:20px;
-border-radius:12px;
-max-width:900px;
-line-height:1.6;
-font-size:18px;
-}
-
-/* INPUT */
-input{
-width:100%;
-padding:12px;
-font-size:16px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ccc;
+border-radius:16px;
+width:90%;
+max-width:850px;
 text-align:center;
 }
 
-/* QUESTION */
 .wordbank{
 display:flex;
 flex-wrap:wrap;
@@ -92,7 +98,28 @@ margin-bottom:10px;
 background:#d6ecff;
 padding:6px 10px;
 border-radius:8px;
-font-size:14px;
+}
+
+input{
+width:100%;
+padding:12px;
+font-size:16px;
+border-radius:10px;
+border:1px solid #ccc;
+margin-top:10px;
+text-align:center;
+}
+
+button{
+margin-top:10px;
+padding:12px;
+width:100%;
+border:none;
+border-radius:10px;
+background:#2e7d32;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 </style>
@@ -108,31 +135,21 @@ font-size:14px;
 <!-- 🟡 INTRO -->
 <div class="screen" id="intro">
 <div class="card">
-
 <img src="assets/innovine-logo.png" style="width:120px;">
-
-<h2>🧬 Life Detective Pro</h2>
-
-<p style="text-align:left;margin:10px 0;">
-✔ Listen to the story carefully<br>
-✔ Observe living things<br>
-✔ Identify characteristics<br>
-✔ Type answers correctly
-</p>
-
-<button class="start" onclick="startGame()">START MISSION</button>
-
+<h2>🧬 Life Detective</h2>
+<p>Learn characteristics of living things through real-life stories</p>
+<button onclick="startGame()">START</button>
 </div>
 </div>
 
 <!-- 🌿 STORY -->
 <div class="screen" id="storyScreen">
-<div id="storyBox"></div>
+<div id="storyOverlay"></div>
 </div>
 
 <!-- ❓ QUESTION -->
 <div class="screen" id="questionScreen">
-<div class="card">
+<div class="qbox">
 
 <div class="wordbank">
 <div>locomotion</div>
@@ -152,113 +169,49 @@ font-size:14px;
 
 <p id="feedback"></p>
 
-<p>⭐ Score: <span id="score">0</span></p>
-
 </div>
 </div>
-
-<!-- 🏁 RESULT -->
-<div class="screen" id="result">
-<div class="card">
-<h2>🏁 Mission Completed</h2>
-<p>Final Score: <span id="final">0</span></p>
-<button onclick="location.reload()">PLAY AGAIN</button>
-</div>
-</div>
-
-<!-- 🔊 AUDIO -->
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
 
 <script>
 
-let index=0;
-let score=0;
-
 /* 🌿 STORY */
-const storyText = `
-A bright morning sun shines over a lively playground. Children are running and playing on the ground. Birds are chirping in the trees. Plants are growing taller every day. Bird eggs have just hatched into chicks. A Mimosa plant closes its leaves when touched.
+const story = `
+A bright morning sun shines over a lively playground. Children are running and playing. Birds are chirping in trees. Plants are growing taller every day. A Mimosa plant closes its leaves when touched.
 `;
 
 /* ❓ QUESTIONS */
-const questions=[
+const questions = [
 {
 q:"You saw that the boy was running in the playground. Type the correct living characteristic:",
 a:"locomotion"
-},
-{
-q:"Plants are growing taller every day. Type the characteristic:",
-a:"growth"
-},
-{
-q:"Birds respond to sounds and movement. Type the characteristic:",
-a:"sensitivity"
-},
-{
-q:"Bird eggs have just hatched into chicks. Type the characteristic:",
-a:"reproduction"
-},
-{
-q:"A child breathes faster after running. Type the characteristic:",
-a:"respiration"
-},
-{
-q:"A child eats food to get energy. Type the characteristic:",
-a:"nutrition"
-},
-{
-q:"The body removes waste through sweat. Type the characteristic:",
-a:"excretion"
 }
 ];
 
-/* 🚀 SPLASH */
-window.onload=function(){
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
-}
+let index=0;
 
 /* 🚀 START */
 function startGame(){
-document.getElementById("intro").style.display="none";
-startStory();
-}
+show("storyScreen");
 
-/* 🌿 STORY + TTS */
-function startStory(){
+let box=document.getElementById("storyOverlay");
+box.innerText=story;
 
-document.getElementById("storyScreen").style.display="flex";
-document.getElementById("storyBox").innerText=storyText;
-
-/* voice */
-let speech=new SpeechSynthesisUtterance(storyText);
+/* AUTO SPEECH */
+let speech=new SpeechSynthesisUtterance(story);
 speech.rate=0.9;
 
-/* when voice ends → move to questions */
+/* AFTER VOICE → MOVE */
 speech.onend=function(){
-showQuestion();
+show("questionScreen");
+loadQ();
 };
 
 speechSynthesis.cancel();
 speechSynthesis.speak(speech);
 }
 
-/* ❓ QUESTION */
-function showQuestion(){
-
-document.getElementById("storyScreen").style.display="none";
-document.getElementById("questionScreen").style.display="flex";
-
-loadQuestion();
-}
-
-function loadQuestion(){
-
-document.getElementById("answer").value="";
-document.getElementById("feedback").innerText="";
-
+/* ❓ LOAD QUESTION */
+function loadQ(){
 document.getElementById("questionText").innerText=
 questions[index].q;
 }
@@ -270,36 +223,16 @@ let user=document.getElementById("answer").value.toLowerCase().trim();
 let correct=questions[index].a;
 
 if(user===correct){
-score+=10;
-document.getElementById("correctSound").play().catch(()=>{});
 document.getElementById("feedback").innerText="✅ Correct!";
 }else{
-document.getElementById("wrongSound").play().catch(()=>{});
 document.getElementById("feedback").innerText="❌ Try again!";
-return;
+}
 }
 
-/* NEXT */
-setTimeout(()=>{
-
-index++;
-
-if(index>=questions.length){
-endGame();
-}else{
-loadQuestion();
-}
-
-document.getElementById("score").innerText=score;
-
-},1200);
-}
-
-/* 🏁 END */
-function endGame(){
-document.getElementById("questionScreen").style.display="none";
-document.getElementById("result").style.display="flex";
-document.getElementById("final").innerText=score;
+/* 🧠 SCREEN SWITCH */
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="flex";
 }
 
 </script>
