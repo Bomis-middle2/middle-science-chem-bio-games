@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plant Adaptation Lab</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Arial;
+background:url("assets/living-story-background.png");
+background-size:cover;
+background-position:center;
+min-height:100vh;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+/* SCREENS */
+.screen{
+display:none;
+min-height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+max-width:900px;
+width:95%;
+text-align:center;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* GAME LAYOUT */
+.game{
+display:none;
+padding:20px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.left,.right{
+flex:1;
+min-width:280px;
+}
+
+img{
+width:100%;
+border-radius:12px;
+}
+
+/* OPTIONS */
+.option{
+background:#e3f2fd;
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.option:hover{
+background:#bbdefb;
+}
+
+/* BUTTON */
+button{
+padding:12px;
+border:none;
+border-radius:10px;
+background:#2e7d32;
+color:white;
+cursor:pointer;
+width:100%;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="200">
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="intro">
+<div class="card">
+<h1>🌿 Plant Adaptation Lab</h1>
+<p>Identify how plants adapt to their environment</p>
+<p>✔ Root ✔ Stem ✔ Leaf modifications</p>
+<button onclick="startGame()">START</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div class="game" id="game">
+
+<div class="container">
+
+<div class="left">
+<img id="plantImg" src="">
+</div>
+
+<div class="right">
+<h2 id="q"></h2>
+
+<div class="option" onclick="check('Root')">Root Adaptation</div>
+<div class="option" onclick="check('Stem')">Stem Adaptation</div>
+<div class="option" onclick="check('Leaf')">Leaf Adaptation</div>
+
+<p id="feedback"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="result">
+<div class="card">
+<h1>🎉 Lab Complete</h1>
+<p>Your Score: <span id="score"></span>/5</p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+</div>
+
+<!-- AUDIO -->
+<audio id="correct" src="assets/correct.mp3"></audio>
+<audio id="wrong" src="assets/wrong.mp3"></audio>
+
+<script>
+
+/* SPLASH */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+
+/* QUESTIONS */
+const data=[
+{
+img:"assets/carrot.png",
+q:"Carrot stores food underground. What adaptation is this?",
+a:"Root"
+},
+{
+img:"assets/mangrove.png",
+q:"Mangroves have breathing roots. What adaptation is this?",
+a:"Root"
+},
+{
+img:"assets/onion.png",
+q:"Onion stores food in a bulb. What adaptation is this?",
+a:"Stem"
+},
+{
+img:"assets/cactus.png",
+q:"Cactus has spines instead of leaves. What adaptation is this?",
+a:"Leaf"
+},
+{
+img:"assets/pea.png",
+q:"Pea plant uses tendrils to climb. What adaptation is this?",
+a:"Stem"
+}
+];
+
+let i=0;
+let score=0;
+
+/* START */
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+loadQ();
+}
+
+/* LOAD */
+function loadQ(){
+
+if(i>=data.length){
+end();
+return;
+}
+
+document.getElementById("plantImg").src=data[i].img;
+document.getElementById("q").innerText=data[i].q;
+document.getElementById("feedback").innerText="";
+}
+
+/* CHECK */
+function check(ans){
+
+if(ans===data[i].a){
+score++;
+document.getElementById("correct").play();
+document.getElementById("feedback").innerText="✔ Correct!";
+}else{
+document.getElementById("wrong").play();
+document.getElementById("feedback").innerText="❌ Wrong!";
+}
+
+setTimeout(()=>{
+i++;
+loadQ();
+},1000);
+}
+
+/* END */
+function end(){
+document.getElementById("game").style.display="none";
+document.getElementById("result").style.display="flex";
+document.getElementById("score").innerText=score;
+}
+
+</script>
+
+</body>
+</html>
