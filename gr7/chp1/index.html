@@ -1,1 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chloroplast Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#eaf7ee;
+overflow:hidden;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* INTRO */
+#intro{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.9);
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+max-width:500px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+button{
+padding:12px 18px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* GAME */
+#game{
+display:none;
+position:fixed;
+inset:0;
+}
+
+.topbar{
+position:absolute;
+top:0;
+left:0;
+right:0;
+display:flex;
+justify-content:space-between;
+background:white;
+padding:10px;
+font-weight:bold;
+z-index:10;
+}
+
+#imgBox{
+position:absolute;
+top:60px;
+left:0;
+right:0;
+height:40%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+#imgBox img{
+max-width:90%;
+max-height:100%;
+border-radius:12px;
+box-shadow:0 8px 18px rgba(0,0,0,0.2);
+}
+
+#question{
+position:absolute;
+top:42%;
+left:10px;
+right:10px;
+text-align:center;
+font-weight:bold;
+font-size:18px;
+}
+
+#options{
+position:absolute;
+bottom:20px;
+left:0;
+right:0;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+padding:10px;
+}
+
+.opt{
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 5px 10px rgba(0,0,0,0.15);
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+}
+
+#feedback{
+position:absolute;
+top:50px;
+width:100%;
+text-align:center;
+font-weight:bold;
+}
+
+/* END */
+#end{
+display:none;
+position:fixed;
+inset:0;
+background:white;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="150">
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+<div class="card">
+<h2>🌿 Chloroplast MCQ Challenge</h2>
+<p>Tap correct answers and learn biology</p>
+<button onclick="startGame()">START</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+<div class="topbar">
+<div>⭐ Score: <span id="score">0</span></div>
+<div>Chloroplast Explorer</div>
+</div>
+
+<div id="feedback"></div>
+
+<div id="imgBox">
+<img src="assets/chloroplast.png">
+</div>
+
+<div id="question"></div>
+
+<div id="options"></div>
+
+</div>
+
+<!-- END -->
+<div id="end">
+<h2>🎉 Great Job!</h2>
+<p>You completed the topic</p>
+<p>⭐ Score: <span id="final"></span></p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+
+<!-- 🔊 AUDIO FIXED -->
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+let score=0;
+let qIndex=0;
+
+const questions=[
+{
+q:"What is the green pigment in chloroplast?",
+options:["Chlorophyll","Haemoglobin","Melanin","Keratin"],
+answer:"Chlorophyll"
+},
+{
+q:"Which structure contains stacks of thylakoids?",
+options:["Grana","Stroma","Nucleus","Ribosome"],
+answer:"Grana"
+},
+{
+q:"Which part traps sunlight?",
+options:["Thylakoids","Cell wall","Vacuole","Cytoplasm"],
+answer:"Thylakoids"
+},
+{
+q:"Where is jelly-like fluid in chloroplast?",
+options:["Stroma","Grana","Nucleus","Membrane"],
+answer:"Stroma"
+},
+{
+q:"Main function of chloroplast?",
+options:["Photosynthesis","Digestion","Respiration","Excretion"],
+answer:"Photosynthesis"
+}
+];
+
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+loadQ();
+}
+
+function loadQ(){
+
+if(qIndex>=questions.length){
+endGame();
+return;
+}
+
+let q=questions[qIndex];
+document.getElementById("question").innerText=q.q;
+
+let box=document.getElementById("options");
+box.innerHTML="";
+
+q.options.sort(()=>Math.random()-0.5).forEach(opt=>{
+
+let div=document.createElement("div");
+div.className="opt";
+div.innerText=opt;
+
+div.onclick=()=>{
+
+if(opt===q.answer){
+score++;
+document.getElementById("feedback").innerText="✔ Correct!";
+document.getElementById("correctSound").play();
+}else{
+document.getElementById("feedback").innerText="❌ Wrong!";
+document.getElementById("wrongSound").play();
+}
+
+document.getElementById("score").innerText=score;
+
+setTimeout(()=>{
+qIndex++;
+loadQ();
+},700);
+
+};
+
+box.appendChild(div);
+});
+
+}
+
+function endGame(){
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="flex";
+document.getElementById("final").innerText=score;
+
+/* IMPORTANT: reset + play clap */
+let clap=document.getElementById("clapSound");
+clap.currentTime=0;
+clap.play();
+}
+
+</script>
+
+</body>
+</html>
