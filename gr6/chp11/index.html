@@ -2,89 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>River Cleanup Challenge</title>
+<title>River Rescue Challenge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:url("assets/river-bg.png") center/cover no-repeat;
+background:url('assets/river-bg.png') center/cover no-repeat;
 overflow:hidden;
-}
-
-/* TOP BAR */
-.topbar{
-position:fixed;
-top:0;
-left:0;
-right:0;
-display:flex;
-justify-content:space-between;
-padding:10px 15px;
-background:white;
-font-weight:bold;
-z-index:10;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* INSTRUCTION */
-#instruction{
-position:fixed;
-top:55px;
-left:10px;
-right:10px;
-background:#ffffffcc;
-padding:10px;
-border-radius:10px;
-font-weight:bold;
-text-align:center;
-z-index:9;
-}
-
-/* GAME AREA */
-#gameArea{
-position:absolute;
-top:120px;
-bottom:140px;
-left:0;
-right:0;
-overflow:hidden;
-}
-
-/* WASTE */
-.waste{
-position:absolute;
-font-size:32px;
-cursor:pointer;
-animation:float 6s linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0px);}
-100%{transform:translateY(-400px);}
-}
-
-/* BINS FIXED BOTTOM (IMPORTANT FIX ✔) */
-.bins{
-position:fixed;
-bottom:10px;
-left:0;
-right:0;
-display:flex;
-justify-content:space-evenly;
-padding:10px;
-z-index:10;
-}
-
-.bin{
-background:white;
-padding:12px;
-border-radius:12px;
-width:28%;
-text-align:center;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* SPLASH */
@@ -101,16 +27,128 @@ z-index:999;
 /* INTRO */
 #intro{
 display:none;
-height:100vh;
+position:absolute;
+inset:0;
+background:rgba(255,255,255,0.85);
+display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
 }
 
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+max-width:500px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+button{
+padding:12px 20px;
+background:#0077b6;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+}
+
+/* GAME */
+#game{
+display:none;
+position:absolute;
+inset:0;
+}
+
+/* TOP BAR */
+.topbar{
+position:absolute;
+top:10px;
+left:10px;
+right:10px;
+display:flex;
+justify-content:space-between;
+background:white;
+padding:10px;
+border-radius:12px;
+font-weight:bold;
+z-index:10;
+}
+
+/* 🔥 ADDED INSTRUCTION */
+#instruction{
+position:absolute;
+top:60px;
+left:10px;
+right:10px;
+background:#ffffffcc;
+padding:10px;
+border-radius:10px;
+font-weight:bold;
+text-align:center;
+z-index:10;
+font-size:14px;
+}
+
+/* GAME ZONE */
+#items{
+position:absolute;
+top:120px;
+bottom:220px;
+width:100%;
+}
+
+/* FLOATING ITEMS */
+.item{
+position:absolute;
+width:70px;
+height:70px;
+background:white;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+box-shadow:0 5px 10px rgba(0,0,0,0.15);
+cursor:pointer;
+}
+
+/* BINS */
+.bins{
+position:absolute;
+bottom:180px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:40px;
+z-index:5;
+}
+
+.bin{
+width:150px;
+height:120px;
+background:white;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:16px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+transition:0.2s;
+}
+
+.bin:hover{
+transform:translateY(-5px);
+}
+
 /* END */
 #end{
 display:none;
-height:100vh;
+position:fixed;
+inset:0;
+background:white;
 align-items:center;
 justify-content:center;
 text-align:center;
@@ -127,24 +165,32 @@ text-align:center;
 
 <!-- INTRO -->
 <div id="intro">
-<div>
-<h2>🌊 River Cleanup Challenge</h2>
-<p>Tap waste → then tap correct bin</p>
+<div class="card">
+<h1>🌊 River Rescue Mission</h1>
+<p>
+Clean the river by sorting waste.<br><br>
+✔ Save ecosystem<br>
+✔ Earn stars ⭐<br>
+✔ Become River Guardian 🌍
+</p>
 <button onclick="startGame()">START</button>
 </div>
 </div>
 
 <!-- GAME -->
-<div id="gameArea"></div>
+<div id="game">
 
 <div class="topbar">
 <div>⭐ Score: <span id="score">0</span></div>
-<div>River Rescue</div>
+<div>River Cleanup Challenge</div>
 </div>
 
+<!-- ✅ YOUR REQUESTED INSTRUCTION ADDED -->
 <div id="instruction">
-👉 Tap waste → then tap correct bin
+👉 Tap the moving waste and then the correct bin to clean the river
 </div>
+
+<div id="items"></div>
 
 <div class="bins">
 <div class="bin" onclick="check('plastic')">🥤 Plastic</div>
@@ -152,11 +198,16 @@ text-align:center;
 <div class="bin" onclick="check('hazard')">☠ Hazard</div>
 </div>
 
+</div>
+
 <!-- END -->
 <div id="end">
-<h2>🎉 Great Job!</h2>
-<p>You cleaned the river!</p>
+<div>
+<h1>🎉 River Cleaned!</h1>
+<h2>You are a Water Guardian 🌊</h2>
 <p>⭐ Score: <span id="final"></span></p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
 </div>
 
 <!-- AUDIO -->
@@ -166,47 +217,70 @@ text-align:center;
 
 <script>
 
-let score=0;
-let selected=null;
-
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
 document.getElementById("intro").style.display="flex";
 },3000);
 
-function startGame(){
-document.getElementById("intro").style.display="none";
-spawnWaste();
-}
-
-const wasteItems=[
-{emoji:"🥤",type:"plastic"},
-{emoji:"🍌",type:"organic"},
-{emoji:"☠️",type:"hazard"},
-{emoji:"🧴",type:"plastic"},
-{emoji:"🍃",type:"organic"}
+const items=[
+{icon:"🥤",type:"plastic"},
+{icon:"🍌",type:"organic"},
+{icon:"🧴",type:"plastic"},
+{icon:"🔋",type:"hazard"},
+{icon:"🐟",type:"organic"},
+{icon:"🧪",type:"hazard"}
 ];
 
-function spawnWaste(){
-let area=document.getElementById("gameArea");
+let score=0;
+let selected=null;
+let movingItems=[];
 
-wasteItems.forEach((w,i)=>{
-let div=document.createElement("div");
-div.className="waste";
-div.innerHTML=w.emoji;
-div.dataset.type=w.type;
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+createItems();
+animate();
+}
 
-/* RANDOM POSITION (FIXED FOR MOBILE) */
-div.style.left=Math.random()*80+"%";
-div.style.top=(50 + Math.random()*200)+"px";
+function createItems(){
+let box=document.getElementById("items");
+box.innerHTML="";
+movingItems=[];
 
-div.onclick=()=>{
-selected=div;
-div.style.transform="scale(1.3)";
+items.forEach((it,i)=>{
+let el=document.createElement("div");
+el.className="item";
+el.innerHTML=it.icon;
+el.dataset.type=it.type;
+
+let obj={
+el:el,
+x:Math.random()*window.innerWidth,
+speed:1+Math.random()*1
 };
 
-area.appendChild(div);
+el.style.left=obj.x+"px";
+el.style.top=(120+Math.random()*250)+"px";
+
+el.onclick=()=>selected=el;
+
+movingItems.push(obj);
+box.appendChild(el);
 });
+}
+
+function animate(){
+movingItems.forEach(o=>{
+o.x += o.speed;
+
+if(o.x > window.innerWidth){
+o.x = -80;
+}
+
+o.el.style.left = o.x + "px";
+});
+
+requestAnimationFrame(animate);
 }
 
 function check(type){
@@ -223,20 +297,17 @@ document.getElementById("wrong").play();
 selected=null;
 document.getElementById("score").innerText=score;
 
-if(score===5){
+if(document.querySelectorAll(".item").length===0){
 endGame();
 }
 }
 
 function endGame(){
-document.getElementById("gameArea").style.display="none";
+document.getElementById("game").style.display="none";
 document.getElementById("end").style.display="flex";
 document.getElementById("final").innerText=score;
 
-/* CLAP FIX ✔ */
-let clap=document.getElementById("clap");
-clap.currentTime=0;
-clap.play();
+document.getElementById("clap").play();
 }
 
 </script>
