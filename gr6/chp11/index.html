@@ -1,1 +1,36 @@
+<style>
 
+/* KEEP ALL YOUR EXISTING CSS ABOVE SAME */
+
+/* UPDATED BINS POSITION */
+.bins{
+position:absolute;
+bottom:80px;   /* ⬅️ MOVED UP (IMPORTANT FIX) */
+width:100%;
+display:flex;
+justify-content:space-around;
+padding:0 20px;
+}
+
+/* UPDATED BIN STYLE (BETTER VISUAL BALANCE) */
+.bin{
+width:140px;
+height:110px;
+background:white;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+transition:0.2s;
+font-size:16px;
+}
+
+/* HOVER EFFECT (OPTIONAL BUT GOOD UX) */
+.bin:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 25px rgba(0,0,0,0.2);
+}
+
+</style>
