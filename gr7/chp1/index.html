@@ -75,7 +75,7 @@ font-weight:bold;
 z-index:10;
 }
 
-/* IMAGE AREA */
+/* IMAGE */
 #imgBox{
 position:absolute;
 top:60px;
@@ -121,10 +121,13 @@ text-align:center;
 /* FEEDBACK */
 #feedback{
 position:absolute;
-top:50px;
+top:70px;
 width:100%;
 text-align:center;
 font-weight:bold;
+z-index:20;
+padding:10px;
+background:rgba(255,255,255,0.8);
 }
 
 /* END */
@@ -189,29 +192,34 @@ Learn structure of chloroplast by identifying parts<br><br>
 
 <script>
 
-let score=0;
-let qIndex=0;
+let score = 0;
+let qIndex = 0;
 
-const questions=[
+const questions = [
 {
-q:"Which part of chloroplast traps sunlight?",
-a:["Thylakoids","Grana","Stroma","Cell wall"]
+question:"Which part of chloroplast traps sunlight?",
+a:["Thylakoids","Grana","Stroma","Cell wall"],
+correct:"Thylakoids"
 },
 {
-q:"Stacks of thylakoids are called?",
-a:["Grana","Stroma","Nucleus","Vacuole"]
+question:"Stacks of thylakoids are called?",
+a:["Grana","Stroma","Nucleus","Vacuole"],
+correct:"Grana"
 },
 {
-q:"Gel-like fluid inside chloroplast is called?",
-a:["Stroma","Grana","Cell membrane","Cytoplasm"]
+question:"Gel-like fluid inside chloroplast is called?",
+a:["Stroma","Grana","Cell membrane","Cytoplasm"],
+correct:"Stroma"
 },
 {
-q:"What is the main function of chloroplast?",
-a:["Photosynthesis","Respiration","Digestion","Transport"]
+question:"What is the main function of chloroplast?",
+a:["Photosynthesis","Respiration","Digestion","Transport"],
+correct:"Photosynthesis"
 },
 {
-q:"Which pigment gives green colour to plants?",
-a:["Chlorophyll","Haemoglobin","Melanin","Keratin"]
+question:"Which pigment gives green colour to plants?",
+a:["Chlorophyll","Haemoglobin","Melanin","Keratin"],
+correct:"Chlorophyll"
 }
 ];
 
@@ -222,37 +230,40 @@ loadQ();
 }
 
 function loadQ(){
-if(qIndex>=questions.length){
+
+if(qIndex >= questions.length){
 endGame();
 return;
 }
 
-let q=questions[qIndex];
-document.getElementById("feedback").innerText="Tap correct: " + q.q;
+let q = questions[qIndex];
+document.getElementById("feedback").innerText = "Tap correct: " + q.question;
 
-let opts=document.getElementById("options");
-opts.innerHTML="";
+let opts = document.getElementById("options");
+opts.innerHTML = "";
 
-let shuffled=[...q.a].sort(()=>Math.random()-0.5);
+let shuffled = [...q.a].sort(()=>Math.random()-0.5);
 
 shuffled.forEach(o=>{
-let div=document.createElement("div");
-div.className="opt";
-div.innerText=o;
+let div = document.createElement("div");
+div.className = "opt";
+div.innerText = o;
 
-div.onclick=()=>{
-if(o===q.q){
+div.onclick = ()=>{
+
+if(o === q.correct){
 score++;
-document.getElementById("feedback").innerText="✔ Correct!";
-}else{
-document.getElementById("feedback").innerText="❌ Try Again!";
-}
-document.getElementById("score").innerText=score;
+document.getElementById("feedback").innerText = "✔ Correct!";
+document.getElementById("score").innerText = score;
 
 setTimeout(()=>{
 qIndex++;
 loadQ();
 },700);
+
+}else{
+document.getElementById("feedback").innerText = "❌ Try Again!";
+}
 };
 
 opts.appendChild(div);
@@ -273,4 +284,4 @@ document.getElementById("intro").style.display="flex";
 </script>
 
 </body>
-</html>    
+</html>
