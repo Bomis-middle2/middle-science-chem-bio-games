@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Plant Adaptation Lab</title>
+<title>Plant Adaptation Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -26,7 +27,7 @@ align-items:center;
 z-index:9999;
 }
 
-/* SCREENS */
+/* INTRO */
 .screen{
 display:none;
 min-height:100vh;
@@ -36,19 +37,18 @@ flex-direction:column;
 padding:20px;
 }
 
-/* CARD */
 .card{
 background:white;
 padding:20px;
-border-radius:15px;
-max-width:900px;
+border-radius:16px;
 width:95%;
+max-width:900px;
 text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* GAME LAYOUT */
-.game{
+/* GAME */
+#game{
 display:none;
 padding:20px;
 }
@@ -74,32 +74,33 @@ width:100%;
 border-radius:12px;
 }
 
-/* OPTIONS */
 .option{
 background:#e3f2fd;
 padding:12px;
-margin:8px 0;
+margin:10px 0;
 border-radius:10px;
 cursor:pointer;
 font-weight:bold;
+text-align:center;
 }
 
 .option:hover{
 background:#bbdefb;
 }
 
-/* BUTTON */
-button{
-padding:12px;
-border:none;
-border-radius:10px;
-background:#2e7d32;
-color:white;
-cursor:pointer;
-width:100%;
-margin-top:10px;
+.scorebar{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+font-weight:bold;
 }
 
+.badge{
+font-size:18px;
+margin-top:10px;
+color:#2e7d32;
+font-weight:bold;
+}
 </style>
 </head>
 
@@ -113,30 +114,38 @@ margin-top:10px;
 <!-- INTRO -->
 <div class="screen" id="intro">
 <div class="card">
-<h1>🌿 Plant Adaptation Lab</h1>
-<p>Identify how plants adapt to their environment</p>
-<p>✔ Root ✔ Stem ✔ Leaf modifications</p>
-<button onclick="startGame()">START</button>
+<h1>🌿 Plant Adaptation Explorer</h1>
+<p>Identify how plants adapt to survive in different environments</p>
+<p>✔ Root ✔ Stem ✔ Leaf Modifications</p>
+<button onclick="startGame()">START GAME</button>
 </div>
 </div>
 
 <!-- GAME -->
-<div class="game" id="game">
+<div id="game">
 
 <div class="container">
 
 <div class="left">
-<img id="plantImg" src="">
+<img id="img" src="">
 </div>
 
 <div class="right">
-<h2 id="q"></h2>
+
+<div class="scorebar">
+<div>Score: <span id="score">0</span></div>
+<div>Streak: <span id="streak">0</span></div>
+</div>
+
+<h3 id="q"></h3>
 
 <div class="option" onclick="check('Root')">Root Adaptation</div>
 <div class="option" onclick="check('Stem')">Stem Adaptation</div>
 <div class="option" onclick="check('Leaf')">Leaf Adaptation</div>
 
 <p id="feedback"></p>
+
+<div id="badge" class="badge"></div>
 
 </div>
 
@@ -147,8 +156,10 @@ margin-top:10px;
 <!-- RESULT -->
 <div class="screen" id="result">
 <div class="card">
-<h1>🎉 Lab Complete</h1>
-<p>Your Score: <span id="score"></span>/5</p>
+<h1>🎉 Mission Complete</h1>
+<p>Final Score: <span id="finalScore"></span></p>
+<p>Accuracy: <span id="accuracy"></span>%</p>
+<p id="finalBadge"></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 </div>
@@ -165,81 +176,82 @@ document.getElementById("splash").style.display="none";
 document.getElementById("intro").style.display="flex";
 },3000);
 
-/* QUESTIONS */
+/* DATA */
 const data=[
-{
-img:"assets/carrot.png",
-q:"Carrot stores food underground. What adaptation is this?",
-a:"Root"
-},
-{
-img:"assets/mangrove.png",
-q:"Mangroves have breathing roots. What adaptation is this?",
-a:"Root"
-},
-{
-img:"assets/onion.png",
-q:"Onion stores food in a bulb. What adaptation is this?",
-a:"Stem"
-},
-{
-img:"assets/cactus.png",
-q:"Cactus has spines instead of leaves. What adaptation is this?",
-a:"Leaf"
-},
-{
-img:"assets/pea.png",
-q:"Pea plant uses tendrils to climb. What adaptation is this?",
-a:"Stem"
-}
+{img:"assets/carrot.png", q:"Carrot stores food underground. What adaptation is this?", a:"Root"},
+{img:"assets/mangrove.png", q:"Mangroves have breathing roots. What adaptation is this?", a:"Root"},
+{img:"assets/onion.png", q:"Onion stores food in bulb. What adaptation is this?", a:"Stem"},
+{img:"assets/cactus.png", q:"Cactus leaves are spines. What adaptation is this?", a:"Leaf"},
+{img:"assets/pea.png", q:"Pea plant climbs using tendrils. What adaptation is this?", a:"Stem"}
 ];
 
 let i=0;
 let score=0;
+let streak=0;
 
 /* START */
 function startGame(){
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="block";
-loadQ();
+load();
 }
 
 /* LOAD */
-function loadQ(){
+function load(){
 
 if(i>=data.length){
 end();
 return;
 }
 
-document.getElementById("plantImg").src=data[i].img;
+document.getElementById("img").src=data[i].img;
 document.getElementById("q").innerText=data[i].q;
 document.getElementById("feedback").innerText="";
 }
 
-/* CHECK */
 function check(ans){
 
-if(ans===data[i].a){
+let d=data[i];
+
+if(ans===d.a){
 score++;
+streak++;
 document.getElementById("correct").play();
 document.getElementById("feedback").innerText="✔ Correct!";
-}else{
-document.getElementById("wrong").play();
-document.getElementById("feedback").innerText="❌ Wrong!";
+
+if(streak>=3){
+document.getElementById("badge").innerText="🔥 Streak Active!";
 }
+}else{
+streak=0;
+document.getElementById("wrong").play();
+document.getElementById("feedback").innerText="❌ Try again!";
+}
+
+document.getElementById("score").innerText=score;
+document.getElementById("streak").innerText=streak;
 
 setTimeout(()=>{
 i++;
-loadQ();
-},1000);
+load();
+},900);
 }
 
-/* END */
 function end(){
+
 document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
-document.getElementById("score").innerText=score;
+
+document.getElementById("finalScore").innerText=score;
+
+let acc=Math.round((score/data.length)*100);
+document.getElementById("accuracy").innerText=acc;
+
+let badge="🌱 Beginner Botanist";
+if(acc>=80) badge="🌿 Plant Explorer";
+if(acc>=100) badge="🌳 Plant Master";
+
+document.getElementById("finalBadge").innerText=badge;
 }
 
 </script>
