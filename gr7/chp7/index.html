@@ -1,1 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fact or Myth Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body{
+margin:0;
+font-family:Arial;
+
+/* 🌸 YOUR BACKGROUND IMAGE */
+background:url("assets/mensurationbg.png") no-repeat center center fixed;
+background-size:cover;
+}
+
+/* DARK OVERLAY FOR READABILITY */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.35);
+z-index:0;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* INTRO */
+#intro{
+display:none;
+position:fixed;
+inset:0;
+z-index:2;
+text-align:center;
+padding:20px;
+}
+
+.card{
+max-width:650px;
+margin:auto;
+margin-top:60px;
+padding:20px;
+border-radius:16px;
+
+/* GLASS EFFECT */
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(6px);
+
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* BUTTONS */
+button{
+padding:14px 18px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.btn{
+width:45%;
+margin:10px;
+font-weight:bold;
+color:white;
+}
+
+.fact{background:#2e7d32;}
+.myth{background:#c62828;}
+
+/* GAME */
+#game{
+display:none;
+height:100vh;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+position:relative;
+z-index:2;
+}
+
+/* IMAGE CARD */
+#imageCard{
+width:90%;
+max-width:500px;
+background:rgba(255,255,255,0.9);
+border-radius:16px;
+padding:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+#imageCard img{
+width:100%;
+border-radius:12px;
+}
+
+/* FEEDBACK */
+#feedback{
+margin-top:10px;
+font-weight:bold;
+font-size:18px;
+color:#222;
+}
+
+/* EXPLANATION */
+#explain{
+margin-top:10px;
+font-size:14px;
+color:#333;
+padding:10px;
+background:rgba(255,248,225,0.9);
+border-radius:10px;
+display:none;
+}
+
+/* END SCREEN */
+#end{
+display:none;
+text-align:center;
+padding:30px;
+position:relative;
+z-index:2;
+}
+
+.badge{
+font-size:50px;
+animation:pop 1s infinite alternate;
+}
+
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND OVERLAY -->
+<div class="overlay"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" style="width:160px;">
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+<div class="card">
+
+<h2>🌸 Fact or Myth Game</h2>
+
+<p>
+Learn menstrual awareness in a respectful way 🌿<br><br>
+✔ Tap FACT or MYTH<br>
+✔ Learn after every answer<br>
+✔ Build awareness & break myths
+</p>
+
+<button onclick="startGame()" style="background:#2e7d32;color:white;">
+START GAME
+</button>
+
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+<div id="imageCard">
+<img id="img" src="">
+</div>
+
+<div style="margin-top:15px;">
+<button class="btn fact" onclick="answer('FACT')">FACT</button>
+<button class="btn myth" onclick="answer('MYTH')">MYTH</button>
+</div>
+
+<div id="feedback"></div>
+<div id="explain"></div>
+
+</div>
+
+<!-- END -->
+<div id="end"></div>
+
+<script>
+
+let index = 0;
+let score = 0;
+
+const cards = [
+{img:"assets/1.png", answer:"MYTH", explain:"Girls can attend school during periods. It is completely normal."},
+{img:"assets/2.png", answer:"FACT", explain:"Sports help reduce cramps and improve mood."},
+{img:"assets/3.png", answer:"MYTH", explain:"Menstruation is not dirty or impure."},
+{img:"assets/4.png", answer:"FACT", explain:"Balanced diet supports health during periods."},
+{img:"assets/5.png", answer:"MYTH", explain:"Talking about periods is not shameful."},
+{img:"assets/6.png", answer:"FACT", explain:"Pads and cloth pads are safe if maintained properly."},
+{img:"assets/7.png", answer:"MYTH", explain:"Bathing during periods is safe and hygienic."},
+{img:"assets/8.png", answer:"FACT", explain:"Mood changes are normal due to hormones."}
+];
+
+cards.sort(()=>Math.random()-0.5);
+
+/* SPLASH */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="block";
+},2000);
+
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="flex";
+loadCard();
+}
+
+function loadCard(){
+
+if(index >= cards.length){
+endGame();
+return;
+}
+
+document.getElementById("img").src = cards[index].img;
+document.getElementById("feedback").innerText = "";
+document.getElementById("explain").style.display = "none";
+}
+
+function answer(choice){
+
+if(choice === cards[index].answer){
+score++;
+document.getElementById("feedback").innerText = "✔ Correct!";
+}else{
+document.getElementById("feedback").innerText = "❌ Think again!";
+}
+
+document.getElementById("explain").style.display = "block";
+document.getElementById("explain").innerText = cards[index].explain;
+
+setTimeout(()=>{
+index++;
+loadCard();
+},1800);
+}
+
+function endGame(){
+
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="block";
+
+let message = score >= 6
+? "🌸 You are a Menstrual Health Champion!"
+: "🌱 Great effort! Keep learning!";
+
+document.getElementById("end").innerHTML = `
+<div class="badge">🏅</div>
+<h2>Game Completed</h2>
+<p>Score: ${score}/8</p>
+<p>${message}</p>
+
+<p style="margin-top:10px;">
+Respect, awareness and education build confidence 💖
+</p>
+
+<button onclick="location.reload()" style="background:#2e7d32;color:white;padding:12px 18px;border:none;border-radius:10px;">
+Play Again
+</button>
+`;
+}
+
+</script>
+
+</body>
+</html>
