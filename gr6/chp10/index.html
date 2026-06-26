@@ -1,1 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Properties of Air Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(#e8f7ff,#ffffff);
+overflow:hidden;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* INTRO */
+.screen{
+display:none;
+position:absolute;
+inset:0;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+max-width:600px;
+}
+
+/* GAME */
+#game{
+display:none;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+background:white;
+padding:10px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.main{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:20px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:15px;
+width:320px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+.icon{
+font-size:80px;
+margin:10px;
+}
+
+.option{
+background:#e3f2fd;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.option:hover{
+background:#bbdefb;
+}
+
+#feedback{
+margin-top:10px;
+font-weight:bold;
+}
+
+/* END */
+#end{
+display:none;
+position:fixed;
+inset:0;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:rgba(255,255,255,0.9);
+}
+
+.endcard{
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="160">
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="intro">
+<div class="card">
+<h1>🌬️ Properties of Air Explorer</h1>
+<p>
+✔ Learn properties of air<br>
+✔ 2 attempts per question<br>
+✔ Earn stars ⭐<br>
+✔ Become Air Scientist 🧪
+</p>
+<button onclick="startGame()">START GAME</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+<div class="topbar">
+<div>⭐ Score: <span id="score">0</span></div>
+<div>Q: <span id="qno">1</span>/9</div>
+</div>
+
+<div class="main">
+
+<div class="box">
+<div class="icon" id="icon">🎈</div>
+<h3 id="question"></h3>
+</div>
+
+<div class="box">
+<div class="option" onclick="check('space')">Air Occupies Space</div>
+<div class="option" onclick="check('weight')">Air Has Weight</div>
+<div class="option" onclick="check('pressure')">Air Exerts Pressure</div>
+
+<div id="feedback"></div>
+</div>
+
+</div>
+</div>
+
+<!-- END -->
+<div id="end">
+<div class="endcard">
+<h1>🎉 Congratulations!</h1>
+<p>You are now an Air Scientist!</p>
+<p>⭐ Score: <span id="final"></span></p>
+
+<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+</div>
+</div>
+
+<!-- AUDIO -->
+<audio id="correct" src="assets/correct.mp3"></audio>
+<audio id="wrong" src="assets/wrong.mp3"></audio>
+
+<script>
+
+/* SPLASH */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+
+/* DATA */
+const data=[
+{icon:"🎈",q:"Balloon inflates when air is blown",a:"pressure"},
+{icon:"⚖️",q:"Two balloons on balance scale",a:"weight"},
+{icon:"🧴",q:"Air fills bottle space",a:"space"},
+{icon:"💨",q:"Suction cup sticks to glass",a:"pressure"},
+{icon:"⚖️",q:"Deflated vs inflated ball",a:"weight"},
+{icon:"🎈",q:"Air takes up space in balloon",a:"space"},
+{icon:"💨",q:"Can crushing experiment",a:"pressure"},
+{icon:"⚖️",q:"Balloon becomes heavier when filled",a:"weight"},
+{icon:"🎈",q:"Air inside syringe moves piston",a:"space"}
+];
+
+let i=0;
+let score=0;
+let attempt=1;
+
+/* START */
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+load();
+}
+
+/* LOAD */
+function load(){
+document.getElementById("icon").innerText=data[i].icon;
+document.getElementById("question").innerText=data[i].q;
+document.getElementById("feedback").innerText="";
+attempt=1;
+document.getElementById("qno").innerText=i+1;
+}
+
+/* CHECK */
+function check(ans){
+let q=data[i];
+
+if(ans===q.a){
+score++;
+document.getElementById("correct").play();
+document.getElementById("feedback").innerText="✔ Correct!";
+next();
+}
+else{
+if(attempt===1){
+document.getElementById("wrong").play();
+document.getElementById("feedback").innerText="Try Again!";
+attempt=2;
+}else{
+document.getElementById("feedback").innerText="Correct Answer!";
+next();
+}
+}
+}
+
+/* NEXT */
+function next(){
+i++;
+document.getElementById("score").innerText=score;
+
+if(i < data.length){
+setTimeout(load,700);
+}else{
+setTimeout(endGame,800);
+}
+}
+
+/* END GAME */
+function endGame(){
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="flex";
+document.getElementById("final").innerText=score;
+
+/* PLAY CLAP ONLY ONCE AT END */
+setTimeout(()=>{
+document.getElementById("clap").play().catch(()=>{});
+},500);
+}
+
+</script>
+
+</body>
+</html>
