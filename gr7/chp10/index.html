@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Biology UNO Matching Game</title>
+<title>Biology UNO Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -79,7 +79,7 @@ margin:10px;
 border-radius:12px;
 }
 
-/* INSTRUCTION LINE */
+/* INSTRUCTION */
 #instruction{
 text-align:center;
 font-size:14px;
@@ -99,7 +99,7 @@ gap:10px;
 padding:10px;
 }
 
-/* SQUARE CARDS */
+/* CARD STYLE */
 .cardImg{
 width:42%;
 aspect-ratio:1/1;
@@ -109,6 +109,7 @@ padding:10px;
 box-shadow:0 6px 15px rgba(0,0,0,0.2);
 cursor:pointer;
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
 transition:0.2s;
@@ -116,9 +117,16 @@ transition:0.2s;
 
 .cardImg img{
 width:100%;
-height:100%;
+height:80%;
 object-fit:contain;
 border-radius:10px;
+}
+
+.label{
+margin-top:5px;
+font-weight:bold;
+font-size:13px;
+color:#333;
 }
 
 .cardImg:hover{
@@ -153,16 +161,15 @@ padding:20px;
 <div id="intro">
 <div class="card">
 
-<h2>🧠 Biology UNO Matching Game</h2>
+<h2>🧠 Biology UNO Image Game</h2>
 
 <p>
-Welcome to the Biology Image Challenge<br><br>
+🎯 Instructions:<br><br>
 
-🎯 Rules:<br>
-• Read the function carefully<br>
-• Click on the correct image to match it<br>
-• Each question has 4 image options<br>
-• Only 1 correct answer<br><br>
+✔ Click on the correct image to match the function<br>
+✔ Each question has 4 image options<br>
+✔ Only ONE is correct<br>
+✔ Learn biology visually and interactively<br><br>
 
 🏆 Goal: Match all structures correctly
 </p>
@@ -183,7 +190,7 @@ Welcome to the Biology Image Challenge<br><br>
 <div id="questionBox"></div>
 
 <div id="instruction">
-Click on the correct to match it with correct function.
+Click on the correct image to match the function.
 </div>
 
 <div id="grid"></div>
@@ -195,7 +202,7 @@ Click on the correct to match it with correct function.
 <!-- END -->
 <div id="end">
 <h2>🎉 Congratulations!</h2>
-<p>You completed the Biology Matching Game</p>
+<p>You completed the Biology UNO Game</p>
 <p>Final Score: <span id="final"></span></p>
 <button onclick="location.reload()">Play Again</button>
 </div>
@@ -260,13 +267,11 @@ return;
 }
 
 let q = questions[index];
-
 document.getElementById("questionBox").innerText = q.q;
 
 let grid = document.getElementById("grid");
 grid.innerHTML = "";
 
-/* create 1 correct + 3 wrong */
 let correct = q.answer;
 let wrongs = allImages.filter(i => i !== correct);
 wrongs.sort(()=>Math.random()-0.5);
@@ -279,7 +284,11 @@ options.forEach(img=>{
 let div = document.createElement("div");
 div.className = "cardImg";
 
-div.innerHTML = `<img src="assets/${img}">`;
+/* IMAGE + LABEL */
+div.innerHTML = `
+  <img src="assets/${img}">
+  <div class="label">${img.replace('.png','')}</div>
+`;
 
 div.onclick = ()=>{
 
