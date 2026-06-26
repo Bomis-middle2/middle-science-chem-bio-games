@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Biology Table Challenge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biology Table Game</title>
 
 <style>
 body{
@@ -35,7 +33,6 @@ padding:20px;
 text-align:center;
 }
 
-/* CARD */
 .card{
 max-width:600px;
 margin:auto;
@@ -46,32 +43,28 @@ background:white;
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* BUTTON */
 button{
-padding:14px;
+padding:14px 18px;
 background:#2e7d32;
 color:white;
 border:none;
-border-radius:12px;
+border-radius:10px;
 font-size:16px;
+cursor:pointer;
 width:80%;
 max-width:280px;
 }
 
-/* GAME CONTAINER */
+/* GAME */
 #game{
 display:none;
 height:100vh;
-overflow:hidden;
 display:flex;
 flex-direction:column;
 }
 
 /* TOP BAR */
 .topbar{
-position:sticky;
-top:0;
-z-index:10;
 display:flex;
 justify-content:space-between;
 padding:10px;
@@ -80,36 +73,24 @@ font-weight:bold;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* WORD BANK (FIXED ✅) */
+/* WORD BANK */
 #wordbank{
 background:#fff8d6;
 padding:10px;
-border-bottom:2px solid #eee;
-
-position:sticky;
-top:50px;
-z-index:9;
-
 overflow-x:auto;
 white-space:nowrap;
+border-bottom:2px solid #eee;
 }
 
-/* WORD STYLE */
 .word{
 display:inline-block;
 background:white;
-padding:12px 16px;
+padding:10px 14px;
 margin:6px;
 border-radius:12px;
 font-weight:bold;
-min-width:120px;
+cursor:pointer;
 border:2px solid #ddd;
-}
-
-.word:active{
-transform:scale(0.9);
-background:#2e7d32;
-color:white;
 }
 
 .word.active{
@@ -117,14 +98,13 @@ background:#2e7d32;
 color:white;
 }
 
-/* TABLE AREA (SCROLLABLE ✅) */
+/* TABLE */
 .table-container{
 flex:1;
 overflow-y:auto;
 padding:10px;
 }
 
-/* TABLE */
 table{
 width:100%;
 border-collapse:collapse;
@@ -141,17 +121,25 @@ font-weight:bold;
 td.empty{
 background:#f7f7f7;
 height:50px;
+cursor:pointer;
 }
 
-/* ANIMATIONS */
+/* FEEDBACK */
+#feedback{
+text-align:center;
+font-weight:bold;
+padding:10px;
+}
+
+/* ANIMATION */
 .correct{
-animation:pop 0.3s;
 background:#c8e6c9 !important;
+animation:pop 0.3s;
 }
 
 .wrong{
-animation:shake 0.3s;
 background:#ffcdd2 !important;
+animation:shake 0.3s;
 }
 
 @keyframes pop{
@@ -168,13 +156,6 @@ background:#ffcdd2 !important;
 100%{transform:translateX(0);}
 }
 
-/* FEEDBACK */
-#feedback{
-text-align:center;
-font-weight:bold;
-padding:10px;
-}
-
 /* END */
 #end{
 display:none;
@@ -186,17 +167,26 @@ padding:20px;
 
 <body>
 
-<!-- SPLASH -->
+<!-- SPLASH (FIXED - NO TEXT ISSUE) -->
 <div id="splash">
-<h2>Loading Game...</h2>
+<img src="assets/innovine-logo.png" style="width:160px;">
 </div>
 
 <!-- INTRO -->
 <div id="intro">
 <div class="card">
-<h2>Biology Table Challenge</h2>
-<p>Tap a word → Tap a box</p>
+
+<h2>🧠 Biology Table Challenge</h2>
+
+<p>
+✔ Click a word from the word bank<br>
+✔ Then click an empty box in the table<br>
+✔ Fill all answers correctly<br>
+✔ Learn biology in an interactive way
+</p>
+
 <button onclick="startGame()">START GAME</button>
+
 </div>
 </div>
 
@@ -268,17 +258,12 @@ b4:"Seeds"
 
 const words = Object.values(answers);
 
-/* SOUND */
-const correctSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
-const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3");
-
-/* SPLASH */
+/* START GAME AFTER SPLASH */
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
 document.getElementById("intro").style.display="block";
-},1500);
+},2000);
 
-/* START */
 function startGame(){
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="flex";
@@ -288,17 +273,21 @@ setupCells();
 
 /* WORD BANK */
 function loadWordBank(){
+
 let box = document.getElementById("wordbank");
-box.innerHTML = "";
+box.innerHTML = "<b>Word Bank</b><br>";
 
 words.forEach(w=>{
+
 let div = document.createElement("div");
 div.className="word";
 div.innerText=w;
 
 div.onclick=()=>{
+
 document.querySelectorAll(".word").forEach(x=>x.classList.remove("active"));
 div.classList.add("active");
+
 selectedWord = w;
 };
 
@@ -308,10 +297,13 @@ box.appendChild(div);
 
 /* CELLS */
 function setupCells(){
+
 document.querySelectorAll(".empty").forEach(cell=>{
+
 cell.onclick=()=>{
+
 if(!selectedWord){
-showFeedback("Select a word first!");
+document.getElementById("feedback").innerText="Select a word first!";
 return;
 }
 
@@ -322,42 +314,25 @@ cell.innerText = selectedWord;
 
 if(selectedWord === answers[id]){
 score++;
-updateScore();
+document.getElementById("score").innerText = score;
 cell.classList.add("correct");
-correctSound.play();
-removeWord(selectedWord);
-showFeedback("Correct!");
+document.getElementById("feedback").innerText="Correct!";
 }else{
 cell.classList.add("wrong");
-wrongSound.play();
-showFeedback("Wrong!");
+document.getElementById("feedback").innerText="Wrong!";
 }
 
 selectedWord = null;
-clearSelection();
-updateProgress();
-checkComplete();
-};
-});
-}
-
-/* HELPERS */
-function removeWord(word){
-document.querySelectorAll(".word").forEach(w=>{
-if(w.innerText === word){
-w.style.display="none";
-}
-});
-}
-
-function clearSelection(){
 document.querySelectorAll(".word").forEach(x=>x.classList.remove("active"));
+
+updateProgress();
+checkEnd();
+};
+
+});
 }
 
-function updateScore(){
-document.getElementById("score").innerText = score;
-}
-
+/* PROGRESS */
 function updateProgress(){
 let filled = 0;
 document.querySelectorAll(".empty").forEach(c=>{
@@ -366,33 +341,24 @@ if(c.innerText !== "") filled++;
 document.getElementById("progress").innerText = filled;
 }
 
-function showFeedback(msg){
-document.getElementById("feedback").innerText = msg;
-}
-
 /* END */
-function checkComplete(){
+function checkEnd(){
 let filled = 0;
 document.querySelectorAll(".empty").forEach(c=>{
 if(c.innerText !== "") filled++;
 });
 
 if(filled === 4){
-setTimeout(endGame,700);
-}
-}
-
-function endGame(){
-
 document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="block";
 
 document.getElementById("end").innerHTML = `
-<h2>Great Job!</h2>
-<p>Score: ${score}</p>
+<h2>🎉 Great Job!</h2>
+<p>You completed the Biology Table Challenge</p>
+<p>Final Score: ${score}</p>
 <button onclick="location.reload()">Play Again</button>
 `;
-
-document.getElementById("end").style.display="block";
+}
 }
 
 </script>
