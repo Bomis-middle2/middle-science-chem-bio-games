@@ -1,1 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Acid Source Matching Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f7f0ff;
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* INTRO SCREEN */
+#intro{
+display:none;
+position:fixed;
+inset:0;
+background:#ffffffee;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+max-width:500px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+button{
+padding:12px 18px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* GAME */
+#game{
+display:none;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+padding:10px;
+background:white;
+font-weight:bold;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+#questionBox{
+text-align:center;
+padding:20px;
+font-size:20px;
+font-weight:bold;
+background:#ffe3c2;
+margin:10px;
+border-radius:16px;
+}
+
+#options{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+padding:10px;
+}
+
+.cardopt{
+width:42%;
+height:120px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+font-weight:bold;
+font-size:14px;
+cursor:pointer;
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+color:white;
+padding:10px;
+}
+
+.c1{background:#ff4d4d;}
+.c2{background:#4da6ff;}
+.c3{background:#4caf50;}
+.c4{background:#ff9800;}
+
+#feedback{
+text-align:center;
+font-size:18px;
+font-weight:bold;
+margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="150">
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+<div class="card">
+
+<h2>Acid Source Matching Game</h2>
+
+<p>
+Some substances have forgotten the acids they contain.<br><br>
+
+Your job is to help them remember.<br><br>
+
+🎯 How to play:<br>
+• A substance card will appear<br>
+• Tap the correct acid card<br>
+• Correct answers give points<br>
+• You have limited time<br><br>
+
+🧠 Goal:<br>
+Match each substance with its correct acid
+</p>
+
+<button onclick="startGame()">START GAME</button>
+
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+<div class="topbar">
+<div>Score: <span id="score">0</span></div>
+<div>Time: <span id="time">30</span></div>
+</div>
+
+<div id="questionBox"></div>
+
+<div id="options"></div>
+
+<div id="feedback"></div>
+
+</div>
+
+<script>
+
+let score = 0;
+let index = 0;
+let time = 30;
+let timer;
+
+let correctSound = new Audio("assets/correct.mp3");
+let wrongSound = new Audio("assets/wrong.mp3");
+let clapSound = new Audio("assets/freesound_community-claps-44774.mp3");
+
+const data = [
+{
+q:"Tamarind",
+answer:"Tartaric acid",
+options:["Tartaric acid","Citric acid","Lactic acid","Malic acid"]
+},
+{
+q:"Tea",
+answer:"Tannic acid",
+options:["Tannic acid","Acetic acid","Oxalic acid","Malic acid"]
+},
+{
+q:"Spinach",
+answer:"Oxalic acid",
+options:["Oxalic acid","Citric acid","Lactic acid","Tartaric acid"]
+},
+{
+q:"Apple",
+answer:"Malic acid",
+options:["Malic acid","Acetic acid","Formic acid","Hydrochloric acid"]
+},
+{
+q:"Milk",
+answer:"Lactic acid",
+options:["Lactic acid","Citric acid","Tannic acid","Oxalic acid"]
+}
+];
+
+function startGame(){
+
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+
+loadQ();
+
+timer = setInterval(()=>{
+time--;
+document.getElementById("time").innerText = time;
+
+if(time<=0){
+clearInterval(timer);
+endGame();
+}
+},1000);
+}
+
+function loadQ(){
+
+if(index >= data.length){
+endGame();
+return;
+}
+
+let q = data[index];
+
+document.getElementById("questionBox").innerText =
+"I am " + q.q + ". Which acid do I contain?";
+
+let box = document.getElementById("options");
+box.innerHTML = "";
+
+q.options.sort(()=>Math.random()-0.5).forEach((o,i)=>{
+
+let div = document.createElement("div");
+div.className = "cardopt c"+((i%4)+1);
+div.innerText = o;
+
+div.onclick = ()=>{
+
+if(o === q.answer){
+score++;
+document.getElementById("score").innerText = score;
+document.getElementById("feedback").innerText = "Correct";
+correctSound.play();
+
+setTimeout(()=>{
+index++;
+loadQ();
+},700);
+
+}else{
+document.getElementById("feedback").innerText = "Wrong";
+wrongSound.play();
+}
+
+};
+
+box.appendChild(div);
+});
+
+}
+
+function endGame(){
+clearInterval(timer);
+
+document.getElementById("game").innerHTML =
+"<div style='text-align:center;margin-top:60px;'>" +
+"<h2>Game Over</h2>" +
+"<h3>Score: " + score + "</h3>" +
+"<button onclick='location.reload()'>Play Again</button>" +
+"</div>";
+
+clapSound.play();
+}
+
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+
+</script>
+
+</body>
+</html>
