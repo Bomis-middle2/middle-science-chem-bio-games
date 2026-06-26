@@ -1,1 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Biotic vs Abiotic Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:url('assets/abiotic-bioticbg.png') center/cover no-repeat;
+overflow:hidden;
+}
+
+/* overlay */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.25);
+backdrop-filter: blur(2px);
+}
+
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* SCREENS (IMPORTANT FIX) */
+.screen{
+display:none;
+position:absolute;
+inset:0;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+/* INTRO CARD */
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+max-width:550px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+button{
+padding:12px 18px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* GAME */
+#game{
+display:none;
+position:absolute;
+inset:0;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+background:white;
+padding:10px;
+border-radius:12px;
+}
+
+.main{
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.panel{
+background:white;
+padding:20px;
+border-radius:16px;
+width:320px;
+box-shadow:0 8px 18px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+#icon{
+font-size:90px;
+margin:10px;
+}
+
+.option{
+margin:10px 0;
+padding:12px;
+background:#e3f2fd;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.option:hover{ background:#bbdefb; }
+
+#feedback{ margin-top:10px; font-weight:bold; }
+
+/* END SCREEN (FIXED — MUST BE HIDDEN INITIALLY) */
+#end{
+display:none;
+position:fixed;
+inset:0;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:rgba(255,255,255,0.7);
+}
+
+.endcard{
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="160">
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="intro">
+<div class="card">
+<h1>🌿 Ecosystem Explorer</h1>
+<p>
+✔ Identify Biotic vs Abiotic factors<br>
+✔ 2 attempts per question<br>
+✔ Earn gems ⭐<br>
+✔ Become Nature Champion 🏆
+</p>
+<button onclick="startGame()">START</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+<div class="topbar">
+<div>⭐ Gems: <span id="score">0</span></div>
+<div>Question: <span id="qno">1</span>/10</div>
+</div>
+
+<div class="main">
+
+<div class="panel">
+<div id="icon">🌱</div>
+<h3 id="name"></h3>
+</div>
+
+<div class="panel">
+<div class="option" onclick="check('biotic')">🌱 Biotic</div>
+<div class="option" onclick="check('abiotic')">🌍 Abiotic</div>
+
+<div id="feedback"></div>
+</div>
+
+</div>
+</div>
+
+<!-- END -->
+<div id="end">
+<div class="endcard">
+<h1>🎉 Congratulations!</h1>
+<p>You are now an Ecosystem Explorer!</p>
+<p>⭐ Score: <span id="final"></span></p>
+
+<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+</div>
+</div>
+
+<script>
+
+/* SPLASH → INTRO */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
+
+/* DATA */
+const items=[
+{type:"biotic",icon:"🌱",name:"Plant"},
+{type:"biotic",icon:"🐄",name:"Animal"},
+{type:"biotic",icon:"🍄",name:"Fungi"},
+{type:"biotic",icon:"🦠",name:"Bacteria"},
+{type:"abiotic",icon:"💧",name:"Water"},
+{type:"abiotic",icon:"☀️",name:"Sunlight"},
+{type:"abiotic",icon:"🌬️",name:"Air"},
+{type:"abiotic",icon:"🪨",name:"Mineral"},
+{type:"abiotic",icon:"🌡️",name:"Temperature"},
+{type:"abiotic",icon:"🌍",name:"Soil"}
+];
+
+items.sort(()=>Math.random()-0.5);
+
+let i=0;
+let score=0;
+let attempt=1;
+
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+load();
+}
+
+function load(){
+document.getElementById("icon").innerText=items[i].icon;
+document.getElementById("name").innerText=items[i].name;
+document.getElementById("feedback").innerText="";
+attempt=1;
+document.getElementById("qno").innerText=i+1;
+}
+
+function check(ans){
+let q=items[i];
+
+if(ans===q.type){
+score++;
+document.getElementById("feedback").innerText="✔ Correct!";
+next();
+}
+else{
+if(attempt===1){
+document.getElementById("feedback").innerText="Try Again!";
+attempt=2;
+}else{
+document.getElementById("feedback").innerText="Correct Answer: "+q.type;
+next();
+}
+}
+}
+
+function next(){
+i++;
+document.getElementById("score").innerText=score;
+
+if(i<items.length){
+setTimeout(load,600);
+}else{
+endGame();
+}
+}
+
+/* FINAL FIXED END SCREEN */
+function endGame(){
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="flex";
+document.getElementById("final").innerText=score;
+
+/* clap sound */
+setTimeout(()=>{
+document.getElementById("clap").play().catch(()=>{});
+},300);
+}
+
+</script>
+
+</body>
+</html>
