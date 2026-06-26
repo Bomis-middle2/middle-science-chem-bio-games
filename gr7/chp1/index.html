@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Chloroplast Explorer</title>
+<title>Chloroplast Explorer Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:#eaf7ee;
+background:#eaf7ea;
 overflow:hidden;
 }
 
@@ -29,8 +29,7 @@ z-index:999;
 display:none;
 position:fixed;
 inset:0;
-background:rgba(255,255,255,0.9);
-display:flex;
+background:#ffffffee;
 align-items:center;
 justify-content:center;
 text-align:center;
@@ -62,6 +61,7 @@ position:fixed;
 inset:0;
 }
 
+/* TOP BAR */
 .topbar{
 position:absolute;
 top:0;
@@ -75,55 +75,50 @@ font-weight:bold;
 z-index:10;
 }
 
+/* IMAGE AREA */
 #imgBox{
 position:absolute;
 top:60px;
 left:0;
 right:0;
-height:40%;
+bottom:200px;
 display:flex;
 align-items:center;
 justify-content:center;
 }
 
 #imgBox img{
-max-width:90%;
+max-width:95%;
 max-height:100%;
 border-radius:12px;
-box-shadow:0 8px 18px rgba(0,0,0,0.2);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-#question{
-position:absolute;
-top:42%;
-left:10px;
-right:10px;
-text-align:center;
-font-weight:bold;
-font-size:18px;
-}
-
+/* OPTIONS */
 #options{
 position:absolute;
-bottom:20px;
+bottom:10px;
 left:0;
 right:0;
-display:grid;
-grid-template-columns:1fr 1fr;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
 gap:10px;
 padding:10px;
 }
 
 .opt{
 background:white;
-padding:15px;
+padding:12px 14px;
 border-radius:12px;
 box-shadow:0 5px 10px rgba(0,0,0,0.15);
-text-align:center;
-font-weight:bold;
 cursor:pointer;
+font-weight:bold;
+min-width:40%;
+text-align:center;
 }
 
+/* FEEDBACK */
 #feedback{
 position:absolute;
 top:50px;
@@ -155,8 +150,13 @@ text-align:center;
 <!-- INTRO -->
 <div id="intro">
 <div class="card">
-<h2>🌿 Chloroplast MCQ Challenge</h2>
-<p>Tap correct answers and learn biology</p>
+<h2>🌿 Chloroplast Explorer</h2>
+<p>
+Learn structure of chloroplast by identifying parts<br><br>
+✔ Tap correct labels<br>
+✔ Earn points ⭐<br>
+✔ Become Cell Scientist 🧬
+</p>
 <button onclick="startGame()">START</button>
 </div>
 </div>
@@ -172,10 +172,8 @@ text-align:center;
 <div id="feedback"></div>
 
 <div id="imgBox">
-<img src="assets/chloroplast.png">
+<img src="/mnt/data/Screenshot 2026-06-26 190631.png">
 </div>
-
-<div id="question"></div>
 
 <div id="options"></div>
 
@@ -183,16 +181,11 @@ text-align:center;
 
 <!-- END -->
 <div id="end">
-<h2>🎉 Great Job!</h2>
-<p>You completed the topic</p>
+<h2>🎉 Congratulations!</h2>
+<p>You are now a Cell Biologist 🧬</p>
 <p>⭐ Score: <span id="final"></span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
-
-<!-- 🔊 AUDIO FIXED -->
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
@@ -201,29 +194,24 @@ let qIndex=0;
 
 const questions=[
 {
-q:"What is the green pigment in chloroplast?",
-options:["Chlorophyll","Haemoglobin","Melanin","Keratin"],
-answer:"Chlorophyll"
+q:"Which part of chloroplast traps sunlight?",
+a:["Thylakoids","Grana","Stroma","Cell wall"]
 },
 {
-q:"Which structure contains stacks of thylakoids?",
-options:["Grana","Stroma","Nucleus","Ribosome"],
-answer:"Grana"
+q:"Stacks of thylakoids are called?",
+a:["Grana","Stroma","Nucleus","Vacuole"]
 },
 {
-q:"Which part traps sunlight?",
-options:["Thylakoids","Cell wall","Vacuole","Cytoplasm"],
-answer:"Thylakoids"
+q:"Gel-like fluid inside chloroplast is called?",
+a:["Stroma","Grana","Cell membrane","Cytoplasm"]
 },
 {
-q:"Where is jelly-like fluid in chloroplast?",
-options:["Stroma","Grana","Nucleus","Membrane"],
-answer:"Stroma"
+q:"What is the main function of chloroplast?",
+a:["Photosynthesis","Respiration","Digestion","Transport"]
 },
 {
-q:"Main function of chloroplast?",
-options:["Photosynthesis","Digestion","Respiration","Excretion"],
-answer:"Photosynthesis"
+q:"Which pigment gives green colour to plants?",
+a:["Chlorophyll","Haemoglobin","Melanin","Keratin"]
 }
 ];
 
@@ -234,61 +222,55 @@ loadQ();
 }
 
 function loadQ(){
-
 if(qIndex>=questions.length){
 endGame();
 return;
 }
 
 let q=questions[qIndex];
-document.getElementById("question").innerText=q.q;
+document.getElementById("feedback").innerText="Tap correct: " + q.q;
 
-let box=document.getElementById("options");
-box.innerHTML="";
+let opts=document.getElementById("options");
+opts.innerHTML="";
 
-q.options.sort(()=>Math.random()-0.5).forEach(opt=>{
+let shuffled=[...q.a].sort(()=>Math.random()-0.5);
 
+shuffled.forEach(o=>{
 let div=document.createElement("div");
 div.className="opt";
-div.innerText=opt;
+div.innerText=o;
 
 div.onclick=()=>{
-
-if(opt===q.answer){
+if(o===q.q){
 score++;
 document.getElementById("feedback").innerText="✔ Correct!";
-document.getElementById("correctSound").play();
 }else{
-document.getElementById("feedback").innerText="❌ Wrong!";
-document.getElementById("wrongSound").play();
+document.getElementById("feedback").innerText="❌ Try Again!";
 }
-
 document.getElementById("score").innerText=score;
 
 setTimeout(()=>{
 qIndex++;
 loadQ();
 },700);
-
 };
 
-box.appendChild(div);
+opts.appendChild(div);
 });
-
 }
 
 function endGame(){
 document.getElementById("game").style.display="none";
 document.getElementById("end").style.display="flex";
 document.getElementById("final").innerText=score;
-
-/* IMPORTANT: reset + play clap */
-let clap=document.getElementById("clapSound");
-clap.currentTime=0;
-clap.play();
 }
+
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},3000);
 
 </script>
 
 </body>
-</html>
+</html>    
