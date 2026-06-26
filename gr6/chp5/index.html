@@ -9,21 +9,10 @@
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(#dff6ff,#ffffff);
+background:url("assets/adaptationbg.png");
+background-size:cover;
+background-attachment:fixed;
 overflow-x:hidden;
-}
-
-/* FLOATING LIGHT ELEMENTS */
-.leaf{
-position:absolute;
-width:40px;
-opacity:0.2;
-animation:float 10s infinite linear;
-}
-
-@keyframes float{
-0%{transform:translateY(100vh) rotate(0deg);}
-100%{transform:translateY(-100vh) rotate(360deg);}
 }
 
 /* SPLASH */
@@ -34,25 +23,32 @@ background:white;
 display:flex;
 align-items:center;
 justify-content:center;
-z-index:999;
+z-index:9999;
+}
+
+#splash img{
+width:140px;
 }
 
 /* INTRO */
 .screen{
 display:none;
-padding:30px;
+min-height:100vh;
+justify-content:center;
+align-items:center;
 text-align:center;
+padding:20px;
 }
 
 .card{
-background:white;
+background:rgba(255,255,255,0.92);
 padding:25px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-max-width:600px;
-margin:auto;
+border-radius:16px;
+max-width:650px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
+/* BUTTON */
 button{
 padding:12px 20px;
 background:#2ecc71;
@@ -60,46 +56,78 @@ color:white;
 border:none;
 border-radius:10px;
 cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* GAME HEADER */
+.top{
+display:flex;
+justify-content:space-between;
+padding:10px 15px;
+background:rgba(255,255,255,0.9);
+font-weight:bold;
 }
 
 /* GAME */
 #game{
 display:none;
-padding:20px;
+padding:15px;
 }
 
 .container{
 display:flex;
 gap:20px;
 flex-wrap:wrap;
-justify-content:center;
+margin-top:10px;
 }
 
-.box{
+/* QUESTION IMAGE */
+.img-box{
 flex:1;
 min-width:280px;
-background:white;
-padding:15px;
-border-radius:12px;
-box-shadow:0 0 8px rgba(0,0,0,0.1);
 }
 
+.img-box img{
+width:100%;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* QUESTION BOX */
+.q-box{
+flex:1;
+min-width:280px;
+background:rgba(255,255,255,0.9);
+padding:15px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* OPTIONS */
 .option{
-padding:10px;
-margin:10px 0;
 background:#eaf7ff;
+padding:12px;
+margin:8px 0;
 border-radius:10px;
 cursor:pointer;
+transition:0.2s;
 }
 
 .option:hover{
 background:#bde0fe;
 }
 
-.badge{
-font-size:18px;
-font-weight:bold;
+/* FEEDBACK */
+#feedback{
 margin-top:10px;
+font-weight:bold;
+}
+
+/* GEM */
+.gem{
+color:#f1c40f;
+font-weight:bold;
 }
 
 </style>
@@ -109,40 +137,47 @@ margin-top:10px;
 
 <!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" width="150">
+<img src="assets/innovine-logo.png">
 </div>
 
 <!-- INTRO -->
 <div class="screen" id="intro">
 <div class="card">
 <h1>🌿 Plant Adaptation Explorer</h1>
+
 <p>
-Help plants survive by identifying their adaptations.<br><br>
-✔ 2 attempts per question<br>
+Help plants survive in different environments 🌱<br><br>
+
+✔ Identify Root / Stem / Leaf adaptations<br>
+✔ You get 2 chances per question<br>
 ✔ Earn ⭐ gems for correct answers<br>
 ✔ Become a Plant Explorer Champion 🏆
 </p>
-<button onclick="startGame()">START JOURNEY</button>
+
+<button onclick="startGame()">START EXPLORING</button>
 </div>
 </div>
 
 <!-- GAME -->
 <div id="game">
 
-<h3>⭐ Gems: <span id="score">0</span></h3>
+<div class="top">
+<div>⭐ Gems: <span id="score">0</span></div>
+<div>Question: <span id="qno">1</span>/5</div>
+</div>
 
 <div class="container">
 
-<div class="box">
-<img id="img" width="100%">
+<div class="img-box">
+<img id="img">
 </div>
 
-<div class="box">
+<div class="q-box">
 <h3 id="q"></h3>
 
-<div class="option" onclick="check('Root')">Root Adaptation</div>
-<div class="option" onclick="check('Stem')">Stem Adaptation</div>
-<div class="option" onclick="check('Leaf')">Leaf Adaptation</div>
+<div class="option" onclick="check('Root')">🌱 Root Adaptation</div>
+<div class="option" onclick="check('Stem')">🌿 Stem Adaptation</div>
+<div class="option" onclick="check('Leaf')">🍃 Leaf Adaptation</div>
 
 <p id="feedback"></p>
 </div>
@@ -154,9 +189,13 @@ Help plants survive by identifying their adaptations.<br><br>
 <div class="screen" id="end">
 <div class="card">
 <h1>🎉 Congratulations!</h1>
-<p>You are now a Plant Explorer!</p>
-<p>⭐ Gems: <span id="final"></span></p>
-<p class="badge" id="badge"></p>
+
+<p>You are now a <b>Plant Explorer!</b></p>
+
+<p class="gem">⭐ Gems Earned: <span id="final"></span></p>
+
+<p id="badge"></p>
+
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 </div>
@@ -169,15 +208,15 @@ Help plants survive by identifying their adaptations.<br><br>
 
 setTimeout(()=>{
 document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="block";
+document.getElementById("intro").style.display="flex";
 },3000);
 
 const data=[
-{img:"assets/carrot.png",q:"Carrot stores food underground",a:"Root"},
-{img:"assets/mangrove.png",q:"Mangrove has breathing roots",a:"Root"},
-{img:"assets/onion.png",q:"Onion stores food in bulb",a:"Stem"},
-{img:"assets/cactus.png",q:"Cactus has spines instead of leaves",a:"Leaf"},
-{img:"assets/pea.png",q:"Pea climbs using tendrils",a:"Stem"}
+{img:"assets/carrot.png",q:"Carrot stores food underground. Identify adaptation.",a:"Root"},
+{img:"assets/mangrove.png",q:"Mangrove has breathing roots.",a:"Root"},
+{img:"assets/onion.png",q:"Onion stores food in bulb.",a:"Stem"},
+{img:"assets/cactus.png",q:"Cactus has spines instead of leaves.",a:"Leaf"},
+{img:"assets/pea.png",q:"Pea climbs using tendrils.",a:"Stem"}
 ];
 
 let i=0;
@@ -193,6 +232,7 @@ load();
 function load(){
 document.getElementById("img").src=data[i].img;
 document.getElementById("q").innerText=data[i].q;
+document.getElementById("qno").innerText=i+1;
 document.getElementById("feedback").innerText="";
 attempt=1;
 }
@@ -204,25 +244,26 @@ let q=data[i];
 if(ans===q.a){
 score++;
 document.getElementById("correct").play();
-document.getElementById("feedback").innerText="✔ Correct!";
+document.getElementById("feedback").innerText="✔ Correct! ⭐";
 next();
 }
 else{
+
 if(attempt===1){
 document.getElementById("wrong").play();
-document.getElementById("feedback").innerText="Try Again!";
+document.getElementById("feedback").innerText="❌ Try Again!";
 attempt=2;
 }else{
-document.getElementById("feedback").innerText="Correct Answer: "+q.a;
+document.getElementById("feedback").innerText="✔ Correct Answer: "+q.a;
 next();
 }
 }
+
+document.getElementById("score").innerText=score;
 }
 
 function next(){
 i++;
-document.getElementById("score").innerText=score;
-
 if(i<data.length){
 setTimeout(load,800);
 }else{
@@ -231,14 +272,15 @@ end();
 }
 
 function end(){
+
 document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="block";
+document.getElementById("end").style.display="flex";
 
 document.getElementById("final").innerText=score;
 
-let badge="🌱 Beginner";
-if(score>=4) badge="🌿 Explorer";
-if(score===5) badge="🌳 Master Botanist";
+let badge="🌱 Beginner Explorer";
+if(score>=4) badge="🌿 Skilled Explorer";
+if(score===5) badge="🌳 Plant Master Explorer";
 
 document.getElementById("badge").innerText=badge;
 }
