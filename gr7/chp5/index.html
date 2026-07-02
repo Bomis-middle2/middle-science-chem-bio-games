@@ -7,16 +7,15 @@
 
 <style>
 body {
-  margin:0; font-family:Arial, sans-serif;
-  background:url('assets/metalnonmetalpng.png') center/cover no-repeat;
-  background-size:cover;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:url('assets/metal-nonmetal-bg.png') center/cover no-repeat;
   overflow:hidden;
 }
 
 /* SPLASH */
 #splash {
-  position:fixed; inset:0;
-  background:white;
+  position:fixed; inset:0; background:white;
   display:flex; align-items:center; justify-content:center;
   z-index:999;
 }
@@ -24,71 +23,61 @@ body {
 /* INTRO */
 #intro {
   display:none; position:fixed; inset:0;
-  background:#ffffffcc; align-items:center; justify-content:center;
+  background:#ffffffdd; align-items:center; justify-content:center;
   text-align:center; padding:20px;
 }
 .card {
   background:white; padding:20px; border-radius:16px;
   max-width:500px; box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
-button { 
-  padding:12px 20px; background:#0077b6; color:white;
-  border:none; border-radius:10px; font-size:16px; cursor:pointer; 
-}
+button { padding:12px 20px; background:#0077b6; color:white;
+border:none; border-radius:10px; font-size:16px; cursor:pointer; }
 
 /* GAME */
 #game { display:none; position:fixed; inset:0; }
 
 /* TOPBAR */
 .topbar {
-  position:absolute; top:10px; left:10px; right:10px;
+  position:absolute; top:0; left:0; right:0;
   display:flex; justify-content:space-between;
   background:white; padding:10px; font-weight:bold; z-index:10;
   border-radius:12px;
-  font-size:14px;
 }
 
-/* PROPERTY CARD */
+/* PROPERTY BOX */
 #propertyBox {
-  position:absolute; top:70px; left:50%; transform:translateX(-50%);
+  position:absolute; top:80px; left:50%; transform:translateX(-50%);
   background:#ffffffcc; padding:20px; border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.15); text-align:center;
-  max-width:90%;
-  font-weight:bold; font-size:18px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15);
+  text-align:center; max-width:90%; font-weight:bold; font-size:18px;
 }
 
 /* OPTIONS */
 #options {
-  position:absolute; bottom:40px; left:0; right:0;
+  position:absolute; bottom:30px; left:0; right:0;
   display:flex; justify-content:center; gap:20px;
-  flex-wrap:wrap;
 }
 .opt {
-  background:white; border:none;
-  border-radius:50%; width:120px; height:120px;
+  width:120px; height:120px;
+  background:white; border-radius:18px;
   display:flex; align-items:center; justify-content:center;
-  box-shadow:0 5px 12px rgba(0,0,0,0.15);
-  cursor:pointer; font-weight:bold; font-size:16px;
-  transition:0.2s;
+  box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;
 }
-.opt:hover { transform:scale(1.05); }
 
 /* FEEDBACK */
 #feedback {
   position:absolute; top:50px; width:100%;
   text-align:center; font-weight:bold; font-size:16px;
-  color:#0077b6;
 }
 
 /* END */
 #end {
-  display:none; position:fixed; inset:0; background:#ffffffcc;
+  display:none; position:fixed; inset:0; background:#ffffffdd;
   align-items:center; justify-content:center; text-align:center;
-  padding:20px;
 }
-#end h2 { color:#0077b6; margin-bottom:10px; }
-#end .score { font-size:18px; font-weight:bold; margin:8px 0; }
-#end button { margin-top:12px; padding:10px 18px; background:#0077b6; color:white; border:none; border-radius:10px; cursor:pointer; }
+#end h2 { color:#0077b6; margin-bottom:5px; }
+#end p { font-weight:bold; }
+#end button { margin-top:15px; }
 </style>
 </head>
 
@@ -104,7 +93,7 @@ button {
 <div class="card">
 <h2>⚡ Metal vs Non-Metal Explorer</h2>
 <p>
-A set of properties is shown. Tap the property → then tap the correct buzzer<br><br>
+Tap the property card → then tap the correct category (Metal / Non-Metal)<br><br>
 ✔ Two attempts per property<br>
 ✔ Earn stars ⭐ for each correct answer<br>
 ✔ Become an Element Explorer 🌟
@@ -123,8 +112,12 @@ A set of properties is shown. Tap the property → then tap the correct buzzer<b
 <div id="feedback"></div>
 <div id="propertyBox"></div>
 <div id="options">
-<img src="assets/metal-buzzer.png" class="opt" onclick="checkAnswer('metal')">
-<img src="assets/non-metal-buzzer.png" class="opt" onclick="checkAnswer('non-metal')">
+<div class="opt" onclick="checkAnswer('metal')">
+<img src="assets/metal-buzzer.png" width="100%">
+</div>
+<div class="opt" onclick="checkAnswer('non-metal')">
+<img src="assets/non-metal-buzzer.png" width="100%">
+</div>
 </div>
 </div>
 
@@ -132,7 +125,7 @@ A set of properties is shown. Tap the property → then tap the correct buzzer<b
 <div id="end">
 <h2>🎉 Congratulations!</h2>
 <p>You have completed the Metal vs Non-Metal Explorer!</p>
-<p class="score">⭐ Score: <span id="final"></span></p>
+<p>⭐ Score: <span id="final"></span></p>
 <button onclick="location.reload()">PLAY AGAIN</button>
 </div>
 
@@ -142,14 +135,14 @@ A set of properties is shown. Tap the property → then tap the correct buzzer<b
 <audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
-// Splash
+// SPLASH
 setTimeout(()=>{
   document.getElementById("splash").style.display="none";
   document.getElementById("intro").style.display="flex";
 },3000);
 
-// Questions
-const questions=[
+// QUESTION DATA
+const questions = [
 {property:"Physical State: Solid (except mercury)",answer:"metal"},
 {property:"Physical State: Solid, liquid, or gas",answer:"non-metal"},
 {property:"Hardness: Hard (some soft like Na,K)",answer:"metal"},
@@ -168,55 +161,56 @@ let attempt=1;
 
 // Start Game
 function startGame(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("game").style.display="block";
-  loadQ();
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+loadQ();
 }
 
 // Load Question
 function loadQ(){
-  if(qIndex>=questions.length){
-    endGame();
-    return;
-  }
-  attempt=1;
-  document.getElementById("feedback").innerText="";
-  document.getElementById("score").innerText=score;
-  document.getElementById("propertyBox").innerText=questions[qIndex].property;
+if(qIndex>=questions.length){
+endGame();
+return;
+}
+attempt=1;
+document.getElementById("feedback").innerText="";
+document.getElementById("score").innerText=score;
+document.getElementById("propertyBox").innerText=questions[qIndex].property;
 }
 
 // Check Answer
 function checkAnswer(ans){
-  let q=questions[qIndex];
-  if(ans===q.answer){
-    score++;
-    document.getElementById("feedback").innerText="✔ Correct!";
-    document.getElementById("correct").play();
-    nextQ();
-  } else {
-    if(attempt===1){
-      document.getElementById("feedback").innerText="❌ Try Again!";
-      document.getElementById("wrong").play();
-      attempt=2;
-    } else {
-      document.getElementById("feedback").innerText="Correct Answer: "+q.answer;
-      nextQ();
-    }
-  }
+let q=questions[qIndex];
+
+if(ans===q.answer){
+score++;
+document.getElementById("feedback").innerText="✔ Correct!";
+document.getElementById("correct").play();
+nextQ();
+}else{
+if(attempt===1){
+document.getElementById("feedback").innerText="❌ Try Again!";
+document.getElementById("wrong").play();
+attempt=2;
+}else{
+document.getElementById("feedback").innerText="Correct Answer: "+q.answer;
+nextQ();
+}
+}
 }
 
 // Next Question
 function nextQ(){
-  qIndex++;
-  setTimeout(loadQ,700);
+qIndex++;
+setTimeout(loadQ,700);
 }
 
 // End Game
 function endGame(){
-  document.getElementById("game").style.display="none";
-  document.getElementById("end").style.display="flex";
-  document.getElementById("final").innerText=score;
-  document.getElementById("clap").play();
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="flex";
+document.getElementById("final").innerText=score;
+document.getElementById("clap").play();
 }
 </script>
 
