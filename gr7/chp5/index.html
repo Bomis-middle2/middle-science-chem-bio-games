@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Metals vs Non-Metals Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#e0f7fa;
+  overflow:hidden;
+}
 
+/* SPLASH */
+#splash {
+  position:fixed; inset:0; background:white;
+  display:flex; align-items:center; justify-content:center;
+  z-index:999;
+}
+
+/* INTRO */
+#intro {
+  display:none; position:fixed; inset:0;
+  background:#ffffffee; align-items:center; justify-content:center;
+  text-align:center; padding:20px;
+}
+.card {
+  background:white; padding:20px; border-radius:16px;
+  max-width:500px; box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+button { 
+  padding:12px 20px; background:#0077b6; color:white;
+  border:none; border-radius:10px; font-size:16px; cursor:pointer; 
+}
+
+/* GAME */
+#game { display:none; position:fixed; inset:0; padding-top:60px; }
+
+/* TOPBAR */
+.topbar {
+  position:absolute; top:0; left:0; right:0;
+  display:flex; justify-content:space-between;
+  background:white; padding:10px; font-weight:bold; z-index:10;
+}
+
+/* PROPERTY CARD */
+#propertyBox {
+  position:absolute; top:70px; left:50%; transform:translateX(-50%);
+  background:#fff3e0; padding:20px; border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.15); text-align:center;
+  max-width:90%; font-weight:bold; font-size:18px;
+}
+
+/* OPTIONS */
+#options {
+  position:absolute; bottom:40px; left:0; right:0;
+  display:flex; justify-content:center; gap:20px;
+  flex-wrap:wrap;
+}
+.opt {
+  background:white; padding:15px 18px; border-radius:12px;
+  box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;
+  font-weight:bold; min-width:120px; text-align:center;
+  display:flex; align-items:center; justify-content:center;
+}
+.opt img {
+  width:50px; height:50px; margin-right:8px;
+}
+
+/* FEEDBACK */
+#feedback {
+  position:absolute; top:40px; width:100%;
+  text-align:center; font-weight:bold; font-size:16px;
+}
+
+/* END */
+#end {
+  display:none; position:fixed; inset:0; background:#ffffffcc;
+  align-items:center; justify-content:center; text-align:center;
+}
+#end div {
+  display:flex; flex-direction:column; align-items:center; gap:15px; padding:20px;
+}
+#end h2 { color:#0077b6; font-size:28px; margin:0; }
+#end p { font-size:18px; margin:0; }
+#end button {
+  padding:14px 24px; font-size:18px; background:#0077b6; color:white; border:none; border-radius:12px; cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="assets/innovine-logo.png" width="150">
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+<div class="card">
+<h2>⚡ Metals vs Non-Metals Explorer</h2>
+<p>
+Tap the property card → then tap the correct category (Metal / Non-Metal)<br><br>
+✔ Two attempts per property<br>
+✔ Earn stars ⭐ for each correct answer<br>
+✔ Become an Element Explorer 🌟
+</p>
+<button onclick="startGame()">START GAME</button>
+</div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+<div class="topbar">
+<div>⭐ Score: <span id="score">0</span></div>
+<div>Metal vs Non-Metal</div>
+</div>
+
+<div id="feedback"></div>
+<div id="propertyBox"></div>
+<div id="options">
+<div class="opt" onclick="checkAnswer('metal')">
+<img src="assets/metal-buzzer.png"> Metal
+</div>
+<div class="opt" onclick="checkAnswer('non-metal')">
+<img src="assets/non-metal-buzzer.png"> Non-Metal
+</div>
+</div>
+</div>
+
+<!-- END -->
+<div id="end">
+<div>
+<h2>🎉 Congratulations!</h2>
+<p>You have completed the Metals vs Non-Metals Explorer!</p>
+<p>⭐ Score: <span id="final"></span></p>
+<button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+</div>
+
+<!-- AUDIO -->
+<audio id="correct" src="assets/correct.mp3"></audio>
+<audio id="wrong" src="assets/wrong.mp3"></audio>
+<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+// Splash
+setTimeout(()=>{
+  document.getElementById("splash").style.display="none";
+  document.getElementById("intro").style.display="flex";
+},3000);
+
+// Questions
+const questions = [
+{property:"Physical State: Solid (except mercury)",answer:"metal"},
+{property:"Physical State: Solid, liquid, or gas",answer:"non-metal"},
+{property:"Hardness: Hard (some soft like Na,K)",answer:"metal"},
+{property:"Hardness: Usually soft and brittle",answer:"non-metal"},
+{property:"Lustre: Shiny (lustrous)",answer:"metal"},
+{property:"Lustre: Dull (except iodine)",answer:"non-metal"},
+{property:"Malleability: Can be hammered into sheets",answer:"metal"},
+{property:"Malleability: Brittle, break easily",answer:"non-metal"},
+{property:"Ductility: Can be drawn into wires",answer:"metal"},
+{property:"Ductility: Not ductile",answer:"non-metal"}
+];
+
+let score=0;
+let qIndex=0;
+let attempt=1;
+
+// Start Game
+function startGame(){
+document.getElementById("intro").style.display="none";
+document.getElementById("game").style.display="block";
+loadQ();
+}
+
+// Load Question
+function loadQ(){
+if(qIndex>=questions.length){
+endGame();
+return;
+}
+attempt=1;
+document.getElementById("feedback").innerText="";
+document.getElementById("score").innerText=score;
+document.getElementById("propertyBox").innerText=questions[qIndex].property;
+}
+
+// Check Answer
+function checkAnswer(ans){
+let q=questions[qIndex];
+
+if(ans===q.answer){
+score++;
+document.getElementById("feedback").innerText="✔ Correct!";
+document.getElementById("correct").play();
+nextQ();
+}else{
+if(attempt===1){
+document.getElementById("feedback").innerText="❌ Try Again!";
+document.getElementById("wrong").play();
+attempt=2;
+}else{
+document.getElementById("feedback").innerText="Correct Answer: "+q.answer;
+nextQ();
+}
+}
+}
+
+// Next Question
+function nextQ(){
+qIndex++;
+setTimeout(loadQ,700);
+}
+
+// End Game
+function endGame(){
+document.getElementById("game").style.display="none";
+document.getElementById("end").style.display="flex";
+document.getElementById("final").innerText=score;
+document.getElementById("clap").play();
+}
+</script>
+
+</body>
+</html>
