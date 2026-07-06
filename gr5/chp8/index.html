@@ -2,959 +2,393 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-🌍 Atmosphere Explorer
-</title>
+<title>🌍 Atmosphere Explorer</title>
 
 <style>
 
+/* ================= RESET ================= */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-
-font-family:'Segoe UI',sans-serif;
-
-background:
-linear-gradient(
-180deg,
-#dff4ff 0%,
-#f5fbff 100%
-);
-
+background:linear-gradient(180deg,#dff4ff,#f5fbff);
 min-height:100vh;
-
 overflow-x:hidden;
-
 }
 
-/* SPLASH */
-
+/* ================= SPLASH ================= */
 #splashScreen{
-
 position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
+inset:0;
 background:white;
-
 display:flex;
-
 justify-content:center;
 align-items:center;
-
 z-index:9999;
-
 }
 
 #splashLogo{
-
-width:320px;
-max-width:85%;
-
-animation:zoomLogo 1.5s ease;
-
+width:300px;
+max-width:80%;
+animation:zoom 1.5s ease;
 }
 
-@keyframes zoomLogo{
-
-0%{
-opacity:0;
-transform:scale(.6);
+@keyframes zoom{
+from{transform:scale(.6);opacity:0;}
+to{transform:scale(1);opacity:1;}
 }
 
-100%{
-opacity:1;
-transform:scale(1);
-}
-
-}
-
-/* INTRO */
-
+/* ================= INTRO ================= */
 #introScreen{
-
 display:none;
-
 min-height:100vh;
-
 justify-content:center;
 align-items:center;
-
 padding:20px;
-
 }
 
 .introCard{
-
 background:white;
-
-max-width:1000px;
+max-width:900px;
 width:100%;
-
-padding:35px;
-
-border-radius:30px;
-
+padding:30px;
+border-radius:25px;
 text-align:center;
-
-box-shadow:
-0 10px 30px rgba(0,0,0,.15);
-
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
 
-.logo{
-
-width:220px;
-
-margin-bottom:20px;
-
-}
+.logo{width:200px;margin-bottom:15px;}
 
 .title{
-
-font-size:3rem;
-
-font-weight:bold;
-
+font-size:2.5rem;
 color:#1565c0;
-
-margin-bottom:20px;
-
+margin-bottom:15px;
 }
 
 .story{
-
-font-size:1.2rem;
-
-line-height:1.8;
-
+font-size:1.1rem;
+line-height:1.6;
 color:#444;
-
 }
 
 .startBtn{
-
-margin-top:25px;
-
-padding:18px 45px;
-
+margin-top:20px;
+padding:15px 35px;
 border:none;
-
-border-radius:20px;
-
+border-radius:15px;
 background:#1976d2;
-
 color:white;
-
-font-size:1.2rem;
-
-font-weight:bold;
-
+font-size:1.1rem;
 cursor:pointer;
-
 }
 
-/* GAME */
-
+/* ================= GAME ================= */
 #gameScreen{
-
 display:none;
-
 padding:20px;
-
 }
 
 .gameHeader{
-
 text-align:center;
-
-margin-bottom:20px;
-
+margin-bottom:15px;
 }
 
-.gameLogo{
-
-width:180px;
-
-margin-bottom:10px;
-
-}
+.gameLogo{width:150px;}
 
 .gameTitle{
-
-font-size:2.8rem;
-
-font-weight:bold;
-
+font-size:2rem;
 color:#1565c0;
-
 }
 
+/* ================= MAIN CARD ================= */
 .mainCard{
-
-max-width:1200px;
-
+max-width:1100px;
 margin:auto;
-
 background:white;
-
-padding:25px;
-
-border-radius:30px;
-
-box-shadow:
-0 10px 30px rgba(0,0,0,.15);
-
+padding:20px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
 
+/* ================= PROMPT ================= */
 .promptBox{
-
 background:#1976d2;
-
 color:white;
-
-padding:15px;
-
-border-radius:20px;
-
-font-size:1.4rem;
-
-font-weight:bold;
-
+padding:12px;
+border-radius:15px;
 text-align:center;
-
-margin-bottom:20px;
-
-}
-
-.scoreBox{
-
-text-align:center;
-
 font-size:1.2rem;
-
-font-weight:bold;
-
-margin-bottom:20px;
-
-color:#2e7d32;
-
+margin-bottom:15px;
 }
 
-/* IMAGE */
+/* ================= SCORE ================= */
+.scoreBox{
+text-align:center;
+font-weight:bold;
+margin-bottom:15px;
+color:#2e7d32;
+}
 
+/* ================= ATMOSPHERE ================= */
 .atmosphereContainer{
-
 position:relative;
-
-max-width:900px;
-
+max-width:700px;
 margin:auto;
-
 }
 
 .atmosphereImage{
-
 width:100%;
-
+border-radius:15px;
 display:block;
-
-border-radius:20px;
-
 }
 
-/* LAYER BUTTONS */
-
-.layerBtn{
-
+/* ================= NEW GRID OVERLAY ================= */
+.layerGrid{
 position:absolute;
+inset:0;
+display:grid;
+grid-template-rows:repeat(5,1fr);
+place-items:center;
+}
 
-width:250px;
-
-height:70px;
-
-border-radius:40px;
-
-border:3px solid #0d47a1;
-
+/* ================= BUTTONS ================= */
+.layerBtn{
+width:60%;
+max-width:220px;
+height:45px;
+border-radius:25px;
+border:2px solid #0d47a1;
 background:white;
-
-font-size:1.8rem;
-
+font-size:1rem;
 font-weight:bold;
-
 color:#0d47a1;
-
 cursor:pointer;
-
-transition:.3s;
-
+transition:0.2s;
 }
 
 .layerBtn:hover{
-
-transform:scale(1.03);
-
+transform:scale(1.05);
 }
 
 .filled{
-
 background:#e8f5e9 !important;
-
-border:3px solid #43a047 !important;
-
+border:2px solid #43a047 !important;
 color:#2e7d32 !important;
-
-font-size:1rem !important;
-
 }
 
+/* ================= FEEDBACK ================= */
 .feedback{
-
-margin-top:20px;
-
 text-align:center;
-
-font-size:1.2rem;
-
+margin-top:15px;
+font-size:1.1rem;
 font-weight:bold;
-
-min-height:40px;
-
+min-height:30px;
 }
 
+/* ================= MOBILE FIX ================= */
 @media(max-width:768px){
 
+.title{font-size:1.8rem;}
+.gameTitle{font-size:1.5rem;}
+
 .layerBtn{
+width:80%;
+font-size:0.9rem;
+}
 
-width:150px;
-height:45px;
-
+.promptBox{
 font-size:1rem;
-
-}
-
-.title{
-
-font-size:2rem;
-
-}
-
-.gameTitle{
-
-font-size:2rem;
-
 }
 
 }
 
 </style>
-
 </head>
 
 <body>
 
+<!-- ================= SPLASH ================= -->
 <div id="splashScreen">
-
-<img
-id="splashLogo"
-src="assets/innovine-logo.png">
-
+<img id="splashLogo" src="assets/innovine-logo.png">
 </div>
 
+<!-- ================= INTRO ================= -->
 <div id="introScreen">
 
 <div class="introCard">
 
-<img
-src="assets/innovine-logo.png"
-class="logo">
+<img class="logo" src="assets/innovine-logo.png">
 
-<h1 class="title">
-
-🌍 ATMOSPHERE EXPLORER
-
-</h1>
+<h1 class="title">🌍 ATMOSPHERE EXPLORER</h1>
 
 <div class="story">
-
-Professor Sky has lost the names of Earth's atmospheric layers.
-
-<br><br>
-
-Tap the correct layer position for each atmospheric layer.
-
+Professor Sky has lost the atmospheric layers.<br><br>
+Tap the correct layer position for each layer.
 </div>
 
-<button
-class="startBtn"
-onclick="startGame()">
-
-🚀 START EXPLORING
-
-</button>
+<button class="startBtn" onclick="startGame()">🚀 START</button>
 
 </div>
 
 </div>
 
+<!-- ================= GAME ================= -->
 <div id="gameScreen">
 
 <div class="gameHeader">
-
-<img
-src="assets/innovine-logo.png"
-class="gameLogo">
-
-<div class="gameTitle">
-
-🌍 ATMOSPHERE EXPLORER
-
-</div>
-
+<img class="gameLogo" src="assets/innovine-logo.png">
+<div class="gameTitle">🌍 ATMOSPHERE EXPLORER</div>
 </div>
 
 <div class="mainCard">
 
-<div
-id="promptBox"
-class="promptBox">
+<div class="promptBox" id="promptBox">Loading...</div>
 
-Loading...
-
-</div>
-
-<div
-class="scoreBox">
-
-⭐ Score:
-<span id="score">
-
-0
-
-</span>
-
-</div>
+<div class="scoreBox">⭐ Score: <span id="score">0</span></div>
 
 <div class="atmosphereContainer">
 
-<img
-src="assets/atmosphere.png"
-class="atmosphereImage">
+<img class="atmosphereImage" src="assets/atmosphere.png">
 
-<!-- Layer buttons added in Part 2 -->
-<!-- =========================
-     LAYER BUTTONS
-========================= -->
+<!-- GRID BUTTONS -->
+<div class="layerGrid">
 
-<button
-id="layerA"
-class="layerBtn"
-style="
-top:5%;
-left:50%;
-transform:translateX(-50%);
-">
-
-E
-
-</button>
-
-<button
-id="layerB"
-class="layerBtn"
-style="
-top:17%;
-left:50%;
-transform:translateX(-50%);
-">
-
-D
-
-</button>
-
-<button
-id="layerC"
-class="layerBtn"
-style="
-top:31%;
-left:50%;
-transform:translateX(-50%);
-">
-
-C
-
-</button>
-
-<button
-id="layerD"
-class="layerBtn"
-style="
-top:49%;
-left:50%;
-transform:translateX(-50%);
-">
-
-B
-
-</button>
-
-<button
-id="layerE"
-class="layerBtn"
-style="
-top:66%;
-left:50%;
-transform:translateX(-50%);
-">
-
-A
-
-</button>
-
-</div>
-
-<div
-id="feedback"
-class="feedback">
-
-Tap the correct layer.
+<button id="layerA" class="layerBtn">A</button>
+<button id="layerB" class="layerBtn">B</button>
+<button id="layerC" class="layerBtn">C</button>
+<button id="layerD" class="layerBtn">D</button>
+<button id="layerE" class="layerBtn">E</button>
 
 </div>
 
 </div>
 
+<div class="feedback" id="feedback">Tap the correct layer</div>
+
 </div>
 
-<!-- =========================
-     AUDIO
-========================= -->
+</div>
 
-<audio
-id="correctSound"
-src="assets/correct.mp3">
-</audio>
-
-<audio
-id="wrongSound"
-src="assets/wrong.mp3">
-</audio>
-
-<audio
-id="clapSound"
-src="assets/freesound_community-claps-44774.mp3">
-</audio>
+<!-- ================= AUDIO ================= -->
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
-/* =========================
-   SPLASH
-========================= */
-
+/* ================= SPLASH ================= */
 setTimeout(()=>{
-
-document.getElementById(
-"splashScreen"
-).style.display =
-"none";
-
-document.getElementById(
-"introScreen"
-).style.display =
-"flex";
-
+document.getElementById("splashScreen").style.display="none";
+document.getElementById("introScreen").style.display="flex";
 },1500);
 
-/* =========================
-   START GAME
-========================= */
-
+/* ================= START GAME ================= */
 function startGame(){
-
-document.getElementById(
-"introScreen"
-).style.display =
-"none";
-
-document.getElementById(
-"gameScreen"
-).style.display =
-"block";
-
+document.getElementById("introScreen").style.display="none";
+document.getElementById("gameScreen").style.display="block";
 startRound();
-
 }
 
-/* =========================
-   SCORE
-========================= */
+/* ================= SCORE ================= */
+let score=0;
 
-let score = 0;
-
-/* =========================
-   LAYER DATA
-========================= */
-
-const layers = [
-
-{
-name:"Troposphere",
-target:"layerE"
-},
-
-{
-name:"Stratosphere",
-target:"layerD"
-},
-
-{
-name:"Mesosphere",
-target:"layerC"
-},
-
-{
-name:"Thermosphere",
-target:"layerB"
-},
-
-{
-name:"Exosphere",
-target:"layerA"
-}
-
+/* ================= DATA ================= */
+const layers=[
+{name:"Troposphere",target:"layerE"},
+{name:"Stratosphere",target:"layerD"},
+{name:"Mesosphere",target:"layerC"},
+{name:"Thermosphere",target:"layerB"},
+{name:"Exosphere",target:"layerA"}
 ];
 
-/* =========================
-   SHUFFLE
-========================= */
-
-function shuffle(array){
-
-for(
-let i=array.length-1;
-i>0;
-i--
-){
-
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
-
-[array[i],array[j]]
-=
-[array[j],array[i]];
-
+/* ================= SHUFFLE ================= */
+function shuffle(arr){
+for(let i=arr.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[arr[i],arr[j]]=[arr[j],arr[i]];
+}
+return arr;
 }
 
-return array;
+let gameLayers=shuffle([...layers]);
+let index=0;
 
-}
-
-let gameLayers =
-shuffle(
-[...layers]
-);
-
-let currentIndex = 0;
-
-/* =========================
-   START ROUND
-========================= */
-
+/* ================= ROUND ================= */
 function startRound(){
 
-if(
-currentIndex >=
-gameLayers.length
-){
-
-showCertificate();
-
+if(index>=gameLayers.length){
+showEnd();
 return;
+}
+
+document.getElementById("promptBox").innerHTML=
+"Place: <b>"+gameLayers[index].name+"</b>";
 
 }
 
-document.getElementById(
-"promptBox"
-).innerHTML =
+/* ================= CLICK ================= */
+document.querySelectorAll(".layerBtn").forEach(btn=>{
+btn.onclick=()=>check(btn.id);
+});
 
-`
-Place:
+/* ================= CHECK ================= */
+function check(id){
 
-<b>
+let current=gameLayers[index];
 
-${gameLayers[currentIndex].name}
+if(id===current.target){
 
-</b>
-`;
+document.getElementById("correctSound").play();
 
-}
-/* =========================
-   CLICK EVENTS
-========================= */
+score+=10;
+document.getElementById("score").innerText=score;
 
-document
-.getElementById("layerA")
-.onclick = ()=>checkLayer("layerA");
+document.getElementById(id).innerText=current.name;
+document.getElementById(id).classList.add("filled");
 
-document
-.getElementById("layerB")
-.onclick = ()=>checkLayer("layerB");
+document.getElementById("feedback").innerText="Correct!";
 
-document
-.getElementById("layerC")
-.onclick = ()=>checkLayer("layerC");
+index++;
+setTimeout(startRound,800);
 
-document
-.getElementById("layerD")
-.onclick = ()=>checkLayer("layerD");
+}else{
 
-document
-.getElementById("layerE")
-.onclick = ()=>checkLayer("layerE");
-
-/* =========================
-   CHECK LAYER
-========================= */
-
-function checkLayer(
-selectedLayer
-){
-
-const currentLayer =
-gameLayers[
-currentIndex
-];
-
-if(
-selectedLayer ===
-currentLayer.target
-){
-
-/* CORRECT */
-
-const correctSound =
-document.getElementById(
-"correctSound"
-);
-
-correctSound.currentTime = 0;
-
-correctSound.play().catch(()=>{});
-
-score += 10;
-
-document.getElementById(
-"score"
-).innerHTML =
-score;
-
-/* FILL THE BOX */
-
-const button =
-document.getElementById(
-selectedLayer
-);
-
-button.innerHTML =
-currentLayer.name;
-
-button.classList.add(
-"filled"
-);
-
-button.disabled = true;
-
-/* FEEDBACK */
-
-document.getElementById(
-"feedback"
-).innerHTML =
-
-`
-✅ Correct!
-`;
-
-currentIndex++;
-
-setTimeout(()=>{
-
-startRound();
-
-},1000);
-
-}
-else{
-
-/* WRONG */
-
-const wrongSound =
-document.getElementById(
-"wrongSound"
-);
-
-wrongSound.currentTime = 0;
-
-wrongSound.play().catch(()=>{});
-
-document.getElementById(
-"feedback"
-).innerHTML =
-
-`
-❌ Try Again
-`;
+document.getElementById("wrongSound").play();
+document.getElementById("feedback").innerText="Try Again!";
 
 }
 
 }
 
-/* =========================
-   CERTIFICATE
-========================= */
+/* ================= END ================= */
+function showEnd(){
 
-function showCertificate(){
+document.getElementById("clapSound").play();
 
-const clapSound =
-document.getElementById(
-"clapSound"
-);
+document.querySelector(".mainCard").innerHTML=`
+<div style="text-align:center;padding:20px;">
 
-clapSound.currentTime = 0;
+<img src="assets/innovine-logo.png" style="width:200px;">
 
-clapSound.play().catch(()=>{});
+<h1>🎉 Great Job!</h1>
 
-document.querySelector(
-".mainCard"
-).innerHTML =
+<p>You completed Atmosphere Explorer</p>
 
-`
-<div
-style="
-text-align:center;
-padding:20px;
-">
+<div style="font-size:3rem;">🌍☁️🚀</div>
 
-<img
-src="assets/innovine-logo.png"
-style="
-width:220px;
-margin-bottom:20px;
-">
+<h2>Final Score: ${score}</h2>
 
-<h1
-style="
-font-size:3rem;
-color:#1565c0;
-margin-bottom:15px;
-">
-
-🏆 ATMOSPHERE EXPLORER
-
-</h1>
-
-<div
-style="
-font-size:4rem;
-margin-bottom:20px;
-">
-
-🌍 ☁️ ✈️ ☄️ 🛰️
-
-</div>
-
-<p
-style="
-font-size:1.3rem;
-line-height:1.8;
-max-width:700px;
-margin:auto;
-">
-
-Excellent Work!
-
-<br><br>
-
-You correctly identified all layers of Earth's atmosphere.
-
-</p>
-
-<br>
-
-<div
-style="
-font-size:1.3rem;
-line-height:2;
-color:#1565c0;
-font-weight:bold;
-">
-
-E → Exosphere<br>
-D → Thermosphere<br>
-C → Mesosphere<br>
-B → Stratosphere<br>
-A → Troposphere
-
-</div>
-
-<br>
-
-<h2
-style="
-color:#2e7d32;
-">
-
-⭐ Final Score:
-${score}
-
-</h2>
-
-<br>
-
-<button
-
-onclick="playAgain()"
-
-style="
-padding:18px 40px;
-border:none;
-border-radius:20px;
-background:#43a047;
-color:white;
-font-size:1.2rem;
-font-weight:bold;
-cursor:pointer;
-">
-
-🔄 PLAY AGAIN
-
-</button>
+<button class="startBtn" onclick="location.reload()">Play Again</button>
 
 </div>
 `;
-
-}
-
-/* =========================
-   PLAY AGAIN
-========================= */
-
-function playAgain(){
-
-location.reload();
 
 }
 
