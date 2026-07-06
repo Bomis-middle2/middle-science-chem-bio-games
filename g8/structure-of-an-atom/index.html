@@ -1,1722 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<title>
-
-Carbon Atom Lab v6
-
-</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Carbon Atom Lab</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
 body{
-
-background:
-linear-gradient(
-180deg,
-#07131d,
-#02070c
-);
-
-color:white;
-
-min-height:100vh;
-
-padding:10px;
-
+  background:linear-gradient(180deg,#07131d,#02070c);
+  color:white;
+  min-height:100vh;
+  padding:10px;
 }
 
 .container{
-
-max-width:1400px;
-
-margin:auto;
-
+  max-width:1400px;
+  margin:auto;
 }
 
 .title{
-
-text-align:center;
-
-font-size:
-clamp(
-1.8rem,
-4vw,
-3rem
-);
-
-color:#4fd8ff;
-
-margin-bottom:20px;
-
+  text-align:center;
+  font-size:clamp(1.8rem,4vw,3rem);
+  color:#4fd8ff;
+  margin-bottom:20px;
 }
 
-/* LAYOUT */
-
 .game{
-
-display:grid;
-
-grid-template-columns:
-
-260px
-1fr
-260px;
-
-gap:15px;
-
+  display:grid;
+  grid-template-columns:260px 1fr 260px;
+  gap:15px;
 }
 
 @media(max-width:900px){
-
-.game{
-
-grid-template-columns:
-1fr;
-
+  .game{
+    grid-template-columns:1fr;
+  }
 }
-
-}
-
-/* PANELS */
 
 .panel{
-
-background:
-rgba(
-255,
-255,
-255,
-0.05
-);
-
-border:
-1px solid rgba(
-255,
-255,
-255,
-0.1
-);
-
-border-radius:20px;
-
-padding:20px;
-
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;
+  padding:20px;
 }
-
-/* INSTRUCTION BOX */
 
 #instructionBox{
-
-line-height:1.8;
-
-font-size:1rem;
-
+  line-height:1.8;
+  font-size:1rem;
 }
-
-/* PARTICLE AREA */
 
 #particleArea{
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-height:140px;
-
-margin-top:20px;
-
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:140px;
+  margin-top:20px;
 }
 
-/* PARTICLES */
-
 .particle{
-
-width:90px;
-height:90px;
-
-border-radius:50%;
-
-display:flex;
-
-justify-content:center;
-align-items:center;
-
-font-size:2rem;
-
-font-weight:bold;
-
-cursor:pointer;
-
-user-select:none;
-
-transition:.2s;
-
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:2rem;
+  font-weight:bold;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
 }
 
 .particle:hover{
-
-transform:scale(1.05);
-
+  transform:scale(1.05);
 }
 
 .proton{
-
-background:#ff3b30;
-
+  background:#ff3b30;
 }
 
 .neutron{
-
-background:#e7d54a;
-
-color:#333;
-
+  background:#e7d54a;
+  color:#333;
 }
 
 .electron{
-
-background:#2563eb;
-
+  background:#2563eb;
 }
-
-/* ATOM AREA */
 
 .atomArea{
-
-position:relative;
-
-height:650px;
-
-overflow:hidden;
-
+  position:relative;
+  height:650px;
+  overflow:hidden;
 }
-
-/* MOBILE */
 
 @media(max-width:700px){
-
-.atomArea{
-
-height:420px;
-
+  .atomArea{
+    height:420px;
+  }
 }
-
-}
-
-/* SHELLS */
 
 .shell1{
-
-position:absolute;
-
-width:260px;
-height:260px;
-
-border-radius:50%;
-
-border:
-3px solid rgba(
-255,
-255,
-255,
-0.7
-);
-
-left:50%;
-top:50%;
-
-transform:
-translate(-50%,-50%);
-
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,0.7);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
 }
 
 .shell2{
-
-position:absolute;
-
-width:460px;
-height:460px;
-
-border-radius:50%;
-
-border:
-3px solid rgba(
-255,
-255,
-255,
-0.4
-);
-
-left:50%;
-top:50%;
-
-transform:
-translate(-50%,-50%);
-
+  position:absolute;
+  width:460px;
+  height:460px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,0.4);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
 }
 
 @media(max-width:700px){
+  .shell1{
+    width:180px;
+    height:180px;
+  }
 
-.shell1{
-
-width:180px;
-height:180px;
-
+  .shell2{
+    width:300px;
+    height:300px;
+  }
 }
-
-.shell2{
-
-width:300px;
-height:300px;
-
-}
-
-}
-
-/* NUCLEUS */
 
 #nucleus{
-
-position:absolute;
-
-width:180px;
-height:180px;
-
-border-radius:50%;
-
-border:
-4px solid gold;
-
-background:
-rgba(
-255,
-200,
-0,
-0.1
-);
-
-left:50%;
-top:50%;
-
-transform:
-translate(-50%,-50%);
-
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:4px solid gold;
+  background:rgba(255,200,0,0.1);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
 }
 
 @media(max-width:700px){
-
-#nucleus{
-
-width:120px;
-height:120px;
-
+  #nucleus{
+    width:120px;
+    height:120px;
+  }
 }
-
-}
-
-/* NUCLEUS PARTICLES */
 
 .nucleusParticle{
-
-position:absolute;
-
-width:28px;
-height:28px;
-
-border-radius:50%;
-
-display:flex;
-
-justify-content:center;
-align-items:center;
-
-font-size:.8rem;
-
-font-weight:bold;
-
+  position:absolute;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:.8rem;
+  font-weight:bold;
 }
 
 @media(max-width:700px){
-
-.nucleusParticle{
-
-width:22px;
-height:22px;
-
-font-size:.7rem;
-
+  .nucleusParticle{
+    width:22px;
+    height:22px;
+    font-size:.7rem;
+  }
 }
-
-}
-
-/* ELECTRONS */
 
 .electronPlaced{
-
-position:absolute;
-
-width:18px;
-height:18px;
-
-border-radius:50%;
-
-background:#2563eb;
-
-box-shadow:
-0 0 10px #2563eb;
-
-transform:
-translate(-50%,-50%);
-
+  position:absolute;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#2563eb;
+  box-shadow:0 0 16px #2563eb;
+  transform:translate(-50%,-50%);
+  z-index:5;
 }
 
-/* ACTIVE TARGET */
-
 .activeTarget{
-
-position:absolute;
-
-width:50px;
-height:50px;
-
-border-radius:50%;
-
-border:
-3px dashed #4fd8ff;
-
-animation:
-pulse 1s infinite;
-
-cursor:pointer;
-
-transform:
-translate(-50%,-50%);
-
+  position:absolute;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:3px dashed #4fd8ff;
+  animation:pulse 1s infinite;
+  cursor:pointer;
+  transform:translate(-50%,-50%);
+  z-index:10;
 }
 
 @keyframes pulse{
-
-0%{
-transform:
-translate(-50%,-50%)
-scale(1);
-}
-
-50%{
-transform:
-translate(-50%,-50%)
-scale(1.1);
-}
-
-100%{
-transform:
-translate(-50%,-50%)
-scale(1);
-}
-
+  0%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.1);}
+  100%{transform:translate(-50%,-50%) scale(1);}
 }
 
 button{
-
-width:100%;
-
-padding:12px;
-
-border:none;
-
-border-radius:12px;
-
-background:#22c55e;
-
-color:white;
-
-cursor:pointer;
-
-margin-top:15px;
-
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+  margin-top:15px;
+  font-size:1rem;
 }
 
 #status{
-
-margin-top:15px;
-
-color:#4fd8ff;
-
-font-weight:bold;
-
-line-height:1.8;
-
+  margin-top:15px;
+  color:#4fd8ff;
+  font-weight:bold;
+  line-height:1.8;
 }
 
+input{
+  font-size:1rem;
+}
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1 class="title">
-
-🧪 Carbon Atom Research Lab
-
-</h1>
+<h1 class="title">🧪 Carbon Atom Research Lab</h1>
 
 <div class="game">
 
-<!-- LEFT -->
+<div class="panel">
+  <h2>Instructions</h2>
+  <br>
+  <div id="instructionBox">Tap the particle and then tap the highlighted location.</div>
+  <div id="particleArea"></div>
+</div>
 
 <div class="panel">
-
-<h2>
-
-Instructions
-
-</h2>
-
-<br>
-
-<div id="instructionBox">
-
-Tap the particle and then tap the highlighted location.
-
+  <div class="atomArea" id="atomArea">
+    <div class="shell2"></div>
+    <div class="shell1"></div>
+    <div id="nucleus"></div>
+  </div>
 </div>
-
-<div id="particleArea">
-
-</div>
-
-</div>
-
-<!-- CENTER -->
 
 <div class="panel">
+  <h2>Mission</h2>
+  <br>
+  <div id="missionText">
+    Stage 1
+    <br><br>
+    Add 6 Protons
+  </div>
 
-<div
-class="atomArea"
-id="atomArea">
+  <div id="status">0 / 6 Protons Added</div>
 
-<div class="shell2"></div>
-
-<div class="shell1"></div>
-
-<div id="nucleus"></div>
-
+  <button onclick="checkProgress()">Check Progress</button>
 </div>
 
 </div>
-
-<!-- RIGHT -->
-
-<div class="panel">
-
-<h2>
-
-Mission
-
-</h2>
-
-<br>
-
-<div id="missionText">
-
-Stage 1
-
-<br><br>
-
-Add 6 Protons
-
 </div>
-
-<div id="status">
-
-0 / 6 Protons Added
-
-</div>
-
-<button
-onclick="checkProgress()">
-
-Check Progress
-
-</button>
-
-</div>
-
-</div>
-<!-- PART 2 -->
 
 <script>
+let stage = "proton";
 
-/* =====================================
-   GAME VARIABLES
-===================================== */
+let protonCount = 0;
+let neutronCount = 0;
+let kElectronCount = 0;
+let lElectronCount = 0;
 
-let stage="proton";
+let selectedParticle = null;
+let activeTarget = null;
 
-let protonCount=0;
-let neutronCount=0;
+const particleArea = document.getElementById("particleArea");
+const nucleus = document.getElementById("nucleus");
+const atomArea = document.getElementById("atomArea");
 
-let kElectronCount=0;
-let lElectronCount=0;
-
-let selectedParticle=null;
-
-let activeTarget=null;
-
-const particleArea=
-document.getElementById(
-"particleArea"
-);
-
-const nucleus=
-document.getElementById(
-"nucleus"
-);
-
-const atomArea=
-document.getElementById(
-"atomArea"
-);
-
-/* =====================================
-   REALISTIC NUCLEUS CLUSTER
-===================================== */
-
-const nucleusPositions=[
-
-{left:50,top:15},
-
-{left:35,top:28},
-{left:50,top:28},
-{left:65,top:28},
-
-{left:28,top:45},
-{left:43,top:45},
-{left:58,top:45},
-{left:73,top:45},
-
-{left:35,top:62},
-{left:50,top:62},
-{left:65,top:62},
-
-{left:50,top:79}
-
+const nucleusPositions = [
+  {left:50,top:15},
+  {left:35,top:28},
+  {left:50,top:28},
+  {left:65,top:28},
+  {left:28,top:45},
+  {left:43,top:45},
+  {left:58,top:45},
+  {left:73,top:45},
+  {left:35,top:62},
+  {left:50,top:62},
+  {left:65,top:62},
+  {left:50,top:79}
 ];
 
-/* =====================================
-   ELECTRON POSITIONS
-===================================== */
+const kShellAngles = [-90, 90];
+const lShellAngles = [-90, 0, 90, 180];
 
-const kShellPositions=[
+function getShellPoint(shellClass, angleDeg){
+  const areaRect = atomArea.getBoundingClientRect();
+  const shell = document.querySelector(shellClass);
+  const shellRect = shell.getBoundingClientRect();
 
-{
-left:"50%",
-top:"29%"
-},
+  const cx = shellRect.left - areaRect.left + shellRect.width / 2;
+  const cy = shellRect.top - areaRect.top + shellRect.height / 2;
+  const radius = shellRect.width / 2;
 
-{
-left:"50%",
-top:"71%"
+  const angle = angleDeg * Math.PI / 180;
+
+  return {
+    left: (cx + radius * Math.cos(angle)) + "px",
+    top: (cy + radius * Math.sin(angle)) + "px"
+  };
 }
-
-];
-
-const lShellPositions=[
-
-{
-left:"50%",
-top:"14%"
-},
-
-{
-left:"86%",
-top:"50%"
-},
-
-{
-left:"50%",
-top:"86%"
-},
-
-{
-left:"14%",
-top:"50%"
-}
-
-];
-
-/* =====================================
-   CREATE PARTICLE
-===================================== */
 
 function createParticle(type){
+  particleArea.innerHTML = "";
 
-particleArea.innerHTML="";
+  const particle = document.createElement("div");
+  particle.className = "particle " + type;
+  particle.dataset.type = type;
 
-const particle=
-document.createElement(
-"div"
-);
+  if(type === "proton") particle.innerHTML = "P";
+  if(type === "neutron") particle.innerHTML = "N";
+  if(type === "electron") particle.innerHTML = "−";
 
-particle.className=
-"particle "+type;
+  particle.onclick = function(){
+    selectParticle(particle);
+  };
 
-particle.dataset.type=
-type;
-
-if(type==="proton"){
-
-particle.innerHTML="P";
-
+  particleArea.appendChild(particle);
 }
 
-if(type==="neutron"){
-
-particle.innerHTML="N";
-
+function selectParticle(particle){
+  selectedParticle = particle;
+  particle.style.transform = "scale(1.1)";
 }
 
-if(type==="electron"){
-
-particle.innerHTML="−";
-
-}
-
-particle.onclick=
-function(){
-
-selectParticle(
-particle
-);
-
-};
-
-particleArea.appendChild(
-particle
-);
-
-}
-
-/* =====================================
-   SELECT PARTICLE
-===================================== */
-
-function selectParticle(
-particle
-){
-
-selectedParticle=
-particle;
-
-particle.style.transform=
-"scale(1.1)";
-
-}
-
-/* =====================================
-   START GAME
-===================================== */
-
-createParticle(
-"proton"
-);
-
-/* =====================================
-   STATUS
-===================================== */
+createParticle("proton");
+updateInstructions();
 
 function updateStatus(){
+  const status = document.getElementById("status");
 
-const status=
-document.getElementById(
-"status"
-);
-
-if(stage==="proton"){
-
-status.innerHTML=
-
-protonCount+
-" / 6 Protons Added";
-
+  if(stage === "proton"){
+    status.innerHTML = protonCount + " / 6 Protons Added";
+  }
+  else if(stage === "neutron"){
+    status.innerHTML = neutronCount + " / 6 Neutrons Added";
+  }
+  else if(stage === "k"){
+    status.innerHTML = kElectronCount + " / 2 Electrons Added";
+  }
+  else if(stage === "l"){
+    status.innerHTML = lElectronCount + " / 4 Electrons Added";
+  }
 }
-
-else if(
-stage==="neutron"
-){
-
-status.innerHTML=
-
-neutronCount+
-" / 6 Neutrons Added";
-
-}
-
-else if(
-stage==="k"
-){
-
-status.innerHTML=
-
-kElectronCount+
-" / 2 Electrons Added";
-
-}
-
-else if(
-stage==="l"
-){
-
-status.innerHTML=
-
-lElectronCount+
-" / 4 Electrons Added";
-
-}
-
-}
-
-/* =====================================
-   DYNAMIC INSTRUCTIONS
-===================================== */
 
 function updateInstructions(){
+  const box = document.getElementById("instructionBox");
 
-const box=
-document.getElementById(
-"instructionBox"
-);
-
-if(stage==="proton"){
-
-box.innerHTML=
-
-`
-Tap the Proton.
-
-<br><br>
-
-Then tap the nucleus.
-`;
-
+  if(stage === "proton"){
+    box.innerHTML = "Tap the Proton.<br><br>Then tap the nucleus.";
+  }
+  else if(stage === "neutron"){
+    box.innerHTML = "Tap the Neutron.<br><br>Then tap the nucleus.";
+  }
+  else if(stage === "k"){
+    box.innerHTML = "Tap the Electron.<br><br>Then tap the glowing K Shell position.";
+  }
+  else if(stage === "l"){
+    box.innerHTML = "Tap the Electron.<br><br>Then tap the glowing L Shell position.";
+  }
+  else{
+    box.innerHTML = "🏆 Carbon Atom Complete<br><br>Complete the quiz.";
+  }
 }
 
-else if(
-stage==="neutron"
-){
+nucleus.addEventListener("click", function(){
+  if(!selectedParticle) return;
 
-box.innerHTML=
+  const type = selectedParticle.dataset.type;
 
-`
-Tap the Neutron.
+  if(type !== "proton" && type !== "neutron") return;
 
-<br><br>
-
-Then tap the nucleus.
-`;
-
-}
-
-else if(
-stage==="k"
-){
-
-box.innerHTML=
-
-`
-Tap the Electron.
-
-<br><br>
-
-Then tap the glowing K Shell position.
-`;
-
-}
-
-else if(
-stage==="l"
-){
-
-box.innerHTML=
-
-`
-Tap the Electron.
-
-<br><br>
-
-Then tap the glowing L Shell position.
-`;
-
-}
-
-else{
-
-box.innerHTML=
-
-`
-🏆 Carbon Atom Complete
-
-<br><br>
-
-Complete the quiz.
-`;
-
-}
-
-}
-
-updateInstructions();
-<!-- PART 3 -->
-
-/* =====================================
-   NUCLEUS TAP TARGET
-===================================== */
-
-nucleus.addEventListener(
-"click",
-function(){
-
-if(!selectedParticle)
-return;
-
-const type=
-selectedParticle.dataset.type;
-
-if(
-type!=="proton" &&
-type!=="neutron"
-){
-
-return;
-
-}
-
-addToNucleus(type);
-
-selectedParticle=null;
-
-nextStep();
-
-}
-);
-
-/* =====================================
-   ADD TO NUCLEUS
-===================================== */
-
-function addToNucleus(type){
-
-const index=
-protonCount+
-neutronCount;
-
-const pos=
-nucleusPositions[index];
-
-const particle=
-document.createElement(
-"div"
-);
-
-particle.className=
-"nucleusParticle";
-
-particle.style.left=
-pos.left+"%";
-
-particle.style.top=
-pos.top+"%";
-
-particle.style.transform=
-"translate(-50%,-50%)";
-
-if(type==="proton"){
-
-particle.style.background=
-"#ff3b30";
-
-particle.innerHTML="P";
-
-protonCount++;
-
-}
-
-if(type==="neutron"){
-
-particle.style.background=
-"#e7d54a";
-
-particle.style.color=
-"#333";
-
-particle.innerHTML="N";
-
-neutronCount++;
-
-}
-
-nucleus.appendChild(
-particle
-);
-
-updateStatus();
-
-}
-
-/* =====================================
-   CREATE ACTIVE TARGET
-===================================== */
-
-function createTarget(
-left,
-top
-){
-
-if(activeTarget){
-
-activeTarget.remove();
-
-}
-
-activeTarget=
-document.createElement(
-"div"
-);
-
-activeTarget.className=
-"activeTarget";
-
-activeTarget.style.left=
-left;
-
-activeTarget.style.top=
-top;
-
-atomArea.appendChild(
-activeTarget
-);
-
-activeTarget.onclick=
-function(){
-
-placeElectron(
-left,
-top
-);
-
-};
-
-}
-
-/* =====================================
-   PLACE ELECTRON
-===================================== */
-
-function placeElectron(
-left,
-top
-){
-
-if(!selectedParticle)
-return;
-
-if(
-selectedParticle.dataset.type
-!=="electron"
-){
-
-return;
-
-}
-
-const electron=
-document.createElement(
-"div"
-);
-
-electron.className=
-"electronPlaced";
-
-electron.style.left=
-left;
-
-electron.style.top=
-top;
-
-atomArea.appendChild(
-electron
-);
-
-if(activeTarget){
-
-activeTarget.remove();
-
-activeTarget=null;
-
-}
-
-if(stage==="k"){
-
-kElectronCount++;
-
-}
-
-else if(
-stage==="l"
-){
-
-lElectronCount++;
-
-}
-
-selectedParticle=null;
-
-updateStatus();
-
-nextStep();
-
-}
-
-/* =====================================
-   SHOW K SHELL TARGET
-===================================== */
-
-function showNextKTarget(){
-
-const pos=
-kShellPositions[
-kElectronCount
-];
-
-createTarget(
-pos.left,
-pos.top
-);
-
-}
-
-/* =====================================
-   SHOW L SHELL TARGET
-===================================== */
-
-function showNextLTarget(){
-
-const pos=
-lShellPositions[
-lElectronCount
-];
-
-createTarget(
-pos.left,
-pos.top
-);
-
-}
-
-/* =====================================
-   NEXT STEP
-===================================== */
-
-function nextStep(){
-
-/* PROTONS */
-
-if(stage==="proton"){
-
-if(protonCount<6){
-
-createParticle(
-"proton"
-);
-
-return;
-
-}
-
-stage="neutron";
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Stage 2
-
-<br><br>
-
-Add 6 Neutrons
-`;
-
-createParticle(
-"neutron"
-);
-
-updateStatus();
-updateInstructions();
-
-return;
-
-}
-
-/* NEUTRONS */
-
-if(stage==="neutron"){
-
-if(neutronCount<6){
-
-createParticle(
-"neutron"
-);
-
-return;
-
-}
-
-stage="k";
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Stage 3
-
-<br><br>
-
-Place 2 Electrons
-in K Shell
-`;
-
-createParticle(
-"electron"
-);
-
-showNextKTarget();
-
-updateStatus();
-updateInstructions();
-
-return;
-
-}
-/* K SHELL */
-
-if(stage==="k"){
-
-if(kElectronCount<2){
-
-createParticle(
-"electron"
-);
-
-showNextKTarget();
-
-return;
-
-}
-
-stage="l";
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Stage 4
-
-<br><br>
-
-Place 4 Electrons
-in L Shell
-`;
-
-createParticle(
-"electron"
-);
-
-showNextLTarget();
-
-updateStatus();
-updateInstructions();
-
-return;
-
-}
-
-/* L SHELL */
-
-if(stage==="l"){
-
-if(lElectronCount<4){
-
-createParticle(
-"electron"
-);
-
-showNextLTarget();
-
-return;
-
-}
-
-stage="complete";
-
-particleArea.innerHTML=
-
-`
-<div style="
-text-align:center;
-font-size:1.3rem;
-color:#22c55e;
-font-weight:bold;
-">
-
-🏆 Carbon Atom Complete
-
-</div>
-`;
-
-document
-.getElementById(
-"missionText"
-)
-.innerHTML=
-
-`
-Carbon Atom Built
-
-<br><br>
-
-Atomic Number: 6
-
-<br>
-
-Mass Number: 12
-
-<br>
-
-Electronic Configuration: 2,4
-`;
-
-document
-.getElementById(
-"status"
-)
-.innerHTML=
-
-`
-✔ 6 Protons
-
-<br>
-
-✔ 6 Neutrons
-
-<br>
-
-✔ 6 Electrons
-`;
-
-updateInstructions();
-
-showQuiz();
-
-}
-
-}
-
-/* =====================================
-   QUIZ
-===================================== */
-
-const quizHTML=
-
-`
-<div
-id="quizScreen"
-class="panel"
-style="
-display:none;
-margin-top:20px;
-">
-
-<h2>
-
-🧠 Carbon Challenge
-
-</h2>
-
-<br>
-
-<p>
-
-1. What is the Atomic Number of Carbon?
-
-</p>
-
-<input
-id="q1"
-type="number"
-style="
-width:100%;
-padding:10px;
-border-radius:10px;
-">
-
-<br><br>
-
-<p>
-
-2. What is the Mass Number of Carbon-12?
-
-</p>
-
-<input
-id="q2"
-type="number"
-style="
-width:100%;
-padding:10px;
-border-radius:10px;
-">
-
-<br><br>
-
-<p>
-
-3. How many Valence Electrons does Carbon have?
-
-</p>
-
-<input
-id="q3"
-type="number"
-style="
-width:100%;
-padding:10px;
-border-radius:10px;
-">
-
-<br><br>
-
-<button
-onclick="checkQuiz()">
-
-Submit Quiz
-
-</button>
-
-</div>
-`;
-
-document
-.querySelector(
-".container"
-)
-.insertAdjacentHTML(
-"beforeend",
-quizHTML
-);
-
-/* =====================================
-   SHOW QUIZ
-===================================== */
-
-function showQuiz(){
-
-document
-.getElementById(
-"quizScreen"
-)
-.style.display=
-"block";
-
-}
-
-/* =====================================
-   CHECK QUIZ
-===================================== */
-
-function checkQuiz(){
-
-const q1=
-document.getElementById(
-"q1"
-).value;
-
-const q2=
-document.getElementById(
-"q2"
-).value;
-
-const q3=
-document.getElementById(
-"q3"
-).value;
-
-if(
-
-q1==="6" &&
-q2==="12" &&
-q3==="4"
-
-){
-
-showCertificate();
-
-}
-
-else{
-
-alert(
-"Some answers are incorrect. Try again."
-);
-
-}
-
-}
-<!-- PART 5 -->
-
-/* =====================================
-   CERTIFICATE
-===================================== */
-
-const certificateHTML=
-
-`
-<div
-id="certificateScreen"
-class="panel"
-style="
-display:none;
-margin-top:20px;
-text-align:center;
-">
-
-<h1>
-
-🏆 Certificate of Achievement
-
-</h1>
-
-<br>
-
-<p>
-
-Enter Student Name
-
-</p>
-
-<br>
-
-<input
-id="studentName"
-placeholder="Student Name"
-style="
-width:300px;
-max-width:100%;
-padding:12px;
-border-radius:10px;
-text-align:center;
-">
-
-<br><br>
-
-<button
-onclick="generateCertificate()">
-
-Generate Certificate
-
-</button>
-
-<br><br>
-
-<div
-id="certificateContent"
-style="
-display:none;
-">
-
-<h2
-id="studentDisplay">
-
-</h2>
-
-<br>
-
-<p>
-
-Successfully Built a Carbon-12 Atom
-
-</p>
-
-<br>
-
-<p>
-
-Atomic Number: 6
-
-</p>
-
-<p>
-
-Mass Number: 12
-
-</p>
-
-<p>
-
-Electronic Configuration: 2,4
-
-</p>
-
-<p>
-
-Valence Electrons: 4
-
-</p>
-
-<br>
-
-<h2>
-
-⭐ Carbon Atom Master ⭐
-
-</h2>
-
-<br>
-
-<button
-onclick="location.reload()">
-
-Play Again
-
-</button>
-
-</div>
-
-</div>
-`;
-
-document
-.querySelector(
-".container"
-)
-.insertAdjacentHTML(
-"beforeend",
-certificateHTML
-);
-
-/* =====================================
-   SHOW CERTIFICATE
-===================================== */
-
-function showCertificate(){
-
-document
-.getElementById(
-"certificateScreen"
-)
-.style.display=
-"block";
-
-window.scrollTo({
-
-top:
-document.body.scrollHeight,
-
-behavior:"smooth"
-
+  addToNucleus(type);
+  selectedParticle = null;
+  nextStep();
 });
 
+function addToNucleus(type){
+  const index = protonCount + neutronCount;
+  const pos = nucleusPositions[index];
+
+  const particle = document.createElement("div");
+  particle.className = "nucleusParticle";
+  particle.style.left = pos.left + "%";
+  particle.style.top = pos.top + "%";
+  particle.style.transform = "translate(-50%,-50%)";
+
+  if(type === "proton"){
+    particle.style.background = "#ff3b30";
+    particle.innerHTML = "P";
+    protonCount++;
+  }
+
+  if(type === "neutron"){
+    particle.style.background = "#e7d54a";
+    particle.style.color = "#333";
+    particle.innerHTML = "N";
+    neutronCount++;
+  }
+
+  nucleus.appendChild(particle);
+  updateStatus();
 }
 
-/* =====================================
-   GENERATE CERTIFICATE
-===================================== */
+function createTarget(left, top){
+  if(activeTarget){
+    activeTarget.remove();
+  }
+
+  activeTarget = document.createElement("div");
+  activeTarget.className = "activeTarget";
+  activeTarget.style.left = left;
+  activeTarget.style.top = top;
+
+  atomArea.appendChild(activeTarget);
+
+  activeTarget.onclick = function(){
+    placeElectron(left, top);
+  };
+}
+
+function placeElectron(left, top){
+  if(!selectedParticle) return;
+
+  if(selectedParticle.dataset.type !== "electron") return;
+
+  const electron = document.createElement("div");
+  electron.className = "electronPlaced";
+  electron.style.left = left;
+  electron.style.top = top;
+
+  atomArea.appendChild(electron);
+
+  if(activeTarget){
+    activeTarget.remove();
+    activeTarget = null;
+  }
+
+  if(stage === "k"){
+    kElectronCount++;
+  }
+  else if(stage === "l"){
+    lElectronCount++;
+  }
+
+  selectedParticle = null;
+  updateStatus();
+  nextStep();
+}
+
+function showNextKTarget(){
+  const pos = getShellPoint(".shell1", kShellAngles[kElectronCount]);
+  createTarget(pos.left, pos.top);
+}
+
+function showNextLTarget(){
+  const pos = getShellPoint(".shell2", lShellAngles[lElectronCount]);
+  createTarget(pos.left, pos.top);
+}
+
+function nextStep(){
+  if(stage === "proton"){
+    if(protonCount < 6){
+      createParticle("proton");
+      return;
+    }
+
+    stage = "neutron";
+
+    document.getElementById("missionText").innerHTML =
+    "Stage 2<br><br>Add 6 Neutrons";
+
+    createParticle("neutron");
+    updateStatus();
+    updateInstructions();
+    return;
+  }
+
+  if(stage === "neutron"){
+    if(neutronCount < 6){
+      createParticle("neutron");
+      return;
+    }
+
+    stage = "k";
+
+    document.getElementById("missionText").innerHTML =
+    "Stage 3<br><br>Place 2 Electrons<br>in K Shell";
+
+    createParticle("electron");
+    showNextKTarget();
+    updateStatus();
+    updateInstructions();
+    return;
+  }
+
+  if(stage === "k"){
+    if(kElectronCount < 2){
+      createParticle("electron");
+      showNextKTarget();
+      return;
+    }
+
+    stage = "l";
+
+    document.getElementById("missionText").innerHTML =
+    "Stage 4<br><br>Place 4 Electrons<br>in L Shell";
+
+    createParticle("electron");
+    showNextLTarget();
+    updateStatus();
+    updateInstructions();
+    return;
+  }
+
+  if(stage === "l"){
+    if(lElectronCount < 4){
+      createParticle("electron");
+      showNextLTarget();
+      return;
+    }
+
+    stage = "complete";
+
+    particleArea.innerHTML =
+    '<div style="text-align:center;font-size:1.3rem;color:#22c55e;font-weight:bold;">🏆 Carbon Atom Complete</div>';
+
+    document.getElementById("missionText").innerHTML =
+    "Carbon Atom Built<br><br>Atomic Number: 6<br>Mass Number: 12<br>Electronic Configuration: 2,4";
+
+    document.getElementById("status").innerHTML =
+    "✔ 6 Protons<br>✔ 6 Neutrons<br>✔ 6 Electrons";
+
+    updateInstructions();
+    showQuiz();
+  }
+}
+
+const quizHTML = `
+<div id="quizScreen" class="panel" style="display:none;margin-top:20px;">
+  <h2>🧠 Carbon Challenge</h2>
+  <br>
+
+  <p>1. What is the Atomic Number of Carbon?</p>
+  <input id="q1" type="number" style="width:100%;padding:10px;border-radius:10px;">
+  <br><br>
+
+  <p>2. What is the Mass Number of Carbon-12?</p>
+  <input id="q2" type="number" style="width:100%;padding:10px;border-radius:10px;">
+  <br><br>
+
+  <p>3. How many Valence Electrons does Carbon have?</p>
+  <input id="q3" type="number" style="width:100%;padding:10px;border-radius:10px;">
+  <br><br>
+
+  <button onclick="checkQuiz()">Submit Quiz</button>
+</div>
+`;
+
+document.querySelector(".container").insertAdjacentHTML("beforeend", quizHTML);
+
+function showQuiz(){
+  document.getElementById("quizScreen").style.display = "block";
+}
+
+function checkQuiz(){
+  const q1 = document.getElementById("q1").value;
+  const q2 = document.getElementById("q2").value;
+  const q3 = document.getElementById("q3").value;
+
+  if(q1 === "6" && q2 === "12" && q3 === "4"){
+    showCertificate();
+  }
+  else{
+    alert("Some answers are incorrect. Try again.");
+  }
+}
+
+const certificateHTML = `
+<div id="certificateScreen" class="panel" style="display:none;margin-top:20px;text-align:center;">
+  <h1>🏆 Certificate of Achievement</h1>
+  <br>
+
+  <p>Enter Student Name</p>
+  <br>
+
+  <input id="studentName" placeholder="Student Name" style="width:300px;max-width:100%;padding:12px;border-radius:10px;text-align:center;">
+  <br><br>
+
+  <button onclick="generateCertificate()">Generate Certificate</button>
+  <br><br>
+
+  <div id="certificateContent" style="display:none;">
+    <h2 id="studentDisplay"></h2>
+    <br>
+
+    <p>Successfully Built a Carbon-12 Atom</p>
+    <br>
+
+    <p>Atomic Number: 6</p>
+    <p>Mass Number: 12</p>
+    <p>Electronic Configuration: 2,4</p>
+    <p>Valence Electrons: 4</p>
+    <br>
+
+    <h2>⭐ Carbon Atom Master ⭐</h2>
+    <br>
+
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+`;
+
+document.querySelector(".container").insertAdjacentHTML("beforeend", certificateHTML);
+
+function showCertificate(){
+  document.getElementById("certificateScreen").style.display = "block";
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
 
 function generateCertificate(){
+  const name = document.getElementById("studentName").value.trim();
 
-const name=
-document
-.getElementById(
-"studentName"
-)
-.value
-.trim();
+  if(name === ""){
+    alert("Please enter a student name.");
+    return;
+  }
 
-if(name===""){
-
-alert(
-"Please enter a student name."
-);
-
-return;
-
+  document.getElementById("studentDisplay").innerHTML = name;
+  document.getElementById("certificateContent").style.display = "block";
 }
-
-document
-.getElementById(
-"studentDisplay"
-)
-.innerHTML=name;
-
-document
-.getElementById(
-"certificateContent"
-)
-.style.display=
-"block";
-
-}
-
-/* =====================================
-   CHECK PROGRESS
-===================================== */
 
 function checkProgress(){
-
-if(stage==="complete"){
-
-showQuiz();
-
+  if(stage === "complete"){
+    showQuiz();
+  }
+  else{
+    alert("Keep building the Carbon Atom!");
+  }
 }
-else{
-
-alert(
-"Keep building the Carbon Atom!"
-);
-
-}
-
-}
-
 </script>
 
 </body>
-
 </html>
