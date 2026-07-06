@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -15,6 +15,7 @@ body{
   overflow:hidden;
 }
 
+/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -24,9 +25,9 @@ body{
   justify-content:center;
   z-index:999;
 }
+#splash img{width:150px; max-width:70%;}
 
-#splash img{width:150px;max-width:70%;}
-
+/* INTRO & END */
 #intro,#end{
   display:none;
   position:fixed;
@@ -37,7 +38,6 @@ body{
   text-align:center;
   padding:20px;
 }
-
 .card{
   background:white;
   padding:22px;
@@ -46,7 +46,6 @@ body{
   width:95%;
   box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
-
 button{
   padding:13px 22px;
   background:#0077b6;
@@ -57,13 +56,12 @@ button{
   cursor:pointer;
   font-weight:bold;
 }
+button:hover{background:#005f8f;}
 
-#game{
-  display:none;
-  position:fixed;
-  inset:0;
-}
+/* GAME */
+#game{ display:none; position:fixed; inset:0; }
 
+/* TOPBAR */
 .topbar{
   position:absolute;
   top:10px;
@@ -79,6 +77,7 @@ button{
   z-index:5;
 }
 
+/* FEEDBACK */
 #feedback{
   position:absolute;
   top:75px;
@@ -86,8 +85,10 @@ button{
   text-align:center;
   font-weight:bold;
   font-size:20px;
+  color:#0077b6;
 }
 
+/* QUESTION */
 #questionBox{
   position:absolute;
   top:125px;
@@ -104,6 +105,7 @@ button{
   font-size:22px;
 }
 
+/* OPTIONS */
 #options{
   position:absolute;
   left:10px;
@@ -114,7 +116,6 @@ button{
   gap:18px;
   flex-wrap:wrap;
 }
-
 .opt{
   background:white;
   padding:16px 20px;
@@ -126,31 +127,23 @@ button{
   text-align:center;
   font-size:18px;
   transition:0.25s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
 }
-
-.opt:hover{transform:scale(1.05)}
-
-.shake{
-  animation:shake 0.35s;
-}
-
+.opt:hover{transform:scale(1.05);}
+.shake{animation:shake 0.35s;}
 @keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  50%{transform:translateX(8px)}
-  75%{transform:translateX(-8px)}
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-8px);}
+  50%{transform:translateX(8px);}
+  75%{transform:translateX(-8px);}
 }
+.glow{animation:glow 0.8s infinite alternate; border:4px solid #00b894;}
+@keyframes glow{from{box-shadow:0 0 8px #00b894;} to{box-shadow:0 0 25px #00b894;}}
 
-.glow{
-  animation:glow 0.8s infinite alternate;
-  border:4px solid #00b894;
-}
-
-@keyframes glow{
-  from{box-shadow:0 0 8px #00b894}
-  to{box-shadow:0 0 25px #00b894}
-}
-
+/* DROPLETS */
 #droplets{
   position:absolute;
   bottom:25px;
@@ -159,7 +152,6 @@ button{
   display:flex;
   gap:7px;
 }
-
 .droplet{
   width:24px;
   height:24px;
@@ -167,51 +159,29 @@ button{
   border-radius:50%;
   border:2px solid #8ecae6;
 }
+.filled{background:#0077b6;}
 
-.filled{
-  background:#0077b6;
-}
-
-@media(max-width:600px){
-  .topbar{
-    font-size:14px;
-    flex-direction:column;
-    text-align:center;
-  }
-
-  #feedback{top:95px}
-
-  #questionBox{
-    top:145px;
-    font-size:18px;
-    padding:18px;
-  }
-
-  #options{
-    bottom:75px;
-    gap:12px;
-  }
-
-  .opt{
-    width:90%;
-    min-width:0;
-    font-size:17px;
-  }
-}
+/* END SCREEN */
+#end h2{color:#0077b6;margin-bottom:10px;}
+#end p{font-weight:bold;margin:5px 0;}
+#end button{margin-top:10px;padding:10px 16px;background:#0077b6;color:white;border:none;border-radius:10px;cursor:pointer;}
 </style>
 </head>
 
 <body>
 
+<!-- SPLASH -->
 <div id="splash">
   <img src="assets/innovine-logo.png" alt="Innovine Logo">
 </div>
 
+<!-- INTRO -->
 <div id="intro">
   <div class="card">
     <h2>💧 Water Conservation Quiz</h2>
     <p>
-      Help save water by selecting the right option in each scenario.<br><br>
+      Help save water by selecting the right option in each scenario.<br>
+      Tap the scenario → then tap the correct choice.<br><br>
       ✔ Two attempts per question<br>
       ✔ Wrong answer will wiggle<br>
       ✔ Correct answer will glow after two wrong attempts<br>
@@ -221,6 +191,7 @@ button{
   </div>
 </div>
 
+<!-- GAME -->
 <div id="game">
   <div class="topbar">
     <div>⭐ Score: <span id="score">0</span></div>
@@ -233,6 +204,7 @@ button{
   <div id="droplets"></div>
 </div>
 
+<!-- END -->
 <div id="end">
   <div class="card">
     <h2>🎉 Congratulations!</h2>
@@ -242,55 +214,26 @@ button{
   </div>
 </div>
 
+<!-- AUDIO -->
 <audio id="correct" src="assets/correct.mp3"></audio>
 <audio id="wrong" src="assets/wrong.mp3"></audio>
 <audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
-window.onload = function(){
-  setTimeout(function(){
-    document.getElementById("splash").style.display = "none";
-    document.getElementById("intro").style.display = "flex";
-  }, 5000);
-};
+// Splash screen
+setTimeout(()=>{
+  document.getElementById("splash").style.display="none";
+  document.getElementById("intro").style.display="flex";
+},3000);
 
+// Questions
 const questions = [
-  {
-    q:"Brushing teeth: Which is the better way to save water?",
-    options:["Running tap","Glass of water"],
-    answer:"Glass of water",
-    icons:["🚰","💧"]
-  },
-  {
-    q:"Washing vegetables: Which option saves more water?",
-    options:["Running water","Using bowl"],
-    answer:"Using bowl",
-    icons:["🚰","🥣"]
-  },
-  {
-    q:"Bathing: Which option saves more water?",
-    options:["Shower","Bucket"],
-    answer:"Bucket",
-    icons:["🚿","🪣"]
-  },
-  {
-    q:"Cleaning a small spill: What should we use?",
-    options:["Running water","Cloth"],
-    answer:"Cloth",
-    icons:["💦","🧽"]
-  },
-  {
-    q:"Rainwater: What should we do with it?",
-    options:["Ignore it","Collect it"],
-    answer:"Collect it",
-    icons:["❌","🌧️"]
-  },
-  {
-    q:"Leaking tap: What should we do?",
-    options:["Ignore it","Fix it"],
-    answer:"Fix it",
-    icons:["🚰","🔧"]
-  }
+  {q:"Brushing teeth: Which is the better way to save water?", options:["Running tap","Glass of water"], answer:"Glass of water", icons:["🪥","💧"]},
+  {q:"Washing vegetables: Which option saves more water?", options:["Running water","Using bowl"], answer:"Using bowl", icons:["🚰","🥣"]},
+  {q:"Bathing: Which option saves more water?", options:["Shower","Bucket"], answer:"Bucket", icons:["🚿","🪣"]},
+  {q:"Cleaning a small spill: What should we use?", options:["Running water","Cloth"], answer:"Cloth", icons:["💦","🧽"]},
+  {q:"Rainwater: What should we do with it?", options:["Ignore it","Collect it"], answer:"Collect it", icons:["❌","🌧️"]},
+  {q:"Leaking tap: What should we do?", options:["Ignore it","Fix it"], answer:"Fix it", icons:["🚰","🔧"]}
 ];
 
 let score = 0;
@@ -298,123 +241,97 @@ let qIndex = 0;
 let attempt = 1;
 let locked = false;
 
+// Safe audio play
 function safePlay(id){
   const audio = document.getElementById(id);
-  if(audio){
-    audio.currentTime = 0;
-    audio.play().catch(function(){});
-  }
+  if(audio){ audio.currentTime=0; audio.play().catch(()=>{}); }
 }
 
+// Start game
 function startGame(){
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  document.getElementById("intro").style.display="none";
+  document.getElementById("game").style.display="block";
   initDroplets();
   loadQuestion();
 }
 
+// Initialize droplets
 function initDroplets(){
   const box = document.getElementById("droplets");
-  box.innerHTML = "";
+  box.innerHTML="";
   for(let i=0;i<questions.length;i++){
-    const d = document.createElement("div");
-    d.className = "droplet";
+    const d = document.createElement("div"); d.className="droplet";
     box.appendChild(d);
   }
 }
 
+// Load question
 function loadQuestion(){
-  if(qIndex >= questions.length){
-    endGame();
-    return;
-  }
+  if(qIndex >= questions.length){ endGame(); return; }
+  locked=false; attempt=1;
+  document.getElementById("feedback").innerText="";
+  document.getElementById("score").innerText=score;
 
-  locked = false;
-  attempt = 1;
+  const q=questions[qIndex];
+  document.getElementById("questionBox").innerText=q.q;
 
-  document.getElementById("feedback").innerText = "";
-  document.getElementById("score").innerText = score;
-
-  const q = questions[qIndex];
-  document.getElementById("questionBox").innerText = q.q;
-
-  const optBox = document.getElementById("options");
-  optBox.innerHTML = "";
-
-  q.options.forEach(function(opt,i){
-    const div = document.createElement("div");
-    div.className = "opt";
-    div.innerHTML = q.icons[i] + " " + opt;
-    div.onclick = function(){
-      checkAnswer(opt, div);
-    };
+  const optBox=document.getElementById("options");
+  optBox.innerHTML="";
+  q.options.forEach((opt,i)=>{
+    const div=document.createElement("div");
+    div.className="opt";
+    div.innerHTML=q.icons[i]+" "+opt;
+    div.onclick=()=>checkAnswer(opt, div);
     optBox.appendChild(div);
   });
 }
 
+// Check answer
 function checkAnswer(selected, element){
   if(locked) return;
+  const q=questions[qIndex];
 
-  const q = questions[qIndex];
-
-  if(selected === q.answer){
-    locked = true;
+  if(selected===q.answer){
+    locked=true;
     score++;
-    document.getElementById("feedback").style.color = "green";
-    document.getElementById("feedback").innerText = "✔ Good job!";
+    document.getElementById("feedback").style.color="green";
+    document.getElementById("feedback").innerText="✔ Correct!";
     safePlay("correct");
     fillDroplet(qIndex);
-
-    setTimeout(function(){
-      qIndex++;
-      loadQuestion();
-    }, 1200);
-
+    setTimeout(()=>{ qIndex++; loadQuestion(); },1200);
   } else {
     element.classList.add("shake");
     safePlay("wrong");
-
-    setTimeout(function(){
-      element.classList.remove("shake");
-    }, 400);
-
-    if(attempt === 1){
-      attempt = 2;
-      document.getElementById("feedback").style.color = "red";
-      document.getElementById("feedback").innerText = "❌ Try again!";
+    setTimeout(()=>{ element.classList.remove("shake"); },400);
+    if(attempt===1){
+      attempt=2;
+      document.getElementById("feedback").style.color="red";
+      document.getElementById("feedback").innerText="❌ Try again!";
     } else {
-      locked = true;
-      document.getElementById("feedback").style.color = "#0077b6";
-      document.getElementById("feedback").innerText = "Correct answer: " + q.answer;
-
-      document.querySelectorAll(".opt").forEach(function(option){
-        if(option.innerText.includes(q.answer)){
-          option.classList.add("glow");
-        }
+      locked=true;
+      document.getElementById("feedback").style.color="#0077b6";
+      document.getElementById("feedback").innerText="✅ Correct Answer: "+q.answer;
+      document.querySelectorAll(".opt").forEach(option=>{
+        if(option.innerText.includes(q.answer)) option.classList.add("glow");
       });
-
-      setTimeout(function(){
-        qIndex++;
-        loadQuestion();
-      }, 1800);
+      setTimeout(()=>{ qIndex++; loadQuestion(); },1800);
     }
   }
 }
 
+// Fill droplet
 function fillDroplet(index){
-  const droplets = document.querySelectorAll(".droplet");
-  if(droplets[index]){
-    droplets[index].classList.add("filled");
-  }
+  const droplets=document.querySelectorAll(".droplet");
+  if(droplets[index]) droplets[index].classList.add("filled");
 }
 
+// End game
 function endGame(){
-  document.getElementById("game").style.display = "none";
-  document.getElementById("end").style.display = "flex";
-  document.getElementById("final").innerText = score + " / " + questions.length;
+  document.getElementById("game").style.display="none";
+  document.getElementById("end").style.display="flex";
+  document.getElementById("final").innerText=score+" / "+questions.length;
   safePlay("clap");
 }
 </script>
-
 </body>
 </html>
