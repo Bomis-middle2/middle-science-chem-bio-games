@@ -1,828 +1,1050 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Weather Mysteries Challenge</title>
-
-<style>
-
-/* =========================
-   RESET
-========================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-
-font-family:Arial,sans-serif;
-
-background:
-linear-gradient(
-180deg,
-#dff6ff,
-#ffffff
-);
-
-min-height:100vh;
-
-padding:20px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-}
-
-/* =========================
-   GAME CONTAINER
-========================= */
-
-.gameContainer{
-
-width:100%;
-
-max-width:900px;
-
-background:white;
-
-border-radius:25px;
-
-padding:25px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.15);
-
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.topBar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:10px;
-
-margin-bottom:20px;
-
-}
-
-.scoreBox{
-
-background:#e3f2fd;
-
-padding:10px 18px;
-
-border-radius:15px;
-
-font-weight:bold;
-
-}
-
-.progressBox{
-
-background:#fff3cd;
-
-padding:10px 18px;
-
-border-radius:15px;
-
-font-weight:bold;
-
-}
-
-/* =========================
-   TITLE
-========================= */
-
-.gameTitle{
-
-text-align:center;
-
-font-size:
-clamp(1.8rem,4vw,3rem);
-
-color:#1565c0;
-
-margin-bottom:10px;
-
-}
-
-.subtitle{
-
-text-align:center;
-
-color:#555;
-
-margin-bottom:25px;
-
-}
-
-/* =========================
-   CARD
-========================= */
-
-.card{
-
-text-align:center;
-
-}
-
-.cardImage{
-
-width:100%;
-
-max-width:700px;
-
-height:auto;
-
-border-radius:20px;
-
-box-shadow:
-0 5px 15px rgba(0,0,0,.15);
-
-margin-bottom:20px;
-
-}
-
-.question{
-
-font-size:1.25rem;
-
-font-weight:bold;
-
-margin-bottom:20px;
-
-line-height:1.5;
-
-}
-
-/* =========================
-   OPTIONS
-========================= */
-
-.options{
-
-max-width:550px;
-
-margin:auto;
-
-}
-
-.optionBtn{
-
-display:block;
-
-width:100%;
-
-padding:15px;
-
-margin:10px 0;
-
-border:none;
-
-border-radius:15px;
-
-background:#2196f3;
-
-color:white;
-
-font-size:1rem;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.optionBtn:hover{
-
-transform:scale(1.02);
-
-}
-
-/* =========================
-   FEEDBACK
-========================= */
-
-#feedback{
-
-margin-top:20px;
-
-font-size:1.1rem;
-
-font-weight:bold;
-
-min-height:70px;
-
-}
-
-.correct{
-
-color:#2e7d32;
-
-}
-
-.wrong{
-
-color:#c62828;
-
-}
-
-/* =========================
-   NEXT BUTTON
-========================= */
-
-.nextBtn{
-
-background:#43a047;
-
-color:white;
-
-border:none;
-
-padding:14px 25px;
-
-border-radius:15px;
-
-font-size:1rem;
-
-font-weight:bold;
-
-cursor:pointer;
-
-margin-top:15px;
-
-display:none;
-
-}
-
-/* =========================
-   RESULT SCREEN
-========================= */
-
-.resultScreen{
-
-text-align:center;
-
-padding:30px;
-
-}
-
-.resultScore{
-
-font-size:3rem;
-
-margin:20px 0;
-
-color:#1565c0;
-
-}
-
-.playAgain{
-
-background:#1565c0;
-
-color:white;
-
-border:none;
-
-padding:15px 30px;
-
-border-radius:15px;
-
-font-size:1rem;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:768px){
-
-.question{
-
-font-size:1.05rem;
-
-}
-
-.optionBtn{
-
-font-size:.95rem;
-
-}
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1677c8">
+  <title>Weather Mysteries Challenge</title>
+
+  <style>
+    :root {
+      --sky: #dff5ff;
+      --blue: #1677c8;
+      --blue-dark: #0c4f87;
+      --navy: #17324d;
+      --yellow: #ffc947;
+      --green: #2d9c68;
+      --red: #d84b4b;
+      --white: #ffffff;
+      --soft: #f4f9fc;
+      --shadow: 0 14px 34px rgba(31, 78, 121, .16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 18px;
+      overflow-x: hidden;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 12% 16%, rgba(255,255,255,.95) 0 5%, transparent 5.5%),
+        radial-gradient(circle at 86% 11%, rgba(255,255,255,.8) 0 4%, transparent 4.5%),
+        linear-gradient(180deg, #bfeaff 0%, #edfaff 58%, #fff7dc 100%);
+      display: grid;
+      place-items: center;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible {
+      outline: 4px solid rgba(255, 201, 71, .75);
+      outline-offset: 3px;
+    }
+
+    .app {
+      position: relative;
+      width: min(1050px, 100%);
+      min-height: min(720px, calc(100dvh - 36px));
+      overflow: hidden;
+      background: rgba(255, 255, 255, .96);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .screen {
+      display: none;
+      min-height: inherit;
+      padding: clamp(22px, 4vw, 42px);
+      animation: fadeIn .35s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* START SCREEN */
+    .start-screen {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(255,255,255,.82), rgba(255,255,255,.94)),
+        radial-gradient(circle at center, #cbedff, #fff);
+    }
+
+    .weather-orbit {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+    }
+
+    .weather-orbit::before,
+    .weather-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 3px dashed rgba(22,119,200,.22);
+      animation: spin 16s linear infinite;
+    }
+
+    .weather-orbit::before { inset: 0; }
+    .weather-orbit::after { inset: 23px; animation-direction: reverse; }
+
+    .hero-icon {
+      z-index: 1;
+      font-size: 5.2rem;
+      filter: drop-shadow(0 8px 10px rgba(23,50,77,.14));
+      animation: float 2.7s ease-in-out infinite;
+    }
+
+    .orbit-icon {
+      position: absolute;
+      z-index: 2;
+      font-size: 1.8rem;
+    }
+
+    .orbit-icon.one { top: 3px; left: 20px; }
+    .orbit-icon.two { right: 0; top: 72px; }
+    .orbit-icon.three { bottom: 0; left: 36px; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes float { 50% { transform: translateY(-8px); } }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 900;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(2.1rem, 5vw, 4.1rem);
+      line-height: 1.03;
+      color: var(--blue-dark);
+      margin-bottom: 14px;
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      color: #526b7f;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      line-height: 1.55;
+      margin-bottom: 25px;
+    }
+
+    .mission-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .mission-pills span {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-weight: 800;
+      color: #315a76;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      min-height: 50px;
+      border: 0;
+      border-radius: 15px;
+      padding: 13px 24px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .primary-btn {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), #0c5eaa);
+      box-shadow: 0 8px 17px rgba(22,119,200,.28);
+    }
+
+    .secondary-btn {
+      color: var(--blue-dark);
+      background: #e8f5fc;
+      border: 2px solid #b6ddf2;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    /* HOW TO PLAY */
+    .instructions-screen {
+      justify-content: center;
+      background: linear-gradient(145deg, #f7fcff, #fffdf4);
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+    }
+
+    .section-subheading {
+      text-align: center;
+      color: #617689;
+      margin-bottom: 25px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 0 auto 26px;
+      width: min(850px, 100%);
+    }
+
+    .step {
+      padding: 22px 18px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 8px 22px rgba(31,78,121,.1);
+      text-align: center;
+      border-top: 5px solid var(--yellow);
+    }
+
+    .step-icon {
+      display: block;
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    .step h3 { margin-bottom: 7px; }
+    .step p { color: #617689; line-height: 1.45; font-size: .94rem; }
+
+    .instructions-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* GAME SCREEN */
+    .game-screen {
+      padding: 18px clamp(16px, 3vw, 30px) 25px;
+      background: linear-gradient(180deg, #f8fdff, #ffffff);
+    }
+
+    .hud {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .hud-item {
+      min-width: 100px;
+      padding: 9px 13px;
+      border-radius: 13px;
+      background: white;
+      border: 1px solid #d9eaf4;
+      text-align: center;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(31,78,121,.07);
+    }
+
+    .hud-label {
+      display: block;
+      margin-bottom: 2px;
+      color: #6d8191;
+      font-size: .68rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .timer.danger {
+      color: var(--red);
+      animation: pulse .65s infinite alternate;
+    }
+
+    @keyframes pulse { to { transform: scale(1.06); } }
+
+    .progress-track {
+      appearance: none;
+      width: 100%;
+      height: 14px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 999px;
+      background: #deedf5;
+    }
+
+    .progress-track::-webkit-progress-bar {
+      border-radius: 999px;
+      background: #deedf5;
+    }
+
+    .progress-track::-webkit-progress-value {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38a7e5, #61cf9a);
+    }
+
+    .progress-track::-moz-progress-bar {
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38a7e5, #61cf9a);
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: minmax(290px, 1.05fr) minmax(330px, .95fr);
+      gap: clamp(18px, 3vw, 30px);
+      align-items: stretch;
+      flex: 1;
+    }
+
+    .visual-panel,
+    .question-panel {
+      position: relative;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 8px 22px rgba(31,78,121,.1);
+      border: 1px solid #deedf5;
+    }
+
+    .visual-panel {
+      min-height: 415px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #eaf7fc;
+    }
+
+    .case-tag {
+      position: absolute;
+      z-index: 2;
+      top: 14px;
+      left: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: white;
+      background: rgba(12,79,135,.92);
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .case-image {
+      width: 100%;
+      height: 100%;
+      min-height: 415px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-error {
+      min-height: 415px;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: #637a8c;
+      font-weight: 800;
+    }
+
+    .question-panel {
+      padding: clamp(20px, 3vw, 30px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .science-label {
+      color: var(--blue);
+      font-size: .76rem;
+      letter-spacing: .1em;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: clamp(1.13rem, 2vw, 1.42rem);
+      line-height: 1.42;
+      margin-bottom: 16px;
+    }
+
+    .clue-row {
+      margin-bottom: 15px;
+    }
+
+    .clue-btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: #fff4ce;
+      color: #76560a;
+      font-weight: 900;
+    }
+
+    .clue-btn:disabled { cursor: default; opacity: .7; }
+
+    .clue-text {
+      display: none;
+      margin-top: 9px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: #fff9e8;
+      color: #6c5a24;
+      line-height: 1.4;
+      animation: fadeIn .25s ease;
+    }
+
+    .clue-text.show { display: block; }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      position: relative;
+      width: 100%;
+      min-height: 54px;
+      padding: 12px 48px 12px 16px;
+      border: 2px solid #cfe4f0;
+      border-radius: 15px;
+      background: #f9fcfe;
+      color: var(--navy);
+      text-align: left;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .option-btn::after {
+      content: "›";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-52%);
+      color: #6e9bb7;
+      font-size: 1.6rem;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(4px);
+      border-color: var(--blue);
+      background: #eef8fe;
+    }
+
+    .option-btn:disabled { cursor: default; }
+    .option-btn.correct-answer { border-color: var(--green); background: #e8f8f0; color: #16613e; }
+    .option-btn.wrong-answer { border-color: var(--red); background: #fff0f0; color: #8d2424; animation: shake .35s ease; }
+    .option-btn.correct-answer::after { content: "✓"; color: var(--green); }
+    .option-btn.wrong-answer::after { content: "×"; color: var(--red); }
+
+    @keyframes shake {
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    .attempt-note {
+      min-height: 25px;
+      padding-top: 9px;
+      color: #667d8e;
+      font-size: .88rem;
+      font-weight: 800;
+    }
+
+    .feedback-box {
+      display: none;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 15px;
+      line-height: 1.45;
+      animation: pop .3s ease;
+    }
+
+    .feedback-box.show { display: block; }
+    .feedback-box.correct { background: #e8f8f0; color: #185d3e; border-left: 5px solid var(--green); }
+    .feedback-box.wrong { background: #fff0f0; color: #822c2c; border-left: 5px solid var(--red); }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .next-btn {
+      display: none;
+      align-self: flex-end;
+      margin-top: 13px;
+    }
+
+    .next-btn.show { display: inline-block; }
+
+    /* RESULT SCREEN */
+    .result-screen {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(150deg, #f5fcff, #fff9e8);
+    }
+
+    .badge {
+      width: 135px;
+      height: 135px;
+      margin-bottom: 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 4.2rem;
+      background: linear-gradient(145deg, #fff1a8, var(--yellow));
+      border: 8px solid white;
+      box-shadow: 0 10px 25px rgba(191,140,15,.25);
+      animation: badgeIn .6s cubic-bezier(.2,.8,.2,1.25);
+    }
+
+    @keyframes badgeIn {
+      from { transform: scale(.2) rotate(-18deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    .result-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--blue-dark);
+      margin-bottom: 4px;
+    }
+
+    .result-message { color: #5a7182; margin-bottom: 20px; }
+
+    .result-stats {
+      width: min(600px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .result-stat {
+      padding: 15px 8px;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 6px 18px rgba(31,78,121,.1);
+    }
+
+    .result-stat strong {
+      display: block;
+      color: var(--blue-dark);
+      font-size: 1.65rem;
+      margin-bottom: 2px;
+    }
+
+    .result-stat span { color: #6b8293; font-size: .8rem; font-weight: 800; }
+
+    .result-actions { display: flex; gap: 11px; flex-wrap: wrap; justify-content: center; }
+
+    /* CONFETTI */
+    .confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -18px;
+      width: 11px;
+      height: 17px;
+      border-radius: 3px;
+      animation: fall 2.8s linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(780px) rotate(720deg); opacity: .7; }
+    }
+
+    @media (max-width: 780px) {
+      body { padding: 8px; align-items: start; }
+      .app { min-height: calc(100dvh - 16px); border-radius: 20px; }
+      .steps { grid-template-columns: 1fr; }
+      .step { padding: 15px; display: grid; grid-template-columns: 48px 1fr; text-align: left; align-items: center; }
+      .step-icon { grid-row: span 2; margin: 0; }
+      .case-grid { grid-template-columns: 1fr; }
+      .visual-panel, .case-image, .image-error { min-height: 240px; }
+      .case-image { height: 240px; }
+      .hud { grid-template-columns: repeat(3, 1fr); }
+      .progress-track { grid-column: 1 / -1; grid-row: 2; }
+      .hud-item { min-width: 0; padding: 8px 5px; }
+      .game-screen { overflow-y: auto; }
+    }
+
+    @media (max-width: 430px) {
+      .screen { padding: 18px 14px; }
+      .weather-orbit { width: 140px; height: 140px; }
+      .hero-icon { font-size: 4rem; }
+      .mission-pills span { padding: 7px 10px; font-size: .82rem; }
+      .game-screen { padding: 12px 10px 18px; }
+      .hud { gap: 6px; }
+      .hud-item { font-size: .86rem; }
+      .question-panel { padding: 17px; }
+      .result-stats { gap: 7px; }
+      .result-stat strong { font-size: 1.35rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="gameContainer">
-
-<div class="topBar">
-
-<div class="scoreBox">
-
-⭐ Score:
-<span id="score">
-
-0
-
-</span>
-
-</div>
-
-<div class="progressBox">
-
-Mystery
-<span id="progress">
-
-1
-
-</span>
-
-/4
-
-</div>
-
-</div>
-
-<h1 class="gameTitle">
-
-🌦️ Weather Mysteries Challenge
-
-</h1>
-
-<p class="subtitle">
-
-Solve the mystery using your knowledge of states of matter.
-
-</p>
-
-<div id="gameArea">
-
-</div>
-
-</div>
-
-<!-- OPTIONAL AUDIO -->
-
-<audio
-id="correctSound"
-src="assets/correct.mp3">
-</audio>
-
-<audio
-id="wrongSound"
-src="assets/wrong.mp3">
-</audio>
-
-<script>
-
-/* =========================
-   GAME DATA
-========================= */
-
-const mysteries = [
-
-{
-image:
-"assets/morning-dew.png",
-
-question:
-"Tiny water droplets appeared on the grass early in the morning. How did they form?",
-
-options:[
-"Condensation",
-"Evaporation",
-"Freezing"
-],
-
-answer:
-"Condensation",
-
-feedback:
-"Water vapour in the air cooled and changed into tiny liquid droplets."
-},
-
-{
-image:
-"assets/missing-puddle.png",
-
-question:
-"A puddle was seen in the morning but disappeared by afternoon. What happened to the water?",
-
-options:[
-"Evaporation",
-"Freezing",
-"Melting"
-],
-
-answer:
-"Evaporation",
-
-feedback:
-"The Sun heated the water and changed it into water vapour."
-},
-
-{
-image:
-"assets/foggy-window.png",
-
-question:
-"The window became covered with tiny water droplets. What caused this?",
-
-options:[
-"Condensation",
-"Freezing",
-"Melting"
-],
-
-answer:
-"Condensation",
-
-feedback:
-"Water vapour cooled when it touched the cold glass."
-},
-
-{
-image:
-"assets/frozen-bottle.png",
-
-question:
-"The water inside the bottle turned into ice. Which change took place?",
-
-options:[
-"Freezing",
-"Melting",
-"Evaporation"
-],
-
-answer:
-"Freezing",
-
-feedback:
-"Water lost heat and changed from liquid to solid."
-}
-
-];
-
-let currentQuestion = 0;
-
-let score = 0;
-
-/* =========================
-   LOAD QUESTION
-========================= */
-
-function loadQuestion(){
-
-const q =
-mysteries[
-currentQuestion
-];
-const gameArea =
-document.getElementById(
-"gameArea"
-);
-
-document.getElementById(
-"progress"
-).innerHTML =
-currentQuestion + 1;
-
-let optionsHTML = "";
-
-q.options.forEach(option=>{
-
-optionsHTML +=
-
-`
-<button
-
-class="optionBtn"
-
-onclick="checkAnswer('${option}')">
-
-${option}
-
-</button>
-`;
-
-});
-
-gameArea.innerHTML =
-
-`
-<div class="card">
-
-<img
-src="${q.image}"
-class="cardImage">
-
-<div class="question">
-
-${q.question}
-
-</div>
-
-<div class="options">
-
-${optionsHTML}
-
-</div>
-
-<div
-id="feedback">
-
-</div>
-
-<button
-
-id="nextBtn"
-
-class="nextBtn"
-
-onclick="nextQuestion()">
-
-Next Mystery →
-
-</button>
-
-</div>
-`;
-
-}
-
-/* =========================
-   CHECK ANSWER
-========================= */
-
-function checkAnswer(
-selected
-){
-
-const q =
-mysteries[
-currentQuestion
-];
-
-const feedback =
-document.getElementById(
-"feedback"
-);
-
-const nextBtn =
-document.getElementById(
-"nextBtn"
-);
-
-const buttons =
-document.querySelectorAll(
-".optionBtn"
-);
-
-buttons.forEach(btn=>{
-
-btn.disabled = true;
-
-});
-
-if(
-selected === q.answer
-){
-
-if(selected === q.answer){
-    score += 10;
-}
-
-document
-.getElementById(
-"score"
-)
-.innerHTML =
-score;
-
-const correctSound =
-document.getElementById(
-"correctSound"
-);
-
-if(correctSound){
-
-correctSound.play().catch(()=>{});
-
-}
-
-feedback.className =
-"correct";
-
-feedback.innerHTML =
-
-`
-✅ Correct!
-
-<br><br>
-
-${q.feedback}
-`;
-
-}
-else{
-
-const wrongSound =
-document.getElementById(
-"wrongSound"
-);
-
-if(wrongSound){
-
-wrongSound.play().catch(()=>{});
-
-}
-
-feedback.className =
-"wrong";
-
-feedback.innerHTML =
-
-`
-❌ Incorrect
-
-<br><br>
-
-Correct Answer:
-<b>${q.answer}</b>
-
-<br><br>
-
-${q.feedback}
-`;
-
-}
-
-nextBtn.style.display =
-"inline-block";
-
-}
-
-/* =========================
-   NEXT QUESTION
-========================= */
-
-function nextQuestion(){
-
-currentQuestion++;
-
-if(
-currentQuestion <
-mysteries.length
-){
-
-loadQuestion();
-
-}
-else{
-
-showResults();
-
-}
-
-}
-
-/* =========================
-   RESULTS
-========================= */
-
-function showResults(){
-
-let message =
-"Great Job!";
-
-if(score === 40){
-
-message =
-"🏆 Weather Expert!";
-}
-else if(score >= 30){
-
-message =
-"🌟 Excellent Detective!";
-}
-else if(score >= 20){
-
-message =
-"👍 Good Observation Skills!";
-}
-
-gameArea.innerHTML =
-
-`
-<div class="resultScreen">
-
-<h2>
-
-🎉 Challenge Complete
-
-</h2>
-
-<div
-class="resultScore">
-
-${score}/40
-
-</div>
-
-<h3>
-
-${message}
-
-</h3>
-
-<br>
-
-<p>
-
-You solved all four weather mysteries.
-
-</p>
-
-<br>
-
-<button
-
-class="playAgain"
-
-onclick="restartGame()">
-
-🔄 Play Again
-
-</button>
-
-</div>
-`;
-
-}
-
-/* =========================
-   RESTART
-========================= */
-
-function restartGame(){
-
-currentQuestion = 0;
-
-score = 0;
-
-document
-.getElementById(
-"score"
-)
-.innerHTML = "0";
-
-document
-.getElementById(
-"progress"
-)
-.innerHTML = "1";
-
-loadQuestion();
-
-}
-
-/* =========================
-   START GAME
-========================= */
-
-loadQuestion();
-
-</script>
-
+  <main class="app" aria-live="polite">
+    <section class="screen start-screen active" id="startScreen">
+      <div class="weather-orbit" aria-hidden="true">
+        <span class="hero-icon">🕵️</span>
+        <span class="orbit-icon one">💧</span>
+        <span class="orbit-icon two">☀️</span>
+        <span class="orbit-icon three">❄️</span>
+      </div>
+      <p class="eyebrow">Science Investigation</p>
+      <h1>Weather Mysteries Challenge</h1>
+      <p class="hero-copy">Study each scene, collect a clue and identify the change in the state of water. Can you solve all four case files?</p>
+      <div class="mission-pills" role="group" aria-label="Game features">
+        <span>🔎 4 case files</span>
+        <span>💡 1 clue per case</span>
+        <span>⏱️ 40 seconds</span>
+        <span>❤️ 2 attempts</span>
+      </div>
+      <button class="primary-btn" id="startBtn" type="button">Begin Investigation →</button>
+    </section>
+
+    <section class="screen instructions-screen" id="instructionsScreen">
+      <h2 class="section-heading">How to Play</h2>
+      <p class="section-subheading">Think like a scientist and use the evidence.</p>
+      <div class="steps">
+        <article class="step">
+          <span class="step-icon">👀</span>
+          <h3>Observe</h3>
+          <p>Look carefully at the weather scene and read the mystery.</p>
+        </article>
+        <article class="step">
+          <span class="step-icon">💡</span>
+          <h3>Investigate</h3>
+          <p>Reveal a clue if you need help. A clue costs only 2 points.</p>
+        </article>
+        <article class="step">
+          <span class="step-icon">✅</span>
+          <h3>Solve</h3>
+          <p>Choose the change of state. You have two attempts for each case.</p>
+        </article>
+      </div>
+      <div class="instructions-actions">
+        <button class="secondary-btn" id="backBtn" type="button">← Back</button>
+        <button class="primary-btn" id="playBtn" type="button">Open Case File 1 →</button>
+      </div>
+    </section>
+
+    <section class="screen game-screen" id="gameScreen">
+      <header class="hud">
+        <div class="hud-item"><span class="hud-label">Case</span><span id="caseNumber">1/4</span></div>
+        <progress class="progress-track" id="progressTrack" max="4" value="1" aria-label="Game progress">1 of 4</progress>
+        <div class="hud-item"><span class="hud-label">Score</span>⭐ <span id="score">0</span></div>
+        <div class="hud-item timer" id="timerBox"><span class="hud-label">Time</span>⏱️ <span id="timer">40</span>s</div>
+      </header>
+
+      <div class="case-grid">
+        <div class="visual-panel">
+          <span class="case-tag" id="caseTag">CASE FILE 01</span>
+          <img class="case-image" id="caseImage" src="assets/morning-dew.png" alt="Weather mystery scene">
+          <div class="image-error" id="imageError">The case image could not be loaded.<br>Please check the image in the assets folder.</div>
+        </div>
+
+        <article class="question-panel">
+          <p class="science-label">The Mystery</p>
+          <h2 class="question-text" id="questionText">Loading the mystery…</h2>
+
+          <div class="clue-row">
+            <button class="clue-btn" id="clueBtn" type="button">💡 Reveal a clue</button>
+            <p class="clue-text" id="clueText"></p>
+          </div>
+
+          <div class="options" id="options"></div>
+          <p class="attempt-note" id="attemptNote">You have 2 attempts.</p>
+          <div class="feedback-box" id="feedback"></div>
+          <button class="primary-btn next-btn" id="nextBtn" type="button">Next Case →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="screen result-screen" id="resultScreen">
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+      <div class="badge" id="resultBadge">🏆</div>
+      <p class="eyebrow">Investigation Complete</p>
+      <h2 class="result-title" id="resultTitle">Weather Expert!</h2>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="result-stats">
+        <div class="result-stat"><strong id="finalScore">0</strong><span>Total Points</span></div>
+        <div class="result-stat"><strong id="correctCases">0/4</strong><span>Cases Solved</span></div>
+        <div class="result-stat"><strong id="bestStreak">0</strong><span>Best Streak</span></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="secondary-btn" id="reviewBtn" type="button">Review Learning</button>
+        <button class="primary-btn" id="restartBtn" type="button">🔄 Play Again</button>
+      </div>
+    </section>
+  </main>
+
+  <audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+  <audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+
+  <script>
+    const mysteries = [
+      {
+        image: "assets/morning-dew.png",
+        alt: "Tiny drops of dew on grass in the morning",
+        question: "Tiny water droplets appeared on the grass early in the morning. How did they form?",
+        options: ["Condensation", "Evaporation", "Freezing"],
+        answer: "Condensation",
+        clue: "The air cooled during the night, but the water did not turn into ice.",
+        feedback: "Water vapour in the air lost heat and changed from a gas into tiny liquid droplets. This change is called condensation."
+      },
+      {
+        image: "assets/missing-puddle.png",
+        alt: "A puddle disappearing in warm sunlight",
+        question: "A puddle was seen in the morning but disappeared by afternoon. What happened to the water?",
+        options: ["Evaporation", "Freezing", "Melting"],
+        answer: "Evaporation",
+        clue: "The Sun warmed the liquid water and it moved into the air.",
+        feedback: "Heat from the Sun changed the liquid water into water vapour. This change is called evaporation."
+      },
+      {
+        image: "assets/foggy-window.png",
+        alt: "Tiny water droplets covering a cool window",
+        question: "The window became covered with tiny water droplets. What caused this?",
+        options: ["Condensation", "Freezing", "Melting"],
+        answer: "Condensation",
+        clue: "Warm water vapour touched the colder glass and lost heat.",
+        feedback: "Water vapour cooled when it touched the cold glass and changed from a gas into liquid droplets. This is condensation."
+      },
+      {
+        image: "assets/frozen-bottle.png",
+        alt: "Water inside a bottle changed into ice",
+        question: "The water inside the bottle turned into ice. Which change took place?",
+        options: ["Freezing", "Melting", "Evaporation"],
+        answer: "Freezing",
+        clue: "The liquid lost enough heat to become a solid.",
+        feedback: "The water lost heat and changed from a liquid into a solid. This change is called freezing."
+      }
+    ];
+
+    const state = {
+      order: [],
+      current: 0,
+      score: 0,
+      attempts: 0,
+      seconds: 40,
+      timerId: null,
+      clueUsed: false,
+      solved: 0,
+      streak: 0,
+      bestStreak: 0,
+      locked: false,
+      reviewMode: false
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      $(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function playSound(id) {
+      const sound = $(id);
+      if (!sound) return;
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    }
+
+    function beginGame() {
+      clearInterval(state.timerId);
+      state.order = shuffle(mysteries);
+      state.current = 0;
+      state.score = 0;
+      state.solved = 0;
+      state.streak = 0;
+      state.bestStreak = 0;
+      state.reviewMode = false;
+      $("score").textContent = "0";
+      showScreen("gameScreen");
+      loadCase();
+    }
+
+    function loadCase() {
+      clearInterval(state.timerId);
+      state.attempts = 0;
+      state.seconds = 40;
+      state.clueUsed = false;
+      state.locked = false;
+
+      const currentCase = state.order[state.current];
+      $("caseNumber").textContent = `${state.current + 1}/${state.order.length}`;
+      $("caseTag").textContent = `CASE FILE ${String(state.current + 1).padStart(2, "0")}`;
+      $("progressTrack").value = state.current + 1;
+      $("progressTrack").textContent = `${state.current + 1} of ${state.order.length}`;
+      $("questionText").textContent = currentCase.question;
+      $("clueText").textContent = currentCase.clue;
+      $("clueText").className = "clue-text";
+      $("clueBtn").disabled = false;
+      $("clueBtn").innerHTML = "💡 Reveal a clue";
+      $("attemptNote").textContent = "You have 2 attempts.";
+      $("feedback").className = "feedback-box";
+      $("feedback").innerHTML = "";
+      $("nextBtn").className = "primary-btn next-btn";
+      $("nextBtn").textContent = state.current === state.order.length - 1 ? "See My Result →" : "Next Case →";
+
+      const image = $("caseImage");
+      image.style.display = "block";
+      $("imageError").style.display = "none";
+      image.src = currentCase.image;
+      image.alt = currentCase.alt;
+      image.onerror = () => {
+        image.style.display = "none";
+        $("imageError").style.display = "grid";
+      };
+
+      const optionsBox = $("options");
+      optionsBox.innerHTML = "";
+      shuffle(currentCase.options).forEach(option => {
+        const button = document.createElement("button");
+        button.className = "option-btn";
+        button.type = "button";
+        button.textContent = option;
+        button.dataset.answer = option;
+        button.addEventListener("click", () => checkAnswer(button, option));
+        optionsBox.appendChild(button);
+      });
+
+      updateTimer();
+      state.timerId = setInterval(() => {
+        state.seconds -= 1;
+        updateTimer();
+        if (state.seconds <= 0) timeUp();
+      }, 1000);
+    }
+
+    function updateTimer() {
+      $("timer").textContent = state.seconds;
+      $("timerBox").classList.toggle("danger", state.seconds <= 10);
+    }
+
+    function revealClue() {
+      if (state.clueUsed || state.locked) return;
+      state.clueUsed = true;
+      $("clueText").classList.add("show");
+      $("clueBtn").disabled = true;
+      $("clueBtn").innerHTML = "💡 Clue revealed (−2 points)";
+    }
+
+    function checkAnswer(button, selected) {
+      if (state.locked) return;
+      const currentCase = state.order[state.current];
+      state.attempts += 1;
+
+      if (selected === currentCase.answer) {
+        button.classList.add("correct-answer");
+        const attemptPoints = state.attempts === 1 ? 20 : 12;
+        const speedBonus = state.attempts === 1 ? Math.min(5, Math.floor(state.seconds / 8)) : 0;
+        const clueCost = state.clueUsed ? 2 : 0;
+        const streakBonus = state.streak >= 1 ? 3 : 0;
+        const earned = Math.max(5, attemptPoints + speedBonus + streakBonus - clueCost);
+        state.score += earned;
+        state.solved += 1;
+        state.streak += 1;
+        state.bestStreak = Math.max(state.bestStreak, state.streak);
+        $("score").textContent = state.score;
+        playSound("correctSound");
+        finishCase(true, `✅ Mystery solved! <strong>+${earned} points</strong><br>${currentCase.feedback}`);
+      } else {
+        button.classList.add("wrong-answer");
+        button.disabled = true;
+        playSound("wrongSound");
+
+        if (state.attempts < 2) {
+          state.streak = 0;
+          $("attemptNote").textContent = "Not quite. Look at the clue and try once more!";
+          $("feedback").className = "feedback-box wrong show";
+          $("feedback").innerHTML = "❌ That process does not match the evidence. You have 1 attempt left.";
+        } else {
+          state.streak = 0;
+          revealCorrectOption(currentCase.answer);
+          finishCase(false, `🔍 The correct answer is <strong>${currentCase.answer}</strong>.<br>${currentCase.feedback}`);
+        }
+      }
+    }
+
+    function timeUp() {
+      if (state.locked) return;
+      state.streak = 0;
+      const currentCase = state.order[state.current];
+      revealCorrectOption(currentCase.answer);
+      finishCase(false, `⏰ Time is up. The correct answer is <strong>${currentCase.answer}</strong>.<br>${currentCase.feedback}`);
+    }
+
+    function revealCorrectOption(answer) {
+      document.querySelectorAll(".option-btn").forEach(button => {
+        if (button.dataset.answer === answer) button.classList.add("correct-answer");
+      });
+    }
+
+    function finishCase(isCorrect, html) {
+      state.locked = true;
+      clearInterval(state.timerId);
+      document.querySelectorAll(".option-btn").forEach(button => button.disabled = true);
+      $("clueBtn").disabled = true;
+      $("attemptNote").textContent = isCorrect ? "Excellent scientific thinking!" : "Read the explanation before moving on.";
+      $("feedback").className = `feedback-box ${isCorrect ? "correct" : "wrong"} show`;
+      $("feedback").innerHTML = html;
+      $("nextBtn").classList.add("show");
+    }
+
+    function nextCase() {
+      state.current += 1;
+      if (state.current < state.order.length) loadCase();
+      else showResults();
+    }
+
+    function showResults() {
+      clearInterval(state.timerId);
+      const ratio = state.solved / state.order.length;
+      let badge = "🌤️";
+      let title = "Weather Explorer";
+      let message = "Good investigation! Review the explanations and try again to improve your score.";
+
+      if (ratio === 1) {
+        badge = "🏆";
+        title = "Weather Expert!";
+        message = "Brilliant! You used evidence to solve every change-of-state mystery.";
+      } else if (ratio >= .75) {
+        badge = "🌟";
+        title = "Super Scientist!";
+        message = "Excellent work! You solved almost every weather mystery.";
+      } else if (ratio >= .5) {
+        badge = "🔎";
+        title = "Clever Investigator!";
+        message = "Good observation. A quick review will help you solve every case.";
+      }
+
+      $("resultBadge").textContent = badge;
+      $("resultTitle").textContent = title;
+      $("resultMessage").textContent = message;
+      $("finalScore").textContent = state.score;
+      $("correctCases").textContent = `${state.solved}/${state.order.length}`;
+      $("bestStreak").textContent = state.bestStreak;
+      showScreen("resultScreen");
+      makeConfetti(ratio >= .75 ? 60 : 28);
+    }
+
+    function reviewLearning() {
+      state.reviewMode = true;
+      clearInterval(state.timerId);
+      showScreen("instructionsScreen");
+      $("instructionsScreen").querySelector(".section-heading").textContent = "What We Learnt";
+      $("instructionsScreen").querySelector(".section-subheading").textContent = "Water changes state when it gains or loses heat.";
+      $("instructionsScreen").querySelector(".steps").innerHTML = `
+        <article class="step"><span class="step-icon">☀️</span><h3>Evaporation</h3><p>Liquid water gains heat and changes into water vapour.</p></article>
+        <article class="step"><span class="step-icon">💧</span><h3>Condensation</h3><p>Water vapour loses heat and changes into liquid water.</p></article>
+        <article class="step"><span class="step-icon">❄️</span><h3>Freezing</h3><p>Liquid water loses heat and changes into solid ice.</p></article>`;
+      $("backBtn").textContent = "← Results";
+      $("playBtn").textContent = "Play Again →";
+    }
+
+    function resetInstructions() {
+      const screen = $("instructionsScreen");
+      screen.querySelector(".section-heading").textContent = "How to Play";
+      screen.querySelector(".section-subheading").textContent = "Think like a scientist and use the evidence.";
+      screen.querySelector(".steps").innerHTML = `
+        <article class="step"><span class="step-icon">👀</span><h3>Observe</h3><p>Look carefully at the weather scene and read the mystery.</p></article>
+        <article class="step"><span class="step-icon">💡</span><h3>Investigate</h3><p>Reveal a clue if you need help. A clue costs only 2 points.</p></article>
+        <article class="step"><span class="step-icon">✅</span><h3>Solve</h3><p>Choose the change of state. You have two attempts for each case.</p></article>`;
+      $("backBtn").textContent = "← Back";
+      $("playBtn").textContent = "Open Case File 1 →";
+    }
+
+    function makeConfetti(count) {
+      const box = $("confetti");
+      box.innerHTML = "";
+      const colours = ["#1677c8", "#ffc947", "#2d9c68", "#ef6c74", "#8e6bd1"];
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("i");
+        piece.className = "confetti-piece";
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.background = colours[i % colours.length];
+        piece.style.animationDelay = `${Math.random() * 1.4}s`;
+        piece.style.animationDuration = `${2.2 + Math.random() * 1.6}s`;
+        box.appendChild(piece);
+      }
+    }
+
+    $("startBtn").addEventListener("click", () => showScreen("instructionsScreen"));
+    $("backBtn").addEventListener("click", () => {
+      if (state.reviewMode) {
+        showScreen("resultScreen");
+      } else {
+        showScreen("startScreen");
+      }
+    });
+    $("playBtn").addEventListener("click", () => {
+      if (state.reviewMode) resetInstructions();
+      beginGame();
+    });
+    $("clueBtn").addEventListener("click", revealClue);
+    $("nextBtn").addEventListener("click", nextCase);
+    $("reviewBtn").addEventListener("click", reviewLearning);
+    $("restartBtn").addEventListener("click", () => {
+      resetInstructions();
+      beginGame();
+    });
+  </script>
 </body>
 </html>
