@@ -1,311 +1,807 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Innovine Pyramid Game</title>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<style>
+    <title>Innovine Food Pyramid Game</title>
 
-body{
-margin:0;
-font-family:Arial;
-background:#eaf6ff;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:999;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #eaf6ff;
+            color: #263238;
+        }
 
-#splash img{width:140px;}
+        button {
+            font-family: inherit;
+        }
 
-/* INSTRUCTIONS */
-#instructions{
-display:none;
-padding:20px;
-text-align:center;
-}
+        /* SPLASH SCREEN */
 
-.card{
-max-width:600px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:15px;
-}
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+        }
 
-/* GAME */
-#game{
-display:none;
-padding:10px;
-}
+        #splash img {
+            width: 160px;
+            max-width: 50%;
+            height: auto;
+        }
 
-.main{
-display:grid;
-grid-template-columns:280px 1fr 260px;
-gap:15px;
-align-items:start;
-}
+        #splash h2 {
+            margin: 18px 0 0;
+            color: #2e7d32;
+        }
 
-/* MOBILE */
-@media(max-width:900px){
-.main{
-grid-template-columns:1fr;
-}
+        /* INSTRUCTION SCREEN */
 
-.side{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-}
+        #instructions {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-.foodCard{
-background:white;
-padding:20px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-cursor:pointer;
-}
+        .instructionCard {
+            width: min(600px, 100%);
+            padding: 30px 25px;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+        }
 
-.foodEmoji{font-size:4rem;}
+        .instructionCard h1 {
+            margin-top: 0;
+            color: #1565c0;
+        }
 
-.pyramidBox{
-background:white;
-padding:10px;
-border-radius:15px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-text-align:center;
-}
+        .instructionCard p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
 
-svg{width:100%;height:auto;}
+        /* BUTTONS */
 
-.sideBox{
-background:white;
-padding:10px;
-border-radius:12px;
-margin-bottom:10px;
-min-height:90px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
+        .btn {
+            min-width: 150px;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 12px;
+            background: #2e7d32;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
 
-.sideTitle{font-weight:bold;}
+        .btn:hover {
+            background: #1b5e20;
+            transform: scale(1.04);
+        }
 
-.item{font-size:1.6rem;margin:3px;display:inline-block;}
+        .btn:active {
+            transform: scale(0.97);
+        }
 
-#feedback{
-text-align:center;
-font-weight:bold;
-margin-top:10px;
-}
+        /* GAME SCREEN */
 
-.btn{
-padding:10px 15px;
-background:#2e7d32;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
-}
+        #game {
+            display: none;
+            width: 100%;
+            padding: 15px;
+        }
 
-#endScreen{
-display:none;
-text-align:center;
-padding:40px;
-}
+        .gameTitle {
+            margin: 0 0 15px;
+            text-align: center;
+            color: #1565c0;
+        }
 
-</style>
+        .main {
+            display: grid;
+            grid-template-columns: minmax(220px, 280px) minmax(320px, 1fr) minmax(220px, 260px);
+            gap: 15px;
+            width: min(1200px, 100%);
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        /* FOOD CARD */
+
+        .foodCard {
+            padding: 25px 20px;
+            border: 4px solid transparent;
+            border-radius: 18px;
+            background: #ffffff;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .foodCard:hover {
+            transform: translateY(-3px);
+        }
+
+        .foodCard:focus {
+            outline: 4px solid #64b5f6;
+            outline-offset: 3px;
+        }
+
+        .foodCard.selected {
+            border-color: #42a5f5;
+            transform: scale(1.03);
+        }
+
+        .foodEmoji {
+            font-size: 5rem;
+            line-height: 1.1;
+        }
+
+        .foodCard h2 {
+            margin: 12px 0 0;
+        }
+
+        #feedback {
+            min-height: 30px;
+            margin: 15px 0 0;
+            text-align: center;
+            font-size: 1.08rem;
+            font-weight: bold;
+            color: #37474f;
+        }
+
+        #feedback.correct {
+            color: #2e7d32;
+        }
+
+        #feedback.wrong {
+            color: #c62828;
+        }
+
+        /* PYRAMID */
+
+        .pyramidBox {
+            padding: 12px;
+            border-radius: 18px;
+            background: #ffffff;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .pyramidBox h2 {
+            margin: 5px 0 0;
+            color: #37474f;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: auto;
+        }
+
+        .pyramidZone polygon {
+            cursor: pointer;
+            stroke: #ffffff;
+            stroke-width: 5;
+            transition: opacity 0.2s;
+        }
+
+        .pyramidZone:hover polygon {
+            opacity: 0.8;
+        }
+
+        .pyramidZone:focus {
+            outline: none;
+        }
+
+        .pyramidZone:focus polygon {
+            stroke: #1565c0;
+            stroke-width: 8;
+        }
+
+        /* Text must not block polygon clicks */
+
+        svg text {
+            pointer-events: none;
+            font-size: 23px;
+            font-weight: bold;
+            fill: #263238;
+            user-select: none;
+        }
+
+        /* SORTED FOOD BOXES */
+
+        .sideBox {
+            min-height: 100px;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sideTitle {
+            padding-bottom: 7px;
+            border-bottom: 2px solid #eceff1;
+            font-size: 1.05rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .sortedItems {
+            padding-top: 7px;
+            text-align: center;
+        }
+
+        .item {
+            display: inline-block;
+            margin: 4px;
+            font-size: 2rem;
+            animation: popIn 0.35s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* END SCREEN */
+
+        #endScreen {
+            display: none;
+            min-height: 100vh;
+            padding: 30px 20px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .endCard {
+            width: min(600px, 100%);
+            padding: 35px 25px;
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+        }
+
+        .endCard h1 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+
+        .trophy {
+            margin: 15px 0;
+            font-size: 6rem;
+        }
+
+        /* TABLET */
+
+        @media (max-width: 900px) {
+            .main {
+                grid-template-columns: 1fr 1.5fr;
+            }
+
+            .side {
+                display: grid;
+                grid-column: 1 / -1;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+
+            .sideBox {
+                margin-bottom: 0;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+            #game {
+                padding: 10px;
+            }
+
+            .gameTitle {
+                font-size: 1.45rem;
+            }
+
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .foodCard {
+                padding: 15px;
+            }
+
+            .foodEmoji {
+                font-size: 4rem;
+            }
+
+            .side {
+                display: grid;
+                grid-column: auto;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .sideBox {
+                min-height: 90px;
+            }
+
+            svg text {
+                font-size: 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="assets/innovine-logo.png">
-<h2>Innovine Learning</h2>
-</div>
+    <!-- SPLASH SCREEN -->
 
-<!-- INSTRUCTIONS -->
-<div id="instructions">
-<div class="card">
-<h2>Instructions</h2>
-<p>Tap food → tap pyramid → build diet pyramid</p>
-<button class="btn" onclick="startGame()">Start Game</button>
-</div>
-</div>
+    <section id="splash">
+        <img
+            src="assets/innovine-logo.png"
+            alt="Innovine logo"
+        >
+        <h2>Innovine Learning</h2>
+    </section>
 
-<!-- GAME -->
-<div id="game">
+    <!-- INSTRUCTION SCREEN -->
 
-<div class="main">
+    <section id="instructions">
+        <div class="instructionCard">
+            <h1>Build the Food Pyramid</h1>
 
-<!-- LEFT -->
-<div>
-<div class="foodCard" id="foodCard">
-<div class="foodEmoji" id="emoji">🍎</div>
-<h3 id="name">Apple</h3>
-</div>
+            <p>
+                Tap the food card and then tap the correct section
+                of the food pyramid.
+            </p>
 
-<p id="feedback">Tap food first</p>
-</div>
+            <button class="btn" id="startButton" type="button">
+                Start Game
+            </button>
+        </div>
+    </section>
 
-<!-- CENTER -->
-<div class="pyramidBox">
+    <!-- GAME SCREEN -->
 
-<svg viewBox="0 0 600 600">
+    <main id="game">
+        <h1 class="gameTitle">Build the Food Pyramid</h1>
 
-<polygon points="300,40 360,140 240,140" fill="#ef9a9a"/>
-<polygon points="240,140 360,140 420,260 180,260" fill="#90caf9"/>
-<polygon points="180,260 420,260 500,420 100,420" fill="#a5d6a7"/>
-<polygon points="100,420 500,420 560,560 40,560" fill="#ffe082"/>
+        <div class="main">
 
-<text x="300" y="100" text-anchor="middle">Less</text>
-<text x="300" y="210" text-anchor="middle">Moderate</text>
-<text x="300" y="340" text-anchor="middle">More</text>
-<text x="300" y="500" text-anchor="middle">Most</text>
+            <!-- FOOD CARD -->
 
-</svg>
+            <section>
+                <div
+                    class="foodCard"
+                    id="foodCard"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Select the displayed food"
+                >
+                    <div class="foodEmoji" id="emoji">🍎</div>
+                    <h2 id="foodName">Apple</h2>
+                </div>
 
-</div>
+                <p id="feedback" aria-live="polite">
+                    Tap the food card first.
+                </p>
+            </section>
 
-<!-- RIGHT -->
-<div class="side">
+            <!-- PYRAMID -->
 
-<div class="sideBox"><div class="sideTitle">Less</div><div id="less"></div></div>
-<div class="sideBox"><div class="sideTitle">Moderate</div><div id="moderate"></div></div>
-<div class="sideBox"><div class="sideTitle">More</div><div id="more"></div></div>
-<div class="sideBox"><div class="sideTitle">Most</div><div id="most"></div></div>
+            <section class="pyramidBox">
+                <h2>Food Pyramid</h2>
 
-</div>
+                <svg
+                    viewBox="0 0 600 600"
+                    role="img"
+                    aria-label="Food pyramid with four sections"
+                >
+                    <g
+                        class="pyramidZone"
+                        data-zone="less"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Less"
+                    >
+                        <polygon
+                            points="300,40 360,140 240,140"
+                            fill="#ef9a9a"
+                        ></polygon>
 
-</div>
+                        <text
+                            x="300"
+                            y="100"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            Less
+                        </text>
+                    </g>
 
-</div>
+                    <g
+                        class="pyramidZone"
+                        data-zone="moderate"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Moderate"
+                    >
+                        <polygon
+                            points="240,140 360,140 420,260 180,260"
+                            fill="#90caf9"
+                        ></polygon>
 
-<!-- ================= END SCREEN (CLOSURE FIX) ================= -->
-<div id="endScreen">
+                        <text
+                            x="300"
+                            y="205"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            Moderate
+                        </text>
+                    </g>
 
-<h1>🎉 Congratulations!</h1>
+                    <g
+                        class="pyramidZone"
+                        data-zone="more"
+                        role="button"
+                        tabindex="0"
+                        aria-label="More"
+                    >
+                        <polygon
+                            points="180,260 420,260 500,420 100,420"
+                            fill="#a5d6a7"
+                        ></polygon>
 
-<h2>You completed the Food Pyramid!</h2>
+                        <text
+                            x="300"
+                            y="340"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            More
+                        </text>
+                    </g>
 
-<div style="font-size:5rem;">🏆</div>
+                    <g
+                        class="pyramidZone"
+                        data-zone="most"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Most"
+                    >
+                        <polygon
+                            points="100,420 500,420 560,560 40,560"
+                            fill="#ffe082"
+                        ></polygon>
 
-<p>Great job building a healthy balanced diet.</p>
+                        <text
+                            x="300"
+                            y="495"
+                            text-anchor="middle"
+                            dominant-baseline="middle"
+                        >
+                            Most
+                        </text>
+                    </g>
+                </svg>
+            </section>
 
-<button class="btn" onclick="location.reload()">Play Again</button>
+            <!-- SORTED ITEMS -->
 
-</div>
+            <aside class="side">
+                <div class="sideBox">
+                    <div class="sideTitle">Less</div>
+                    <div class="sortedItems" id="less"></div>
+                </div>
 
-<script>
+                <div class="sideBox">
+                    <div class="sideTitle">Moderate</div>
+                    <div class="sortedItems" id="moderate"></div>
+                </div>
 
-/* SPLASH */
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("instructions").style.display="block";
-},2000);
+                <div class="sideBox">
+                    <div class="sideTitle">More</div>
+                    <div class="sortedItems" id="more"></div>
+                </div>
 
-/* FOOD DATA */
-const foods=[
-{name:"Apple",emoji:"🍎",group:"more"},
-{name:"Rice",emoji:"🍚",group:"most"},
-{name:"Milk",emoji:"🥛",group:"moderate"},
-{name:"Chips",emoji:"🍟",group:"less"},
-{name:"Carrot",emoji:"🥕",group:"more"},
-{name:"Candy",emoji:"🍬",group:"less"},
-{name:"Fish",emoji:"🐟",group:"moderate"},
-{name:"Bread",emoji:"🍞",group:"most"}
-];
+                <div class="sideBox">
+                    <div class="sideTitle">Most</div>
+                    <div class="sortedItems" id="most"></div>
+                </div>
+            </aside>
 
-let shuffled=[];
-let i=0;
-let active=false;
+        </div>
+    </main>
 
-/* START */
-function startGame(){
-document.getElementById("instructions").style.display="none";
-document.getElementById("game").style.display="block";
+    <!-- END SCREEN -->
 
-shuffled=[...foods].sort(()=>Math.random()-0.5);
+    <section id="endScreen">
+        <div class="endCard">
+            <h1>🎉 Congratulations!</h1>
 
-loadFood();
-}
+            <h2>You completed the Food Pyramid!</h2>
 
-/* LOAD */
-function loadFood(){
-active=false;
-document.getElementById("emoji").textContent=shuffled[i].emoji;
-document.getElementById("name").textContent=shuffled[i].name;
-document.getElementById("feedback").textContent="Tap food first";
-}
+            <div class="trophy">🏆</div>
 
-/* ACTIVATE */
-document.getElementById("foodCard").onclick=()=>{
-active=true;
-document.getElementById("feedback").textContent="Now tap pyramid";
-};
+            <p>Great job building a healthy, balanced diet.</p>
 
-/* CLICK ZONES */
-document.querySelectorAll("polygon").forEach((p,index)=>{
+            <button class="btn" id="playAgainButton" type="button">
+                Play Again
+            </button>
+        </div>
+    </section>
 
-p.addEventListener("click",()=>{
+    <script>
+        "use strict";
 
-if(!active){
-document.getElementById("feedback").textContent="Tap food first!";
-return;
-}
+        const foods = [
+            {
+                name: "Apple",
+                emoji: "🍎",
+                group: "more"
+            },
+            {
+                name: "Rice",
+                emoji: "🍚",
+                group: "most"
+            },
+            {
+                name: "Milk",
+                emoji: "🥛",
+                group: "moderate"
+            },
+            {
+                name: "Chips",
+                emoji: "🍟",
+                group: "less"
+            },
+            {
+                name: "Carrot",
+                emoji: "🥕",
+                group: "more"
+            },
+            {
+                name: "Candy",
+                emoji: "🍬",
+                group: "less"
+            },
+            {
+                name: "Fish",
+                emoji: "🐟",
+                group: "moderate"
+            },
+            {
+                name: "Bread",
+                emoji: "🍞",
+                group: "most"
+            }
+        ];
 
-const zones=["less","moderate","more","most"];
+        const splash = document.getElementById("splash");
+        const instructions = document.getElementById("instructions");
+        const game = document.getElementById("game");
+        const endScreen = document.getElementById("endScreen");
 
-check(zones[index]);
+        const startButton = document.getElementById("startButton");
+        const playAgainButton =
+            document.getElementById("playAgainButton");
 
-});
+        const foodCard = document.getElementById("foodCard");
+        const emojiElement = document.getElementById("emoji");
+        const foodNameElement =
+            document.getElementById("foodName");
+        const feedback = document.getElementById("feedback");
 
-});
+        const pyramidZones =
+            document.querySelectorAll(".pyramidZone");
 
-/* CHECK */
-function check(zone){
+        let shuffledFoods = [];
+        let currentIndex = 0;
+        let foodSelected = false;
+        let inputLocked = false;
 
-const food=shuffled[i];
+        /* Show instructions after splash screen */
 
-if(zone===food.group){
+        window.setTimeout(function () {
+            splash.style.display = "none";
+            instructions.style.display = "flex";
+        }, 5000);
 
-document.getElementById(zone).innerHTML+=
-`<div class="item">${food.emoji}</div>`;
+        /* Fisher-Yates shuffle */
 
-i++;
+        function shuffleFoods(foodList) {
+            const result = [...foodList];
 
-if(i<shuffled.length){
-loadFood();
-}else{
-showEnd();
-}
+            for (let index = result.length - 1; index > 0; index--) {
+                const randomIndex =
+                    Math.floor(Math.random() * (index + 1));
 
-}else{
-document.getElementById("feedback").textContent="Try again!";
-}
+                [result[index], result[randomIndex]] =
+                    [result[randomIndex], result[index]];
+            }
 
-}
+            return result;
+        }
 
-/* ================= FINAL CLOSURE FIX ================= */
-function showEnd(){
+        /* Clear sorted food boxes */
 
-document.getElementById("game").style.display="none";
-document.getElementById("instructions").style.display="none";
-document.getElementById("endScreen").style.display="block";
+        function clearFoodBoxes() {
+            document.getElementById("less").innerHTML = "";
+            document.getElementById("moderate").innerHTML = "";
+            document.getElementById("more").innerHTML = "";
+            document.getElementById("most").innerHTML = "";
+        }
 
-}
+        /* Start or restart game */
 
-</script>
+        function startGame() {
+            shuffledFoods = shuffleFoods(foods);
+            currentIndex = 0;
+            foodSelected = false;
+            inputLocked = false;
+
+            clearFoodBoxes();
+
+            instructions.style.display = "none";
+            endScreen.style.display = "none";
+            game.style.display = "block";
+
+            loadFood();
+        }
+
+        /* Display current food */
+
+        function loadFood() {
+            const currentFood = shuffledFoods[currentIndex];
+
+            foodSelected = false;
+            inputLocked = false;
+
+            emojiElement.textContent = currentFood.emoji;
+            foodNameElement.textContent = currentFood.name;
+
+            foodCard.classList.remove("selected");
+
+            feedback.textContent = "Tap the food card first.";
+            feedback.className = "";
+        }
+
+        /* Select current food */
+
+        function selectFood() {
+            if (inputLocked || currentIndex >= shuffledFoods.length) {
+                return;
+            }
+
+            foodSelected = true;
+            foodCard.classList.add("selected");
+
+            feedback.textContent =
+                "Now tap the correct section of the pyramid.";
+
+            feedback.className = "";
+        }
+
+        /* Check selected pyramid zone */
+
+        function checkAnswer(selectedZone) {
+            if (inputLocked) {
+                return;
+            }
+
+            if (!foodSelected) {
+                feedback.textContent = "Tap the food card first!";
+                feedback.className = "wrong";
+                return;
+            }
+
+            const currentFood = shuffledFoods[currentIndex];
+
+            if (selectedZone === currentFood.group) {
+                inputLocked = true;
+                foodSelected = false;
+
+                foodCard.classList.remove("selected");
+
+                const item = document.createElement("span");
+                item.className = "item";
+                item.textContent = currentFood.emoji;
+                item.title = currentFood.name;
+
+                document
+                    .getElementById(selectedZone)
+                    .appendChild(item);
+
+                feedback.textContent = "✓ Correct! Well done!";
+                feedback.className = "correct";
+
+                currentIndex++;
+
+                window.setTimeout(function () {
+                    if (currentIndex < shuffledFoods.length) {
+                        loadFood();
+                    } else {
+                        showEndScreen();
+                    }
+                }, 700);
+            } else {
+                feedback.textContent = "✗ Try again!";
+                feedback.className = "wrong";
+            }
+        }
+
+        /* Show completion screen */
+
+        function showEndScreen() {
+            game.style.display = "none";
+            instructions.style.display = "none";
+            endScreen.style.display = "flex";
+        }
+
+        /* Food card controls */
+
+        foodCard.addEventListener("click", selectFood);
+
+        foodCard.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectFood();
+            }
+        });
+
+        /* Pyramid controls */
+
+        pyramidZones.forEach(function (zone) {
+            zone.addEventListener("click", function () {
+                checkAnswer(zone.dataset.zone);
+            });
+
+            zone.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    checkAnswer(zone.dataset.zone);
+                }
+            });
+        });
+
+        /* Button controls */
+
+        startButton.addEventListener("click", startGame);
+        playAgainButton.addEventListener("click", startGame);
+    </script>
 
 </body>
 </html>
