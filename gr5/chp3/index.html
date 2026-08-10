@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nutrient Detective</title>
+
+<title>Innovine Cell Sort Challenge</title>
 
 <style>
 
-/* ================= GLOBAL ================= */
+/* =========================
+   RESET
+========================= */
+
 *{
 margin:0;
 padding:0;
@@ -15,388 +20,951 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Segoe UI,sans-serif;
 
-/* FIXED BACKGROUND DEPTH */
+font-family:'Trebuchet MS',sans-serif;
+
 background:
-radial-gradient(circle at center,
-rgba(255,255,255,0.75),
-rgba(255,255,255,0.92)),
-url("assets/clinic-bg.png");
+linear-gradient(
+135deg,
+#edf7ee 0%,
+#f8fffa 50%,
+#e8f4ff 100%
+);
 
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
+min-height:100vh;
+
+overflow-x:hidden;
+
+position:relative;
+
 }
 
-/* ================= SPLASH ================= */
-#splash{
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+#splashScreen{
+
 position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-}
 
-#splash img{
-width:240px;
-animation:fade 1s ease;
-}
+top:0;
+left:0;
 
-@keyframes fade{
-from{opacity:0;transform:scale(0.7);}
-to{opacity:1;transform:scale(1);}
-}
-
-/* ================= SCREENS ================= */
-.screen{
-display:none;
-padding:15px;
-}
-
-/* ================= INTRO ================= */
-.card{
-background:rgba(255,255,255,0.96);
-max-width:900px;
-margin:auto;
-padding:20px;
-border-radius:18px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
-text-align:center;
-}
-
-button{
-padding:14px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
 width:100%;
-}
+height:100%;
 
-.start{
-background:#2e7d32;
-color:white;
-}
+background:white;
 
-/* ================= GAME WRAPPER (NEW FIX) ================= */
-.game-wrapper{
-display:grid;
-grid-template-columns:1fr;
-gap:15px;
-max-width:1100px;
-margin:auto;
-}
-
-/* ================= HUD ================= */
-.hud{
 display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+#splashLogo{
+
+width:350px;
+
+max-width:85%;
+
+animation:fadeZoom 2s ease;
+
+}
+
+@keyframes fadeZoom{
+
+0%{
+opacity:0;
+transform:scale(.7);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* =========================
+   FLOATING SCIENCE ICONS
+========================= */
+
+.bgIcon{
+
+position:fixed;
+
+font-size:90px;
+
+opacity:.05;
+
+pointer-events:none;
+
+animation:float 14s infinite ease-in-out;
+
+z-index:0;
+
+}
+
+.i1{
+top:5%;
+left:3%;
+}
+
+.i2{
+top:12%;
+right:4%;
+animation-delay:2s;
+}
+
+.i3{
+bottom:10%;
+left:6%;
+animation-delay:4s;
+}
+
+.i4{
+bottom:8%;
+right:8%;
+animation-delay:6s;
+}
+
+.i5{
+top:50%;
+left:1%;
+animation-delay:3s;
+}
+
+.i6{
+top:55%;
+right:1%;
+animation-delay:5s;
+}
+
+@keyframes float{
+
+0%{
+transform:
+translateY(0px)
+rotate(0deg);
+}
+
+50%{
+transform:
+translateY(-30px)
+rotate(10deg);
+}
+
+100%{
+transform:
+translateY(0px)
+rotate(0deg);
+}
+
+}
+
+/* =========================
+   MAIN GAME
+========================= */
+
+#gameContainer{
+
+display:none;
+
+position:relative;
+
+z-index:10;
+
+max-width:1300px;
+
+margin:20px auto;
+
+background:white;
+
+border-radius:30px;
+
+padding:25px;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.12);
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.gameTitle{
+
+font-size:2.3rem;
+
+color:#2e7d32;
+
+font-weight:bold;
+
+margin-bottom:15px;
+
+}
+
+.instruction{
+
+background:#fff8e1;
+
+border:2px solid #ffd54f;
+
+padding:15px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+font-size:1rem;
+
+}
+
+/* =========================
+   SCORE BAR
+========================= */
+
+.scoreBar{
+
+display:flex;
+
 justify-content:space-between;
+
 flex-wrap:wrap;
-font-weight:bold;
-font-size:14px;
-margin-bottom:10px;
-background:rgba(255,255,255,0.85);
-padding:10px;
-border-radius:12px;
+
+gap:10px;
+
+margin:20px 0;
+
 }
 
-/* ================= CASE PANEL ================= */
-.case-panel{
-background:rgba(255,255,255,0.95);
-padding:15px;
-border-radius:16px;
-box-shadow:0 6px 15px rgba(0,0,0,0.12);
-}
+.stat{
 
-.case-title{
-background:#1976d2;
-color:white;
-padding:8px;
-border-radius:10px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.symptoms{
-background:#fff3e0;
-padding:10px;
-border-radius:10px;
-margin-top:10px;
-}
-
-/* ================= QUESTION PANEL ================= */
-.q-panel{
-background:rgba(255,255,255,0.96);
-padding:15px;
-border-radius:16px;
-box-shadow:0 6px 15px rgba(0,0,0,0.12);
-}
-
-.option{
-margin:8px 0;
-padding:12px;
 background:#e3f2fd;
-border-radius:10px;
+
+padding:12px 18px;
+
+border-radius:12px;
+
+font-weight:bold;
+
+font-size:1rem;
+
+}
+
+/* =========================
+   FEATURE CARD
+========================= */
+
+.featureCard{
+
+max-width:700px;
+
+margin:25px auto;
+
+background:#1976d2;
+
+color:white;
+
+padding:25px;
+
+border-radius:22px;
+
+text-align:center;
+
+font-size:1.5rem;
+
+font-weight:bold;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.2);
+
+}
+
+/* =========================
+   CELL OPTIONS
+========================= */
+
+.cellArea{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:25px;
+
+margin-top:20px;
+
+}
+
+.cellCard{
+
+background:#fafafa;
+
+border:3px solid #dbeafe;
+
+border-radius:25px;
+
+padding:20px;
+
+text-align:center;
+
 cursor:pointer;
+
+transition:.2s;
+
 }
 
-/* ================= FEEDBACK ================= */
-.correct{background:#c8e6c9;padding:10px;border-radius:10px;margin-top:10px;}
-.wrong{background:#ffcdd2;padding:10px;border-radius:10px;margin-top:10px;}
-.hint{background:#fff3cd;padding:10px;border-radius:10px;margin-top:10px;}
+.cellCard:hover{
 
-/* ================= DESKTOP UPGRADE ================= */
-@media(min-width:900px){
-.game-wrapper{
-grid-template-columns: 1fr 1fr;
-align-items:start;
-}
+transform:scale(1.02);
+
 }
 
-/* ================= MOBILE ================= */
+.cellTitle{
+
+font-size:1.7rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
+margin-bottom:10px;
+
+}
+
+.cellImage{
+
+width:280px;
+
+max-width:100%;
+
+display:block;
+
+margin:auto;
+
+}
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback{
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+min-height:80px;
+
+margin-top:20px;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:768px){
-button{font-size:15px;}
+
+.cellArea{
+
+grid-template-columns:1fr;
+
+}
+
+.featureCard{
+
+font-size:1.15rem;
+
+}
+
+.gameTitle{
+
+font-size:1.8rem;
+
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="assets/innovine-logo.png">
+<!-- SPLASH SCREEN -->
+
+<div id="splashScreen">
+
+<img
+src="assets/innovine-logo.png"
+id="splashLogo"
+alt="Innovine Logo">
+
 </div>
 
-<!-- INTRO -->
-<div class="screen" id="intro">
-<div class="card">
-<img src="assets/innovine-logo.png" style="width:140px;">
-<h2>🏥 Nutrient Detective</h2>
-<p>Diagnose patients using symptoms and nutrition clues</p>
-<button class="start" onclick="startGame()">START</button>
-</div>
-</div>
+<!-- FLOATING ICONS -->
 
-<!-- GAME -->
-<div class="screen" id="game">
+<div class="bgIcon i1">🧬</div>
+<div class="bgIcon i2">🔬</div>
+<div class="bgIcon i3">🌿</div>
+<div class="bgIcon i4">🦠</div>
+<div class="bgIcon i5">🧫</div>
+<div class="bgIcon i6">🔍</div>
 
-<div class="hud">
-<div>⭐ Score: <span id="score">0</span></div>
-<div>❤️ Lives: <span id="life">2</span></div>
-<div>📌 Q: <span id="qno">1</span></div>
-</div>
+<!-- MAIN GAME -->
 
-<div class="game-wrapper">
+<div id="gameContainer">
 
-<!-- CASE PANEL -->
-<div class="case-panel">
-<div class="case-title">🏥 CASE FILE</div>
+<div class="header">
 
-<div id="caseText">
-Patient shows unusual symptoms. Diagnose carefully.
-</div>
+<h1 class="gameTitle">
 
-<div class="symptoms" id="symptoms">
-Observe symptoms and choose correct nutrient.
-</div>
-</div>
+🔬 Cell Sort Challenge
 
-<!-- QUESTION PANEL -->
-<div class="q-panel">
+</h1>
 
-<h3 id="question"></h3>
+<div class="instruction">
 
-<div id="options"></div>
-
-<div id="feedback"></div>
+👉 Read the feature carefully and tap the correct cell type.
 
 </div>
 
 </div>
+
+<div class="scoreBar">
+
+<div class="stat">
+
+⭐ Score:
+<span id="score">0</span>
+
 </div>
 
-<!-- RESULT -->
-<div class="screen" id="result">
-<div class="card">
-<h2>🏁 Mission Complete</h2>
-<p>Final Score: <span id="final"></span></p>
-<button onclick="location.reload()">PLAY AGAIN</button>
-</div>
+<div class="stat">
+
+Question:
+<span id="questionNumber">1</span>/10
+
 </div>
 
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+</div>
+
+<div
+id="featureCard"
+class="featureCard">
+
+Loading...
+
+</div>
+
+<div class="cellArea">
+
+<div
+class="cellCard"
+onclick="checkAnswer('animal')">
+
+<div class="cellTitle">
+
+Animal Cell
+
+</div>
+
+<img
+src="assets/animal-cell.png"
+class="cellImage"
+alt="Animal Cell">
+
+</div>
+
+<div
+class="cellCard"
+onclick="checkAnswer('plant')">
+
+<div class="cellTitle">
+
+Plant Cell
+
+</div>
+
+<img
+src="assets/plant-cell.png"
+class="cellImage"
+alt="Plant Cell">
+
+</div>
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+
+</div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/freesound_community-claps-44774.mp3">
+</audio>
 
 <script>
 
-/* ================= SPLASH ================= */
+/* =========================
+   SPLASH SCREEN
+========================= */
+
 setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="block";
-},3000);
 
-/* ================= START ================= */
-function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
-loadQ();
+document.getElementById(
+"splashScreen"
+).style.display="none";
+
+document.getElementById(
+"gameContainer"
+).style.display="block";
+
+},2000);
+
+/* =========================
+   GAME DATA
+========================= */
+
+const features = [
+
+{
+text:"Smaller in size",
+type:"animal"
+},
+
+{
+text:"Do not have a cell wall",
+type:"animal"
+},
+
+{
+text:"Vacuoles are absent or small",
+type:"animal"
+},
+
+{
+text:"Do not have chloroplast",
+type:"animal"
+},
+
+{
+text:"Store food as glycogen",
+type:"animal"
+},
+
+{
+text:"Larger in size",
+type:"plant"
+},
+
+{
+text:"Have a cell wall",
+type:"plant"
+},
+
+{
+text:"Large central vacuole",
+type:"plant"
+},
+
+{
+text:"Contain chloroplast",
+type:"plant"
+},
+
+{
+text:"Store food as starch",
+type:"plant"
 }
 
-/* ================= STATE ================= */
-let score=0;
-let life=2;
-let qIndex=0;
-let attempt=1;
-let lock=false;
-
-/* ================= DATA ================= */
-const data=[
-{
-q:"A child cannot see in dim light. Which nutrient is missing?",
-case:"Night vision problem detected in child patient.",
-sym:"Difficulty seeing in low light conditions.",
-o:["Vitamin A","Vitamin C","Iron","Calcium"],
-a:"Vitamin A",
-hint:"Think about eyes 👁️"
-},
-{
-q:"Bleeding gums and slow healing?",
-case:"Gum bleeding observed in patient.",
-sym:"Wounds take long time to heal.",
-o:["Vitamin C","Vitamin A","Iron","Calcium"],
-a:"Vitamin C",
-hint:"Think immunity 🩹"
-},
-{
-q:"Pale skin and tiredness?",
-case:"Patient looks weak and exhausted.",
-sym:"Low energy and shortness of breath.",
-o:["Iron","Calcium","Vitamin A","Iodine"],
-a:"Iron",
-hint:"Think blood ❤️"
-},
-{
-q:"Swollen thyroid gland?",
-case:"Neck swelling observed.",
-sym:"Slow physical and mental growth.",
-o:["Iodine","Iron","Vitamin C","Calcium"],
-a:"Iodine",
-hint:"Think thyroid 🧠"
-},
-{
-q:"Weak bones and teeth decay?",
-case:"Bone weakness detected.",
-sym:"Tooth decay reported.",
-o:["Calcium","Iron","Vitamin A","Vitamin C"],
-a:"Calcium",
-hint:"Think bones 🦴"
-}
 ];
 
-/* ================= LOAD ================= */
-function loadQ(){
+let currentQuestion = 0;
+let score = 0;
+let answering = false;
 
-if(qIndex>=data.length){
-end();
+/* =========================
+   RANDOMIZE QUESTIONS
+========================= */
+
+for(
+let i = features.length - 1;
+i > 0;
+i--
+){
+
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+[
+features[i],
+features[j]
+]
+=
+[
+features[j],
+features[i]
+];
+
+}
+
+/* =========================
+   LOAD QUESTION
+========================= */
+
+function loadQuestion(){
+
+if(
+currentQuestion >=
+features.length
+){
+
+showCompletionScreen();
+
 return;
+
 }
 
-attempt=1;
-lock=false;
+document
+.getElementById(
+"questionNumber"
+)
+.innerHTML =
+currentQuestion + 1;
 
-let q=data[qIndex];
+document
+.getElementById(
+"featureCard"
+)
+.innerHTML =
 
-document.getElementById("qno").innerText=qIndex+1;
-document.getElementById("question").innerText=q.q;
+features[
+currentQuestion
+].text;
 
-document.getElementById("caseText").innerText=q.case;
-document.getElementById("symptoms").innerText=q.sym;
+document
+.getElementById(
+"feedback"
+)
+.innerHTML = "";
 
-let html="";
-q.o.forEach(opt=>{
-html+=`<div class="option" onclick="check('${opt}')">${opt}</div>`;
-});
-
-document.getElementById("options").innerHTML=html;
-document.getElementById("feedback").innerHTML="";
 }
 
-/* ================= CHECK ================= */
-function check(ans){
+/* =========================
+   CHECK ANSWER
+========================= */
 
-if(lock) return;
+function checkAnswer(
+selectedType
+){
 
-let q=data[qIndex];
+if(answering){
 
-if(ans===q.a){
+return;
 
-document.getElementById("correctSound").play();
+}
 
-score+=10;
-document.getElementById("feedback").innerHTML="✅ Correct Diagnosis!";
-document.getElementById("feedback").className="correct";
+answering = true;
 
-lock=true;
+const current =
+features[
+currentQuestion
+];
+
+const feedback =
+document.getElementById(
+"feedback"
+);
+
+/* CORRECT */
+
+if(
+selectedType ===
+current.type
+){
+
+const correctSound =
+document.getElementById(
+"correctSound"
+);
+
+correctSound.currentTime = 0;
+
+correctSound.play().catch(()=>{});
+
+score += 10;
+
+document
+.getElementById(
+"score"
+)
+.innerHTML =
+score;
+
+feedback.style.color =
+"#2e7d32";
+
+feedback.innerHTML =
+
+`
+🎉 Correct!
+
+<br><br>
+
+<b>${current.text}</b>
+
+belongs to
+
+<b>
+${
+selectedType==="animal"
+?
+"Animal Cell"
+:
+"Plant Cell"
+}
+</b>
+`;
+
+}
+
+/* WRONG */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+feedback.style.color =
+"#c62828";
+
+feedback.innerHTML =
+
+`
+❌ Not Quite!
+
+<br><br>
+
+<b>${current.text}</b>
+
+belongs to
+
+<b>
+${
+current.type==="animal"
+?
+"Animal Cell"
+:
+"Plant Cell"
+}
+</b>
+`;
+
+}
+
+/* NEXT QUESTION */
 
 setTimeout(()=>{
-qIndex++;
-updateHUD();
-loadQ();
-},1200);
 
-}else{
+currentQuestion++;
 
-document.getElementById("wrongSound").play();
-life--;
-updateHUD();
+answering = false;
 
-if(attempt===1){
+loadQuestion();
 
-document.getElementById("feedback").innerHTML="💡 Hint: "+q.hint;
-document.getElementById("feedback").className="hint";
-attempt=2;
-lock=false;
-
-}else{
-
-document.getElementById("feedback").innerHTML="❌ Correct Answer: "+q.a;
-document.getElementById("feedback").className="wrong";
-
-lock=true;
-
-setTimeout(()=>{
-qIndex++;
-loadQ();
-},1500);
+},1800);
 
 }
 
-if(life<0){
-end();
-}
+/* =========================
+   COMPLETION SCREEN
+========================= */
+
+function showCompletionScreen(){
+
+const clapSound =
+document.getElementById(
+"clapSound"
+);
+
+clapSound.currentTime = 0;
+
+clapSound.play().catch(()=>{});
+
+let badge =
+"🌟";
+
+let title =
+"Cell Learner";
+
+if(score >= 80){
+
+badge =
+"🏆";
+
+title =
+"Cell Expert";
 
 }
+else if(score >= 60){
+
+badge =
+"🥇";
+
+title =
+"Cell Champion";
+
 }
 
-/* ================= HUD ================= */
-function updateHUD(){
-document.getElementById("score").innerText=score;
-document.getElementById("life").innerText=life;
+document
+.getElementById(
+"gameContainer"
+)
+.innerHTML =
+
+`
+<div
+style="
+text-align:center;
+padding:40px;
+">
+
+<img
+src="assets/innovine-logo.png"
+style="
+width:220px;
+max-width:80%;
+margin-bottom:25px;
+">
+
+<div
+style="
+font-size:100px;
+">
+
+${badge}
+
+</div>
+
+<h1
+style="
+color:#2e7d32;
+margin-bottom:15px;
+">
+
+${title}
+
+</h1>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+max-width:700px;
+margin:auto;
+">
+
+You helped Animal Cells and Plant Cells remember their characteristics.
+
+Excellent work!
+
+</p>
+
+<br>
+
+<h2
+style="
+color:#1565c0;
+">
+
+⭐ Final Score:
+${score}/100
+
+</h2>
+
+<br>
+
+<button
+
+onclick="restartGame()"
+
+style="
+padding:15px 30px;
+border:none;
+border-radius:15px;
+background:#1565c0;
+color:white;
+font-size:1rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 Play Again
+
+</button>
+
+</div>
+`;
+
 }
 
-/* ================= END ================= */
-function end(){
-document.getElementById("game").style.display="none";
-document.getElementById("result").style.display="block";
-document.getElementById("final").innerText=score;
-document.getElementById("clapSound").play();
+/* =========================
+   RESTART
+========================= */
+
+function restartGame(){
+
+location.reload();
+
 }
+
+/* =========================
+   START GAME
+========================= */
+
+loadQuestion();
 
 </script>
 
