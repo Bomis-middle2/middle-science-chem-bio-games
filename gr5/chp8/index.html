@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-🌍 Atmosphere Explorer
-</title>
+<title>Atmosphere Explorer</title>
 
 <style>
 
@@ -25,8 +23,8 @@ font-family:'Segoe UI',sans-serif;
 background:
 linear-gradient(
 180deg,
-#dff4ff 0%,
-#f5fbff 100%
+#dff4ff,
+#ffffff
 );
 
 min-height:100vh;
@@ -35,22 +33,17 @@ overflow-x:hidden;
 
 }
 
-/* SPLASH */
+
+/* ================= SPLASH ================= */
 
 #splashScreen{
 
 position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
+inset:0;
 
 background:white;
 
 display:flex;
-
 justify-content:center;
 align-items:center;
 
@@ -60,28 +53,13 @@ z-index:9999;
 
 #splashLogo{
 
-width:320px;
-max-width:85%;
-
-animation:zoomLogo 1.5s ease;
+width:260px;
+max-width:80%;
 
 }
 
-@keyframes zoomLogo{
 
-0%{
-opacity:0;
-transform:scale(.6);
-}
-
-100%{
-opacity:1;
-transform:scale(1);
-}
-
-}
-
-/* INTRO */
+/* ================= INTRO ================= */
 
 #introScreen{
 
@@ -96,16 +74,17 @@ padding:20px;
 
 }
 
+
 .introCard{
 
 background:white;
 
-max-width:1000px;
 width:100%;
+max-width:700px;
 
-padding:35px;
+padding:30px;
 
-border-radius:30px;
+border-radius:25px;
 
 text-align:center;
 
@@ -114,41 +93,45 @@ box-shadow:
 
 }
 
+
 .logo{
 
-width:220px;
+width:180px;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
+
 
 .title{
 
-font-size:3rem;
-
-font-weight:bold;
+font-size:clamp(28px,5vw,48px);
 
 color:#1565c0;
 
-margin-bottom:20px;
+font-weight:bold;
+
+margin-bottom:15px;
 
 }
 
+
 .story{
 
-font-size:1.2rem;
+font-size:18px;
 
-line-height:1.8;
+line-height:1.7;
 
 color:#444;
 
 }
 
+
 .startBtn{
 
 margin-top:25px;
 
-padding:18px 45px;
+padding:15px 40px;
 
 border:none;
 
@@ -158,7 +141,7 @@ background:#1976d2;
 
 color:white;
 
-font-size:1.2rem;
+font-size:18px;
 
 font-weight:bold;
 
@@ -166,35 +149,40 @@ cursor:pointer;
 
 }
 
-/* GAME */
+
+/* ================= GAME ================= */
+
 
 #gameScreen{
 
 display:none;
 
-padding:20px;
+padding:15px;
 
 }
+
+
 
 .gameHeader{
 
 text-align:center;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
+
 
 .gameLogo{
 
-width:180px;
-
-margin-bottom:10px;
+width:140px;
 
 }
 
+
+
 .gameTitle{
 
-font-size:2.8rem;
+font-size:clamp(24px,5vw,42px);
 
 font-weight:bold;
 
@@ -202,22 +190,26 @@ color:#1565c0;
 
 }
 
+
+
 .mainCard{
-
-max-width:1200px;
-
-margin:auto;
 
 background:white;
 
-padding:25px;
+max-width:1000px;
 
-border-radius:30px;
+margin:auto;
+
+padding:20px;
+
+border-radius:25px;
 
 box-shadow:
 0 10px 30px rgba(0,0,0,.15);
 
 }
+
+
 
 .promptBox{
 
@@ -227,47 +219,62 @@ color:white;
 
 padding:15px;
 
-border-radius:20px;
+border-radius:18px;
 
-font-size:1.4rem;
+font-size:clamp(18px,3vw,26px);
 
 font-weight:bold;
 
 text-align:center;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
+
+
 
 .scoreBox{
 
 text-align:center;
 
-font-size:1.2rem;
+font-size:20px;
 
 font-weight:bold;
 
-margin-bottom:20px;
-
 color:#2e7d32;
+
+margin-bottom:15px;
 
 }
 
-/* IMAGE */
+
+
+/* ================= IMAGE AREA ================= */
+
 
 .atmosphereContainer{
 
 position:relative;
 
-max-width:900px;
+width:100%;
+
+max-width:850px;
 
 margin:auto;
 
+aspect-ratio:16/9;
+
 }
+
+
 
 .atmosphereImage{
 
 width:100%;
+
+height:100%;
+
+object-fit:contain;
 
 display:block;
 
@@ -275,15 +282,18 @@ border-radius:20px;
 
 }
 
-/* LAYER BUTTONS */
+
+
+/* ================= LAYER BUTTONS ================= */
+
 
 .layerBtn{
 
 position:absolute;
 
-width:250px;
+width:28%;
 
-height:70px;
+height:10%;
 
 border-radius:40px;
 
@@ -291,72 +301,175 @@ border:3px solid #0d47a1;
 
 background:white;
 
-font-size:1.8rem;
+color:#0d47a1;
+
+font-size:clamp(12px,2vw,22px);
 
 font-weight:bold;
 
-color:#0d47a1;
-
 cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+text-align:center;
+
+padding:5px;
 
 transition:.3s;
 
 }
 
+
 .layerBtn:hover{
 
-transform:scale(1.03);
+transform:scale(1.05);
 
 }
+
+
 
 .filled{
 
-background:#e8f5e9 !important;
+background:#e8f5e9!important;
 
-border:3px solid #43a047 !important;
+border-color:#43a047!important;
 
-color:#2e7d32 !important;
+color:#2e7d32!important;
 
-font-size:1rem !important;
+font-size:clamp(10px,2vw,18px)!important;
 
 }
+
+
+
+/* ================= FEEDBACK ================= */
+
 
 .feedback{
 
-margin-top:20px;
-
 text-align:center;
 
-font-size:1.2rem;
+font-size:20px;
 
 font-weight:bold;
 
-min-height:40px;
+margin-top:15px;
+
+min-height:35px;
 
 }
+
+
+
+/* ================= MOBILE ================= */
+
 
 @media(max-width:768px){
 
-.layerBtn{
 
-width:150px;
-height:45px;
+#gameScreen{
 
-font-size:1rem;
+padding:10px;
 
 }
 
-.title{
 
-font-size:2rem;
+.mainCard{
+
+padding:12px;
+
+border-radius:18px;
 
 }
+
+
+.gameLogo{
+
+width:110px;
+
+}
+
 
 .gameTitle{
 
-font-size:2rem;
+font-size:26px;
 
 }
+
+
+.promptBox{
+
+font-size:16px;
+
+padding:12px;
+
+}
+
+
+.scoreBox{
+
+font-size:16px;
+
+}
+
+
+
+.atmosphereContainer{
+
+aspect-ratio:3/4;
+
+}
+
+
+
+.atmosphereImage{
+
+object-fit:cover;
+
+}
+
+
+
+.layerBtn{
+
+width:38%;
+
+height:8%;
+
+font-size:12px;
+
+border-width:2px;
+
+}
+
+
+}
+
+
+
+/* SMALL MOBILE */
+
+
+@media(max-width:400px){
+
+
+.layerBtn{
+
+font-size:10px;
+
+}
+
+
+.gameTitle{
+
+font-size:22px;
+
+}
+
 
 }
 
@@ -364,23 +477,35 @@ font-size:2rem;
 
 </head>
 
+
 <body>
+
+
+<!-- SPLASH -->
 
 <div id="splashScreen">
 
-<img
+<img 
 id="splashLogo"
 src="assets/innovine-logo.png">
 
 </div>
 
+
+
+<!-- INTRO -->
+
+
 <div id="introScreen">
 
+
 <div class="introCard">
+
 
 <img
 src="assets/innovine-logo.png"
 class="logo">
+
 
 <h1 class="title">
 
@@ -388,15 +513,22 @@ class="logo">
 
 </h1>
 
+
 <div class="story">
 
 Professor Sky has lost the names of Earth's atmospheric layers.
 
 <br><br>
 
-Tap the correct layer position for each atmospheric layer.
+Help place each atmospheric layer in the correct position.
+
+<br><br>
+
+Tap the correct layer button to complete the atmosphere map.
 
 </div>
+
+
 
 <button
 class="startBtn"
@@ -406,17 +538,26 @@ onclick="startGame()">
 
 </button>
 
+
 </div>
 
 </div>
+
+
+
+<!-- GAME -->
+
 
 <div id="gameScreen">
 
+
 <div class="gameHeader">
+
 
 <img
 src="assets/innovine-logo.png"
 class="gameLogo">
+
 
 <div class="gameTitle">
 
@@ -424,9 +565,13 @@ class="gameLogo">
 
 </div>
 
+
 </div>
 
+
+
 <div class="mainCard">
+
 
 <div
 id="promptBox"
@@ -436,86 +581,30 @@ Loading...
 
 </div>
 
-<div
-class="scoreBox">
+
+<div class="scoreBox">
 
 ⭐ Score:
-<span id="score">
-
-0
-
-</span>
+<span id="score">0</span>
 
 </div>
 
+
+
 <div class="atmosphereContainer">
+
 
 <img
 src="assets/atmosphere.png"
 class="atmosphereImage">
 
-<!-- Layer buttons added in Part 2 -->
-<!-- =========================
-     LAYER BUTTONS
-========================= -->
+
 
 <button
 id="layerA"
 class="layerBtn"
 style="
-top:5%;
-left:50%;
-transform:translateX(-50%);
-">
-
-E
-
-</button>
-
-<button
-id="layerB"
-class="layerBtn"
-style="
-top:17%;
-left:50%;
-transform:translateX(-50%);
-">
-
-D
-
-</button>
-
-<button
-id="layerC"
-class="layerBtn"
-style="
-top:31%;
-left:50%;
-transform:translateX(-50%);
-">
-
-C
-
-</button>
-
-<button
-id="layerD"
-class="layerBtn"
-style="
-top:49%;
-left:50%;
-transform:translateX(-50%);
-">
-
-B
-
-</button>
-
-<button
-id="layerE"
-class="layerBtn"
-style="
-top:66%;
+top:8%;
 left:50%;
 transform:translateX(-50%);
 ">
@@ -524,7 +613,71 @@ A
 
 </button>
 
+
+
+<button
+id="layerB"
+class="layerBtn"
+style="
+top:24%;
+left:50%;
+transform:translateX(-50%);
+">
+
+B
+
+</button>
+
+
+
+<button
+id="layerC"
+class="layerBtn"
+style="
+top:40%;
+left:50%;
+transform:translateX(-50%);
+">
+
+C
+
+</button>
+
+
+
+<button
+id="layerD"
+class="layerBtn"
+style="
+top:56%;
+left:50%;
+transform:translateX(-50%);
+">
+
+D
+
+</button>
+
+
+
+<button
+id="layerE"
+class="layerBtn"
+style="
+top:72%;
+left:50%;
+transform:translateX(-50%);
+">
+
+E
+
+</button>
+
+
+
 </div>
+
+
 
 <div
 id="feedback"
@@ -534,94 +687,53 @@ Tap the correct layer.
 
 </div>
 
-</div>
 
 </div>
 
-<!-- =========================
-     AUDIO
-========================= -->
 
-<audio
-id="correctSound"
-src="assets/correct.mp3">
-</audio>
+</div>
 
-<audio
-id="wrongSound"
-src="assets/wrong.mp3">
-</audio>
 
-<audio
-id="clapSound"
-src="assets/freesound_community-claps-44774.mp3">
-</audio>
+<!-- AUDIO -->
+
+
+<audio id="correctSound"
+src="assets/correct.mp3"></audio>
+
+
+<audio id="wrongSound"
+src="assets/wrong.mp3"></audio>
+
+
+<audio id="clapSound"
+src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
 /* =========================
-   SPLASH
+   SPLASH SCREEN
 ========================= */
 
 setTimeout(()=>{
 
-document.getElementById(
-"splashScreen"
-).style.display =
-"none";
+document.getElementById("splashScreen").style.display="none";
 
-document.getElementById(
-"introScreen"
-).style.display =
-"flex";
+document.getElementById("introScreen").style.display="flex";
 
-},1500);
+},3000);
+
+
 
 /* =========================
-   START GAME
+   GAME DATA
 ========================= */
 
-function startGame(){
 
-document.getElementById(
-"introScreen"
-).style.display =
-"none";
-
-document.getElementById(
-"gameScreen"
-).style.display =
-"block";
-
-startRound();
-
-}
-
-/* =========================
-   SCORE
-========================= */
-
-let score = 0;
-
-/* =========================
-   LAYER DATA
-========================= */
-
-const layers = [
+const layers=[
 
 {
-name:"Troposphere",
-target:"layerE"
-},
-
-{
-name:"Stratosphere",
-target:"layerD"
-},
-
-{
-name:"Mesosphere",
-target:"layerC"
+name:"Exosphere",
+target:"layerA"
 },
 
 {
@@ -630,56 +742,107 @@ target:"layerB"
 },
 
 {
-name:"Exosphere",
-target:"layerA"
+name:"Mesosphere",
+target:"layerC"
+},
+
+{
+name:"Stratosphere",
+target:"layerD"
+},
+
+{
+name:"Troposphere",
+target:"layerE"
 }
 
 ];
 
+
+
+let score=0;
+
+let current=0;
+
+let shuffled=[];
+
+let locked=false;
+
+
+
 /* =========================
-   SHUFFLE
+   AUDIO SAFE PLAY
 ========================= */
 
-function shuffle(array){
 
-for(
-let i=array.length-1;
-i>0;
-i--
-){
+function playSound(id){
 
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
+let sound=document.getElementById(id);
 
-[array[i],array[j]]
-=
-[array[j],array[i]];
+if(sound){
+
+sound.currentTime=0;
+
+sound.play().catch(()=>{});
 
 }
 
-return array;
+}
+
+
+
+/* =========================
+   START GAME
+========================= */
+
+
+function startGame(){
+
+document.getElementById("introScreen").style.display="none";
+
+document.getElementById("gameScreen").style.display="block";
+
+
+score=0;
+
+current=0;
+
+document.getElementById("score").innerHTML=score;
+
+
+/* Reset buttons */
+
+document.querySelectorAll(".layerBtn").forEach(btn=>{
+
+btn.disabled=false;
+
+btn.classList.remove("filled");
+
+btn.innerHTML=btn.id.replace("layer","");
+
+
+});
+
+
+shuffled=[...layers].sort(()=>Math.random()-0.5);
+
+
+loadRound();
 
 }
 
-let gameLayers =
-shuffle(
-[...layers]
-);
 
-let currentIndex = 0;
+
 
 /* =========================
-   START ROUND
+   LOAD ROUND
 ========================= */
 
-function startRound(){
 
-if(
-currentIndex >=
-gameLayers.length
-){
+function loadRound(){
+
+
+if(current>=shuffled.length){
 
 showCertificate();
 
@@ -687,278 +850,277 @@ return;
 
 }
 
-document.getElementById(
-"promptBox"
-).innerHTML =
+
+locked=false;
+
+
+document.getElementById("promptBox").innerHTML=
 
 `
 Place:
 
-<b>
-
-${gameLayers[currentIndex].name}
-
-</b>
+<b>${shuffled[current].name}</b>
 `;
 
+
+
+document.getElementById("feedback").innerHTML=
+
+"Tap the correct layer.";
+
+
+
 }
+
+
+
 /* =========================
-   CLICK EVENTS
+   BUTTON EVENTS
 ========================= */
+
 
 document
 .getElementById("layerA")
-.onclick = ()=>checkLayer("layerA");
+.onclick=()=>checkLayer("layerA");
+
 
 document
 .getElementById("layerB")
-.onclick = ()=>checkLayer("layerB");
+.onclick=()=>checkLayer("layerB");
+
 
 document
 .getElementById("layerC")
-.onclick = ()=>checkLayer("layerC");
+.onclick=()=>checkLayer("layerC");
+
 
 document
 .getElementById("layerD")
-.onclick = ()=>checkLayer("layerD");
+.onclick=()=>checkLayer("layerD");
+
 
 document
 .getElementById("layerE")
-.onclick = ()=>checkLayer("layerE");
+.onclick=()=>checkLayer("layerE");
+
+
+
 
 /* =========================
-   CHECK LAYER
+   CHECK ANSWER
 ========================= */
 
-function checkLayer(
-selectedLayer
-){
 
-const currentLayer =
-gameLayers[
-currentIndex
-];
+function checkLayer(selected){
 
-if(
-selectedLayer ===
-currentLayer.target
-){
 
-/* CORRECT */
+if(locked) return;
 
-const correctSound =
-document.getElementById(
-"correctSound"
-);
 
-correctSound.currentTime = 0;
+let answer=shuffled[current];
 
-correctSound.play().catch(()=>{});
 
-score += 10;
 
-document.getElementById(
-"score"
-).innerHTML =
-score;
+if(selected===answer.target){
 
-/* FILL THE BOX */
 
-const button =
-document.getElementById(
-selectedLayer
-);
+locked=true;
 
-button.innerHTML =
-currentLayer.name;
 
-button.classList.add(
-"filled"
-);
+score+=10;
 
-button.disabled = true;
 
-/* FEEDBACK */
+document.getElementById("score").innerHTML=score;
 
-document.getElementById(
-"feedback"
-).innerHTML =
 
-`
-✅ Correct!
-`;
 
-currentIndex++;
+playSound("correctSound");
+
+
+
+let btn=document.getElementById(selected);
+
+
+btn.innerHTML=answer.name;
+
+
+btn.classList.add("filled");
+
+btn.disabled=true;
+
+
+
+document.getElementById("feedback").innerHTML=
+
+"✅ Correct!";
+
+
+current++;
+
+
 
 setTimeout(()=>{
 
-startRound();
+loadRound();
 
-},1000);
+},1200);
+
+
 
 }
+
 else{
 
-/* WRONG */
 
-const wrongSound =
-document.getElementById(
-"wrongSound"
-);
+playSound("wrongSound");
 
-wrongSound.currentTime = 0;
 
-wrongSound.play().catch(()=>{});
+document.getElementById("feedback").innerHTML=
 
-document.getElementById(
-"feedback"
-).innerHTML =
+"❌ Try Again";
 
-`
-❌ Try Again
-`;
 
 }
 
 }
+
+
+
 
 /* =========================
    CERTIFICATE
 ========================= */
 
+
 function showCertificate(){
 
-const clapSound =
-document.getElementById(
-"clapSound"
-);
 
-clapSound.currentTime = 0;
+playSound("clapSound");
 
-clapSound.play().catch(()=>{});
 
-document.querySelector(
-".mainCard"
-).innerHTML =
+document.querySelector(".mainCard").innerHTML=
 
 `
-<div
-style="
+
+<div style="
 text-align:center;
 padding:20px;
 ">
 
+
 <img
 src="assets/innovine-logo.png"
 style="
-width:220px;
-margin-bottom:20px;
-">
-
-<h1
-style="
-font-size:3rem;
-color:#1565c0;
+width:150px;
 margin-bottom:15px;
 ">
 
-🏆 ATMOSPHERE EXPLORER
+
+<h1 style="
+color:#1565c0;
+font-size:clamp(25px,6vw,45px);
+">
+
+🏆 Atmosphere Explorer
 
 </h1>
 
-<div
-style="
-font-size:4rem;
-margin-bottom:20px;
+
+<div style="
+font-size:55px;
+margin:20px;
 ">
 
-🌍 ☁️ ✈️ ☄️ 🛰️
+🌍 ☁️ ✈️ 🛰️
 
 </div>
 
-<p
-style="
-font-size:1.3rem;
-line-height:1.8;
-max-width:700px;
-margin:auto;
+
+<h2 style="
+color:#2e7d32;
 ">
 
 Excellent Work!
 
-<br><br>
+</h2>
+
+
+<p style="
+font-size:18px;
+line-height:1.6;
+">
 
 You correctly identified all layers of Earth's atmosphere.
 
 </p>
 
+
 <br>
 
-<div
-style="
-font-size:1.3rem;
-line-height:2;
-color:#1565c0;
+
+<div style="
+background:#e3f2fd;
+padding:15px;
+border-radius:15px;
 font-weight:bold;
+line-height:2;
 ">
 
-E → Exosphere<br>
-D → Thermosphere<br>
-C → Mesosphere<br>
-B → Stratosphere<br>
-A → Troposphere
+Exosphere<br>
+
+Thermosphere<br>
+
+Mesosphere<br>
+
+Stratosphere<br>
+
+Troposphere
 
 </div>
 
+
 <br>
 
-<h2
-style="
-color:#2e7d32;
-">
+
+<h2>
 
 ⭐ Final Score:
 ${score}
 
 </h2>
 
+
 <br>
 
+
 <button
-
-onclick="playAgain()"
-
+onclick="location.reload()"
 style="
-padding:18px 40px;
-border:none;
-border-radius:20px;
+padding:15px 35px;
 background:#43a047;
 color:white;
-font-size:1.2rem;
+border:none;
+border-radius:20px;
+font-size:18px;
 font-weight:bold;
-cursor:pointer;
 ">
 
 🔄 PLAY AGAIN
 
 </button>
 
+
 </div>
+
 `;
 
 }
 
-/* =========================
-   PLAY AGAIN
-========================= */
 
-function playAgain(){
-
-location.reload();
-
-}
 
 </script>
 
+
 </body>
+
 </html>
