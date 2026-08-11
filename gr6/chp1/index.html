@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nutrient Detective Lab</title>
+<title>Nutrient Detective: Emergency Ward</title>
 
 <style>
 
@@ -29,9 +29,12 @@ rgba(255,255,255,0.75)
 url("assets/clinic-bg.png");
 
 background-size:cover;
+
 background-position:center;
 
 min-height:100vh;
+
+overflow:hidden;
 
 }
 
@@ -65,6 +68,23 @@ width:230px;
 
 max-width:80%;
 
+animation:zoom 1s ease;
+
+}
+
+
+@keyframes zoom{
+
+from{
+transform:scale(.6);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
 }
 
 
@@ -76,7 +96,7 @@ max-width:80%;
 
 display:none;
 
-min-height:100vh;
+height:100vh;
 
 align-items:center;
 
@@ -91,74 +111,69 @@ padding:15px;
 /* ================= INTRO ================= */
 
 
-.intro-card{
+.card{
 
 background:white;
 
 width:95%;
 
-max-width:700px;
+max-width:750px;
 
-padding:30px;
+padding:25px;
 
 border-radius:25px;
 
 text-align:center;
 
 box-shadow:
-0 10px 30px rgba(0,0,0,0.2);
+0 10px 30px rgba(0,0,0,.18);
 
 }
 
 
-.intro-card img{
+.card img{
 
 width:130px;
 
 }
 
 
-.intro-title{
-
-font-size:clamp(28px,5vw,42px);
+h1{
 
 color:#1565c0;
 
 margin:15px 0;
 
-}
-
-
-.intro-text{
-
-font-size:18px;
-
-line-height:1.6;
-
-color:#444;
+font-size:clamp(26px,5vw,42px);
 
 }
 
 
-.start-btn{
-
-margin-top:25px;
-
-padding:15px 35px;
+button{
 
 border:none;
 
-border-radius:20px;
+border-radius:15px;
+
+padding:14px 25px;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.start{
 
 background:#2e7d32;
 
 color:white;
 
-font-size:18px;
-
-font-weight:bold;
-
-cursor:pointer;
+margin-top:20px;
 
 }
 
@@ -183,7 +198,13 @@ width:95%;
 
 max-width:1100px;
 
+height:95vh;
+
 margin:auto;
+
+display:flex;
+
+flex-direction:column;
 
 }
 
@@ -192,44 +213,38 @@ margin:auto;
 /* HEADER */
 
 
-.game-header{
+.header{
 
 background:white;
 
-padding:15px;
+padding:12px;
 
-border-radius:20px;
+border-radius:18px;
 
 display:flex;
 
-justify-content:space-between;
-
 align-items:center;
+
+justify-content:space-between;
 
 box-shadow:
 0 5px 20px rgba(0,0,0,.15);
 
-margin-bottom:15px;
+}
+
+
+.header img{
+
+width:80px;
 
 }
 
 
-
-.game-logo{
-
-width:90px;
-
-}
-
-
-
-.game-title{
-
-font-size:clamp(20px,4vw,32px);
-
-font-weight:bold;
+.header h2{
 
 color:#1565c0;
+
+font-size:clamp(18px,3vw,30px);
 
 }
 
@@ -246,13 +261,13 @@ justify-content:space-around;
 
 background:#e3f2fd;
 
-padding:12px;
+padding:10px;
 
 border-radius:15px;
 
-font-weight:bold;
+margin-top:10px;
 
-margin-bottom:15px;
+font-weight:bold;
 
 }
 
@@ -266,10 +281,10 @@ color:#1565c0;
 
 
 
-/* PROGRESS */
+/* HEALTH */
 
 
-.progress-box{
+.health-box{
 
 background:white;
 
@@ -277,15 +292,23 @@ padding:10px;
 
 border-radius:15px;
 
-margin-bottom:15px;
+margin-top:10px;
 
 }
 
 
+.health-title{
 
-.progress-bar{
+font-weight:bold;
 
-height:14px;
+margin-bottom:5px;
+
+}
+
+
+.health-bar{
+
+height:15px;
 
 background:#ddd;
 
@@ -296,8 +319,7 @@ overflow:hidden;
 }
 
 
-
-.progress-fill{
+.health-fill{
 
 height:100%;
 
@@ -311,25 +333,10 @@ transition:.5s;
 
 
 
-/* MAIN GRID */
+/* PATIENT AREA */
 
 
-.game-wrapper{
-
-display:grid;
-
-grid-template-columns:1fr;
-
-gap:15px;
-
-}
-
-
-
-/* PATIENT CARD */
-
-
-.patient-card{
+.patient-box{
 
 background:white;
 
@@ -337,11 +344,14 @@ padding:20px;
 
 border-radius:20px;
 
+margin-top:15px;
+
 box-shadow:
 0 6px 20px rgba(0,0,0,.15);
 
-}
+text-align:center;
 
+}
 
 
 .patient-title{
@@ -356,26 +366,20 @@ border-radius:12px;
 
 font-weight:bold;
 
-text-align:center;
-
-margin-bottom:15px;
-
 }
 
 
+.patient-name{
 
-.patient-id{
-
-font-size:18px;
+font-size:22px;
 
 font-weight:bold;
 
 color:#1565c0;
 
-margin-bottom:10px;
+margin:15px;
 
 }
-
 
 
 .symptoms{
@@ -386,31 +390,39 @@ padding:15px;
 
 border-radius:15px;
 
-line-height:1.7;
+line-height:1.6;
 
 }
 
 
 
-/* QUESTION PANEL */
+/* ACTION AREA */
 
 
-.question-card{
+.action-box{
 
 background:white;
 
-padding:20px;
+padding:18px;
 
 border-radius:20px;
+
+margin-top:15px;
 
 box-shadow:
 0 6px 20px rgba(0,0,0,.15);
 
+text-align:center;
+
 }
 
 
 
-.question-title{
+.action-title{
+
+font-size:20px;
+
+font-weight:bold;
 
 color:#1565c0;
 
@@ -420,7 +432,19 @@ margin-bottom:15px;
 
 
 
-/* OPTIONS */
+/* BUTTON OPTIONS */
+
+
+.options{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
 
 
 .option{
@@ -428,8 +452,6 @@ margin-bottom:15px;
 background:#e3f2fd;
 
 padding:15px;
-
-margin:10px 0;
 
 border-radius:15px;
 
@@ -442,10 +464,9 @@ transition:.3s;
 }
 
 
-
 .option:hover{
 
-transform:scale(1.03);
+transform:scale(1.04);
 
 background:#bbdefb;
 
@@ -476,11 +497,10 @@ animation:shake .4s;
 @keyframes pulse{
 
 50%{
-transform:scale(1.05);
+transform:scale(1.06);
 }
 
 }
-
 
 
 @keyframes shake{
@@ -514,21 +534,33 @@ border-radius:12px;
 
 font-weight:bold;
 
-text-align:center;
+min-height:35px;
 
 }
 
 
 
-/* DESKTOP */
+/* RECOVERY */
 
 
-@media(min-width:900px){
+.recovery{
 
-.game-wrapper{
+font-size:50px;
 
-grid-template-columns:1fr 1fr;
+animation:heal 1s infinite alternate;
 
+}
+
+
+
+@keyframes heal{
+
+from{
+transform:scale(1);
+}
+
+to{
+transform:scale(1.2);
 }
 
 }
@@ -541,40 +573,51 @@ grid-template-columns:1fr 1fr;
 @media(max-width:600px){
 
 
-.game-header{
+body{
+
+overflow:hidden;
+
+}
+
+
+.header{
 
 flex-direction:column;
 
-}
-
-
-.game-logo{
-
-width:70px;
+gap:5px;
 
 }
 
 
-.hud{
+.options{
 
-font-size:14px;
+grid-template-columns:1fr;
 
 }
 
 
-.patient-card,
-.question-card{
+.patient-box{
 
-padding:15px;
+padding:12px;
+
+}
+
+
+.action-box{
+
+padding:12px;
 
 }
 
 
 .option{
 
-font-size:15px;
+font-size:14px;
+
+padding:12px;
 
 }
+
 
 }
 
@@ -601,37 +644,39 @@ font-size:15px;
 <div class="screen" id="intro">
 
 
-<div class="intro-card">
+<div class="card">
 
 
 <img src="assets/innovine-logo.png">
 
 
-<h1 class="intro-title">
-
-🏥 Nutrient Detective Lab
-
+<h1>
+🏥 Nutrient Detective<br>
+Emergency Ward
 </h1>
 
 
-<p class="intro-text">
+<p>
 
-You are a junior nutrition expert.
-
-<br><br>
-
-Study patient clues, identify nutrient deficiencies and suggest healthy foods.
+You are a junior nutrition doctor.
 
 <br><br>
 
-🔎 Solve patient cases<br>
-⭐ Earn points<br>
-🥼 Become a Nutrition Expert
+Patients arrive with health problems.
+
+Investigate symptoms, identify missing nutrients and prescribe healthy foods.
+
+<br><br>
+
+🔍 Find clues<br>
+🧪 Identify nutrient<br>
+🥗 Give food treatment
 
 </p>
 
 
-<button class="start-btn" onclick="startGame()">
+<button class="start"
+onclick="startGame()">
 
 START MISSION
 
@@ -647,25 +692,22 @@ START MISSION
 
 <!-- GAME -->
 
+
 <div class="screen" id="game">
 
 
 <div class="game-container">
 
 
-<div class="game-header">
+<div class="header">
 
 
-<img 
-src="assets/innovine-logo.png"
-class="game-logo">
+<img src="assets/innovine-logo.png">
 
 
-<div class="game-title">
-
-🏥 Nutrient Detective Lab
-
-</div>
+<h2>
+🏥 Emergency Ward
+</h2>
 
 
 </div>
@@ -674,6 +716,7 @@ class="game-logo">
 
 <div class="hud">
 
+
 <div>
 ⭐ Score:
 <span id="score">0</span>
@@ -681,53 +724,62 @@ class="game-logo">
 
 
 <div>
-❤️ Lives:
-<span id="life">2</span>
+❤️ Patients Saved:
+<span id="saved">0</span>
 </div>
 
 
 <div>
-📌 Case:
-<span id="qno">1</span>/10
+📋 Case:
+<span id="caseNo">1</span>/6
 </div>
 
-</div>
-
-
-
-<div class="progress-box">
-
-<div class="progress-bar">
-
-<div id="progress"
-class="progress-fill">
-
-</div>
-
-</div>
 
 </div>
 
 
 
-<div class="game-wrapper">
+<div class="health-box">
 
 
-<div class="patient-card">
+<div class="health-title">
+❤️ Patient Recovery
+</div>
+
+
+<div class="health-bar">
+
+<div id="health"
+class="health-fill">
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="patient-box">
 
 
 <div class="patient-title">
 
-🩺 PATIENT REPORT
+🚑 PATIENT ARRIVED
 
 </div>
 
 
-<div id="caseText"
+<div id="patientName"
+class="patient-name">
+
+</div>
+
+
+<div id="symptoms"
 class="symptoms">
 
-Loading patient details...
-
 </div>
 
 
@@ -735,17 +787,17 @@ Loading patient details...
 
 
 
-<div class="question-card">
+<div class="action-box">
 
 
-<h3 
-class="question-title"
-id="question">
+<div id="actionTitle"
+class="action-title">
 
-</h3>
+</div>
 
 
-<div id="options">
+<div id="options"
+class="options">
 
 </div>
 
@@ -765,43 +817,40 @@ class="feedback">
 </div>
 
 
-</div>
-
-
 
 <!-- RESULT -->
+
 
 <div class="screen" id="result">
 
 
-<div class="intro-card">
+<div class="card">
 
 
 <h1>
-
-🏆 Mission Complete
-
+🏆 Nutrition Expert
 </h1>
 
 
-<p>
-
-You are now a certified Nutrient Detective!
-
-</p>
+<div class="recovery">
+❤️
+</div>
 
 
-<h2>
-
-⭐ Score:
-<span id="final">
-
-</span>
+<h2 id="resultText">
 
 </h2>
 
 
-<button class="start-btn"
+<p>
+
+⭐ Final Score:
+<span id="finalScore"></span>
+
+</p>
+
+
+<button class="start"
 onclick="location.reload()">
 
 PLAY AGAIN
@@ -816,11 +865,18 @@ PLAY AGAIN
 
 
 
-<audio id="correctSound" src="assets/correct.mp3"></audio>
+<!-- AUDIO -->
 
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="correctSound"
+src="assets/correct.mp3"></audio>
 
-<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<audio id="wrongSound"
+src="assets/wrong.mp3"></audio>
+
+
+<audio id="clapSound"
+src="assets/freesound_community-claps-44774.mp3"></audio>
 <script>
 
 /* ================= SPLASH ================= */
@@ -835,206 +891,273 @@ document.getElementById("intro").style.display="flex";
 
 
 
-/* ================= GAME STATE ================= */
+/* ================= GAME DATA ================= */
 
 
-let score=0;
-
-let life=2;
-
-let qIndex=0;
-
-let attempt=1;
-
-let locked=false;
-
-
-
-/* ================= QUESTIONS ================= */
-
-
-const data=[
+const patients=[
 
 {
-case:
-"Patient ID: #01<br><br>🩺 Symptom Report:<br>• Cannot see clearly in dim light<br>• Difficulty seeing at night",
+name:"Aarav",
 
-q:"Which nutrient deficiency is this?",
+symptoms:
+`
+👁 Cannot see clearly in dim light<br>
+👁 Difficulty seeing at night
+`,
 
-o:[
+step1:"Choose the correct investigation",
+
+investigation:[
+"👁 Eye Scan",
+"🩸 Blood Test",
+"🦴 Bone Scan"
+],
+
+correctInvestigation:"👁 Eye Scan",
+
+nutrient:[
 "Vitamin A",
 "Vitamin C",
 "Iron",
 "Calcium"
 ],
 
-a:"Vitamin A"
+answerNutrient:"Vitamin A",
+
+food:[
+"🥕 Carrot",
+"🍬 Candy",
+"🥤 Soft Drink",
+"🍟 Chips"
+],
+
+answerFood:"🥕 Carrot"
 
 },
 
 
+
 {
-case:
-"Patient ID: #02<br><br>🩺 Symptom Report:<br>• Bleeding gums<br>• Slow healing of wounds",
+name:"Meera",
 
-q:"Which nutrient is missing?",
+symptoms:
+`
+🦷 Bleeding gums<br>
+🩹 Slow healing of wounds
+`,
 
-o:[
+step1:"Choose the correct investigation",
+
+investigation:[
+"🍊 Immunity Check",
+"🦴 Bone Scan",
+"👁 Eye Scan"
+],
+
+correctInvestigation:"🍊 Immunity Check",
+
+nutrient:[
 "Vitamin C",
 "Vitamin A",
 "Iron",
 "Iodine"
 ],
 
-a:"Vitamin C"
+answerNutrient:"Vitamin C",
 
-},
-
-
-{
-case:
-"Patient ID: #03<br><br>🩺 Symptom Report:<br>• Pale skin<br>• Feeling tired and weak",
-
-q:"Which deficiency causes this?",
-
-o:[
-"Iron",
-"Calcium",
-"Vitamin A",
-"Vitamin C"
+food:[
+"🍊 Orange",
+"🍫 Chocolate",
+"🥤 Cola",
+"🍭 Candy"
 ],
 
-a:"Iron"
+answerFood:"🍊 Orange"
 
 },
 
 
+
 {
-case:
-"Patient ID: #04<br><br>🩺 Symptom Report:<br>• Swollen thyroid gland<br>• Poor growth",
+name:"Rohan",
 
-q:"Which nutrient is required?",
+symptoms:
+`
+😟 Pale skin<br>
+😴 Feels tired and weak
+`,
 
-o:[
+step1:"Choose the correct investigation",
+
+investigation:[
+"🩸 Blood Test",
+"👁 Eye Scan",
+"🦴 Bone Scan"
+],
+
+correctInvestigation:"🩸 Blood Test",
+
+nutrient:[
+"Iron",
+"Calcium",
+"Vitamin C",
+"Vitamin A"
+],
+
+answerNutrient:"Iron",
+
+food:[
+"🥬 Spinach",
+"🍬 Candy",
+"🍟 Chips",
+"🥤 Soft Drink"
+],
+
+answerFood:"🥬 Spinach"
+
+},
+
+
+
+{
+name:"Anaya",
+
+symptoms:
+`
+🦋 Swollen thyroid gland<br>
+📉 Slow growth
+`,
+
+step1:"Choose the correct investigation",
+
+investigation:[
+"🧪 Thyroid Check",
+"👁 Eye Scan",
+"🦴 Bone Scan"
+],
+
+correctInvestigation:"🧪 Thyroid Check",
+
+nutrient:[
 "Iodine",
 "Iron",
 "Calcium",
 "Vitamin C"
 ],
 
-a:"Iodine"
+answerNutrient:"Iodine",
+
+food:[
+"🧂 Iodised Salt",
+"🍫 Chocolate",
+"🍭 Candy",
+"🍟 Chips"
+],
+
+answerFood:"🧂 Iodised Salt"
 
 },
 
 
+
 {
-case:
-"Patient ID: #05<br><br>🩺 Symptom Report:<br>• Weak bones<br>• Tooth problems",
+name:"Kabir",
 
-q:"Which nutrient helps strengthen bones?",
+symptoms:
+`
+🦴 Weak bones<br>
+🦷 Tooth problems
+`,
 
-o:[
+step1:"Choose the correct investigation",
+
+investigation:[
+"🦴 Bone Scan",
+"👁 Eye Scan",
+"🩸 Blood Test"
+],
+
+correctInvestigation:"🦴 Bone Scan",
+
+nutrient:[
 "Calcium",
 "Iron",
-"Vitamin C",
-"Vitamin A"
-],
-
-a:"Calcium"
-
-},
-
-
-{
-case:
-"Patient ID: #06<br><br>🩺 Symptom Report:<br>• Frequent infections<br>• Low immunity",
-
-q:"Which vitamin helps improve immunity?",
-
-o:[
-"Vitamin C",
 "Vitamin A",
-"Iron",
-"Calcium"
+"Vitamin C"
 ],
 
-a:"Vitamin C"
+answerNutrient:"Calcium",
+
+food:[
+"🥛 Milk",
+"🍬 Candy",
+"🥤 Cola",
+"🍟 Chips"
+],
+
+answerFood:"🥛 Milk"
 
 },
 
 
+
 {
-case:
-"Patient ID: #07<br><br>🩺 Symptom Report:<br>• Slow growth<br>• Poor muscle development",
+name:"Sara",
 
-q:"Which nutrient is needed for growth?",
+symptoms:
+`
+💪 Weak muscles<br>
+📉 Poor growth
+`,
 
-o:[
+step1:"Choose the correct investigation",
+
+investigation:[
+"💪 Growth Check",
+"👁 Eye Scan",
+"🦴 Bone Scan"
+],
+
+correctInvestigation:"💪 Growth Check",
+
+nutrient:[
 "Protein",
 "Sugar",
 "Salt",
 "Water"
 ],
 
-a:"Protein"
+answerNutrient:"Protein",
 
-},
-
-
-{
-case:
-"Patient ID: #08<br><br>🥕 Food Advice Case:<br>Patient needs better eyesight.",
-
-q:"Which food should be suggested?",
-
-o:[
-"Carrots and Papaya",
-"Chips and Soda",
-"Candy",
-"White Bread"
+food:[
+"🥚 Eggs",
+"🍬 Candy",
+"🥤 Soda",
+"🍟 Chips"
 ],
 
-a:"Carrots and Papaya"
-
-},
-
-
-{
-case:
-"Patient ID: #09<br><br>🥗 Food Advice Case:<br>Patient has iron deficiency.",
-
-q:"Which food is helpful?",
-
-o:[
-"Spinach and Beetroot",
-"Soft Drinks",
-"Candy",
-"Fried Snacks"
-],
-
-a:"Spinach and Beetroot"
-
-},
-
-
-{
-case:
-"Patient ID: #10<br><br>🥛 Food Advice Case:<br>Child needs stronger bones.",
-
-q:"Which food should be recommended?",
-
-o:[
-"Milk and Curd",
-"Junk Food",
-"Soft Drinks",
-"Sweets"
-],
-
-a:"Milk and Curd"
+answerFood:"🥚 Eggs"
 
 }
 
 ];
+
+
+
+/* ================= VARIABLES ================= */
+
+
+let current=0;
+
+let score=0;
+
+let saved=0;
+
+let stage=0;
+
+let health=0;
+
+let locked=false;
 
 
 
@@ -1047,72 +1170,55 @@ document.getElementById("intro").style.display="none";
 
 document.getElementById("game").style.display="flex";
 
-loadQuestion();
+loadPatient();
 
 }
 
 
 
-/* ================= LOAD QUESTION ================= */
+
+/* ================= LOAD PATIENT ================= */
 
 
-function loadQuestion(){
+function loadPatient(){
 
 
-if(qIndex>=data.length){
+if(current>=patients.length){
 
-endGame();
+finishGame();
 
 return;
 
 }
 
 
-attempt=1;
+stage=0;
 
 locked=false;
 
 
-let q=data[qIndex];
+let p=patients[current];
 
 
-document.getElementById("qno").innerText=qIndex+1;
+document.getElementById("caseNo").innerText=current+1;
 
 
-document.getElementById("question").innerText=q.q;
+document.getElementById("patientName").innerText=
+"Patient: "+p.name;
 
 
-document.getElementById("caseText").innerHTML=q.case;
+document.getElementById("symptoms").innerHTML=
+p.symptoms;
 
+
+
+showOptions(
+p.investigation,
+p.step1
+);
 
 
 document.getElementById("feedback").innerHTML="";
-
-
-let optionsHTML="";
-
-
-q.o.forEach(opt=>{
-
-
-optionsHTML+=`
-
-<div class="option" onclick="checkAnswer(this,'${opt}')">
-
-${opt}
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById("options").innerHTML=optionsHTML;
-
-
-
-updateProgress();
 
 
 }
@@ -1120,38 +1226,176 @@ updateProgress();
 
 
 
-/* ================= CHECK ANSWER ================= */
+/* ================= SHOW OPTIONS ================= */
 
 
-function checkAnswer(element,answer){
+function showOptions(options,title){
 
 
-if(locked) return;
+document.getElementById("actionTitle").innerText=title;
+
+
+let box=document.getElementById("options");
+
+box.innerHTML="";
+
+
+options.forEach(option=>{
+
+
+let btn=document.createElement("div");
+
+btn.className="option";
+
+btn.innerHTML=option;
+
+
+btn.onclick=()=>checkAnswer(option);
+
+
+box.appendChild(btn);
+
+
+});
+
+
+}
 
 
 
-let correct=data[qIndex].a;
+/* ================= CHECK ================= */
+
+
+function checkAnswer(selected){
+
+
+if(locked)return;
 
 
 
-if(answer===correct){
+let p=patients[current];
 
 
-locked=true;
+
+/* INVESTIGATION */
+
+
+if(stage===0){
+
+
+if(selected===p.correctInvestigation){
+
+
+score+=5;
+
+document.getElementById("feedback").innerHTML=
+"✅ Clue found!";
+
+
+stage=1;
+
+
+setTimeout(()=>{
+
+showOptions(
+p.nutrient,
+"🧪 Identify Missing Nutrient"
+);
+
+
+},800);
+
+
+
+}
+
+else{
+
+
+wrongFeedback();
+
+}
+
+
+}
+
+
+
+
+/* NUTRIENT */
+
+
+else if(stage===1){
+
+
+if(selected===p.answerNutrient){
 
 
 score+=10;
 
+document.getElementById("feedback").innerHTML=
+"✅ Nutrient identified!";
 
-document.getElementById("score").innerText=score;
+
+stage=2;
 
 
-element.classList.add("correct");
+setTimeout(()=>{
+
+
+showOptions(
+p.food,
+"🥗 Prescribe Food"
+);
+
+
+},800);
+
+
+
+}
+
+else{
+
+
+wrongFeedback();
+
+}
+
+
+}
+
+
+
+
+/* FOOD */
+
+
+else if(stage===2){
+
+
+if(selected===p.answerFood){
+
+
+score+=10;
+
+saved++;
+
+
+health+=16;
+
+
+document.getElementById("saved").innerText=saved;
 
 
 document.getElementById("feedback").innerHTML=
+"🎉 Patient recovered!";
 
-"✅ Correct! Great work.";
+
+updateHealth();
+
+
+locked=true;
 
 
 playSound("correctSound");
@@ -1161,108 +1405,82 @@ playSound("correctSound");
 setTimeout(()=>{
 
 
-qIndex++;
+current++;
 
-loadQuestion();
-
-
-},1000);
-
-
-
-}
-
-else{
-
-
-element.classList.add("wrong");
-
-
-playSound("wrongSound");
-
-
-if(attempt===1){
-
-
-attempt=2;
-
-
-document.getElementById("feedback").innerHTML=
-
-"💡 Hint: Think about the function of this nutrient.";
-
-
-}
-
-
-else{
-
-
-locked=true;
-
-
-document.getElementById("feedback").innerHTML=
-
-"❌ Correct Answer: "+correct;
-
-
-
-setTimeout(()=>{
-
-
-qIndex++;
-
-loadQuestion();
+loadPatient();
 
 
 },1500);
 
 
+
+}
+
+else{
+
+
+wrongFeedback();
+
+
 }
 
 
 }
 
-}
 
-
-
-/* ================= PROGRESS ================= */
-
-
-function updateProgress(){
-
-
-let percent=(qIndex/data.length)*100;
-
-
-document.getElementById("progress").style.width=
-
-percent+"%";
+updateScore();
 
 }
 
 
 
-/* ================= AUDIO ================= */
+/* ================= WRONG ================= */
+
+
+function wrongFeedback(){
+
+
+playSound("wrongSound");
+
+
+document.getElementById("feedback").innerHTML=
+"❌ Try again";
+
+
+}
+
+
+
+/* ================= UPDATE ================= */
+
+
+function updateScore(){
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+
+function updateHealth(){
+
+document.getElementById("health").style.width=
+health+"%";
+
+}
+
+
+
+/* ================= SOUND ================= */
 
 
 function playSound(id){
 
+let audio=document.getElementById(id);
 
-let sound=document.getElementById(id);
+audio.currentTime=0;
 
-
-if(sound){
-
-
-sound.currentTime=0;
-
-
-sound.play().catch(()=>{});
-
-
-}
+audio.play().catch(()=>{});
 
 }
 
@@ -1271,7 +1489,7 @@ sound.play().catch(()=>{});
 /* ================= END ================= */
 
 
-function endGame(){
+function finishGame(){
 
 
 document.getElementById("game").style.display="none";
@@ -1280,16 +1498,21 @@ document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
 
 
-document.getElementById("final").innerText=
+document.getElementById("finalScore").innerText=
+score+"/150";
 
-score+" / 100";
+
+document.getElementById("resultText").innerHTML=
+`
+You saved ${saved} patients!<br><br>
+You are a Nutrient Detective Expert 🥼
+`;
 
 
 playSound("clapSound");
 
 
 }
-
 
 
 </script>
