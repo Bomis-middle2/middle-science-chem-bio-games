@@ -4,9 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nutrient Detective: Emergency Ward</title>
+
 
 <style>
 
@@ -34,14 +36,12 @@ background-position:center;
 
 min-height:100vh;
 
-overflow:hidden;
+overflow:auto;
 
 }
 
 
-
-/* ================= SPLASH ================= */
-
+/* SPLASH */
 
 #splash{
 
@@ -68,48 +68,31 @@ width:230px;
 
 max-width:80%;
 
-animation:zoom 1s ease;
-
-}
-
-
-@keyframes zoom{
-
-from{
-transform:scale(.6);
-opacity:0;
-}
-
-to{
-transform:scale(1);
-opacity:1;
-}
-
 }
 
 
 
-/* ================= SCREENS ================= */
-
+/* COMMON SCREEN */
 
 .screen{
 
 display:none;
 
-height:100vh;
+min-height:100vh;
 
 align-items:center;
 
-justify-content:center;
+justify-content:flex-start;
 
 padding:15px;
+
+overflow-y:auto;
 
 }
 
 
 
-/* ================= INTRO ================= */
-
+/* CARD */
 
 .card{
 
@@ -126,7 +109,9 @@ border-radius:25px;
 text-align:center;
 
 box-shadow:
-0 10px 30px rgba(0,0,0,.18);
+0 10px 30px rgba(0,0,0,0.18);
+
+margin:auto;
 
 }
 
@@ -138,15 +123,17 @@ width:130px;
 }
 
 
+
 h1{
 
 color:#1565c0;
 
+font-size:clamp(25px,5vw,42px);
+
 margin:15px 0;
 
-font-size:clamp(26px,5vw,42px);
-
 }
+
 
 
 button{
@@ -179,14 +166,11 @@ margin-top:20px;
 
 
 
-/* ================= GAME ================= */
-
+/* GAME */
 
 #game{
 
 display:none;
-
-flex-direction:column;
 
 }
 
@@ -198,20 +182,15 @@ width:95%;
 
 max-width:1100px;
 
-height:95vh;
-
 margin:auto;
 
-display:flex;
-
-flex-direction:column;
+padding-bottom:30px;
 
 }
 
 
 
 /* HEADER */
-
 
 .header{
 
@@ -252,16 +231,17 @@ font-size:clamp(18px,3vw,30px);
 
 /* HUD */
 
-
 .hud{
 
 display:flex;
 
 justify-content:space-around;
 
+flex-wrap:wrap;
+
 background:#e3f2fd;
 
-padding:10px;
+padding:12px;
 
 border-radius:15px;
 
@@ -269,8 +249,9 @@ margin-top:10px;
 
 font-weight:bold;
 
-}
+gap:10px;
 
+}
 
 
 .hud span{
@@ -283,12 +264,11 @@ color:#1565c0;
 
 /* HEALTH */
 
-
 .health-box{
 
 background:white;
 
-padding:10px;
+padding:12px;
 
 border-radius:15px;
 
@@ -301,14 +281,14 @@ margin-top:10px;
 
 font-weight:bold;
 
-margin-bottom:5px;
+margin-bottom:8px;
 
 }
 
 
 .health-bar{
 
-height:15px;
+height:16px;
 
 background:#ddd;
 
@@ -333,8 +313,7 @@ transition:.5s;
 
 
 
-/* PATIENT AREA */
-
+/* PATIENT */
 
 .patient-box{
 
@@ -348,8 +327,6 @@ margin-top:15px;
 
 box-shadow:
 0 6px 20px rgba(0,0,0,.15);
-
-text-align:center;
 
 }
 
@@ -366,6 +343,8 @@ border-radius:12px;
 
 font-weight:bold;
 
+text-align:center;
+
 }
 
 
@@ -376,6 +355,8 @@ font-size:22px;
 font-weight:bold;
 
 color:#1565c0;
+
+text-align:center;
 
 margin:15px;
 
@@ -390,14 +371,13 @@ padding:15px;
 
 border-radius:15px;
 
-line-height:1.6;
+line-height:1.7;
 
 }
 
 
 
 /* ACTION AREA */
-
 
 .action-box{
 
@@ -412,10 +392,7 @@ margin-top:15px;
 box-shadow:
 0 6px 20px rgba(0,0,0,.15);
 
-text-align:center;
-
 }
-
 
 
 .action-title{
@@ -426,14 +403,15 @@ font-weight:bold;
 
 color:#1565c0;
 
+text-align:center;
+
 margin-bottom:15px;
 
 }
 
 
 
-/* BUTTON OPTIONS */
-
+/* OPTIONS */
 
 .options{
 
@@ -444,7 +422,6 @@ grid-template-columns:1fr 1fr;
 gap:12px;
 
 }
-
 
 
 .option{
@@ -459,6 +436,8 @@ font-weight:bold;
 
 cursor:pointer;
 
+text-align:center;
+
 transition:.3s;
 
 }
@@ -466,63 +445,29 @@ transition:.3s;
 
 .option:hover{
 
-transform:scale(1.04);
+transform:scale(1.03);
 
 background:#bbdefb;
 
 }
 
 
-
 .correct{
 
 background:#c8e6c9!important;
 
-animation:pulse .5s;
-
 }
-
 
 
 .wrong{
 
 background:#ffcdd2!important;
 
-animation:shake .4s;
-
-}
-
-
-
-@keyframes pulse{
-
-50%{
-transform:scale(1.06);
-}
-
-}
-
-
-@keyframes shake{
-
-25%{
-transform:translateX(-8px);
-}
-
-50%{
-transform:translateX(8px);
-}
-
-75%{
-transform:translateX(-8px);
-}
-
 }
 
 
 
 /* FEEDBACK */
-
 
 .feedback{
 
@@ -534,59 +479,81 @@ border-radius:12px;
 
 font-weight:bold;
 
+text-align:center;
+
 min-height:35px;
 
 }
 
 
 
-/* RECOVERY */
+/* RESULT */
 
+#result{
 
-.recovery{
-
-font-size:50px;
-
-animation:heal 1s infinite alternate;
+display:none;
 
 }
 
 
 
-@keyframes heal{
+/* DESKTOP */
 
-from{
-transform:scale(1);
-}
+@media(min-width:900px){
 
-to{
-transform:scale(1.2);
+.options{
+
+grid-template-columns:1fr 1fr;
+
 }
 
 }
 
 
 
-/* MOBILE */
-
+/* MOBILE FIX */
 
 @media(max-width:600px){
 
 
 body{
 
-overflow:hidden;
+overflow:auto;
 
 }
+
+
+
+.screen{
+
+align-items:flex-start;
+
+}
+
 
 
 .header{
 
 flex-direction:column;
 
-gap:5px;
+gap:8px;
 
 }
+
+
+.header img{
+
+width:70px;
+
+}
+
+
+.game-container{
+
+height:auto;
+
+}
+
 
 
 .options{
@@ -596,30 +563,24 @@ grid-template-columns:1fr;
 }
 
 
-.patient-box{
-
-padding:12px;
-
-}
-
-
+.patient-box,
 .action-box{
 
-padding:12px;
+padding:14px;
 
 }
 
 
 .option{
 
-font-size:14px;
+font-size:15px;
 
-padding:12px;
+padding:14px;
+
+}
 
 }
 
-
-}
 
 </style>
 
@@ -627,6 +588,7 @@ padding:12px;
 
 
 <body>
+
 
 
 <!-- SPLASH -->
@@ -662,9 +624,7 @@ You are a junior nutrition doctor.
 
 <br><br>
 
-Patients arrive with health problems.
-
-Investigate symptoms, identify missing nutrients and prescribe healthy foods.
+Investigate patient symptoms, identify missing nutrients and prescribe healthy food.
 
 <br><br>
 
@@ -685,13 +645,12 @@ START MISSION
 
 </div>
 
-
 </div>
 
 
 
-<!-- GAME -->
 
+<!-- GAME -->
 
 <div class="screen" id="game">
 
@@ -724,7 +683,7 @@ START MISSION
 
 
 <div>
-❤️ Patients Saved:
+❤️ Saved:
 <span id="saved">0</span>
 </div>
 
@@ -743,7 +702,9 @@ START MISSION
 
 
 <div class="health-title">
+
 ❤️ Patient Recovery
+
 </div>
 
 
@@ -811,6 +772,7 @@ class="feedback">
 </div>
 
 
+
 </div>
 
 
@@ -819,7 +781,6 @@ class="feedback">
 
 
 <!-- RESULT -->
-
 
 <div class="screen" id="result">
 
@@ -832,14 +793,7 @@ class="feedback">
 </h1>
 
 
-<div class="recovery">
-❤️
-</div>
-
-
-<h2 id="resultText">
-
-</h2>
+<h2 id="resultText"></h2>
 
 
 <p>
@@ -865,21 +819,16 @@ PLAY AGAIN
 
 
 
-<!-- AUDIO -->
+<audio id="correctSound" src="assets/correct.mp3"></audio>
 
-<audio id="correctSound"
-src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
 
-
-<audio id="wrongSound"
-src="assets/wrong.mp3"></audio>
-
-
-<audio id="clapSound"
-src="assets/freesound_community-claps-44774.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 <script>
 
+
 /* ================= SPLASH ================= */
+
 
 setTimeout(()=>{
 
@@ -891,12 +840,15 @@ document.getElementById("intro").style.display="flex";
 
 
 
-/* ================= GAME DATA ================= */
+
+/* ================= PATIENT DATA ================= */
 
 
 const patients=[
 
+
 {
+
 name:"Aarav",
 
 symptoms:
@@ -905,9 +857,8 @@ symptoms:
 👁 Difficulty seeing at night
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "👁 Eye Scan",
 "🩸 Blood Test",
 "🦴 Bone Scan"
@@ -915,29 +866,32 @@ investigation:[
 
 correctInvestigation:"👁 Eye Scan",
 
-nutrient:[
+nutrients:
+[
 "Vitamin A",
 "Vitamin C",
 "Iron",
 "Calcium"
 ],
 
-answerNutrient:"Vitamin A",
+correctNutrient:"Vitamin A",
 
-food:[
+foods:
+[
 "🥕 Carrot",
 "🍬 Candy",
 "🥤 Soft Drink",
 "🍟 Chips"
 ],
 
-answerFood:"🥕 Carrot"
+correctFood:"🥕 Carrot"
 
 },
 
 
 
 {
+
 name:"Meera",
 
 symptoms:
@@ -946,39 +900,41 @@ symptoms:
 🩹 Slow healing of wounds
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "🍊 Immunity Check",
-"🦴 Bone Scan",
-"👁 Eye Scan"
+"👁 Eye Scan",
+"🦴 Bone Scan"
 ],
 
 correctInvestigation:"🍊 Immunity Check",
 
-nutrient:[
+nutrients:
+[
 "Vitamin C",
 "Vitamin A",
 "Iron",
 "Iodine"
 ],
 
-answerNutrient:"Vitamin C",
+correctNutrient:"Vitamin C",
 
-food:[
+foods:
+[
 "🍊 Orange",
 "🍫 Chocolate",
 "🥤 Cola",
 "🍭 Candy"
 ],
 
-answerFood:"🍊 Orange"
+correctFood:"🍊 Orange"
 
 },
 
 
 
 {
+
 name:"Rohan",
 
 symptoms:
@@ -987,9 +943,8 @@ symptoms:
 😴 Feels tired and weak
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "🩸 Blood Test",
 "👁 Eye Scan",
 "🦴 Bone Scan"
@@ -997,29 +952,32 @@ investigation:[
 
 correctInvestigation:"🩸 Blood Test",
 
-nutrient:[
+nutrients:
+[
 "Iron",
 "Calcium",
 "Vitamin C",
 "Vitamin A"
 ],
 
-answerNutrient:"Iron",
+correctNutrient:"Iron",
 
-food:[
+foods:
+[
 "🥬 Spinach",
 "🍬 Candy",
 "🍟 Chips",
 "🥤 Soft Drink"
 ],
 
-answerFood:"🥬 Spinach"
+correctFood:"🥬 Spinach"
 
 },
 
 
 
 {
+
 name:"Anaya",
 
 symptoms:
@@ -1028,39 +986,41 @@ symptoms:
 📉 Slow growth
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "🧪 Thyroid Check",
 "👁 Eye Scan",
-"🦴 Bone Scan"
+"🩸 Blood Test"
 ],
 
 correctInvestigation:"🧪 Thyroid Check",
 
-nutrient:[
+nutrients:
+[
 "Iodine",
 "Iron",
 "Calcium",
 "Vitamin C"
 ],
 
-answerNutrient:"Iodine",
+correctNutrient:"Iodine",
 
-food:[
+foods:
+[
 "🧂 Iodised Salt",
 "🍫 Chocolate",
 "🍭 Candy",
 "🍟 Chips"
 ],
 
-answerFood:"🧂 Iodised Salt"
+correctFood:"🧂 Iodised Salt"
 
 },
 
 
 
 {
+
 name:"Kabir",
 
 symptoms:
@@ -1069,9 +1029,8 @@ symptoms:
 🦷 Tooth problems
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "🦴 Bone Scan",
 "👁 Eye Scan",
 "🩸 Blood Test"
@@ -1079,29 +1038,32 @@ investigation:[
 
 correctInvestigation:"🦴 Bone Scan",
 
-nutrient:[
+nutrients:
+[
 "Calcium",
 "Iron",
 "Vitamin A",
 "Vitamin C"
 ],
 
-answerNutrient:"Calcium",
+correctNutrient:"Calcium",
 
-food:[
+foods:
+[
 "🥛 Milk",
 "🍬 Candy",
 "🥤 Cola",
 "🍟 Chips"
 ],
 
-answerFood:"🥛 Milk"
+correctFood:"🥛 Milk"
 
 },
 
 
 
 {
+
 name:"Sara",
 
 symptoms:
@@ -1110,9 +1072,8 @@ symptoms:
 📉 Poor growth
 `,
 
-step1:"Choose the correct investigation",
-
-investigation:[
+investigation:
+[
 "💪 Growth Check",
 "👁 Eye Scan",
 "🦴 Bone Scan"
@@ -1120,23 +1081,25 @@ investigation:[
 
 correctInvestigation:"💪 Growth Check",
 
-nutrient:[
+nutrients:
+[
 "Protein",
 "Sugar",
 "Salt",
 "Water"
 ],
 
-answerNutrient:"Protein",
+correctNutrient:"Protein",
 
-food:[
+foods:
+[
 "🥚 Eggs",
 "🍬 Candy",
 "🥤 Soda",
 "🍟 Chips"
 ],
 
-answerFood:"🥚 Eggs"
+correctFood:"🥚 Eggs"
 
 }
 
@@ -1144,33 +1107,41 @@ answerFood:"🥚 Eggs"
 
 
 
-/* ================= VARIABLES ================= */
 
 
-let current=0;
+/* ================= GAME VARIABLES ================= */
+
+
+let currentPatient=0;
 
 let score=0;
 
-let saved=0;
-
-let stage=0;
+let savedPatients=0;
 
 let health=0;
+
+let stage=0;
 
 let locked=false;
 
 
 
-/* ================= START ================= */
+
+
+/* ================= START GAME ================= */
 
 
 function startGame(){
 
+
 document.getElementById("intro").style.display="none";
+
 
 document.getElementById("game").style.display="flex";
 
+
 loadPatient();
+
 
 }
 
@@ -1183,7 +1154,7 @@ loadPatient();
 function loadPatient(){
 
 
-if(current>=patients.length){
+if(currentPatient>=patients.length){
 
 finishGame();
 
@@ -1197,28 +1168,28 @@ stage=0;
 locked=false;
 
 
-let p=patients[current];
+let patient=patients[currentPatient];
 
 
-document.getElementById("caseNo").innerText=current+1;
+document.getElementById("caseNo").innerText=
+currentPatient+1;
 
 
 document.getElementById("patientName").innerText=
-"Patient: "+p.name;
+"Patient: "+patient.name;
 
 
 document.getElementById("symptoms").innerHTML=
-p.symptoms;
-
-
-
-showOptions(
-p.investigation,
-p.step1
-);
+patient.symptoms;
 
 
 document.getElementById("feedback").innerHTML="";
+
+
+showOptions(
+patient.investigation,
+"🔍 Select Investigation"
+);
 
 
 }
@@ -1226,10 +1197,12 @@ document.getElementById("feedback").innerHTML="";
 
 
 
-/* ================= SHOW OPTIONS ================= */
 
 
-function showOptions(options,title){
+/* ================= DISPLAY OPTIONS ================= */
+
+
+function showOptions(list,title){
 
 
 document.getElementById("actionTitle").innerText=title;
@@ -1237,23 +1210,26 @@ document.getElementById("actionTitle").innerText=title;
 
 let box=document.getElementById("options");
 
+
 box.innerHTML="";
 
 
-options.forEach(option=>{
+list.forEach(item=>{
 
 
-let btn=document.createElement("div");
-
-btn.className="option";
-
-btn.innerHTML=option;
+let option=document.createElement("div");
 
 
-btn.onclick=()=>checkAnswer(option);
+option.className="option";
 
 
-box.appendChild(btn);
+option.innerText=item;
+
+
+option.onclick=()=>checkAnswer(item,option);
+
+
+box.appendChild(option);
 
 
 });
@@ -1263,47 +1239,50 @@ box.appendChild(btn);
 
 
 
-/* ================= CHECK ================= */
 
 
-function checkAnswer(selected){
+
+/* ================= CHECK ANSWER ================= */
+
+
+function checkAnswer(answer,element){
 
 
 if(locked)return;
 
 
-
-let p=patients[current];
-
+let patient=patients[currentPatient];
 
 
-/* INVESTIGATION */
+
+/* STEP 1 */
 
 
 if(stage===0){
 
 
-if(selected===p.correctInvestigation){
+if(answer===patient.correctInvestigation){
 
 
 score+=5;
-
-document.getElementById("feedback").innerHTML=
-"✅ Clue found!";
 
 
 stage=1;
 
 
+showFeedback("✅ Investigation complete!");
+
+
 setTimeout(()=>{
 
+
 showOptions(
-p.nutrient,
+patient.nutrients,
 "🧪 Identify Missing Nutrient"
 );
 
 
-},800);
+},700);
 
 
 
@@ -1312,7 +1291,7 @@ p.nutrient,
 else{
 
 
-wrongFeedback();
+wrong(element);
 
 }
 
@@ -1322,34 +1301,36 @@ wrongFeedback();
 
 
 
-/* NUTRIENT */
+
+
+/* STEP 2 */
 
 
 else if(stage===1){
 
 
-if(selected===p.answerNutrient){
+if(answer===patient.correctNutrient){
 
 
 score+=10;
 
-document.getElementById("feedback").innerHTML=
-"✅ Nutrient identified!";
-
 
 stage=2;
+
+
+showFeedback("✅ Nutrient identified!");
 
 
 setTimeout(()=>{
 
 
 showOptions(
-p.food,
+patient.foods,
 "🥗 Prescribe Food"
 );
 
 
-},800);
+},700);
 
 
 
@@ -1358,54 +1339,58 @@ p.food,
 else{
 
 
-wrongFeedback();
-
-}
+wrong(element);
 
 
 }
 
+}
 
 
 
-/* FOOD */
+
+
+
+
+/* STEP 3 */
 
 
 else if(stage===2){
 
 
-if(selected===p.answerFood){
+if(answer===patient.correctFood){
 
 
 score+=10;
 
-saved++;
+
+savedPatients++;
 
 
 health+=16;
 
 
-document.getElementById("saved").innerText=saved;
-
-
-document.getElementById("feedback").innerHTML=
-"🎉 Patient recovered!";
-
-
 updateHealth();
+
+
+document.getElementById("saved").innerText=
+savedPatients;
 
 
 locked=true;
 
 
-playSound("correctSound");
+showFeedback("🎉 Patient recovered successfully!");
 
+
+correct(element);
 
 
 setTimeout(()=>{
 
 
-current++;
+currentPatient++;
+
 
 loadPatient();
 
@@ -1419,74 +1404,130 @@ loadPatient();
 else{
 
 
-wrongFeedback();
+wrong(element);
 
 
 }
-
 
 }
 
 
 updateScore();
 
+
 }
 
 
 
-/* ================= WRONG ================= */
 
 
-function wrongFeedback(){
+
+/* ================= FEEDBACK ================= */
+
+
+function showFeedback(text){
+
+
+document.getElementById("feedback").innerHTML=text;
+
+
+}
+
+
+
+function wrong(element){
+
+
+element.classList.add("wrong");
 
 
 playSound("wrongSound");
 
 
-document.getElementById("feedback").innerHTML=
-"❌ Try again";
+showFeedback("❌ Try again");
+
+
+setTimeout(()=>{
+
+
+element.classList.remove("wrong");
+
+
+},500);
 
 
 }
 
 
 
-/* ================= UPDATE ================= */
+function correct(element){
+
+
+element.classList.add("correct");
+
+
+playSound("correctSound");
+
+
+}
+
+
+
+
+
+
+/* ================= SCORE ================= */
 
 
 function updateScore(){
 
-document.getElementById("score").innerText=score;
+
+document.getElementById("score").innerText=
+score;
+
 
 }
+
 
 
 
 function updateHealth(){
 
+
 document.getElementById("health").style.width=
 health+"%";
+
 
 }
 
 
 
-/* ================= SOUND ================= */
+
+
+
+/* ================= AUDIO ================= */
 
 
 function playSound(id){
 
+
 let audio=document.getElementById(id);
+
+
+if(audio){
+
 
 audio.currentTime=0;
 
+
 audio.play().catch(()=>{});
+
 
 }
 
 
-
-/* ================= END ================= */
+}
+// ================= END GAME =================
 
 
 function finishGame(){
@@ -1498,15 +1539,25 @@ document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
 
 
-document.getElementById("finalScore").innerText=
-score+"/150";
+document.getElementById("finalScore").innerText =
+score + " / 150";
 
 
-document.getElementById("resultText").innerHTML=
+
+document.getElementById("resultText").innerHTML =
+
 `
-You saved ${saved} patients!<br><br>
-You are a Nutrient Detective Expert 🥼
+🎉 Excellent Work!<br><br>
+
+You successfully treated 
+<b>${savedPatients}</b> patients.<br><br>
+
+You are now a<br>
+
+🏥 <b>Nutrient Detective Expert</b>
+
 `;
+
 
 
 playSound("clapSound");
@@ -1516,6 +1567,7 @@ playSound("clapSound");
 
 
 </script>
+
 
 </body>
 
