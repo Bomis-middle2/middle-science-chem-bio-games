@@ -5,9 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
 Food Chain Rescue Mission v2
@@ -19,7 +17,6 @@ Food Chain Rescue Mission v2
    FOOD CHAIN RESCUE MISSION v2
 
    DESIGNED FOR:
-
    ✓ Desktop
    ✓ Laptop
    ✓ Tablet
@@ -28,7 +25,6 @@ Food Chain Rescue Mission v2
    ✓ GitHub Pages
 
    OPTIMISED FOR:
-
    ✓ Low Internet Speeds
    ✓ Touch Screens
    ✓ Large Tap Targets
@@ -56,6 +52,58 @@ min-height:100vh;
 overflow-x:hidden;
 
 color:#222;
+
+}
+
+/* =====================================
+   SPLASH OVERLAY
+===================================== */
+
+#splash-overlay {
+
+position: fixed;
+
+top: 0; 
+
+left: 0; 
+
+width: 100%; 
+
+height: 100%;
+
+background-color: #07131d;
+
+z-index: 9999;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+flex-direction: column;
+
+}
+
+#splash-overlay img {
+
+max-width: 280px;
+
+width: 70%;
+
+height: auto;
+
+object-fit: contain;
+
+animation: fadeIn 1s ease-in-out;
+
+}
+
+@keyframes fadeIn {
+
+from { opacity: 0; transform: scale(0.95); }
+
+to { opacity: 1; transform: scale(1); }
 
 }
 
@@ -587,6 +635,14 @@ font-size:18px;
 
 <body>
 
+<!-- INTRO SPLASH OVERLAY (ONLY SHOWN AT START) -->
+
+<div id="splash-overlay">
+
+<img src="assets/logo.png" alt="Innovine Logo" onerror="console.log('Logo missing in assets folder');">
+
+</div>
+
 <div id="background">
 
 <div class="cloud">☁️</div>
@@ -800,6 +856,7 @@ class="badge">
 </div>
 
 </div>
+
 <!-- FOREST ECOSYSTEM -->
 
 <div
@@ -1108,6 +1165,19 @@ Return To Map
 <script>
 
 /* =====================================
+   SPLASH TIMER
+===================================== */
+
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    const splash = document.getElementById('splash-overlay');
+    if(splash) {
+      splash.style.display = 'none';
+    }
+  }, 5000);
+});
+
+/* =====================================
    SOUNDS
 ===================================== */
 
@@ -1116,9 +1186,13 @@ function playSound(id){
 const s=
 document.getElementById(id);
 
+if(s){
+
 s.currentTime=0;
 
 s.play().catch(function(){});
+
+}
 
 }
 
@@ -1376,6 +1450,7 @@ selectedForest=
 el.textContent.trim();
 
 }
+
 /* =====================================
    FOREST FOOD CHAIN PLACEMENT
 ===================================== */
@@ -1651,6 +1726,19 @@ document
 )
 .style.width=
 percent+"%";
+
+if(completedZones === 4){
+
+document
+.getElementById(
+"badgeMaster"
+)
+.style.display=
+"inline-block";
+
+playSound("clapSound");
+
+}
 
 }
 
@@ -1954,6 +2042,7 @@ document
 loadPondChoices();
 
 }
+
 /* =====================================
    POND FOOD CHAIN
 ===================================== */
@@ -2500,6 +2589,7 @@ playSound(
 }
 
 }
+
 /* =====================================
    GRASSLAND MISSION 2
    FOOD CHAIN BUILDER
@@ -3193,6 +3283,7 @@ document
 }
 
 }
+
 /* =====================================
    OCEAN MISSION 2
    FOOD CHAIN BUILDER
@@ -3506,7 +3597,7 @@ playSound(
 );
 
 alert(
-"Start with the producer and work up the food chain."
+"Start with the tiny producers floating at the surface!"
 );
 
 }
@@ -3540,15 +3631,15 @@ document
 <h3>
 
 🌊 Mission 3:
-Coral Reef Crisis
+Ocean Crisis
 
 </h3>
 
 <p class="center">
 
-Coral reefs are dying.
+Overfishing significantly reduces shark numbers.
 
-What is the most likely effect?
+What happens to small fish populations over time?
 
 </p>
 
@@ -3557,25 +3648,25 @@ What is the most likely effect?
 <div
 class="option"
 onclick="checkOceanCrisis(true)">
-Fewer fish habitats
+Increase
 </div>
 
 <div
 class="option"
 onclick="checkOceanCrisis(false)">
-More coral growth
+Decrease
 </div>
 
 <div
 class="option"
 onclick="checkOceanCrisis(false)">
-More sharks instantly
+Stay Same
 </div>
 
 <div
 class="option"
 onclick="checkOceanCrisis(false)">
-No ecosystem change
+Disappear
 </div>
 
 </div>
@@ -3588,7 +3679,7 @@ class="hidden center">
 
 <h3>
 
-🏅 Ocean Ecosystem Complete
+🏅 Ocean Complete
 
 </h3>
 
@@ -3596,7 +3687,7 @@ class="hidden center">
 class="btn"
 onclick="completeOcean()">
 
-Finish Adventure
+Return To Map
 
 </button>
 
@@ -3652,16 +3743,6 @@ document
 .style.display=
 "inline-block";
 
-showFinalChallenge();
-
-}
-
-/* =====================================
-   FINAL CHALLENGE
-===================================== */
-
-function showFinalChallenge(){
-
 document
 .getElementById(
 "oceanScreen"
@@ -3670,200 +3751,31 @@ document
 "hidden"
 );
 
-document.body.insertAdjacentHTML(
-"beforeend",
+document
+.getElementById(
+"mapScreen"
+)
+.classList.remove(
+"hidden"
+);
+
+document
+.getElementById(
+"oceanCard"
+)
+.innerHTML=
+
 `
-
-<div
-id="finalScreen"
-class="card">
-
-<h2>
-
-🕸 Food Web Challenge
-
-</h2>
-
-<p class="center">
-
-A pesticide kills many insects
-in a forest ecosystem.
-
-Explain ONE possible effect
-on the food web.
-
-</p>
-
-<br>
-
-<textarea
-id="finalAnswer"
-style="
-width:100%;
-height:160px;
-padding:15px;
-border-radius:12px;
-font-size:16px;
-">
-
-</textarea>
+🌊
 
 <br><br>
 
-<div class="center">
+Ocean
 
-<button
-class="btn"
-onclick="submitFinalAnswer()">
+<br><br>
 
-Submit Answer
-
-</button>
-
-</div>
-
-</div>
-
-`
-);
-
-}
-
-/* =====================================
-   CERTIFICATE
-===================================== */
-
-function submitFinalAnswer(){
-
-const answer=
-document
-.getElementById(
-"finalAnswer"
-)
-.value
-.trim()
-.toLowerCase();
-
-if(
-answer.length < 40
-){
-
-alert(
-"Please explain your answer in more detail."
-);
-
-return;
-
-}
-
-document
-.getElementById(
-"badgeMaster"
-)
-.style.display=
-"inline-block";
-
-playSound(
-"clapSound"
-);
-
-showCertificate();
-
-}
-
-function showCertificate(){
-
-const name=
-document
-.getElementById(
-"studentName"
-)
-.value;
-
-document.body.insertAdjacentHTML(
-"beforeend",
-`
-
-<div
-id="certificateScreen"
-class="card">
-
-<h1>
-
-🏆 MASTER ECOLOGIST
-
-</h1>
-
-<br>
-
-<p class="center">
-
-Awarded To
-
-</p>
-
-<h2>
-
-${name}
-
-</h2>
-
-<br>
-
-<p class="center">
-
-Successfully restored
-
-</p>
-
-<div
-style="
-font-size:22px;
-text-align:center;
-line-height:2;
-">
-
-🌳 Forest Ecosystem<br>
-💧 Pond Ecosystem<br>
-🌾 Grassland Ecosystem<br>
-🌊 Ocean Ecosystem
-
-</div>
-
-<br>
-
-<h2>
-
-⭐⭐⭐⭐⭐
-
-</h2>
-
-<br>
-
-<div class="center">
-
-<button
-class="btn"
-onclick="location.reload()">
-
-Play Again
-
-</button>
-
-</div>
-
-</div>
-
-`
-);
-
-document
-.getElementById(
-"finalScreen"
-)
-.classList.add(
-"hidden"
-);
+✅ Complete
+`;
 
 }
 
