@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lab Escape: Solutions & Density Quest</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .game-container {
+            background-color: #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 650px;
+            width: 100%;
+            padding: 30px;
+            border: 1px solid #334155;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
+        }
+        .header h1 {
+            color: #38bdf8;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f172a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .energy-bar-container {
+            width: 150px;
+            height: 16px;
+            background-color: #334155;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .energy-bar {
+            width: 100%;
+            height: 100%;
+            background-color: #22c55e;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .chamber-title {
+            font-size: 1.3rem;
+            color: #fbbf24;
+            margin-bottom: 12px;
+        }
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        .options-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            background-color: #334155;
+            color: #f8fafc;
+            border: 2px solid transparent;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            background-color: #475569;
+            border-color: #38bdf8;
+        }
+        .feedback {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            display: none;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .feedback.correct {
+            background-color: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            color: #4ade80;
+        }
+        .feedback.incorrect {
+            background-color: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+        .next-btn {
+            width: 100%;
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.2s ease;
+        }
+        .next-btn:hover {
+            background-color: #0369a1;
+        }
+        .restart-btn {
+            background-color: #e11d48;
+        }
+        .restart-btn:hover {
+            background-color: #be123c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="header">
+        <h1>🧪 The Lab Escape</h1>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Solutions & Density Quest</p>
+    </div>
+
+    <div class="status-bar">
+        <div>Stage: <span id="stage-num" style="color: #38bdf8; font-weight: bold;">1/3</span></div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span>Energy:</span>
+            <div class="energy-bar-container">
+                <div class="energy-bar" id="energy-bar"></div>
+            </div>
+            <span id="energy-text" style="font-weight: bold;">100 EP</span>
+        </div>
+    </div>
+
+    <div id="game-body">
+        <h2 class="chamber-title" id="chamber-title">Chamber 1: The Mixture Lock</h2>
+        <p class="description" id="chamber-desc">
+            You are locked in a room with a liquid scanner. On the table are three beakers. To unlock the scanner, you must pour in a <strong>UNIFORM mixture</strong> where all components are evenly distributed throughout[cite: 2].
+        </p>
+
+        <div class="options-grid" id="options-container">
+            <!-- Options populated dynamically -->
+        </div>
+
+        <div class="feedback" id="feedback-box"></div>
+        <button class="next-btn" id="next-btn" onclick="nextStage()">Next Chamber</button>
+    </div>
+</div>
+
+<script>
+    const gameData = [
+        {
+            title: "Chamber 1: The Mixture Lock",
+            desc: "You are locked in a room with a liquid scanner. On the table are three beakers. To unlock the scanner, you must pour in a <strong>UNIFORM mixture</strong> where all components are evenly distributed throughout[cite: 2].",
+            options: [
+                { text: "Beaker 1: Sand mixed in water[cite: 2]", correct: false, reason: "Incorrect! Sand settles at the bottom, making it a non-uniform mixture[cite: 2]." },
+                { text: "Beaker 2: Salt dissolved completely in water[cite: 2]", correct: true, reason: "Correct! Salt dissolved in water forms a uniform mixture where particles spread evenly throughout[cite: 2]." },
+                { text: "Beaker 3: Oil poured over water[cite: 2]", correct: false, reason: "Incorrect! Oil forms a separate floating layer over water, making it non-uniform[cite: 2]." }
+            ]
+        },
+        {
+            title: "Chamber 2: The Saturated Doorway",
+            desc: "A heavy glass door is blocked by a massive block of sugar crystal. To dissolve the sugar rapidly and clear the doorway, which method should you use?",
+            options: [
+                { text: "Option A: Pour cold water over the sugar block[cite: 2]", correct: false, reason: "Incorrect! Cold water dissolves solid solute much slower[cite: 2]." },
+                { text: "Option B: Pour hot water over the sugar block and stir[cite: 2]", correct: true, reason: "Correct! Heating increases particle movement and solubility for most solids, dissolving sugar faster[cite: 2]." },
+                { text: "Option C: Add more sugar into an already saturated liquid[cite: 2]", correct: false, reason: "Incorrect! A saturated solution cannot dissolve any extra solute at room temperature[cite: 2]." }
+            ]
+        },
+        {
+            title: "Chamber 3: The Floating Key",
+            desc: "The exit hatch key sits submerged at the bottom of a water container. You need to make the key float without reaching into the container. How can you raise the buoyant force of the water?",
+            options: [
+                { text: "Option A: Add a large amount of salt into the water[cite: 2]", correct: true, reason: "Correct! Dissolving salt increases water density, providing greater upthrust/buoyancy to make items float (like the Dead Sea)[cite: 2]!" },
+                { text: "Option B: Pour cooking oil into the container[cite: 2]", correct: false, reason: "Incorrect! Oil sits on top because it's less dense, but it doesn't increase the density of the underlying water[cite: 2]." },
+                { text: "Option C: Cool the water down to low temperature[cite: 2]", correct: false, reason: "Incorrect! Cooling increases gas solubility, but it will not instantly increase water density enough to float the key[cite: 2]." }
+            ]
+        }
+    ];
+
+    let currentStage = 0;
+    let energy = 100;
+
+    function loadStage() {
+        const stage = gameData[currentStage];
+        document.getElementById("stage-num").innerText = `${currentStage + 1}/3`;
+        document.getElementById("chamber-title").innerText = stage.title;
+        document.getElementById("chamber-desc").innerHTML = stage.desc;
+        
+        const optionsContainer = document.getElementById("options-container");
+        optionsContainer.innerHTML = "";
+        
+        document.getElementById("feedback-box").style.display = "none";
+        document.getElementById("next-btn").style.display = "none";
+
+        stage.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = opt.text;
+            btn.onclick = () => checkAnswer(opt, btn);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(option, btnElement) {
+        const feedbackBox = document.getElementById("feedback-box");
+        const buttons = document.querySelectorAll(".option-btn");
+        
+        // Disable all buttons after selection
+        buttons.forEach(b => b.disabled = true);
+
+        if (option.correct) {
+            feedbackBox.className = "feedback correct";
+            feedbackBox.innerHTML = option.reason;
+            document.getElementById("next-btn").innerText = currentStage < 2 ? "Next Chamber" : "Claim Victory";
+            document.getElementById("next-btn").style.display = "block";
+        } else {
+            energy -= 20;
+            updateEnergyDisplay();
+            feedbackBox.className = "feedback incorrect";
+            feedbackBox.innerHTML = option.reason + " (-20 EP)";
+
+            if (energy <= 0) {
+                document.getElementById("next-btn").innerText = "Restart Quest";
+                document.getElementById("next-btn").className = "next-btn restart-btn";
+                document.getElementById("next-btn").onclick = () => location.reload();
+                document.getElementById("next-btn").style.display = "block";
+            } else {
+                // Re-enable options to allow another attempt
+                setTimeout(() => {
+                    buttons.forEach(b => b.disabled = false);
+                }, 1000);
+            }
+        }
+        feedbackBox.style.display = "block";
+    }
+
+    function updateEnergyDisplay() {
+        if (energy < 0) energy = 0;
+        const energyBar = document.getElementById("energy-bar");
+        document.getElementById("energy-text").innerText = `${energy} EP`;
+        energyBar.style.width = `${energy}%`;
+
+        if (energy <= 30) {
+            energyBar.style.backgroundColor = "#ef4444";
+        } else if (energy <= 60) {
+            energyBar.style.backgroundColor = "#f59e0b";
+        }
+    }
+
+    function nextStage() {
+        currentStage++;
+        if (currentStage < gameData.length) {
+            loadStage();
+        } else {
+            showWinScreen();
+        }
+    }
+
+    function showWinScreen() {
+        document.getElementById("game-body").innerHTML = `
+            <div style="text-align: center; padding: 20px 0;">
+                <h2 style="color: #4ade80; font-size: 1.8rem; margin-bottom: 15px;">🎉 ESCAPE SUCCESSFUL!</h2>
+                <p class="description">You cleared all 3 chambers with <strong>${energy} EP</strong> remaining!</p>
+                <p class="description" style="font-size: 0.95rem;">You have successfully applied the concepts of uniform mixtures, solubility, and liquid density[cite: 2].</p>
+                <button class="next-btn" style="display: inline-block; width: auto; padding: 12px 30px; margin-top: 15px;" onclick="location.reload()">Play Again</button>
+            </div>
+        `;
+    }
+
+    // Initialize game
+    loadStage();
+</script>
+
+</body>
+</html>
