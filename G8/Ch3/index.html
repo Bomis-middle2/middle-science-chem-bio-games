@@ -35,27 +35,12 @@
             border-bottom: 2px solid #334155;
             padding-bottom: 15px;
         }
-        .innovine-logo {
-            width: 80px;
-            height: 80px;
-            filter: drop-shadow(0px 0px 10px rgba(56, 189, 248, 0.4));
-            margin-bottom: 10px;
-        }
-        .innovine-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 4px;
-        }
-        .innovine-tagline {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
+        .brand-logo {
+            max-width: 180px;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: drop-shadow(0px 0px 8px rgba(56, 189, 248, 0.3));
         }
         .header h1 {
             color: #38bdf8;
@@ -175,24 +160,11 @@
 <body>
 
 <div class="game-container">
-    <!-- Screen 1: Innovine Splash Screen & Instructions -->
+    <!-- Screen 1: Splash Screen with Logo Image & Instructions -->
     <div id="splash-screen" style="text-align: center;">
         <div class="header" style="border-bottom: none;">
-            <!-- Innovine Brand Logo SVG -->
-            <svg class="innovine-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" stroke="#38bdf8" stroke-width="4" fill="none"/>
-                <path d="M50 10 L50 50 L85 30" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-                <path d="M50 50 L15 30" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-                <path d="M50 50 L50 90" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-                <path d="M35 30 Q50 45 65 30 Q50 65 35 70" stroke="#818cf8" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <circle cx="65" cy="30" r="4" fill="#38bdf8"/>
-            </svg>
-            <div class="innovine-title">INNOVINE</div>
-            <div class="innovine-tagline">Interactive Learning Systems</div>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-            <h2 style="color: #f8fafc; font-size: 1.4rem;">The Lab Escape</h2>
+            <img src="assets/logo.png" alt="Logo" class="brand-logo">
+            <h2 style="color: #f8fafc; font-size: 1.5rem;">The Lab Escape</h2>
             <p style="color: #94a3b8; font-size: 0.9rem;">Solutions & Density Quest</p>
         </div>
 
@@ -209,7 +181,7 @@
         <button class="action-btn" onclick="startGame()">Start Quest</button>
     </div>
 
-    <!-- Screen 2: Gameplay Screen (No Logo in UI) -->
+    <!-- Screen 2: Gameplay Screen (Clean Header, No Logo) -->
     <div id="game-screen" style="display: none;">
         <div class="header">
             <h1>The Lab Escape</h1>
@@ -240,17 +212,9 @@
         </div>
     </div>
 
-    <!-- Screen 3: End Screen with Innovine Logo -->
+    <!-- Screen 3: End Screen with Logo Image -->
     <div id="end-screen" style="display: none; text-align: center;">
-        <svg class="innovine-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" stroke="#38bdf8" stroke-width="4" fill="none"/>
-            <path d="M50 10 L50 50 L85 30" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-            <path d="M50 50 L15 30" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-            <path d="M50 50 L50 90" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-            <path d="M35 30 Q50 45 65 30 Q50 65 35 70" stroke="#818cf8" stroke-width="4" stroke-linecap="round" fill="none"/>
-            <circle cx="65" cy="30" r="4" fill="#38bdf8"/>
-        </svg>
-        <div class="innovine-title" style="font-size: 1.8rem;">INNOVINE</div>
+        <img src="assets/logo.png" alt="Logo" class="brand-logo">
 
         <h2 style="color: #4ade80; font-size: 1.8rem; margin: 15px 0;">🎉 ESCAPE SUCCESSFUL!</h2>
         <p class="description">You cleared all 3 chambers with <strong id="final-energy">100 EP</strong> remaining!</p>
