@@ -72,7 +72,15 @@
         .chamber-title {
             font-size: 1.3rem;
             color: #fbbf24;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+        }
+        .question-tracker {
+            font-size: 0.85rem;
+            color: #38bdf8;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
         .description {
             font-size: 1rem;
@@ -89,7 +97,6 @@
             text-align: left;
         }
         .instruction-box ul {
-            margin-linecap: square;
             padding-left: 20px;
             margin-top: 10px;
             color: #94a3b8;
@@ -112,9 +119,13 @@
             text-align: left;
             transition: all 0.2s ease;
         }
-        .option-btn:hover {
+        .option-btn:hover:not(:disabled) {
             background-color: #475569;
             border-color: #38bdf8;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
         }
         .feedback {
             padding: 12px 16px;
@@ -175,10 +186,10 @@
 
         <div class="instruction-box">
             <h3 style="color: #38bdf8; font-size: 1.1rem; margin-bottom: 8px;">📜 Mission Briefing & Rules:</h3>
-            <p style="font-size: 0.95rem; color: #cbd5e1;">You are trapped inside a locked chemistry facility! Navigate through 3 chambers by applying key science concepts.</p>
+            <p style="font-size: 0.95rem; color: #cbd5e1;">You are trapped inside a locked chemistry facility! Navigate through 3 security chambers containing 9 total questions by applying key science concepts.</p>
             <ul>
-                <li><strong>3 Chambers:</strong> Answer correctly to bypass security locks.</li>
-                <li><strong>Energy Points (EP):</strong> You start with 100 EP. Incorrect answers deduct 20 EP.</li>
+                <li><strong>3 Chambers (9 Questions):</strong> Clear 3 questions per chamber to bypass security locks.</li>
+                <li><strong>Energy Points (EP):</strong> You start with 100 EP. Incorrect answers deduct 10 EP.</li>
                 <li><strong>Audio Cues:</strong> Ensure sound is enabled for real-time acoustic feedback.</li>
             </ul>
         </div>
@@ -194,7 +205,7 @@
         </div>
 
         <div class="status-bar">
-            <div>Stage: <span id="stage-num" style="color: #38bdf8; font-weight: bold;">1/3</span></div>
+            <div>Chamber: <span id="chamber-num" style="color: #38bdf8; font-weight: bold;">1/3</span></div>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span>Energy:</span>
                 <div class="energy-bar-container">
@@ -205,6 +216,7 @@
         </div>
 
         <div id="game-body">
+            <div class="question-tracker" id="question-tracker">Question 1 of 3 in Chamber 1</div>
             <h2 class="chamber-title" id="chamber-title">Chamber 1: The Mixture Lock</h2>
             <p class="description" id="chamber-desc"></p>
 
@@ -213,7 +225,7 @@
             </div>
 
             <div class="feedback" id="feedback-box"></div>
-            <button class="action-btn" id="next-btn" style="display: none;" onclick="nextStage()">Next Chamber</button>
+            <button class="action-btn" id="next-btn" style="display: none;" onclick="nextQuestion()">Next Question</button>
         </div>
     </div>
 
@@ -222,8 +234,8 @@
         <img src="assets/logo.png" alt="Logo" class="brand-logo">
 
         <h2 style="color: #4ade80; font-size: 1.8rem; margin-bottom: 15px;">🎉 ESCAPE SUCCESSFUL!</h2>
-        <p class="description">You cleared all 3 chambers with <strong id="final-energy">100 EP</strong> remaining!</p>
-        <p class="description" style="font-size: 0.95rem;">You have successfully applied the concepts of uniform mixtures, solubility, and liquid density[cite: 2].</p>
+        <p class="description">You cleared all 9 questions across 3 chambers with <strong id="final-energy">100 EP</strong> remaining!</p>
+        <p class="description" style="font-size: 0.95rem;">You have successfully mastered uniform mixtures, solubility factors, saturation points, and density principles[cite: 2].</p>
         <button class="action-btn" style="width: auto; padding: 12px 30px; margin-top: 15px;" onclick="location.reload()">Play Again</button>
     </div>
 </div>
@@ -252,7 +264,7 @@
     function startGame() {
         document.getElementById("instruction-screen").style.display = "none";
         document.getElementById("game-screen").style.display = "block";
-        loadStage();
+        loadQuestion();
     }
 
     function showEndScreen() {
@@ -262,45 +274,112 @@
         document.getElementById("final-energy").innerText = `${energy} EP`;
     }
 
-    // --- Data Model ---
+    // --- Data Model: 9 Questions Across 3 Chambers ---
     const gameData = [
+        // CHAMBER 1: Uniform vs Non-Uniform Mixtures
         {
-            title: "Chamber 1: The Mixture Lock",
-            desc: "You are locked in a room with a liquid scanner. On the table are three beakers. To unlock the scanner, you must pour in a <strong>UNIFORM mixture</strong> where all components are evenly distributed throughout[cite: 2].",
-            options: [
-                { text: "Beaker 1: Sand mixed in water[cite: 2]", correct: false, reason: "Incorrect! Sand settles at the bottom, making it a non-uniform mixture[cite: 2]." },
-                { text: "Beaker 2: Salt dissolved completely in water[cite: 2]", correct: true, reason: "Correct! Salt dissolved in water forms a uniform mixture where particles spread evenly throughout[cite: 2]." },
-                { text: "Beaker 3: Oil poured over water[cite: 2]", correct: false, reason: "Incorrect! Oil forms a separate floating layer over water, making it non-uniform[cite: 2]." }
+            chamberTitle: "Chamber 1: The Mixture Lock",
+            questions: [
+                {
+                    desc: "To unlock the liquid scanner, you must identify a <strong>UNIFORM mixture</strong> where all components spread evenly throughout[cite: 2].",
+                    options: [
+                        { text: "Option A: Sand mixed in water[cite: 2]", correct: false, reason: "Incorrect! Sand settles at the bottom, forming a non-uniform mixture[cite: 2]." },
+                        { text: "Option B: Salt dissolved completely in water[cite: 2]", correct: true, reason: "Correct! Salt dissolved in water creates a uniform mixture with evenly distributed particles[cite: 2]." },
+                        { text: "Option C: Cooking oil poured over water[cite: 2]", correct: false, reason: "Incorrect! Oil floats as a separate layer, forming a non-uniform mixture[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "The scanner requires a solution. In a saltwater solution, what is the role of the <strong>WATER</strong>?",
+                    options: [
+                        { text: "Option A: Solvent (the liquid that dissolves the solute)", correct: true, reason: "Correct! Water is the solvent that dissolves the salt[cite: 2]." },
+                        { text: "Option B: Solute (the substance being dissolved)", correct: false, reason: "Incorrect! The salt is the solute, while water acts as the solvent[cite: 2]." },
+                        { text: "Option C: Precipitate", correct: false, reason: "Incorrect! Water acts as the liquid dissolving medium (solvent)[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "Which of these everyday mixtures behaves as a <strong>uniform mixture (solution)</strong>?",
+                    options: [
+                        { text: "Option A: Chalk powder in water", correct: false, reason: "Incorrect! Chalk remains suspended and settles out, forming a non-uniform mixture[cite: 2]." },
+                        { text: "Option B: Muddy lake water", correct: false, reason: "Incorrect! Muddy water contains suspended soil particles[cite: 2]." },
+                        { text: "Option C: Clean sugar water solution[cite: 2]", correct: true, reason: "Correct! Sugar dissolves completely to form a uniform liquid solution throughout[cite: 2]." }
+                    ]
+                }
             ]
         },
+        // CHAMBER 2: Solubility & Saturation Dynamics
         {
-            title: "Chamber 2: The Saturated Doorway",
-            desc: "A heavy glass door is blocked by a massive block of sugar crystal. To dissolve the sugar rapidly and clear the doorway, which method should you use?",
-            options: [
-                { text: "Option A: Pour cold water over the sugar block[cite: 2]", correct: false, reason: "Incorrect! Cold water dissolves solid solute much slower[cite: 2]." },
-                { text: "Option B: Pour hot water over the sugar block and stir[cite: 2]", correct: true, reason: "Correct! Heating increases particle movement and solubility for most solids, dissolving sugar faster[cite: 2]." },
-                { text: "Option C: Add more sugar into an already saturated liquid[cite: 2]", correct: false, reason: "Incorrect! A saturated solution cannot dissolve any extra solute at room temperature[cite: 2]." }
+            chamberTitle: "Chamber 2: The Saturated Doorway",
+            questions: [
+                {
+                    desc: "A heavy glass door is blocked by a massive block of sugar crystal. Which method will dissolve the sugar block <strong>fastest</strong>?",
+                    options: [
+                        { text: "Option A: Pour cold water over the sugar block[cite: 2]", correct: false, reason: "Incorrect! Cold water dissolves solid solutes much slower[cite: 2]." },
+                        { text: "Option B: Pour hot water over the sugar block and stir[cite: 2]", correct: true, reason: "Correct! Heating and stirring increase particle movement and solubility rate[cite: 2]." },
+                        { text: "Option C: Add more sugar to an already saturated liquid[cite: 2]", correct: false, reason: "Incorrect! Saturated solutions cannot dissolve additional solute at room temperature[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "What happens when you keep adding salt to a beaker of water until no more salt can dissolve?",
+                    options: [
+                        { text: "Option A: It becomes an unsaturated solution", correct: false, reason: "Incorrect! An unsaturated solution can still dissolve more solute[cite: 2]." },
+                        { text: "Option B: It becomes a saturated solution[cite: 2]", correct: true, reason: "Correct! A solution that cannot dissolve any more solute at a given temperature is saturated[cite: 2]." },
+                        { text: "Option C: The water evaporates instantly", correct: false, reason: "Incorrect! Excess solute simply settles at the bottom when saturated[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "How can you make a <strong>saturated sugar solution</strong> dissolve extra sugar without adding more water?",
+                    options: [
+                        { text: "Option A: Heat the solution to a higher temperature", correct: true, reason: "Correct! Increasing temperature raises the solubility limit for most solid solutes[cite: 2]." },
+                        { text: "Option B: Cool the solution in an ice bath", correct: false, reason: "Incorrect! Cooling reduces solubility, causing dissolved sugar to crystallize out[cite: 2]." },
+                        { text: "Option C: Leave it undisturbed in the dark", correct: false, reason: "Incorrect! Temperature change is required to alter the saturation capacity[cite: 2]." }
+                    ]
+                }
             ]
         },
+        // CHAMBER 3: Density & Buoyant Force
         {
-            title: "Chamber 3: The Floating Key",
-            desc: "The exit hatch key sits submerged at the bottom of a water container. You need to make the key float without reaching into the container. How can you raise the buoyant force of the water?",
-            options: [
-                { text: "Option A: Add a large amount of salt into the water[cite: 2]", correct: true, reason: "Correct! Dissolving salt increases water density, providing greater upthrust/buoyancy to make items float (like the Dead Sea)[cite: 2]!" },
-                { text: "Option B: Pour cooking oil into the container[cite: 2]", correct: false, reason: "Incorrect! Oil sits on top because it's less dense, but it doesn't increase the density of the underlying water[cite: 2]." },
-                { text: "Option C: Cool the water down to low temperature[cite: 2]", correct: false, reason: "Incorrect! Cooling increases gas solubility, but it will not instantly increase water density enough to float the key[cite: 2]." }
+            chamberTitle: "Chamber 3: The Floating Key",
+            questions: [
+                {
+                    desc: "The exit hatch key sits submerged at the bottom of a water container. How can you increase the buoyant force of the liquid to make the key float?",
+                    options: [
+                        { text: "Option A: Dissolve a large amount of salt into the water[cite: 2]", correct: true, reason: "Correct! Dissolving salt increases liquid density, providing greater buoyant upthrust[cite: 2]." },
+                        { text: "Option B: Pour cooking oil into the container[cite: 2]", correct: false, reason: "Incorrect! Oil sits on top because it is less dense, but does not increase water density[cite: 2]." },
+                        { text: "Option C: Cool the water down[cite: 2]", correct: false, reason: "Incorrect! Cooling water slightly does not increase density enough to float metal keys[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "Why does cooking oil float on top of pure water when mixed[cite: 2]?",
+                    options: [
+                        { text: "Option A: Oil is denser than water", correct: false, reason: "Incorrect! Denser liquids sink beneath less dense liquids[cite: 2]." },
+                        { text: "Option B: Oil is less dense than water[cite: 2]", correct: true, reason: "Correct! Substances with lower density float above liquids with higher density[cite: 2]." },
+                        { text: "Option C: Oil reacts chemically with water", correct: false, reason: "Incorrect! Oil floats due to physical density differences[cite: 2]." }
+                    ]
+                },
+                {
+                    desc: "An egg sinks in plain tap water but floats when salt is dissolved in the water[cite: 2]. What scientific principle does this prove?",
+                    options: [
+                        { text: "Option A: Saltwater is denser than tap water, exerting greater buoyant force[cite: 2]", correct: true, reason: "Correct! Adding solute increases solution density, enabling lighter/equal density objects to float[cite: 2]." },
+                        { text: "Option B: Salt dissolves the eggshell", correct: false, reason: "Incorrect! The egg floats purely due to increased liquid density[cite: 2]." },
+                        { text: "Option C: Tap water has zero density", correct: false, reason: "Incorrect! Tap water has a density of ~1 g/cm³, whereas saltwater is denser[cite: 2]." }
+                    ]
+                }
             ]
         }
     ];
 
-    let currentStage = 0;
+    let currentChamber = 0;
+    let currentQuestion = 0;
     let energy = 100;
 
-    function loadStage() {
-        const stage = gameData[currentStage];
-        document.getElementById("stage-num").innerText = `${currentStage + 1}/3`;
-        document.getElementById("chamber-title").innerText = stage.title;
-        document.getElementById("chamber-desc").innerHTML = stage.desc;
+    function loadQuestion() {
+        const chamberData = gameData[currentChamber];
+        const qData = chamberData.questions[currentQuestion];
+
+        document.getElementById("chamber-num").innerText = `${currentChamber + 1}/3`;
+        document.getElementById("question-tracker").innerText = `Question ${currentQuestion + 1} of 3 in Chamber ${currentChamber + 1}`;
+        document.getElementById("chamber-title").innerText = chamberData.chamberTitle;
+        document.getElementById("chamber-desc").innerHTML = qData.desc;
         
         const optionsContainer = document.getElementById("options-container");
         optionsContainer.innerHTML = "";
@@ -308,7 +387,7 @@
         document.getElementById("feedback-box").style.display = "none";
         document.getElementById("next-btn").style.display = "none";
 
-        stage.options.forEach((opt) => {
+        qData.options.forEach((opt) => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
             btn.innerHTML = opt.text;
@@ -327,14 +406,16 @@
             playSound('correct');
             feedbackBox.className = "feedback correct";
             feedbackBox.innerHTML = option.reason;
-            document.getElementById("next-btn").innerText = currentStage < 2 ? "Next Chamber" : "Claim Victory";
+            
+            const isLastQuestion = (currentChamber === 2 && currentQuestion === 2);
+            document.getElementById("next-btn").innerText = isLastQuestion ? "Claim Victory" : "Next Question";
             document.getElementById("next-btn").style.display = "block";
         } else {
             playSound('incorrect');
-            energy -= 20;
+            energy -= 10;
             updateEnergyDisplay();
             feedbackBox.className = "feedback incorrect";
-            feedbackBox.innerHTML = option.reason + " (-20 EP)";
+            feedbackBox.innerHTML = option.reason + " (-10 EP)";
 
             if (energy <= 0) {
                 document.getElementById("next-btn").innerText = "Restart Quest";
@@ -363,10 +444,14 @@
         }
     }
 
-    function nextStage() {
-        currentStage++;
-        if (currentStage < gameData.length) {
-            loadStage();
+    function nextQuestion() {
+        if (currentQuestion < 2) {
+            currentQuestion++;
+            loadQuestion();
+        } else if (currentChamber < 2) {
+            currentChamber++;
+            currentQuestion = 0;
+            loadQuestion();
         } else {
             showEndScreen();
         }
