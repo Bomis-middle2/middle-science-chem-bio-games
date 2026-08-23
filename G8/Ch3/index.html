@@ -36,11 +36,11 @@
             padding-bottom: 15px;
         }
         .brand-logo {
-            max-width: 180px;
+            max-width: 200px;
             height: auto;
             object-fit: contain;
-            margin-bottom: 15px;
-            filter: drop-shadow(0px 0px 8px rgba(56, 189, 248, 0.3));
+            margin-bottom: 20px;
+            filter: drop-shadow(0px 0px 10px rgba(56, 189, 248, 0.4));
         }
         .header h1 {
             color: #38bdf8;
@@ -83,7 +83,7 @@
         .instruction-box {
             background-color: #0f172a;
             border-left: 4px solid #38bdf8;
-            padding: 16px;
+            padding: 20px;
             border-radius: 6px;
             margin-bottom: 24px;
             text-align: left;
@@ -91,10 +91,10 @@
         .instruction-box ul {
             margin-linecap: square;
             padding-left: 20px;
-            margin-top: 8px;
+            margin-top: 10px;
             color: #94a3b8;
-            font-size: 0.92rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
         .options-grid {
             display: grid;
@@ -139,7 +139,7 @@
             background-color: #0284c7;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
@@ -160,17 +160,22 @@
 <body>
 
 <div class="game-container">
-    <!-- Screen 1: Splash Screen with Logo Image & Instructions -->
-    <div id="splash-screen" style="text-align: center;">
-        <div class="header" style="border-bottom: none;">
-            <img src="assets/logo.png" alt="Logo" class="brand-logo">
-            <h2 style="color: #f8fafc; font-size: 1.5rem;">The Lab Escape</h2>
+    <!-- SCREEN 1: LOGO SCREEN (SPLASH) -->
+    <div id="logo-screen" style="text-align: center; padding: 20px 0;">
+        <img src="assets/logo.png" alt="Logo" class="brand-logo"><br>
+        <button class="action-btn" style="max-width: 250px;" onclick="showInstructions()">Continue</button>
+    </div>
+
+    <!-- SCREEN 2: INSTRUCTIONS SCREEN -->
+    <div id="instruction-screen" style="display: none; text-align: center;">
+        <div class="header">
+            <h2 style="color: #38bdf8; font-size: 1.6rem; margin-bottom: 4px;">The Lab Escape</h2>
             <p style="color: #94a3b8; font-size: 0.9rem;">Solutions & Density Quest</p>
         </div>
 
         <div class="instruction-box">
-            <h3 style="color: #38bdf8; font-size: 1.05rem; margin-bottom: 6px;">📜 Mission Briefing & Rules:</h3>
-            <p style="font-size: 0.9rem; color: #cbd5e1;">You are trapped inside a locked chemistry facility! Navigate through 3 chambers by applying key science concepts.</p>
+            <h3 style="color: #38bdf8; font-size: 1.1rem; margin-bottom: 8px;">📜 Mission Briefing & Rules:</h3>
+            <p style="font-size: 0.95rem; color: #cbd5e1;">You are trapped inside a locked chemistry facility! Navigate through 3 chambers by applying key science concepts.</p>
             <ul>
                 <li><strong>3 Chambers:</strong> Answer correctly to bypass security locks.</li>
                 <li><strong>Energy Points (EP):</strong> You start with 100 EP. Incorrect answers deduct 20 EP.</li>
@@ -181,7 +186,7 @@
         <button class="action-btn" onclick="startGame()">Start Quest</button>
     </div>
 
-    <!-- Screen 2: Gameplay Screen (Clean Header, No Logo) -->
+    <!-- SCREEN 3: GAMEPLAY SCREEN -->
     <div id="game-screen" style="display: none;">
         <div class="header">
             <h1>The Lab Escape</h1>
@@ -212,11 +217,11 @@
         </div>
     </div>
 
-    <!-- Screen 3: End Screen with Logo Image -->
-    <div id="end-screen" style="display: none; text-align: center;">
+    <!-- SCREEN 4: END SCREEN -->
+    <div id="end-screen" style="display: none; text-align: center; padding: 10px 0;">
         <img src="assets/logo.png" alt="Logo" class="brand-logo">
 
-        <h2 style="color: #4ade80; font-size: 1.8rem; margin: 15px 0;">🎉 ESCAPE SUCCESSFUL!</h2>
+        <h2 style="color: #4ade80; font-size: 1.8rem; margin-bottom: 15px;">🎉 ESCAPE SUCCESSFUL!</h2>
         <p class="description">You cleared all 3 chambers with <strong id="final-energy">100 EP</strong> remaining!</p>
         <p class="description" style="font-size: 0.95rem;">You have successfully applied the concepts of uniform mixtures, solubility, and liquid density[cite: 2].</p>
         <button class="action-btn" style="width: auto; padding: 12px 30px; margin-top: 15px;" onclick="location.reload()">Play Again</button>
@@ -274,6 +279,25 @@
         }
     }
 
+    // --- Screen Navigation Functions ---
+    function showInstructions() {
+        document.getElementById("logo-screen").style.display = "none";
+        document.getElementById("instruction-screen").style.display = "block";
+    }
+
+    function startGame() {
+        document.getElementById("instruction-screen").style.display = "none";
+        document.getElementById("game-screen").style.display = "block";
+        loadStage();
+    }
+
+    function showEndScreen() {
+        playSound('victory');
+        document.getElementById("game-screen").style.display = "none";
+        document.getElementById("end-screen").style.display = "block";
+        document.getElementById("final-energy").innerText = `${energy} EP`;
+    }
+
     // --- Data Model ---
     const gameData = [
         {
@@ -307,12 +331,6 @@
 
     let currentStage = 0;
     let energy = 100;
-
-    function startGame() {
-        document.getElementById("splash-screen").style.display = "none";
-        document.getElementById("game-screen").style.display = "block";
-        loadStage();
-    }
 
     function loadStage() {
         const stage = gameData[currentStage];
@@ -388,13 +406,6 @@
         } else {
             showEndScreen();
         }
-    }
-
-    function showEndScreen() {
-        playSound('victory');
-        document.getElementById("game-screen").style.display = "none";
-        document.getElementById("end-screen").style.display = "block";
-        document.getElementById("final-energy").innerText = `${energy} EP`;
     }
 </script>
 
