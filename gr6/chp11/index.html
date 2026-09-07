@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>River Rescue Challenge</title>
+<title>River Rescue Challenge – 12 Labelled Waste Items</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -103,16 +103,43 @@ right:0;
 /* ITEMS */
 .item{
 position:absolute;
-width:60px;
-height:60px;
+width:104px;
+height:68px;
 background:white;
 border-radius:12px;
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
-font-size:28px;
+gap:3px;
+font-size:25px;
 box-shadow:0 5px 10px rgba(0,0,0,0.15);
 cursor:pointer;
+user-select:none;
+touch-action:manipulation;
+}
+
+.item-label{
+font-size:11px;
+line-height:1.1;
+font-weight:bold;
+color:#17324d;
+text-align:center;
+padding:0 4px;
+}
+
+.item.selected{
+outline:4px solid #ffd54f;
+transform:scale(1.06);
+}
+
+@media(max-width:600px){
+.item{
+width:92px;
+height:64px;
+font-size:22px;
+}
+.item-label{font-size:10px;}
 }
 
 /* BINS (FIXED MOBILE SAFE AREA) */
@@ -176,12 +203,12 @@ Tap waste → then tap correct bin
 <div id="game">
 
 <div class="topbar">
-<div>⭐ Score: <span id="score">0</span></div>
+<div>⭐ Score: <span id="score">0</span>/12</div>
 <div>River Cleanup</div>
 </div>
 
 <div id="instruction">
-👉 Tap the moving waste and then the correct bin to clean the river
+👉 Tap a labelled waste item and then tap the correct bin
 </div>
 
 <div id="items"></div>
@@ -215,12 +242,15 @@ document.getElementById("intro").style.display="flex";
 },2500);
 
 const items=[
-{icon:"🥤",type:"plastic"},
-{icon:"🍌",type:"organic"},
-{icon:"🧴",type:"plastic"},
-{icon:"🔋",type:"hazard"},
-{icon:"🐟",type:"organic"},
-{icon:"🧪",type:"hazard"}
+{icon:"🧴",label:"Empty shampoo bottle",type:"plastic"},
+{icon:"🍎",label:"Apple core",type:"organic"},
+{icon:"🧪",label:"Chemical waste",type:"hazard"},
+{icon:"🛍️",label:"Plastic bag",type:"plastic"},
+{icon:"🍶",label:"Plastic bottle",type:"plastic"},
+{icon:"🍂",label:"Fallen leaves",type:"organic"},
+{icon:"🥕",label:"Vegetable peelings",type:"organic"},
+{icon:"🔋",label:"Leaking battery",type:"hazard"},
+{icon:"🛢️",label:"Used engine oil",type:"hazard"}
 ];
 
 let score=0;
@@ -285,22 +315,31 @@ let box=document.getElementById("items");
 box.innerHTML="";
 moving=[];
 
-items.forEach(it=>{
+const areaHeight=Math.max(70,box.clientHeight);
+const cardHeight=window.innerWidth<=600 ? 64 : 68;
+const laneCount=Math.max(1,Math.floor(areaHeight/(cardHeight+8)));
+
+items.forEach((it,itemIndex)=>{
 let el=document.createElement("div");
 el.className="item";
-el.innerHTML=it.icon;
+el.innerHTML=`<span>${it.icon}</span><span class="item-label">${it.label}</span>`;
 el.dataset.type=it.type;
+el.setAttribute("aria-label",it.label);
 
 let obj={
 el:el,
-x:Math.random()*window.innerWidth,
+x:(itemIndex%4)*(window.innerWidth/4)+Math.random()*30,
 speed:1+Math.random()*1
 };
 
 el.style.left=obj.x+"px";
-el.style.top=(20+Math.random()*200)+"px";
+el.style.top=((itemIndex%laneCount)*(cardHeight+8))+"px";
 
-el.onclick=()=>selected=el;
+el.onclick=()=>{
+document.querySelectorAll(".item").forEach(card=>card.classList.remove("selected"));
+selected=el;
+el.classList.add("selected");
+};
 
 moving.push(obj);
 box.appendChild(el);
@@ -310,7 +349,7 @@ box.appendChild(el);
 function animate(){
 moving.forEach(o=>{
 o.x+=o.speed;
-if(o.x>window.innerWidth)o.x=-60;
+if(o.x>window.innerWidth)o.x=-110;
 o.el.style.left=o.x+"px";
 });
 requestAnimationFrame(animate);
@@ -325,6 +364,7 @@ selected.remove();
 playSound("correctSound","correct");
 }else{
 playSound("wrongSound","wrong");
+selected.classList.remove("selected");
 }
 
 selected=null;
