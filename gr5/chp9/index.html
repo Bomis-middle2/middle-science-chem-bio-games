@@ -409,6 +409,229 @@ font-size:1rem;
 
 }
 
+
+/* =========================
+   ENHANCED RESPONSIVE LAYOUT
+========================= */
+
+.gameProgress{
+display:none;
+}
+
+@media(max-width:900px){
+
+body{
+background-attachment:scroll;
+background-position:center top;
+}
+
+#gameScreen{
+padding:10px;
+}
+
+.gameHeader{
+margin-bottom:12px;
+}
+
+.gameLogo{
+width:120px;
+margin-bottom:6px;
+}
+
+.gameTitle{
+font-size:1.75rem;
+line-height:1.15;
+}
+
+.mainCard{
+padding:14px;
+border-radius:22px;
+}
+
+.currentStepCard{
+padding:14px 12px;
+border-radius:16px;
+min-height:auto;
+font-size:.95rem;
+line-height:1.35;
+margin-bottom:14px;
+}
+
+.gameProgress{
+display:block;
+text-align:center;
+font-size:.85rem;
+font-weight:700;
+color:#2e7d32;
+margin-bottom:10px;
+}
+
+.imageContainer{
+max-width:100%;
+overflow:visible;
+}
+
+.farmingImage{
+border-radius:14px;
+}
+
+.dropBox{
+width:22%;
+height:auto;
+min-height:34px;
+padding:4px 3px;
+font-size:.54rem;
+line-height:1.05;
+border-width:2px;
+border-radius:9px;
+}
+
+.dropBox.filled{
+font-size:.5rem;
+}
+
+.feedback{
+font-size:.95rem;
+line-height:1.4;
+margin-top:14px;
+min-height:28px;
+}
+
+}
+
+@media(max-width:600px){
+
+.introCard{
+padding:22px 16px;
+border-radius:22px;
+}
+
+.logo{
+width:150px;
+margin-bottom:12px;
+}
+
+.title{
+font-size:1.8rem;
+line-height:1.15;
+}
+
+.story{
+font-size:1rem;
+line-height:1.55;
+}
+
+.startBtn{
+padding:14px 28px;
+font-size:1rem;
+}
+
+.gameLogo{
+width:105px;
+}
+
+.gameTitle{
+font-size:1.55rem;
+}
+
+.currentStepCard{
+padding:12px 10px;
+}
+
+.currentStepCard .stepLabel{
+font-size:.78rem !important;
+}
+
+.currentStepCard .stepName{
+font-size:1.25rem !important;
+}
+
+.mainCard{
+padding:10px;
+border-radius:18px;
+}
+
+.imageContainer{
+padding-bottom:6px;
+}
+
+.dropBox{
+width:21.5%;
+min-height:30px;
+font-size:.46rem;
+padding:3px 2px;
+}
+
+.dropBox.filled{
+font-size:.43rem;
+}
+
+}
+
+@media(max-width:430px){
+
+#gameScreen{
+padding:6px;
+}
+
+.gameHeader{
+margin-bottom:8px;
+}
+
+.gameLogo{
+width:92px;
+}
+
+.gameTitle{
+font-size:1.35rem;
+}
+
+.mainCard{
+padding:8px;
+border-radius:16px;
+}
+
+.currentStepCard{
+margin-bottom:10px;
+padding:10px 8px;
+}
+
+.currentStepCard .stepLabel{
+font-size:.7rem !important;
+}
+
+.currentStepCard .stepName{
+font-size:1.08rem !important;
+}
+
+.gameProgress{
+font-size:.78rem;
+margin-bottom:7px;
+}
+
+.farmingImage{
+border-radius:10px;
+}
+
+.dropBox{
+width:21%;
+min-height:26px;
+font-size:.4rem;
+border-radius:7px;
+padding:2px 1px;
+}
+
+.dropBox.filled{
+font-size:.37rem;
+}
+
+.feedback{
+font-size:.85rem;
+margin-top:10px;
+}
+
+}
+
 </style>
 
 </head>
@@ -497,6 +720,10 @@ class="currentStepCard">
 
 Loading...
 
+</div>
+
+<div id="gameProgress" class="gameProgress">
+Step 1 of 8
 </div>
 
 <div class="imageContainer">
@@ -772,12 +999,18 @@ return;
 
 }
 
+
+document.getElementById(
+"gameProgress"
+).innerHTML =
+`Step ${currentStepIndex + 1} of ${gameSteps.length}`;
+
 document.getElementById(
 "currentStepCard"
 ).innerHTML =
 
 `
-<div style="
+<div class="stepLabel" style="
 font-size:1rem;
 opacity:.9;
 ">
@@ -786,7 +1019,7 @@ opacity:.9;
 
 </div>
 
-<div style="
+<div class="stepName" style="
 font-size:2rem;
 font-weight:bold;
 margin-top:10px;
@@ -1051,12 +1284,6 @@ text-align:center;
 padding:20px;
 ">
 
-<img
-src="assets/innovine-logo.png"
-style="
-width:220px;
-margin-bottom:20px;
-">
 
 <h1
 style="
