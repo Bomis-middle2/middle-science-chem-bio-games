@@ -6,19 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:url('assets/abiotic-bioticbg.png') center/cover no-repeat;
-overflow:hidden;
+*{box-sizing:border-box}
+
+:root{
+--green:#2e7d32;
+--green2:#43a047;
+--blue:#1976d2;
+--brown:#8d6e63;
+--red:#d84343;
+--gold:#f5b400;
+--ink:#263238;
 }
 
-/* overlay */
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(255,255,255,0.25);
-backdrop-filter: blur(2px);
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:url('assets/abiotic-bioticbg.png') center/cover no-repeat fixed;
+min-height:100vh;
+overflow-x:hidden;
+color:var(--ink);
 }
 
 /* SPLASH */
@@ -31,106 +37,372 @@ align-items:center;
 justify-content:center;
 z-index:999;
 }
+#splash img{
+width:150px;
+animation:logoPop 1s ease;
+}
+@keyframes logoPop{
+from{opacity:0;transform:scale(.7)}
+to{opacity:1;transform:scale(1)}
+}
 
 /* SCREENS */
 .screen{
 display:none;
-position:absolute;
-inset:0;
+min-height:100vh;
 align-items:center;
 justify-content:center;
 text-align:center;
+padding:20px;
 }
 
 .card{
-background:white;
-padding:25px;
-border-radius:18px;
-max-width:550px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
+background:rgba(255,255,255,.96);
+padding:26px;
+border-radius:22px;
+max-width:700px;
+width:95%;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+
+.intro-logo{
+width:115px;
+margin-bottom:8px;
+}
+
+.intro-steps{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.step{
+background:#eef8f0;
+padding:12px 8px;
+border-radius:13px;
+font-weight:bold;
 }
 
 button{
-padding:12px 18px;
-background:#2e7d32;
+padding:13px 18px;
+background:var(--green);
 color:white;
 border:none;
-border-radius:10px;
+border-radius:11px;
 font-size:16px;
 cursor:pointer;
+font-weight:bold;
 }
+button:hover{transform:translateY(-1px)}
 
 /* GAME */
 #game{
 display:none;
-position:absolute;
-inset:0;
-padding:20px;
+min-height:100vh;
+padding:10px 14px 22px;
+}
+
+.game-wrap{
+max-width:1050px;
+margin:auto;
+}
+
+.game-title{
+background:rgba(255,255,255,.94);
+border-radius:14px;
+padding:9px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:var(--green);
 }
 
 .topbar{
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-background:white;
-padding:10px;
-border-radius:12px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+margin:9px 0;
 }
 
-.main{
-margin-top:20px;
+.hud{
+font-weight:bold;
+background:rgba(255,255,255,.96);
+padding:10px 5px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+font-size:14px;
+}
+
+.progress{
+height:10px;
+background:rgba(255,255,255,.8);
+border-radius:999px;
+overflow:hidden;
+margin-bottom:12px;
+}
+#progressFill{
+height:100%;
+width:0;
+background:linear-gradient(90deg,#66bb6a,#2e7d32);
+transition:.35s;
+}
+
+/* HABITAT BOARD */
+.board{
+background:rgba(255,255,255,.95);
+border-radius:22px;
+padding:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.14);
+}
+
+.mission{
+background:linear-gradient(135deg,#2e7d32,#66bb6a);
+color:white;
+border-radius:16px;
+padding:13px;
+text-align:center;
+margin-bottom:14px;
+}
+
+.mission small{
+font-weight:bold;
+letter-spacing:.08em;
+}
+
+.mission h2{
+margin:5px 0 0;
+font-size:clamp(18px,3vw,25px);
+}
+
+/* draggable-style object card */
+.object-zone{
 display:flex;
 justify-content:center;
-gap:20px;
-flex-wrap:wrap;
+margin:10px 0 16px;
 }
 
-.panel{
-background:white;
-padding:20px;
-border-radius:16px;
-width:320px;
-box-shadow:0 8px 18px rgba(0,0,0,0.1);
-text-align:center;
+.object-card{
+width:230px;
+min-height:190px;
+background:linear-gradient(#ffffff,#f3fbf4);
+border:3px solid #b9dfbf;
+border-radius:24px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+box-shadow:0 8px 18px rgba(0,0,0,.12);
+cursor:grab;
+user-select:none;
+touch-action:none;
+transition:.2s;
+position:relative;
+}
+
+.object-card:active{cursor:grabbing}
+.object-card.dragging{
+transform:scale(1.05);
+opacity:.88;
+box-shadow:0 14px 28px rgba(0,0,0,.2);
 }
 
 #icon{
-font-size:90px;
-margin:10px;
+font-size:88px;
+line-height:1;
 }
-
-.option{
-margin:10px 0;
-padding:12px;
-background:#e3f2fd;
-border-radius:10px;
-cursor:pointer;
+#name{
+font-size:22px;
 font-weight:bold;
-}
-
-.option:hover{ background:#bbdefb; }
-
-#feedback{
 margin-top:10px;
-font-weight:bold;
 }
 
-/* END SCREEN FIX */
-#end{
-display:none;
-position:fixed;
-inset:0;
+.drag-hint{
+font-size:12px;
+color:#64756b;
+margin-top:7px;
+}
+
+/* DROP ZONES */
+.drop-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+
+.drop-zone{
+min-height:180px;
+border-radius:20px;
+border:3px dashed;
+padding:18px 10px;
+display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
+cursor:pointer;
+transition:.2s;
+}
+
+.biotic-zone{
+background:#edf8ef;
+border-color:#66bb6a;
+}
+.abiotic-zone{
+background:#eef7ff;
+border-color:#64b5f6;
+}
+
+.drop-zone:hover,
+.drop-zone.over{
+transform:scale(1.015);
+box-shadow:0 7px 16px rgba(0,0,0,.1);
+}
+
+.zone-title{
+font-size:21px;
+font-weight:bold;
+margin:6px 0;
+}
+.zone-help{
+font-size:13px;
+color:#5d6b65;
+line-height:1.4;
+}
+
+.drop-zone.correct{
+border-style:solid;
+background:#dff5e4;
+animation:correctPulse .55s ease;
+}
+.drop-zone.wrong{
+border-style:solid;
+border-color:#ef5350;
+background:#ffebee;
+animation:shake .35s ease;
+}
+
+@keyframes correctPulse{
+50%{transform:scale(1.03)}
+}
+@keyframes shake{
+25%{transform:translateX(-7px)}
+50%{transform:translateX(7px)}
+75%{transform:translateX(-4px)}
+}
+
+/* FEEDBACK */
+.feedback-box{
+margin-top:14px;
+background:#fff;
+border:2px solid #e1e8e3;
+border-radius:15px;
+padding:13px;
+min-height:70px;
 text-align:center;
-background:rgba(255,255,255,0.8);
+font-weight:bold;
+line-height:1.45;
+}
+
+#nextBtn{
+display:none;
+width:100%;
+margin-top:10px;
+background:var(--blue);
+}
+
+/* COLLECTION */
+.collection{
+margin-top:14px;
+background:rgba(255,255,255,.96);
+border-radius:18px;
+padding:12px;
+}
+.collection-title{
+font-weight:bold;
+color:var(--green);
+margin-bottom:8px;
+}
+#collectionItems{
+display:flex;
+flex-wrap:wrap;
+gap:7px;
+justify-content:center;
+}
+.collected{
+background:#f4f7f5;
+border:2px solid #dce8df;
+padding:7px 9px;
+border-radius:999px;
+font-size:13px;
+font-weight:bold;
+}
+.collected.biotic{border-color:#81c784;background:#edf8ef}
+.collected.abiotic{border-color:#90caf9;background:#eef7ff}
+
+/* END */
+#end{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+padding:20px;
+text-align:center;
+background:rgba(255,255,255,.72);
 }
 
 .endcard{
 background:white;
 padding:30px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+border-radius:22px;
+width:min(760px,95%);
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.end-icons{
+font-size:48px;
+margin:10px 0;
+}
+
+.summary-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin:18px 0;
+}
+.summary{
+padding:14px;
+border-radius:14px;
+font-weight:bold;
+}
+.summary.bio{background:#edf8ef;color:#1b5e20}
+.summary.abio{background:#eef7ff;color:#0d47a1}
+
+#badge{
+font-size:20px;
+font-weight:bold;
+margin:12px 0;
+color:#7b5d00;
+}
+
+/* MOBILE */
+@media(max-width:650px){
+#game{padding:7px}
+.topbar{gap:4px}
+.hud{font-size:11px;padding:8px 3px}
+.board{padding:10px}
+.object-card{width:190px;min-height:160px}
+#icon{font-size:70px}
+#name{font-size:19px}
+.drop-zone{min-height:145px;padding:12px 6px}
+.zone-title{font-size:17px}
+.zone-help{font-size:11px}
+.intro-steps{grid-template-columns:1fr}
+}
+
+@media(max-width:390px){
+.drop-grid{gap:7px}
+.drop-zone{min-height:135px}
 }
 </style>
 </head>
@@ -139,43 +411,97 @@ box-shadow:0 10px 25px rgba(0,0,0,0.2);
 
 <!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" width="150">
+<img src="assets/innovine-logo.png" alt="Innovine logo">
 </div>
 
 <!-- INTRO -->
 <div class="screen" id="intro">
 <div class="card">
-<h1>🌿 Ecosystem Explorer</h1>
+<img class="intro-logo" src="assets/innovine-logo.png" alt="Innovine logo">
+<h1>🌿 Ecosystem Sorting Adventure</h1>
+
 <p>
-✔ Identify Biotic vs Abiotic factors<br>
-✔ 2 attempts per question<br>
-✔ Earn Gems ⭐<br>
-✔ Become Nature Champion 🏆
+The ecosystem cards have been mixed up! Help restore the ecosystem by sorting
+each factor into the correct group.
 </p>
-<button onclick="startGame()">START GAME</button>
+
+<div class="intro-steps">
+<div class="step">👆 Drag or tap each card</div>
+<div class="step">🎯 You get 2 attempts</div>
+<div class="step">⭐ Earn a gem for each correct sort</div>
+</div>
+
+<button onclick="startGame()">START ADVENTURE</button>
 </div>
 </div>
 
 <!-- GAME -->
 <div id="game">
+<div class="game-wrap">
+
+<div class="game-title">🌿 ECOSYSTEM SORTING ADVENTURE</div>
 
 <div class="topbar">
-<div>⭐ Gems: <span id="score">0</span></div>
-<div>Question: <span id="qno">1</span>/10</div>
+<div class="hud">⭐ Gems<br><span id="score">0</span></div>
+<div class="hud">📌 Card<br><span id="qno">1</span>/10</div>
+<div class="hud">🎯 Attempts<br><span id="attempts">2</span></div>
+<div class="hud">✅ Sorted<br><span id="sorted">0</span>/10</div>
 </div>
 
-<div class="main">
+<div class="progress">
+<div id="progressFill"></div>
+</div>
 
-<div class="panel">
+<div class="board">
+
+<div class="mission">
+<small>ECOSYSTEM MISSION</small>
+<h2>Where does this factor belong?</h2>
+</div>
+
+<div class="object-zone">
+<div id="objectCard" class="object-card" draggable="true">
 <div id="icon">🌱</div>
-<h3 id="name"></h3>
+<div id="name">Plant</div>
+<div class="drag-hint">Drag me ↓ or tap a group</div>
+</div>
 </div>
 
-<div class="panel">
-<div class="option" onclick="check('biotic')">🌱 Biotic</div>
-<div class="option" onclick="check('abiotic')">🌍 Abiotic</div>
+<div class="drop-grid">
 
-<div id="feedback"></div>
+<div id="bioticZone" class="drop-zone biotic-zone"
+onclick="choose('biotic')"
+ondragover="allowDrop(event)"
+ondragenter="dragEnter(event,this)"
+ondragleave="dragLeave(this)"
+ondrop="dropItem(event,'biotic',this)">
+<div class="zone-title">BIOTIC</div>
+<div class="zone-help">Living components of an ecosystem</div>
+</div>
+
+<div id="abioticZone" class="drop-zone abiotic-zone"
+onclick="choose('abiotic')"
+ondragover="allowDrop(event)"
+ondragenter="dragEnter(event,this)"
+ondragleave="dragLeave(this)"
+ondrop="dropItem(event,'abiotic',this)">
+<div class="zone-title">ABIOTIC</div>
+<div class="zone-help">Non-living components of an ecosystem</div>
+</div>
+
+</div>
+
+<div id="feedback" class="feedback-box">
+Drag the card into a group, or tap the group.
+</div>
+
+<button id="nextBtn" onclick="nextCard()">NEXT CARD ➜</button>
+
+</div>
+
+<div class="collection">
+<div class="collection-title">🧺 Ecosystem Collection</div>
+<div id="collectionItems"></div>
 </div>
 
 </div>
@@ -184,61 +510,86 @@ box-shadow:0 10px 25px rgba(0,0,0,0.2);
 <!-- END -->
 <div id="end">
 <div class="endcard">
-<h1>🎉 Congratulations!</h1>
-<p>You are now an Ecosystem Explorer!</p>
-<p>⭐ Score: <span id="final"></span></p>
+<h1>🏆 Nature Champion!</h1>
+<div class="end-icons">🌱 ☀️ 💧 🐄 🍄</div>
+<p>You successfully sorted the ecosystem factors.</p>
+
+<h2>⭐ Gems: <span id="final"></span>/10</h2>
+<div id="badge"></div>
+
+<div class="summary-grid">
+<div class="summary bio">🌱 BIOTIC<br>Plant • Animal • Fungi • Bacteria</div>
+<div class="summary abio">🌍 ABIOTIC<br>Water • Sunlight • Air • Mineral • Temperature • Soil</div>
+</div>
+
+<button onclick="location.reload()">PLAY AGAIN</button>
 
 <audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3"></audio>
 </div>
 </div>
 
+<audio id="correctAudio" src="assets/correct.mp3"></audio>
+<audio id="wrongAudio" src="assets/wrong.mp3"></audio>
+
 <script>
-
-/* SPLASH → INTRO */
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
-
-/* DATA */
-const items=[
-{type:"biotic",icon:"🌱",name:"Plant"},
-{type:"biotic",icon:"🐄",name:"Animal"},
-{type:"biotic",icon:"🍄",name:"Fungi"},
-{type:"biotic",icon:"🦠",name:"Bacteria"},
-{type:"abiotic",icon:"💧",name:"Water"},
-{type:"abiotic",icon:"☀️",name:"Sunlight"},
-{type:"abiotic",icon:"💨",name:"Air"},
-{type:"abiotic",icon:"🪨",name:"Mineral"},
-{type:"abiotic",icon:"🌡️",name:"Temperature"},
-{type:"abiotic",icon:"⛰️",name:"Soil"}
+const originalItems=[
+{type:"biotic",icon:"🌱",name:"Plant",fact:"Plants are living organisms, so they are biotic factors."},
+{type:"biotic",icon:"🐄",name:"Animal",fact:"Animals are living organisms, so they are biotic factors."},
+{type:"biotic",icon:"🍄",name:"Fungi",fact:"Fungi are living organisms and are biotic factors."},
+{type:"biotic",icon:"🦠",name:"Bacteria",fact:"Bacteria are living microorganisms and are biotic factors."},
+{type:"abiotic",icon:"💧",name:"Water",fact:"Water is a non-living part of an ecosystem, so it is abiotic."},
+{type:"abiotic",icon:"☀️",name:"Sunlight",fact:"Sunlight is a non-living environmental factor, so it is abiotic."},
+{type:"abiotic",icon:"💨",name:"Air",fact:"Air is non-living and is an abiotic factor."},
+{type:"abiotic",icon:"🪨",name:"Mineral",fact:"Minerals are non-living components of an ecosystem."},
+{type:"abiotic",icon:"🌡️",name:"Temperature",fact:"Temperature is a non-living environmental condition."},
+{type:"abiotic",icon:"⛰️",name:"Soil",fact:"Soil is classified here as an abiotic component of the ecosystem."}
 ];
 
-items.sort(()=>Math.random()-0.5);
-
+let items=[];
 let i=0;
 let score=0;
 let attempt=1;
+let locked=false;
+let answered=false;
+let collected=[];
 
-/* AUDIO FIX */
-const correctAudio = new Audio('assets/correct.mp3');
-const wrongAudio = new Audio('assets/wrong.mp3');
-const clapAudio = document.getElementById("clapAudio");
-
-function playSound(audio){
-audio.currentTime = 0;
-audio.play().catch(()=>{});
+function shuffle(arr){
+return [...arr].sort(()=>Math.random()-.5);
 }
 
-/* unlock audio */
+/* SPLASH */
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+document.getElementById("intro").style.display="flex";
+},1800);
+
+/* AUDIO */
+function playSound(id){
+const a=document.getElementById(id);
+a.currentTime=0;
+a.play().catch(()=>{});
+}
+
 function unlockAudio(){
-correctAudio.play().then(()=>correctAudio.pause()).catch(()=>{});
-wrongAudio.play().then(()=>wrongAudio.pause()).catch(()=>{});
+["correctAudio","wrongAudio","clapAudio"].forEach(id=>{
+const a=document.getElementById(id);
+if(!a)return;
+a.volume=0;
+a.play().then(()=>{
+a.pause();
+a.currentTime=0;
+a.volume=1;
+}).catch(()=>{a.volume=1});
+});
 }
 
 /* START */
 function startGame(){
 unlockAudio();
+items=shuffle(originalItems);
+i=0;
+score=0;
+collected=[];
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="block";
 load();
@@ -246,46 +597,203 @@ load();
 
 /* LOAD */
 function load(){
-document.getElementById("icon").innerText=items[i].icon;
-document.getElementById("name").innerText=items[i].name;
-document.getElementById("feedback").innerText="";
+if(i>=items.length){
+endGame();
+return;
+}
+
 attempt=1;
+locked=false;
+answered=false;
+
+const q=items[i];
+
+document.getElementById("icon").innerText=q.icon;
+document.getElementById("name").innerText=q.name;
 document.getElementById("qno").innerText=i+1;
+document.getElementById("attempts").innerText=2;
+document.getElementById("sorted").innerText=i;
+document.getElementById("score").innerText=score;
+document.getElementById("progressFill").style.width=(i/items.length*100)+"%";
+document.getElementById("feedback").innerText="Drag the card into a group, or tap the group.";
+document.getElementById("nextBtn").style.display="none";
+
+document.getElementById("bioticZone").classList.remove("correct","wrong","over");
+document.getElementById("abioticZone").classList.remove("correct","wrong","over");
+
+const card=document.getElementById("objectCard");
+card.style.visibility="visible";
+card.classList.remove("dragging");
+}
+
+/* DESKTOP DRAG */
+const objectCard=document.getElementById("objectCard");
+
+objectCard.addEventListener("dragstart",e=>{
+if(locked){
+e.preventDefault();
+return;
+}
+objectCard.classList.add("dragging");
+e.dataTransfer.setData("text/plain","ecosystem-card");
+});
+
+objectCard.addEventListener("dragend",()=>{
+objectCard.classList.remove("dragging");
+document.querySelectorAll(".drop-zone").forEach(z=>z.classList.remove("over"));
+});
+
+function allowDrop(e){
+e.preventDefault();
+}
+
+function dragEnter(e,zone){
+e.preventDefault();
+if(!locked) zone.classList.add("over");
+}
+
+function dragLeave(zone){
+zone.classList.remove("over");
+}
+
+function dropItem(e,type,zone){
+e.preventDefault();
+zone.classList.remove("over");
+choose(type);
+}
+
+/* TOUCH DRAG */
+let touchGhost=null;
+
+objectCard.addEventListener("touchstart",e=>{
+if(locked)return;
+
+const t=e.touches[0];
+touchGhost=objectCard.cloneNode(true);
+touchGhost.removeAttribute("id");
+touchGhost.style.position="fixed";
+touchGhost.style.zIndex="999";
+touchGhost.style.width="150px";
+touchGhost.style.minHeight="120px";
+touchGhost.style.pointerEvents="none";
+touchGhost.style.opacity=".9";
+document.body.appendChild(touchGhost);
+moveGhost(t.clientX,t.clientY);
+},{passive:true});
+
+objectCard.addEventListener("touchmove",e=>{
+if(!touchGhost)return;
+const t=e.touches[0];
+moveGhost(t.clientX,t.clientY);
+
+const el=document.elementFromPoint(t.clientX,t.clientY);
+document.querySelectorAll(".drop-zone").forEach(z=>z.classList.remove("over"));
+if(el){
+const zone=el.closest(".drop-zone");
+if(zone)zone.classList.add("over");
+}
+},{passive:false});
+
+objectCard.addEventListener("touchend",e=>{
+if(!touchGhost)return;
+
+const t=e.changedTouches[0];
+const el=document.elementFromPoint(t.clientX,t.clientY);
+const zone=el ? el.closest(".drop-zone") : null;
+
+touchGhost.remove();
+touchGhost=null;
+document.querySelectorAll(".drop-zone").forEach(z=>z.classList.remove("over"));
+
+if(zone){
+choose(zone.id==="bioticZone" ? "biotic" : "abiotic");
+}
+});
+
+function moveGhost(x,y){
+if(!touchGhost)return;
+touchGhost.style.left=(x-75)+"px";
+touchGhost.style.top=(y-60)+"px";
 }
 
 /* CHECK */
-function check(ans){
-let q=items[i];
+function choose(ans){
+if(locked)return;
+
+const q=items[i];
+const zone=document.getElementById(ans==="biotic" ? "bioticZone" : "abioticZone");
 
 if(ans===q.type){
+locked=true;
+answered=true;
 score++;
-document.getElementById("feedback").innerText="✔ Correct!";
-playSound(correctAudio);
-next();
+
+zone.classList.add("correct");
+playSound("correctAudio");
+
+document.getElementById("score").innerText=score;
+document.getElementById("feedback").innerHTML=
+"✅ Correct! <b>"+q.name+"</b> belongs to the <b>"+capitalize(q.type)+"</b> group.<br>"+q.fact;
+
+collected.push(q);
+renderCollection();
+
+document.getElementById("objectCard").style.visibility="hidden";
+document.getElementById("nextBtn").style.display="block";
 }
 else{
+zone.classList.add("wrong");
+playSound("wrongAudio");
+
+setTimeout(()=>zone.classList.remove("wrong"),500);
+
 if(attempt===1){
-document.getElementById("feedback").innerText="Try Again!";
-playSound(wrongAudio);
 attempt=2;
-}else{
-document.getElementById("feedback").innerText="Correct Answer: "+q.type;
-playSound(wrongAudio);
-next();
+document.getElementById("attempts").innerText=1;
+document.getElementById("feedback").innerHTML=
+"❌ Not quite. Think: <b>Is it living, or is it a non-living part of the environment?</b> Try once more.";
+}
+else{
+locked=true;
+answered=true;
+document.getElementById("attempts").innerText=0;
+
+const correctZone=document.getElementById(q.type==="biotic" ? "bioticZone" : "abioticZone");
+correctZone.classList.add("correct");
+
+document.getElementById("feedback").innerHTML=
+"💡 Correct group: <b>"+capitalize(q.type)+"</b>.<br>"+q.fact;
+
+collected.push(q);
+renderCollection();
+
+document.getElementById("objectCard").style.visibility="hidden";
+document.getElementById("nextBtn").style.display="block";
 }
 }
 }
 
-/* NEXT */
-function next(){
+function renderCollection(){
+const box=document.getElementById("collectionItems");
+box.innerHTML="";
+
+collected.forEach(item=>{
+const chip=document.createElement("span");
+chip.className="collected "+item.type;
+chip.innerText=item.icon+" "+item.name;
+box.appendChild(chip);
+});
+}
+
+function capitalize(text){
+return text.charAt(0).toUpperCase()+text.slice(1);
+}
+
+function nextCard(){
+if(!answered)return;
 i++;
-document.getElementById("score").innerText=score;
-
-if(i<items.length){
-setTimeout(load,600);
-}else{
-endGame();
-}
+load();
+window.scrollTo({top:0,behavior:"smooth"});
 }
 
 /* END */
@@ -294,12 +802,13 @@ document.getElementById("game").style.display="none";
 document.getElementById("end").style.display="flex";
 document.getElementById("final").innerText=score;
 
-/* clap sound FIX */
-setTimeout(()=>{
-playSound(clapAudio);
-},500);
-}
+let badge="🌱 Ecosystem Learner";
+if(score>=7)badge="🌿 Skilled Ecosystem Explorer";
+if(score>=9)badge="🏆 Nature Champion";
+document.getElementById("badge").innerText=badge;
 
+setTimeout(()=>playSound("clapAudio"),300);
+}
 </script>
 
 </body>
