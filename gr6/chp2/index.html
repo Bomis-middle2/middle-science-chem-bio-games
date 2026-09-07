@@ -93,6 +93,7 @@ background:white;
 padding:15px;
 border-radius:16px;
 box-shadow:0 6px 15px rgba(0,0,0,0.12);
+text-align:center;
 }
 
 .case-title{
@@ -104,6 +105,144 @@ margin-bottom:10px;
 font-weight:bold;
 }
 
+/* NEW: QUESTION VISUAL */
+.question-visual{
+height:230px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:10px 0 14px;
+background:linear-gradient(#f8fcff,#eef7ff);
+border:2px solid #d7ebf8;
+border-radius:16px;
+overflow:hidden;
+position:relative;
+}
+
+.visual-scene{
+position:relative;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.visual-label{
+position:absolute;
+bottom:8px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(255,255,255,.92);
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+white-space:nowrap;
+box-shadow:0 2px 7px rgba(0,0,0,.08);
+}
+
+/* BEAKER */
+.beaker{
+position:relative;
+width:120px;
+height:150px;
+border:5px solid #78909c;
+border-top:none;
+border-radius:0 0 20px 20px;
+overflow:hidden;
+background:rgba(255,255,255,.55);
+}
+
+.beaker:before{
+content:"";
+position:absolute;
+top:0;
+left:-5px;
+width:130px;
+height:5px;
+background:#78909c;
+border-radius:4px;
+}
+
+.water{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+background:#90caf9;
+}
+
+.sand{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+background:#c7a66b;
+}
+
+.oil{
+position:absolute;
+left:0;
+right:0;
+background:#ffd54f;
+}
+
+/* SALT WATER */
+.salt-dot{
+position:absolute;
+width:7px;
+height:7px;
+background:white;
+border:1px solid #d6d6d6;
+border-radius:50%;
+}
+
+/* MIXTURE TRAY */
+.tray{
+position:relative;
+width:210px;
+height:100px;
+background:#d8b47b;
+border:5px solid #8d6e63;
+border-radius:18px;
+overflow:hidden;
+}
+
+.iron-particle{
+position:absolute;
+width:10px;
+height:10px;
+background:#4f4f4f;
+border-radius:50%;
+}
+
+.sand-particle{
+position:absolute;
+width:7px;
+height:7px;
+background:#f1d08d;
+border-radius:50%;
+}
+
+/* RICE AND STONES */
+.rice{
+position:absolute;
+width:18px;
+height:7px;
+background:#fff0b8;
+border:1px solid #d6c590;
+border-radius:50%;
+}
+
+.stone{
+position:absolute;
+width:18px;
+height:14px;
+background:#737373;
+border-radius:45%;
+}
+
 /* OPTIONS */
 .option{
 margin:8px 0;
@@ -111,11 +250,32 @@ padding:12px;
 background:#e3f2fd;
 border-radius:10px;
 cursor:pointer;
+transition:.15s;
+}
+
+.option:hover{
+background:#bbdefb;
+transform:translateY(-1px);
+}
+
+#feedback{
+margin-top:10px;
+min-height:24px;
+font-weight:bold;
 }
 
 /* DESKTOP */
 @media(min-width:900px){
 .game-wrapper{grid-template-columns:1fr 1fr;}
+}
+
+/* MOBILE */
+@media(max-width:600px){
+.screen{padding:10px;}
+.question-visual{height:190px;}
+.beaker{width:100px;height:125px;}
+.tray{width:185px;height:90px;}
+.card,.case-panel{padding:13px;}
 }
 </style>
 </head>
@@ -150,6 +310,10 @@ cursor:pointer;
 
 <div class="case-panel">
 <div class="case-title">🧪 LAB CASE</div>
+
+<!-- NEW VISUAL AREA -->
+<div id="questionVisual" class="question-visual"></div>
+
 <div id="caseText"></div>
 </div>
 
@@ -186,18 +350,63 @@ let lock=false;
 
 /* QUESTIONS */
 const data=[
-{q:"Sand + Water",case:"Beaker contains sand and water.",o:["Filtration","Evaporation","Magnet","Sieving"],a:"Filtration"},
-{q:"Salt water",case:"Salt dissolved in water.",o:["Evaporation","Filtration","Magnet","Handpicking"],a:"Evaporation"},
-{q:"Iron + Sand",case:"Iron mixed with sand.",o:["Magnetic separation","Filtration","Evaporation","Sieving"],a:"Magnetic separation"},
-{q:"Rice + Stones",case:"Mixed grains and stones.",o:["Handpicking","Evaporation","Magnet","Filtration"],a:"Handpicking"},
-{q:"Oil + Water",case:"Two layers visible.",o:["Decantation","Filtration","Sieving","Handpicking"],a:"Decantation"}
+{
+q:"Sand + Water",
+case:"Beaker contains sand and water.",
+o:["Filtration","Evaporation","Magnet","Sieving"],
+a:"Filtration",
+visual:"sandWater"
+},
+{
+q:"Salt water",
+case:"Salt dissolved in water.",
+o:["Evaporation","Filtration","Magnet","Handpicking"],
+a:"Evaporation",
+visual:"saltWater"
+},
+{
+q:"Iron + Sand",
+case:"Iron mixed with sand.",
+o:["Magnetic separation","Filtration","Evaporation","Sieving"],
+a:"Magnetic separation",
+visual:"ironSand"
+},
+{
+q:"Rice + Stones",
+case:"Mixed grains and stones.",
+o:["Handpicking","Evaporation","Magnet","Filtration"],
+a:"Handpicking",
+visual:"riceStones"
+},
+{
+q:"Oil + Water",
+case:"Two layers visible.",
+o:["Decantation","Filtration","Sieving","Handpicking"],
+a:"Decantation",
+visual:"oilWater"
+}
 ];
 
 /* AUDIO FIX */
 function unlockAudio(){
-document.getElementById("correctSound").play().catch(()=>{});
-document.getElementById("wrongSound").play().catch(()=>{});
-document.getElementById("clapSound").play().catch(()=>{});
+const sounds=[
+document.getElementById("correctSound"),
+document.getElementById("wrongSound"),
+document.getElementById("clapSound")
+];
+
+sounds.forEach(sound=>{
+sound.volume=0;
+sound.play()
+.then(()=>{
+sound.pause();
+sound.currentTime=0;
+sound.volume=1;
+})
+.catch(()=>{
+sound.volume=1;
+});
+});
 }
 
 /* SPLASH */
@@ -210,7 +419,7 @@ document.getElementById("intro").style.display="flex";
 
 /* START */
 function startGame(){
-unlockAudio(); // FIX SOUND BLOCK
+unlockAudio();
 document.getElementById("intro").style.display="none";
 document.getElementById("game").style.display="flex";
 loadQ();
@@ -233,6 +442,8 @@ document.getElementById("qno").innerText=qIndex+1;
 document.getElementById("question").innerText=q.q;
 document.getElementById("caseText").innerText=q.case;
 
+renderVisual(q.visual);
+
 let html="";
 q.o.forEach(opt=>{
 html+=`<div class="option" onclick="check('${opt}')">${opt}</div>`;
@@ -240,6 +451,121 @@ html+=`<div class="option" onclick="check('${opt}')">${opt}</div>`;
 
 document.getElementById("options").innerHTML=html;
 document.getElementById("feedback").innerHTML="";
+}
+
+/* VISUALS */
+function renderVisual(type){
+
+const box=document.getElementById("questionVisual");
+
+if(type==="sandWater"){
+box.innerHTML=`
+<div class="visual-scene">
+  <div class="beaker">
+    <div class="water" style="height:65%;"></div>
+    <div class="sand" style="height:25%;"></div>
+  </div>
+  <div class="visual-label">Sand + Water</div>
+</div>`;
+}
+
+else if(type==="saltWater"){
+box.innerHTML=`
+<div class="visual-scene">
+  <div class="beaker">
+    <div class="water" style="height:68%;"></div>
+    <span class="salt-dot" style="left:25%;bottom:35%;"></span>
+    <span class="salt-dot" style="left:48%;bottom:48%;"></span>
+    <span class="salt-dot" style="left:68%;bottom:28%;"></span>
+    <span class="salt-dot" style="left:35%;bottom:20%;"></span>
+    <span class="salt-dot" style="left:75%;bottom:52%;"></span>
+    <span class="salt-dot" style="left:55%;bottom:14%;"></span>
+  </div>
+  <div class="visual-label">Salt Solution</div>
+</div>`;
+}
+
+else if(type==="ironSand"){
+box.innerHTML=`
+<div class="visual-scene">
+  <div class="tray">
+    ${makeIronSand()}
+  </div>
+  <div class="visual-label">Iron Filings + Sand</div>
+</div>`;
+}
+
+else if(type==="riceStones"){
+box.innerHTML=`
+<div class="visual-scene">
+  <div class="tray" style="background:#f2dfad;">
+    ${makeRiceStones()}
+  </div>
+  <div class="visual-label">Rice + Stones</div>
+</div>`;
+}
+
+else if(type==="oilWater"){
+box.innerHTML=`
+<div class="visual-scene">
+  <div class="beaker">
+    <div class="water" style="height:42%;"></div>
+    <div class="oil" style="height:30%;bottom:42%;"></div>
+  </div>
+  <div style="
+    position:absolute;
+    right:16%;
+    top:30%;
+    font-size:12px;
+    font-weight:bold;
+    color:#8a6d00;">← Oil</div>
+  <div style="
+    position:absolute;
+    right:14%;
+    top:58%;
+    font-size:12px;
+    font-weight:bold;
+    color:#1565c0;">← Water</div>
+  <div class="visual-label">Oil + Water</div>
+</div>`;
+}
+}
+
+function makeIronSand(){
+let html="";
+
+for(let i=0;i<28;i++){
+let left=5+((i*17)%88);
+let top=8+((i*23)%76);
+html+=`<span class="sand-particle" style="left:${left}%;top:${top}%;"></span>`;
+}
+
+for(let i=0;i<15;i++){
+let left=8+((i*29)%82);
+let top=10+((i*31)%70);
+html+=`<span class="iron-particle" style="left:${left}%;top:${top}%;"></span>`;
+}
+
+return html;
+}
+
+function makeRiceStones(){
+let html="";
+
+for(let i=0;i<24;i++){
+let left=5+((i*19)%86);
+let top=10+((i*27)%68);
+let rotate=(i*23)%170;
+html+=`<span class="rice" style="left:${left}%;top:${top}%;transform:rotate(${rotate}deg);"></span>`;
+}
+
+for(let i=0;i<6;i++){
+let left=10+((i*31)%78);
+let top=14+((i*37)%62);
+html+=`<span class="stone" style="left:${left}%;top:${top}%;"></span>`;
+}
+
+return html;
 }
 
 /* CHECK */
@@ -251,10 +577,13 @@ let q=data[qIndex];
 
 if(ans===q.a){
 
+document.getElementById("correctSound").currentTime=0;
 document.getElementById("correctSound").play().catch(()=>{});
+
 score+=10;
 lock=true;
 
+document.getElementById("score").innerText=score;
 document.getElementById("feedback").innerHTML="✅ Correct!";
 
 setTimeout(()=>{
@@ -264,8 +593,11 @@ loadQ();
 
 }else{
 
+document.getElementById("wrongSound").currentTime=0;
 document.getElementById("wrongSound").play().catch(()=>{});
+
 life--;
+document.getElementById("life").innerText=Math.max(life,0);
 
 if(attempt===1){
 document.getElementById("feedback").innerHTML="💡 Try Again!";
@@ -290,6 +622,8 @@ function end(){
 document.getElementById("game").style.display="none";
 document.getElementById("result").style.display="flex";
 document.getElementById("final").innerText=score;
+
+document.getElementById("clapSound").currentTime=0;
 document.getElementById("clapSound").play().catch(()=>{});
 }
 
