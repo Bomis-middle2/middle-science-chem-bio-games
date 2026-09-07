@@ -2,276 +2,800 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Air Properties Explorer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Air Lab Challenge</title>
 <style>
+*{box-sizing:border-box}
+:root{
+  --blue:#0b78c7;
+  --blue2:#51b7f0;
+  --yellow:#ffd94d;
+  --green:#1aa34a;
+  --red:#ed3348;
+  --ink:#163b63;
+  --cream:#fff9e5;
+}
 body{
-margin:0;
-font-family:Arial;
-background:url('assets/air-bg.png') center/cover no-repeat;
-overflow:hidden;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+  background:url("assets/air-bg.png") center/cover fixed no-repeat;
+  color:var(--ink);
 }
-
-/* overlay */
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(255,255,255,0.25);
+body:before{
+  content:"";
+  position:fixed;inset:0;
+  background:rgba(232,247,255,.76);
+  backdrop-filter:blur(2px);
+  z-index:-1;
 }
+button{font:inherit}
 
-/* SPLASH */
 #splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
+  position:fixed;inset:0;background:white;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+  animation:splashOut .45s 1.4s forwards;
 }
+#splash img{width:160px;max-width:50vw}
+@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
 
-/* INTRO */
 .screen{
-display:none;
-position:absolute;
-inset:0;
-align-items:center;
-justify-content:center;
-text-align:center;
+  display:none;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
 }
-
-.card{
-background:white;
-padding:25px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-max-width:600px;
+#intro{display:flex}
+.intro-card{
+  width:min(760px,96%);
+  background:rgba(255,255,255,.97);
+  border-radius:28px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 18px 45px rgba(25,80,120,.18);
+  border:4px solid white;
 }
+.intro-logo{width:120px}
+.intro-title{
+  margin:8px 0 4px;
+  font-size:clamp(30px,6vw,54px);
+  color:#0a69b5;
+  text-shadow:0 2px 0 #fff, 0 4px 0 #f1c928;
+}
+.intro-sub{
+  font-size:18px;
+  font-weight:bold;
+  color:#2f5c7b;
+}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:24px 0;
+}
+.step{
+  background:#eef8ff;
+  border:2px solid #bfe6ff;
+  border-radius:18px;
+  padding:14px 8px;
+  font-weight:bold;
+}
+.primary{
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(#25b757,#108e3f);
+  color:white;
+  padding:15px 26px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 6px 0 #0a6f31;
+}
+.primary:active{transform:translateY(2px);box-shadow:0 4px 0 #0a6f31}
 
 /* GAME */
 #game{
-display:none;
-position:absolute;
-inset:0;
-padding:20px;
+  display:none;
+  padding:10px 14px 26px;
+}
+.game-wrap{
+  max-width:1220px;
+  margin:auto;
+}
+.top-logo-row{
+  display:grid;
+  grid-template-columns:180px 1fr 150px;
+  gap:14px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.brand-card,.grade-badge,.game-title{
+  background:rgba(255,255,255,.96);
+  border-radius:20px;
+  box-shadow:0 8px 24px rgba(30,85,125,.12);
+}
+.brand-card{
+  padding:12px;
+  text-align:center;
+}
+.brand-card img{width:145px;max-width:100%}
+.game-title{
+  padding:10px 16px;
+  text-align:center;
+  border:4px solid white;
+  background:linear-gradient(#0f7ed0,#065ea8);
+}
+.game-title h1{
+  margin:0;
+  color:#ffd84a;
+  font-size:clamp(28px,4vw,50px);
+  text-shadow:0 3px 0 #fff,0 5px 0 #073e77;
+  line-height:1;
+}
+.game-title p{
+  margin:4px 0 0;
+  color:white;
+  font-weight:bold;
+}
+.grade-badge{
+  padding:15px 8px;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  border:4px solid #bdeaff;
 }
 
-.topbar{
-display:flex;
-justify-content:space-between;
-background:white;
-padding:10px;
-border-radius:10px;
-font-weight:bold;
+.status{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:12px;
+  margin-bottom:12px;
 }
-
-.main{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
-margin-top:20px;
+.score-box,.progress-box{
+  background:rgba(255,255,255,.97);
+  border-radius:17px;
+  padding:12px 16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
-
-.box{
-background:white;
-padding:20px;
-border-radius:15px;
-width:320px;
-text-align:center;
-box-shadow:0 8px 20px rgba(0,0,0,0.1);
+.score-box{
+  font-size:20px;
+  font-weight:bold;
 }
-
-.icon{
-font-size:80px;
-margin:10px;
+.progress-box{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  justify-content:space-between;
 }
+.qtext{font-size:18px;font-weight:bold;white-space:nowrap}
+.dots{
+  flex:1;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.dot{
+  width:26px;height:26px;border-radius:50%;
+  border:3px solid #8ea7b8;
+  background:#cfdde6;
+}
+.dot.active{background:#35b64b;border-color:#158236}
+.dot.done{background:#68c6ff;border-color:#2288c5}
 
+.content{
+  display:grid;
+  grid-template-columns:1.5fr .9fr;
+  gap:14px;
+}
+.experiment-card,.answer-card{
+  background:rgba(255,255,255,.97);
+  border-radius:24px;
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
+  overflow:hidden;
+}
+.card-head{
+  background:linear-gradient(90deg,#0c83d0,#0560ac);
+  color:white;
+  padding:13px 18px;
+  font-size:21px;
+  font-weight:bold;
+}
+.experiment-body{padding:16px}
+.before-after{
+  display:grid;
+  grid-template-columns:1fr 68px 1fr;
+  gap:12px;
+  align-items:center;
+}
+.visual-panel{
+  position:relative;
+  min-height:300px;
+  background:linear-gradient(#dff3ff,#eefaff 75%,#d9b687 75%);
+  border-radius:18px;
+  overflow:hidden;
+  border:2px solid #c6e6f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tag{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  color:white;
+  border-radius:999px;
+  padding:6px 24px;
+  font-weight:bold;
+  z-index:3;
+}
+.before-tag{background:#eb5261}
+.after-tag{background:#16a34a}
+.arrow{
+  font-size:52px;
+  text-align:center;
+  color:#efad0b;
+  text-shadow:0 2px 0 #875d00;
+}
+.run-btn{
+  margin:14px auto 0;
+  display:block;
+  min-width:240px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(#25b757,#108e3f);
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  padding:13px 20px;
+  cursor:pointer;
+  box-shadow:0 5px 0 #0a6f31;
+}
+.run-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+
+.answer-card .question-head{
+  background:linear-gradient(#ffe56d,#ffd137);
+  padding:18px 14px;
+  text-align:center;
+  font-weight:bold;
+  font-size:22px;
+  color:#2f2f2f;
+}
+.answers{padding:18px}
 .option{
-background:#e3f2fd;
-padding:12px;
-margin:10px 0;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
+  width:100%;
+  border:2px solid #4fb7f1;
+  border-radius:18px;
+  padding:17px 14px;
+  margin:7px 0;
+  background:linear-gradient(#caebff,#a8dcfb);
+  color:#173b66;
+  font-weight:bold;
+  font-size:18px;
+  cursor:pointer;
+  transition:.18s;
 }
-
-.option:hover{ background:#bbdefb; }
-
+.option:hover{transform:translateY(-1px)}
+.option.correct{background:#d8f7df;border-color:#26a844;color:#155d27}
+.option.wrong{background:#ffe3e6;border-color:#e03b4b;color:#8a1f2b}
+.option:disabled{cursor:not-allowed}
+.attempt-note{
+  text-align:center;
+  font-weight:bold;
+  color:#7a2a1e;
+  margin:8px 0 0;
+}
 #feedback{
-margin-top:10px;
-font-weight:bold;
+  min-height:78px;
+  margin:12px 18px 18px;
+  border-radius:14px;
+  padding:12px;
+  background:#f5f9fc;
+  font-weight:bold;
+  line-height:1.4;
+}
+#next{
+  display:none;
+  width:calc(100% - 36px);
+  margin:0 18px 18px;
+  border:0;
+  border-radius:14px;
+  padding:13px;
+  background:#0b7cc8;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-/* END SCREEN FIXED */
+.observe{
+  margin-top:14px;
+  background:var(--cream);
+  border:3px dashed #e1a614;
+  border-radius:18px;
+  padding:13px 16px;
+  font-size:18px;
+  line-height:1.4;
+}
+.observe b{font-size:20px}
+.think-row{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:14px;
+  align-items:center;
+}
+.scientist{
+  font-size:88px;
+  text-align:center;
+}
+.think-bubble{
+  background:white;
+  border:3px solid #67bff2;
+  border-radius:24px;
+  padding:16px 20px;
+  position:relative;
+  font-size:18px;
+}
+.think-bubble:before{
+  content:"";
+  position:absolute;
+  left:-24px;
+  top:34px;
+  border-width:14px 24px 14px 0;
+  border-style:solid;
+  border-color:transparent #67bff2 transparent transparent;
+}
+.think-bubble:after{
+  content:"";
+  position:absolute;
+  left:-18px;
+  top:37px;
+  border-width:11px 20px 11px 0;
+  border-style:solid;
+  border-color:transparent white transparent transparent;
+}
+
+/* SVG / VISUALS */
+.balloon-svg{display:block;overflow:visible}
+.balloon-flat{width:160px;height:120px}
+.balloon-big{width:170px;height:220px}
+.balloon-body{fill:#ef2d2d;stroke:#a41414;stroke-width:4}
+.balloon-neck{fill:#df2020;stroke:#a41414;stroke-width:3}
+.balloon-string{fill:none;stroke:#6b6b6b;stroke-width:2.5}
+.balloon-shine{fill:none;stroke:rgba(255,255,255,.75);stroke-width:7;stroke-linecap:round}
+
+.bottle{
+  width:110px;height:170px;border:6px solid #65879a;border-radius:12px 12px 25px 25px;
+  position:relative;background:rgba(255,255,255,.48)
+}
+.bottle:before{
+  content:"";position:absolute;width:50px;height:34px;border:6px solid #65879a;border-bottom:none;
+  top:-38px;left:24px;border-radius:8px 8px 0 0
+}
+.airdot{position:absolute;width:12px;height:12px;border-radius:50%;background:#65bdf0}
+.scale{position:relative;width:250px;height:180px}
+.scale-stand{position:absolute;width:14px;height:100px;background:#677d8b;left:118px;top:58px}
+.scale-base{position:absolute;width:90px;height:12px;background:#677d8b;left:80px;bottom:8px;border-radius:8px}
+.scale-beam{position:absolute;width:210px;height:9px;background:#795548;left:20px;top:57px;transition:.7s}
+.scale-beam.tilt{transform:rotate(8deg)}
+.scale-balloon{position:absolute;top:2px}
+.scale-balloon.left{left:6px}
+.scale-balloon.right{right:6px}
+.football{font-size:100px}
+.can{font-size:120px;transition:.7s}
+.can.crush{transform:scaleX(.5) scaleY(.72) rotate(8deg)}
+.pressure{font-size:38px;font-weight:bold;color:#0b76b8}
+
+
+.inverted-demo{
+  position:relative;
+  width:250px;
+  height:210px;
+  margin:auto;
+}
+.water-tank{
+  position:absolute;
+  left:35px;
+  bottom:10px;
+  width:180px;
+  height:145px;
+  border:6px solid #607d8b;
+  border-top:none;
+  border-radius:0 0 16px 16px;
+  background:linear-gradient(to top,#78c7f0 0 68%,rgba(120,199,240,.22) 68%);
+  overflow:hidden;
+}
+.inverted-glass{
+  position:absolute;
+  width:82px;
+  height:120px;
+  left:84px;
+  top:20px;
+  border:5px solid #78909c;
+  border-bottom:none;
+  border-radius:10px 10px 0 0;
+  background:rgba(255,255,255,.55);
+  z-index:2;
+}
+.inverted-glass.lowered{
+  top:62px;
+}
+.trapped-air{
+  position:absolute;
+  left:8px;
+  top:8px;
+  width:56px;
+  height:68px;
+  background:rgba(255,255,255,.95);
+  border-radius:8px;
+}
+.air-label{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  top:12px;
+  background:white;
+  border:2px solid #8bc8e8;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:12px;
+  font-weight:bold;
+  color:#155b84;
+  white-space:nowrap;
+}
+.water-label{
+  position:absolute;
+  left:8px;
+  bottom:12px;
+  font-size:12px;
+  font-weight:bold;
+  color:#0a5f8f;
+  background:rgba(255,255,255,.78);
+  padding:4px 7px;
+  border-radius:8px;
+}
+
 #end{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(255,255,255,0.9);
-align-items:center;
-justify-content:center;
-text-align:center;
+  display:none;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(255,255,255,.8);
 }
+.end-card{
+  width:min(720px,96%);
+  background:white;
+  border-radius:28px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 18px 45px rgba(0,0,0,.16);
+}
+.end-card h1{font-size:42px;color:#0c73be;margin:6px}
+.badge{font-size:24px;font-weight:bold;color:#806000;margin:15px 0}
 
-.endcard{
-background:white;
-padding:30px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+@media(max-width:880px){
+  .top-logo-row{grid-template-columns:1fr}
+  .brand-card,.grade-badge{display:none}
+  .status{grid-template-columns:1fr}
+  .content{grid-template-columns:1fr}
+  .before-after{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg)}
+  .visual-panel{min-height:240px}
+  .think-row{grid-template-columns:80px 1fr}
+  .scientist{font-size:60px}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  #game{padding:7px}
+  .game-title h1{font-size:30px}
+  .progress-box{gap:8px;flex-wrap:wrap}
+  .dots{gap:5px}
+  .dot{width:20px;height:20px}
+  .option{font-size:16px;padding:14px 10px}
+  .think-row{grid-template-columns:1fr}
+  .think-bubble:before,.think-bubble:after{display:none}
+  .scientist{font-size:54px}
+  .steps{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
-<div class="overlay"></div>
+<div id="splash"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="assets/innovine-logo.png" width="160">
-</div>
+<section id="intro" class="screen">
+  <div class="intro-card">
+    <img class="intro-logo" src="assets/innovine-logo.png" alt="Innovine logo">
+    <h1 class="intro-title">Air Lab Challenge</h1>
+    <div class="intro-sub">Explore • Observe • Think • Choose</div>
+    <p>Perform four virtual experiments and use the evidence to identify the property of air.</p>
+    <div class="steps">
+      <div class="step">🧪 Explore</div>
+      <div class="step">👀 Observe</div>
+      <div class="step">💭 Think</div>
+      <div class="step">✅ Choose</div>
+    </div>
+    <button id="startBtn" class="primary" type="button">START AIR LAB</button>
+  </div>
+</section>
 
-<!-- INTRO -->
-<div class="screen" id="intro">
-<div class="card">
-<h1>🌬️ Air Properties Explorer</h1>
-<p>
-✔ Learn Air Properties<br>
-✔ 2 attempts per question<br>
-✔ Earn Stars ⭐<br>
-✔ Become Air Scientist 🧪
-</p>
-<button onclick="startGame()">START GAME</button>
-</div>
-</div>
+<main id="game">
+  <div class="game-wrap">
+    <div class="top-logo-row">
+      <div class="brand-card"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
+      <div class="game-title">
+        <h1>Air Lab Challenge</h1>
+        <p>Explore • Observe • Think • Choose</p>
+      </div>
+      <div class="grade-badge">Grade 6<br>Science</div>
+    </div>
 
-<!-- GAME -->
-<div id="game">
+    <div class="status">
+      <div class="score-box">Score: ⭐ <span id="score">0</span></div>
+      <div class="progress-box">
+        <div class="qtext">Question: <span id="qno">1</span> / 4</div>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
 
-<div class="topbar">
-<div>⭐ Score: <span id="score">0</span></div>
-<div>Q: <span id="qno">1</span>/6</div>
-</div>
+    <div class="content">
+      <section class="experiment-card">
+        <div class="card-head" id="expTitle">Experiment 1: Inflating a Balloon</div>
+        <div class="experiment-body">
+          <div class="before-after">
+            <div class="visual-panel">
+              <div class="tag before-tag">Before</div>
+              <div id="beforeVisual"></div>
+            </div>
+            <div class="arrow">➜</div>
+            <div class="visual-panel">
+              <div class="tag after-tag">After</div>
+              <div id="afterVisual"></div>
+            </div>
+          </div>
+          <button id="runBtn" class="run-btn" type="button">▶ Run Experiment</button>
+          <div id="observe" class="observe"><b>🔎 Observe:</b> Run the experiment to see what changes.</div>
+          <div class="think-row">
+            <div class="scientist">👩‍🔬</div>
+            <div class="think-bubble"><b>Think:</b> <span id="thinkText">What does this tell you about air?</span></div>
+          </div>
+        </div>
+      </section>
 
-<div class="main">
+      <section class="answer-card">
+        <div class="question-head">Which property of air does this experiment show?</div>
+        <div class="answers">
+          <button class="option" data-answer="space" type="button">Air Occupies Space</button>
+          <button class="option" data-answer="weight" type="button">Air Has Weight</button>
+          <button class="option" data-answer="pressure" type="button">Air Exerts Pressure</button>
+          <div class="attempt-note">You have <span id="attempts">2</span> attempts!</div>
+        </div>
+        <div id="feedback" aria-live="polite">Run the experiment before choosing an answer.</div>
+        <button id="next" type="button">NEXT EXPERIMENT ➜</button>
+      </section>
+    </div>
+  </div>
+</main>
 
-<div class="box">
-<div class="icon" id="icon">🎈</div>
-<h3 id="question"></h3>
-</div>
+<section id="end">
+  <div class="end-card">
+    <img src="assets/innovine-logo.png" alt="Innovine logo" style="width:110px">
+    <h1>🏆 Air Scientist!</h1>
+    <p>You completed all four air investigations.</p>
+    <h2>Final Score: ⭐ <span id="finalScore">0</span>/4</h2>
+    <div class="badge" id="badge"></div>
+    <button id="againBtn" class="primary" type="button">PLAY AGAIN</button>
+  </div>
+</section>
 
-<div class="box">
-<div class="option" onclick="check('space')">🌬️ Air Occupies Space</div>
-<div class="option" onclick="check('weight')">⚖️ Air Has Weight</div>
-<div class="option" onclick="check('pressure')">💨 Air Exerts Pressure</div>
-
-<div id="feedback"></div>
-</div>
-
-</div>
-</div>
-
-<!-- END -->
-<div id="end">
-<div class="endcard">
-<h1>🎉 Congratulations!</h1>
-<p>You are now an Air Scientist!</p>
-<p>⭐ Final Score: <span id="final"></span></p>
-
-<!-- clap sound trigger happens automatically -->
-</div>
-</div>
-
-<!-- AUDIO -->
-<audio id="correct" src="assets/correct.mp3"></audio>
-<audio id="wrong" src="assets/wrong.mp3"></audio>
-<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+<audio id="correctAudio" src="assets/correct.mp3"></audio>
+<audio id="wrongAudio" src="assets/wrong.mp3"></audio>
+<audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
+(function(){
+const flatBalloon = `
+<svg class="balloon-svg balloon-flat" viewBox="0 0 180 120" aria-label="Flat red balloon">
+  <path class="balloon-body" d="M18 75 C33 55 58 54 85 63 C104 69 119 68 135 60 C145 55 154 50 161 57 C169 65 160 79 151 84 C132 94 111 95 88 89 C61 82 39 87 25 88 C12 89 10 82 18 75 Z"/>
+  <path class="balloon-neck" d="M155 55 L173 48 L177 65 L160 68 Z"/>
+  <path class="balloon-shine" d="M31 70 C47 64 58 65 70 67"/>
+</svg>`;
 
-/* SPLASH */
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
+const bigBalloon = `
+<svg class="balloon-svg balloon-big" viewBox="0 0 160 230" aria-label="Inflated red balloon">
+  <ellipse class="balloon-body" cx="80" cy="90" rx="57" ry="72"/>
+  <path class="balloon-shine" d="M51 48 C40 64 38 82 41 95"/>
+  <path class="balloon-neck" d="M70 161 L90 161 L97 178 L63 178 Z"/>
+  <path class="balloon-string" d="M80 178 C66 192 92 205 76 227"/>
+</svg>`;
 
-/* QUESTIONS (FIXED SET) */
-const data = [
-{icon:"🎈",q:"Inflating a balloon",a:"space"},
-{icon:"🧴",q:"Air trapped inside a bottle",a:"space"},
-{icon:"⚖️",q:"Two balloons on balance scale",a:"weight"},
-{icon:"🏈",q:"Deflated vs filled football weight",a:"weight"},
-{icon:"🎈",q:"Balloon expands when air is blown",a:"pressure"},
-{icon:"💨",q:"Can crushing experiment",a:"pressure"}
+const tinyBalloon = `
+<svg class="balloon-svg" width="70" height="95" viewBox="0 0 160 230">
+  <ellipse class="balloon-body" cx="80" cy="90" rx="57" ry="72"/>
+  <path class="balloon-neck" d="M70 161 L90 161 L97 178 L63 178 Z"/>
+  <path class="balloon-string" d="M80 178 C66 192 92 205 76 227"/>
+</svg>`;
+
+const experiments=[
+{
+title:"Experiment 1: Inflating a Balloon",
+answer:"space",
+before:flatBalloon,
+after:bigBalloon,
+observe:"The balloon changes from flat to swollen after air is blown into it.",
+think:"What does the increase in the balloon's size tell you about air?",
+fact:"Air takes up space inside the balloon, making the balloon expand."
+},
+{
+title:"Experiment 2: Inverted Glass in Water",
+answer:"space",
+before:`<div class="inverted-demo">
+  <div class="water-tank">
+    <div class="water-label">Water</div>
+  </div>
+  <div class="inverted-glass">
+    <div class="air-label">Air inside glass</div>
+  </div>
+</div>`,
+after:`<div class="inverted-demo">
+  <div class="water-tank">
+    <div class="water-label">Water</div>
+  </div>
+  <div class="inverted-glass lowered">
+    <div class="trapped-air"></div>
+    <div class="air-label">Trapped air</div>
+  </div>
+</div>`,
+observe:"When the glass is pushed straight down into the water, water does not completely fill the glass because air is trapped inside.",
+think:"Why can the water not occupy the space inside the inverted glass?",
+fact:"The trapped air takes up space and prevents water from completely entering the glass. This demonstrates that air occupies space."
+},
+{
+title:"Experiment 3: Balloon Balance",
+answer:"weight",
+before:`<div class="scale"><div class="scale-stand"></div><div class="scale-base"></div><div class="scale-beam"></div><div class="scale-balloon left">${tinyBalloon}</div><div class="scale-balloon right">${tinyBalloon}</div></div>`,
+after:`<div class="scale"><div class="scale-stand"></div><div class="scale-base"></div><div class="scale-beam tilt"></div><div class="scale-balloon left">${tinyBalloon}</div><div class="scale-balloon right" style="transform:scale(.55);top:28px">${tinyBalloon}</div></div>`,
+observe:"When air is released from one balloon, the side with the inflated balloon becomes heavier.",
+think:"Why does the balance change after air is released from one balloon?",
+fact:"The change in balance shows that the air inside the balloon has weight."
+},
+
+
+{
+title:"Experiment 4: Crushing Can",
+answer:"pressure",
+before:`<div style="text-align:center"><div class="can">🥫</div><b>Before</b></div>`,
+after:`<div style="text-align:center"><div class="pressure">→ → &nbsp; ← ←</div><div class="can crush">🥫</div><b>After cooling</b></div>`,
+observe:"The can collapses inward when the outside air pressure becomes greater than the pressure inside.",
+think:"What force pushes the can inward?",
+fact:"The outside air pushes on the can, demonstrating that air exerts pressure."
+}
 ];
 
-let i=0;
-let score=0;
-let attempt=1;
+let i=0,score=0,attempt=1,ran=false,locked=false;
+const $=id=>document.getElementById(id);
+const options=[...document.querySelectorAll(".option")];
 
-/* START */
+function play(id){
+  const a=$(id);
+  if(!a)return;
+  a.currentTime=0;
+  a.play().catch(()=>{});
+}
+
+function makeDots(){
+  $("dots").innerHTML="";
+  experiments.forEach((_,idx)=>{
+    const d=document.createElement("div");
+    d.className="dot";
+    if(idx<i)d.classList.add("done");
+    if(idx===i)d.classList.add("active");
+    $("dots").appendChild(d);
+  });
+}
+
 function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
-load();
+  $("intro").style.display="none";
+  $("game").style.display="block";
+  i=0;score=0;
+  load();
 }
 
-/* LOAD */
 function load(){
-document.getElementById("icon").innerText=data[i].icon;
-document.getElementById("question").innerText=data[i].q;
-document.getElementById("feedback").innerText="";
-attempt=1;
-document.getElementById("qno").innerText=i+1;
+  if(i>=experiments.length){finish();return}
+  const e=experiments[i];
+  attempt=1;ran=false;locked=false;
+  $("score").textContent=score;
+  $("qno").textContent=i+1;
+  $("attempts").textContent=2;
+  $("expTitle").textContent=e.title;
+  $("beforeVisual").innerHTML=e.before;
+  $("afterVisual").innerHTML=e.before;
+  $("observe").innerHTML="<b>🔎 Observe:</b> Run the experiment to see what changes.";
+  $("thinkText").textContent=e.think;
+  $("feedback").textContent="Run the experiment before choosing an answer.";
+  $("runBtn").disabled=false;
+  $("runBtn").textContent="▶ Run Experiment";
+  $("next").style.display="none";
+  options.forEach(b=>{
+    b.disabled=true;
+    b.classList.remove("correct","wrong");
+  });
+  makeDots();
 }
 
-/* CHECK */
-function check(ans){
-let q=data[i];
-
-if(ans===q.a){
-score++;
-document.getElementById("correct").play();
-document.getElementById("feedback").innerText="✔ Correct!";
-next();
-}
-else{
-if(attempt===1){
-document.getElementById("wrong").play();
-document.getElementById("feedback").innerText="Try Again!";
-attempt=2;
-}else{
-document.getElementById("feedback").innerText="Correct Answer!";
-next();
-}
-}
+function runExperiment(){
+  if(ran)return;
+  ran=true;
+  const e=experiments[i];
+  $("afterVisual").innerHTML=e.after;
+  $("observe").innerHTML="<b>🔎 Observe:</b> "+e.observe;
+  $("feedback").textContent="Now choose the property of air shown by the experiment.";
+  $("runBtn").disabled=true;
+  $("runBtn").textContent="✓ Experiment Complete";
+  options.forEach(b=>b.disabled=false);
 }
 
-/* NEXT */
-function next(){
-i++;
-document.getElementById("score").innerText=score;
+function checkAnswer(ans,button){
+  if(!ran||locked)return;
+  const e=experiments[i];
 
-if(i < data.length){
-setTimeout(load,700);
-}else{
-endGame();
+  if(ans===e.answer){
+    locked=true;
+    score++;
+    $("score").textContent=score;
+    button.classList.add("correct");
+    $("feedback").innerHTML="✅ Correct! ⭐<br>"+e.fact;
+    play("correctAudio");
+    options.forEach(b=>b.disabled=true);
+    $("next").style.display="block";
+  }else{
+    button.classList.add("wrong");
+    play("wrongAudio");
+    if(attempt===1){
+      attempt=2;
+      $("attempts").textContent=1;
+      $("feedback").textContent="❌ Not quite. Look carefully at the observation and try again.";
+      setTimeout(()=>button.classList.remove("wrong"),450);
+    }else{
+      locked=true;
+      $("attempts").textContent=0;
+      const correct=options.find(b=>b.dataset.answer===e.answer);
+      correct.classList.add("correct");
+      $("feedback").innerHTML="💡 Correct answer: <b>"+correct.textContent+"</b><br>"+e.fact;
+      options.forEach(b=>b.disabled=true);
+      $("next").style.display="block";
+    }
+  }
 }
+
+function nextExperiment(){
+  if(!locked)return;
+  i++;
+  load();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* END */
-function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="flex";
-document.getElementById("final").innerText=score;
-
-/* FINAL CLAP */
-document.getElementById("clap").play().catch(()=>{});
+function finish(){
+  $("game").style.display="none";
+  $("end").style.display="flex";
+  $("finalScore").textContent=score;
+  let badge="🌬️ Junior Air Explorer";
+  if(score>=3)badge="🧪 Skilled Air Scientist";
+  if(score===4)badge="🏆 Master Air Scientist";
+  $("badge").textContent=badge;
+  play("clapAudio");
 }
 
+$("startBtn").addEventListener("click",startGame);
+$("runBtn").addEventListener("click",runExperiment);
+$("next").addEventListener("click",nextExperiment);
+$("againBtn").addEventListener("click",()=>location.reload());
+options.forEach(b=>b.addEventListener("click",()=>checkAnswer(b.dataset.answer,b)));
+})();
 </script>
-
 </body>
 </html>
