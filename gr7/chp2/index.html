@@ -2,253 +2,1120 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Digestive System Organs Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digestive System Explorer | Grade 7</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#fff7ec;
+*{box-sizing:border-box}
+
+:root{
+  --orange:#f28b30;
+  --orange2:#ffb25e;
+  --cream:#fff6e7;
+  --peach:#ffe1bd;
+  --brown:#7a4524;
+  --green:#2fa35b;
+  --red:#df4f48;
+  --blue:#2b83c6;
+  --ink:#3e2d24;
+  --white:#fff;
 }
 
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:"Trebuchet MS",Arial,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(#fff7ec,#fffdf8);
+}
+
+body{overflow-x:hidden}
+button{font:inherit}
+
+/* SPLASH */
 #splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:splashOut .45s 1.5s forwards;
 }
 
+#splash img{
+  width:155px;
+  max-width:48vw;
+}
+
+@keyframes splashOut{
+  to{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+}
+
+/* INTRO */
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+
+#intro{display:flex}
+
+.intro-card{
+  width:min(900px,96vw);
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 18px 50px rgba(105,65,30,.18);
+  border:4px solid rgba(255,255,255,.9);
+}
+
+.hero{
+  position:relative;
+  min-height:340px;
+  overflow:hidden;
+  padding:22px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 80% 18%,rgba(255,255,255,.85),transparent 25%),
+    linear-gradient(#ffe3bd,#ffc582);
+}
+
+.hero:before,
+.hero:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:#f8a95a;
+  bottom:-80px;
+}
+
+.hero:before{
+  width:600px;
+  height:170px;
+  left:-150px;
+}
+
+.hero:after{
+  width:700px;
+  height:190px;
+  right:-210px;
+}
+
+.intro-logo{
+  position:absolute;
+  left:20px;
+  top:18px;
+  width:115px;
+  background:#fff;
+  padding:6px;
+  border-radius:12px;
+  z-index:4;
+}
+
+.hero-title{
+  position:relative;
+  z-index:5;
+  margin-top:75px;
+}
+
+.hero-title h1{
+  margin:0;
+  font-size:clamp(40px,7vw,70px);
+  line-height:.95;
+  color:#c85b13;
+  font-weight:900;
+  text-shadow:
+    0 2px 0 #fff,
+    0 5px 0 rgba(111,53,16,.14);
+}
+
+.hero-title h1 span{
+  display:block;
+  color:#7a4524;
+  font-size:.78em;
+}
+
+.hero-title p{
+  display:inline-block;
+  margin-top:15px;
+  padding:9px 18px;
+  border-radius:999px;
+  background:#8c4d26;
+  color:#fff;
+  font-weight:bold;
+}
+
+/* CSS digestive mascot */
+.body-figure{
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  width:170px;
+  height:155px;
+  z-index:3;
+}
+
+.head{
+  position:absolute;
+  left:57px;
+  top:0;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#ffd0aa;
+  border:4px solid #d48f63;
+}
+
+.torso{
+  position:absolute;
+  left:35px;
+  top:48px;
+  width:100px;
+  height:105px;
+  border-radius:38px 38px 20px 20px;
+  background:#fff8ec;
+  border:5px solid #d69a70;
+}
+
+.oesophagus{
+  position:absolute;
+  left:81px;
+  top:59px;
+  width:8px;
+  height:37px;
+  background:#ef8f76;
+  border-radius:8px;
+  z-index:4;
+}
+
+.stomach{
+  position:absolute;
+  left:70px;
+  top:91px;
+  width:36px;
+  height:31px;
+  border-radius:50% 45% 55% 50%;
+  background:#e97560;
+  transform:rotate(20deg);
+  z-index:4;
+}
+
+.intestine{
+  position:absolute;
+  left:60px;
+  top:116px;
+  width:52px;
+  height:28px;
+  border:6px double #d99865;
+  border-radius:13px;
+  z-index:4;
+}
+
+.intro-bottom{
+  padding:20px 22px 24px;
+  text-align:center;
+}
+
+.how-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin:15px 0 18px;
+}
+
+.how-grid div{
+  background:#fff7ec;
+  border:2px solid #f1d2aa;
+  border-radius:14px;
+  padding:11px 8px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.primary{
+  border:0;
+  border-radius:15px;
+  padding:13px 26px;
+  background:linear-gradient(#f59b42,#d96b18);
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 5px 0 #a94e0e;
+}
+
+.primary:active{
+  transform:translateY(2px);
+  box-shadow:0 3px 0 #a94e0e;
+}
+
+/* GAME */
 #game{
-display:none;
-padding:10px;
+  display:none;
+  min-height:100vh;
+  padding:8px;
+}
+
+.game-wrap{
+  width:min(1180px,100%);
+  margin:auto;
 }
 
 .topbar{
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-padding:10px;
-background:#fff;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  display:grid;
+  grid-template-columns:145px 1fr 130px;
+  gap:8px;
+  align-items:center;
+  margin-bottom:8px;
 }
 
-#cardBox{
-margin-top:20px;
-text-align:center;
+.logo-box,
+.title-box,
+.score-box{
+  background:#fff;
+  border-radius:15px;
+  padding:9px;
+  box-shadow:0 5px 16px rgba(0,0,0,.08);
 }
 
-.card{
-background:#ffd7a8;
-padding:25px;
-margin:10px auto;
-border-radius:16px;
-max-width:500px;
-font-size:18px;
-font-weight:bold;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+.logo-box img{
+  width:115px;
+  display:block;
+  margin:auto;
+}
+
+.title-box{text-align:center}
+
+.title-box h1{
+  margin:0;
+  color:#b95816;
+  font-size:23px;
+}
+
+.title-box p{
+  margin:3px 0 0;
+  font-size:12px;
+  color:#776457;
+  font-weight:bold;
+}
+
+.score-box{
+  text-align:center;
+  font-weight:bold;
+}
+
+.progress-row{
+  background:#fff;
+  border-radius:14px;
+  padding:8px 12px;
+  margin-bottom:8px;
+  box-shadow:0 4px 13px rgba(0,0,0,.06);
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.mission-label{
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.progress{
+  flex:1;
+  height:11px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#f1e3d3;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#ef8c32,#ffc267);
+  transition:.3s;
+}
+
+.attempts-top{
+  white-space:nowrap;
+  font-weight:bold;
+}
+
+/* MAIN CARD */
+.main{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:10px;
+}
+
+.visual-card,
+.question-card{
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.10);
+}
+
+.card-head{
+  background:linear-gradient(90deg,#e77825,#f49d49);
+  color:#fff;
+  padding:12px 15px;
+  font-size:20px;
+  font-weight:900;
+  text-align:center;
+}
+
+.visual-body{
+  padding:12px;
+}
+
+.image-frame{
+  min-height:430px;
+  border-radius:18px;
+  background:linear-gradient(#fff9f0,#fff2df);
+  border:2px solid #f0dcc3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+
+.image-frame img{
+  max-width:95%;
+  max-height:400px;
+  object-fit:contain;
+  display:block;
+}
+
+.clue{
+  margin-top:9px;
+  background:#fff6d8;
+  border:2px solid #edd482;
+  border-radius:12px;
+  padding:9px 11px;
+  text-align:center;
+  font-weight:bold;
+  font-size:13px;
+}
+
+/* QUESTION SIDE */
+.question-head{
+  background:linear-gradient(#ffe1a8,#ffc767);
+  padding:13px;
+  text-align:center;
+  font-weight:900;
+  font-size:18px;
+}
+
+.question-body{
+  padding:14px;
+}
+
+.level{
+  display:inline-block;
+  background:#fff2df;
+  color:#a94e13;
+  border:2px solid #edc294;
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:9px;
+}
+
+#questionText{
+  font-size:18px;
+  font-weight:bold;
+  line-height:1.35;
+  margin-bottom:12px;
 }
 
 .options{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
 }
 
 .opt{
-background:white;
-padding:15px;
-border-radius:12px;
-width:45%;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
-cursor:pointer;
-font-weight:bold;
+  min-height:58px;
+  padding:10px 8px;
+  border-radius:13px;
+  border:2px solid #efb978;
+  background:linear-gradient(#fffaf3,#fff0df);
+  color:#5b381f;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-#feedback{
-text-align:center;
-font-weight:bold;
-margin-top:10px;
-font-size:18px;
+.opt.correct{
+  background:#daf5df;
+  border-color:#43ad5d;
+  color:#176334;
 }
 
-#imgBox{
-display:flex;
-justify-content:center;
-margin-top:10px;
+.opt.wrong{
+  background:#ffe0dd;
+  border-color:#de5b52;
+  color:#8a2b27;
 }
 
-#imgBox img{
-max-width:95%;
-height:auto;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+.opt:disabled{
+  cursor:default;
 }
 
+.feedback{
+  min-height:85px;
+  margin-top:10px;
+  padding:10px;
+  border-radius:12px;
+  background:#f7f7f5;
+  border:2px solid #e5e0d8;
+  line-height:1.4;
+  font-weight:bold;
+}
+
+.feedback.good{
+  background:#e6f8e9;
+  border-color:#9bd7a7;
+}
+
+.feedback.bad{
+  background:#fff0e9;
+  border-color:#f2b89a;
+}
+
+.next-btn{
+  display:none;
+  width:100%;
+  margin-top:9px;
+  border:0;
+  border-radius:12px;
+  padding:11px;
+  background:#2b83c6;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* END */
 #end{
-display:none;
-text-align:center;
-padding:20px;
+  display:none;
+}
+
+.end-card{
+  width:min(650px,96vw);
+  background:#fff;
+  text-align:center;
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 18px 45px rgba(0,0,0,.14);
+}
+
+.end-card img{width:105px}
+
+.end-card h1{
+  color:#c25e18;
+  font-size:37px;
+  margin:7px;
+}
+
+.trophy{
+  font-size:88px;
+}
+
+.badge{
+  display:inline-block;
+  background:#fff0bc;
+  border:3px solid #efc95e;
+  border-radius:15px;
+  padding:9px 16px;
+  font-size:23px;
+  font-weight:900;
+  color:#7c4d12;
+}
+
+.result{
+  margin:15px auto;
+  background:#fff7ec;
+  border:2px solid #f0d2ae;
+  border-radius:13px;
+  padding:11px;
+  max-width:330px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .topbar{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .logo-box{display:none}
+
+  .main{
+    grid-template-columns:1fr;
+  }
+
+  .image-frame{
+    min-height:320px;
+  }
+}
+
+@media(max-width:620px){
+  #game{padding:4px}
+
+  .topbar{
+    gap:4px;
+    margin-bottom:4px;
+  }
+
+  .title-box,
+  .score-box{
+    padding:6px;
+    border-radius:10px;
+  }
+
+  .title-box h1{
+    font-size:16px;
+  }
+
+  .title-box p{
+    display:none;
+  }
+
+  .score-box{
+    font-size:12px;
+  }
+
+  .progress-row{
+    margin-bottom:4px;
+    padding:6px 7px;
+    font-size:11px;
+    gap:6px;
+  }
+
+  .progress{
+    height:8px;
+  }
+
+  .main{
+    gap:5px;
+  }
+
+  .visual-card,
+  .question-card{
+    border-radius:14px;
+  }
+
+  .card-head{
+    font-size:14px;
+    padding:7px;
+  }
+
+  .visual-body{
+    padding:5px;
+  }
+
+  .image-frame{
+    min-height:205px;
+    height:205px;
+  }
+
+  .image-frame img{
+    max-height:190px;
+  }
+
+  .clue{
+    margin-top:5px;
+    padding:5px;
+    font-size:10.5px;
+  }
+
+  .question-head{
+    padding:7px;
+    font-size:14px;
+  }
+
+  .question-body{
+    padding:7px;
+  }
+
+  .level{
+    font-size:9px;
+    padding:3px 7px;
+    margin-bottom:5px;
+  }
+
+  #questionText{
+    font-size:13px;
+    margin-bottom:6px;
+  }
+
+  .options{
+    gap:5px;
+  }
+
+  .opt{
+    min-height:44px;
+    padding:6px 4px;
+    font-size:11px;
+    border-radius:9px;
+  }
+
+  .feedback{
+    min-height:48px;
+    margin-top:5px;
+    padding:6px;
+    font-size:10.5px;
+  }
+
+  .next-btn{
+    margin-top:5px;
+    padding:8px;
+    font-size:11px;
+  }
+
+  .hero{
+    min-height:330px;
+  }
+
+  .hero-title{
+    margin-top:62px;
+  }
+
+  .hero-title h1{
+    font-size:40px;
+  }
+
+  .body-figure{
+    transform:translateX(-50%) scale(.82);
+    transform-origin:bottom;
+  }
+
+  .how-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:360px){
+  .options{
+    grid-template-columns:1fr;
+  }
+
+  .image-frame{
+    height:185px;
+    min-height:185px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" width="150">
+  <img src="assets/innovine-logo.png" alt="Innovine logo">
 </div>
 
-<!-- GAME -->
-<div id="game">
+<section id="intro" class="screen">
+  <div class="intro-card">
 
-<div class="topbar">
-<div>Score: <span id="score">0</span></div>
-<div>Digestive System Game</div>
-</div>
+    <div class="hero">
+      <img class="intro-logo" src="assets/innovine-logo.png" alt="Innovine logo">
 
-<div id="cardBox"></div>
+      <div class="hero-title">
+        <h1>DIGESTIVE SYSTEM <span>EXPLORER</span></h1>
+        <p>Follow the Food Journey!</p>
+      </div>
 
-<div id="imgBox">
-<img src="assets/digestive-system.png">
-</div>
+      <div class="body-figure">
+        <div class="head"></div>
+        <div class="torso"></div>
+        <div class="oesophagus"></div>
+        <div class="stomach"></div>
+        <div class="intestine"></div>
+      </div>
+    </div>
 
-<div id="feedback"></div>
+    <div class="intro-bottom">
+      <p><b>Your mission:</b> Connect digestive organs with their correct functions.</p>
 
-<div class="options" id="options"></div>
+      <div class="how-grid">
+        <div>👀 Observe</div>
+        <div>🧠 Think</div>
+        <div>❤️ 2 attempts</div>
+        <div>⭐ Earn points</div>
+      </div>
 
-</div>
+      <button class="primary" id="startBtn" type="button">
+        START JOURNEY ➜
+      </button>
+    </div>
 
-<!-- END -->
-<div id="end">
-<h2>Well Done</h2>
-<p>You completed the Organ Function Game</p>
-<p>Score: <span id="final"></span></p>
-<button onclick="location.reload()">PLAY AGAIN</button>
-</div>
+  </div>
+</section>
+
+<main id="game">
+  <div class="game-wrap">
+
+    <div class="topbar">
+      <div class="logo-box">
+        <img src="assets/innovine-logo.png" alt="Innovine logo">
+      </div>
+
+      <div class="title-box">
+        <h1>🍎 Digestive System Explorer</h1>
+        <p>Organ–Function Challenge</p>
+      </div>
+
+      <div class="score-box">
+        ⭐ Score: <span id="score">0</span>
+      </div>
+    </div>
+
+    <div class="progress-row">
+      <div class="mission-label">
+        Mission <span id="qno">1</span> / 5
+      </div>
+
+      <div class="progress">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="attempts-top">
+        Attempts: <span id="attempts">❤️ ❤️</span>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <section class="visual-card">
+        <div class="card-head">
+          Explore the Digestive System
+        </div>
+
+        <div class="visual-body">
+          <div class="image-frame">
+            <img src="assets/digestive-system.png" alt="Digestive system">
+          </div>
+
+          <div class="clue" id="clue">
+            Study the digestive system image before answering.
+          </div>
+        </div>
+      </section>
+
+      <section class="question-card">
+        <div class="question-head">
+          Organ Function Mission
+        </div>
+
+        <div class="question-body">
+
+          <div class="level" id="levelTag">
+            Structure & Function
+          </div>
+
+          <div id="questionText"></div>
+
+          <div class="options" id="options"></div>
+
+          <div class="feedback" id="feedback">
+            Choose the best answer.
+          </div>
+
+          <button class="next-btn" id="nextBtn" type="button">
+            NEXT ORGAN ➜
+          </button>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<section id="end" class="screen">
+  <div class="end-card">
+
+    <img src="assets/innovine-logo.png" alt="Innovine logo">
+
+    <div class="trophy">🏆</div>
+
+    <h1>Mission Complete!</h1>
+
+    <div class="badge" id="badge">
+      Digestive System Explorer
+    </div>
+
+    <div class="result">
+      ⭐ Score: <span id="finalScore">0</span> / 5
+    </div>
+
+    <p>
+      You connected digestive organs with their roles in the journey of food.
+    </p>
+
+    <button class="primary" id="againBtn" type="button">
+      PLAY AGAIN
+    </button>
+
+  </div>
+</section>
 
 <script>
-
-let score = 0;
-let index = 0;
+document.addEventListener("DOMContentLoaded",()=>{
 
 const gameData = [
 {
-org:"I am Stomach. What do I do?",
-correct:"Break down food using acid and enzymes",
-options:[
-"Break down food using acid and enzymes",
-"Carry oxygen",
-"Absorb water",
-"Make blood"
-]
+  organ:"Stomach",
+  level:"Understanding",
+  question:"Food has reached the stomach. What is one important function of this organ?",
+  correct:"It churns food and mixes it with gastric juice",
+  options:[
+    "It churns food and mixes it with gastric juice",
+    "It absorbs most nutrients into the blood",
+    "It carries food from the mouth to the stomach",
+    "It absorbs most of the remaining water"
+  ],
+  clue:"💡 Think about what happens to food after it enters the stomach.",
+  explain:"The stomach mechanically churns food and mixes it with gastric juice containing acid and enzymes, helping digestion."
 },
 {
-org:"I am Oesophagus. What do I do?",
-correct:"Carry food from mouth to stomach",
-options:[
-"Carry food from mouth to stomach",
-"Produce bile",
-"Pump blood",
-"Digest fats"
-]
+  organ:"Oesophagus",
+  level:"Understanding",
+  question:"What is the main role of the oesophagus in digestion?",
+  correct:"It moves swallowed food from the mouth to the stomach",
+  options:[
+    "It moves swallowed food from the mouth to the stomach",
+    "It produces bile",
+    "It absorbs digested nutrients",
+    "It stores faeces"
+  ],
+  clue:"💡 Trace the route food takes after it is swallowed.",
+  explain:"The oesophagus is a muscular tube that moves swallowed food towards the stomach by wave-like muscular contractions."
 },
 {
-org:"I am Small Intestine. What do I do?",
-correct:"Absorb nutrients from food",
-options:[
-"Absorb nutrients from food",
-"Store waste",
-"Produce saliva",
-"Filter blood"
-]
+  organ:"Small Intestine",
+  level:"Application",
+  question:"Most digestion has taken place. Which organ is especially important for absorbing digested nutrients?",
+  correct:"Small intestine",
+  options:[
+    "Small intestine",
+    "Oesophagus",
+    "Large intestine",
+    "Rectum"
+  ],
+  clue:"💡 Look for the long, coiled part of the digestive tract.",
+  explain:"The small intestine is the main site where digested nutrients are absorbed into the bloodstream."
 },
 {
-org:"I am Large Intestine. What do I do?",
-correct:"Absorb water and form waste",
-options:[
-"Absorb water and form waste",
-"Digest proteins",
-"Pump oxygen",
-"Make enzymes"
-]
+  organ:"Large Intestine",
+  level:"Application",
+  question:"Undigested material enters the large intestine. What mainly happens there?",
+  correct:"Water is absorbed and faeces are formed",
+  options:[
+    "Water is absorbed and faeces are formed",
+    "Food is mixed with saliva",
+    "Protein digestion begins",
+    "Food is pushed into the oesophagus"
+  ],
+  clue:"💡 Think about what the body still needs to recover from undigested material.",
+  explain:"The large intestine absorbs much of the remaining water and salts, while the undigested material becomes faeces."
 },
 {
-org:"I am Liver. What do I do?",
-correct:"Produce bile for digestion",
-options:[
-"Produce bile for digestion",
-"Store food",
-"Pump blood",
-"Move food"
-]
+  organ:"Liver",
+  level:"Structure & Function",
+  question:"How does the liver help digestion?",
+  correct:"It produces bile, which helps in the digestion of fats",
+  options:[
+    "It produces bile, which helps in the digestion of fats",
+    "It churns food mechanically",
+    "It pushes food into the stomach",
+    "It absorbs most digested nutrients"
+  ],
+  clue:"💡 The liver produces a digestive fluid associated with fats.",
+  explain:"The liver produces bile. Bile helps with fat digestion by breaking large fat droplets into smaller droplets."
 }
 ];
 
+let index=0;
+let score=0;
+let attempt=1;
+let locked=false;
+
+const $=id=>document.getElementById(id);
+
+function shuffle(arr){
+  const copy=[...arr];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
+
 function startGame(){
-document.getElementById("splash").style.display="none";
-document.getElementById("game").style.display="block";
-loadCard();
+  $("intro").style.display="none";
+  $("game").style.display="block";
+  index=0;
+  score=0;
+  loadQuestion();
 }
 
-function loadCard(){
+function loadQuestion(){
+  if(index>=gameData.length){
+    endGame();
+    return;
+  }
 
-if(index >= gameData.length){
-endGame();
-return;
+  const data=gameData[index];
+
+  attempt=1;
+  locked=false;
+
+  $("qno").textContent=index+1;
+  $("score").textContent=score;
+  $("progressFill").style.width=(index/gameData.length*100)+"%";
+  $("attempts").textContent="❤️ ❤️";
+
+  $("levelTag").textContent=data.level;
+  $("questionText").textContent=data.question;
+  $("clue").textContent=data.clue;
+
+  $("feedback").className="feedback";
+  $("feedback").textContent="Choose the best answer.";
+
+  $("nextBtn").style.display="none";
+
+  const box=$("options");
+  box.innerHTML="";
+
+  shuffle(data.options).forEach(optionText=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="opt";
+    btn.textContent=optionText;
+
+    btn.addEventListener("click",()=>{
+      checkAnswer(optionText,btn);
+    });
+
+    box.appendChild(btn);
+  });
 }
 
-let data = gameData[index];
+function checkAnswer(choice,button){
+  if(locked)return;
 
-document.getElementById("cardBox").innerHTML =
-`<div class="card">${data.org}</div>`;
+  const data=gameData[index];
+  const buttons=[...document.querySelectorAll(".opt")];
 
-let optBox = document.getElementById("options");
-optBox.innerHTML = "";
+  if(choice===data.correct){
 
-data.options.sort(()=>Math.random()-0.5).forEach(opt=>{
+    locked=true;
+    score++;
 
-let div = document.createElement("div");
-div.className = "opt";
-div.innerText = opt;
+    $("score").textContent=score;
 
-div.onclick = ()=>{
+    button.classList.add("correct");
 
-if(opt === data.correct){
-score++;
-document.getElementById("score").innerText = score;
-document.getElementById("feedback").innerText = "Correct answer";
+    buttons.forEach(b=>b.disabled=true);
 
-setTimeout(()=>{
-index++;
-loadCard();
-},800);
+    $("feedback").className="feedback good";
+    $("feedback").innerHTML=
+      "✅ <b>Correct!</b><br>"+data.explain;
 
-}else{
-document.getElementById("feedback").innerText = "Try again";
+    $("nextBtn").style.display="block";
+
+  }else{
+
+    button.classList.add("wrong");
+
+    if(attempt===1){
+
+      attempt=2;
+      $("attempts").textContent="❤️";
+
+      $("feedback").className="feedback bad";
+      $("feedback").textContent=
+        "❌ Not quite. Use the clue and try once more.";
+
+      setTimeout(()=>{
+        button.classList.remove("wrong");
+      },450);
+
+    }else{
+
+      locked=true;
+
+      $("attempts").textContent="—";
+
+      const correctBtn=
+        buttons.find(b=>b.textContent===data.correct);
+
+      if(correctBtn){
+        correctBtn.classList.add("correct");
+      }
+
+      buttons.forEach(b=>b.disabled=true);
+
+      $("feedback").className="feedback good";
+      $("feedback").innerHTML=
+        "💡 <b>Correct answer:</b> "+data.correct+
+        "<br>"+data.explain;
+
+      $("nextBtn").style.display="block";
+    }
+  }
 }
 
-};
+function nextQuestion(){
+  if(!locked)return;
 
-optBox.appendChild(div);
-});
+  index++;
 
+  if(index<gameData.length){
+    loadQuestion();
+  }else{
+    endGame();
+  }
 }
 
 function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="block";
-document.getElementById("final").innerText = score;
+
+  $("game").style.display="none";
+  $("end").style.display="flex";
+
+  $("finalScore").textContent=score;
+
+  let badge="🌱 Digestion Learner";
+
+  if(score>=4){
+    badge="🔬 Digestive System Scientist";
+  }
+
+  if(score===5){
+    badge="🏆 Digestion Master";
+  }
+
+  $("badge").textContent=badge;
 }
 
-setTimeout(startGame,2000);
+$("startBtn").addEventListener("click",startGame);
+$("nextBtn").addEventListener("click",nextQuestion);
+$("againBtn").addEventListener("click",()=>location.reload());
 
+});
 </script>
 
 </body>
