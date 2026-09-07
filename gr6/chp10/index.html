@@ -476,21 +476,7 @@ button{font:inherit}
 .end-card h1{font-size:42px;color:#0c73be;margin:6px}
 .badge{font-size:24px;font-weight:bold;color:#806000;margin:15px 0}
 
-@media(max-width:880px){
-  .top-logo-row{grid-template-columns:1fr}
-  .brand-card,.grade-badge{display:none}
-  .status{grid-template-columns:1fr}
-  .content{grid-template-columns:1fr}
-  .before-after{grid-template-columns:1fr}
-  .arrow{transform:rotate(90deg)}
-  .visual-panel{min-height:240px}
-  .think-row{grid-template-columns:80px 1fr}
-  .scientist{font-size:60px}
-  .steps{grid-template-columns:1fr 1fr}
-}
-@media(max-width:520px){
-  #game{padding:7px}
-  .game-title h1{font-size:30px}
+.game-title h1{font-size:30px}
   .progress-box{gap:8px;flex-wrap:wrap}
   .dots{gap:5px}
   .dot{width:20px;height:20px}
@@ -500,6 +486,304 @@ button{font:inherit}
   .scientist{font-size:54px}
   .steps{grid-template-columns:1fr}
 }
+
+/* RESPONSIVE DESKTOP + TABLET + MOBILE */
+.game-wrap{width:min(1220px,100%);margin:auto}
+
+/* Large desktop */
+@media(min-width:1200px){
+  .content{grid-template-columns:minmax(0,1.45fr) minmax(330px,.8fr)}
+  .visual-panel{min-height:310px}
+}
+
+/* Laptop / desktop */
+@media(min-width:901px) and (max-width:1199px){
+  #game{padding:10px 12px 22px}
+  .top-logo-row{grid-template-columns:150px 1fr 130px}
+  .brand-card img{width:125px}
+  .content{grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr)}
+  .visual-panel{min-height:280px}
+  .option{font-size:16px;padding:15px 12px}
+}
+
+/* Tablet */
+@media(max-width:900px){
+  body{background-attachment:scroll}
+  #game{padding:8px}
+  .top-logo-row{grid-template-columns:1fr;gap:8px}
+  .brand-card,.grade-badge{display:none}
+  .game-title{padding:10px 8px;border-radius:16px}
+  .game-title h1{font-size:32px}
+  .game-title p{font-size:14px}
+
+  .status{grid-template-columns:1fr;gap:8px}
+  .score-box{text-align:center;font-size:18px}
+  .progress-box{display:block}
+  .qtext{text-align:center;margin-bottom:9px;font-size:16px}
+  .dots{justify-content:center;flex-wrap:wrap}
+
+  .content{grid-template-columns:1fr;gap:10px}
+  .experiment-card,.answer-card{border-radius:18px}
+  .card-head{font-size:18px;padding:11px 12px;text-align:center}
+  .experiment-body{padding:10px}
+  .before-after{grid-template-columns:1fr;gap:8px}
+  .arrow{transform:rotate(90deg);font-size:38px;line-height:1}
+  .visual-panel{min-height:220px;padding:10px}
+  .tag{font-size:12px;padding:5px 18px}
+
+  .run-btn{width:100%;min-width:0;font-size:16px}
+  .observe{font-size:16px;padding:11px 12px}
+  .observe b{font-size:17px}
+
+  .think-row{grid-template-columns:72px 1fr;gap:8px}
+  .scientist{font-size:54px}
+  .think-bubble{font-size:16px;padding:13px 14px}
+  .think-bubble:before,.think-bubble:after{display:none}
+
+  .answer-card .question-head{font-size:18px;padding:14px 10px}
+  .answers{padding:12px}
+  .option{min-height:50px;font-size:16px;padding:14px 12px;border-radius:14px}
+  #feedback{margin:8px 12px 12px;min-height:64px;font-size:15px}
+  #next{width:calc(100% - 24px);margin:0 12px 12px;min-height:48px;font-size:16px}
+}
+
+/* Phones */
+@media(max-width:520px){
+  .intro-card{padding:20px 14px;border-radius:20px}
+  .intro-logo{width:90px}
+  .intro-title{font-size:34px}
+  .intro-sub{font-size:15px}
+  .steps{grid-template-columns:1fr 1fr;gap:8px}
+  .step{padding:10px 6px;font-size:14px}
+  .primary{width:100%;font-size:16px}
+
+  .game-title h1{font-size:27px}
+  .game-title p{font-size:12px}
+  .score-box{font-size:17px}
+  .dot{width:19px;height:19px}
+
+  .visual-panel{min-height:200px}
+  .balloon-flat{width:125px;height:95px}
+  .balloon-big{width:120px;height:165px}
+  .scale{transform:scale(.82);transform-origin:center}
+  .inverted-demo{transform:scale(.82);transform-origin:center}
+  .can{font-size:92px}
+  .pressure{font-size:28px}
+
+  .think-row{grid-template-columns:1fr;text-align:center}
+  .scientist{font-size:48px}
+  .think-bubble{text-align:left}
+}
+
+/* Very small phones */
+@media(max-width:360px){
+  #game{padding:5px}
+  .game-title h1{font-size:24px}
+  .visual-panel{min-height:185px}
+  .option{font-size:15px;padding:12px 10px}
+  .steps{grid-template-columns:1fr}
+}
+
+/* Wide desktop safety */
+@media(min-width:1400px){
+  .game-wrap{max-width:1280px}
+}
+
+
+/* MOBILE NO-REPETITIVE-SCROLL MODE */
+@media(max-width:600px){
+  body{overflow-x:hidden}
+
+  #game{
+    padding:5px 6px 12px;
+  }
+
+  .game-title{
+    padding:7px 6px;
+  }
+  .game-title h1{
+    font-size:23px;
+  }
+  .game-title p{
+    display:none;
+  }
+
+  .status{
+    margin-bottom:6px;
+  }
+  .score-box{
+    padding:7px;
+    font-size:15px;
+  }
+  .progress-box{
+    padding:7px 9px;
+  }
+  .qtext{
+    margin-bottom:5px;
+    font-size:14px;
+  }
+  .dot{
+    width:16px;
+    height:16px;
+  }
+
+  .gamecard,
+  .experiment-card,
+  .answer-card{
+    border-radius:14px;
+  }
+
+  .card-head{
+    font-size:16px;
+    padding:8px;
+  }
+
+  .experiment-body{
+    padding:7px;
+  }
+
+  /* Keep BEFORE and AFTER next to each other on phones */
+  .before-after{
+    grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);
+    gap:4px;
+    align-items:center;
+  }
+
+  .arrow{
+    transform:none;
+    font-size:22px;
+  }
+
+  .visual-panel{
+    min-height:145px;
+    height:145px;
+    padding:5px;
+    border-radius:12px;
+  }
+
+  .tag{
+    top:5px;
+    font-size:10px;
+    padding:3px 9px;
+  }
+
+  .balloon-flat{
+    width:85px;
+    height:70px;
+  }
+  .balloon-big{
+    width:80px;
+    height:115px;
+  }
+
+  .inverted-demo{
+    transform:scale(.56);
+    transform-origin:center;
+  }
+
+  .scale{
+    transform:scale(.56);
+    transform-origin:center;
+  }
+
+  .can{
+    font-size:68px;
+  }
+  .pressure{
+    font-size:18px;
+  }
+
+  .run-btn{
+    min-height:40px;
+    padding:9px 10px;
+    margin-top:7px;
+    font-size:14px;
+  }
+
+  .observe{
+    margin-top:7px;
+    padding:8px 9px;
+    font-size:13px;
+  }
+  .observe b{
+    font-size:14px;
+  }
+
+  /* Scientist prompt becomes a compact strip */
+  .think-row{
+    grid-template-columns:38px 1fr;
+    gap:5px;
+    margin-top:7px;
+    text-align:left;
+  }
+  .scientist{
+    font-size:34px;
+  }
+  .think-bubble{
+    padding:8px 9px;
+    font-size:13px;
+    border-radius:12px;
+  }
+
+  .answer-card .question-head{
+    font-size:15px;
+    padding:9px 7px;
+  }
+
+  .answers{
+    padding:7px;
+  }
+
+  .option{
+    min-height:42px;
+    margin:5px 0;
+    padding:9px 10px;
+    font-size:14px;
+    border-radius:11px;
+  }
+
+  .attempt-note{
+    margin-top:5px;
+    font-size:12px;
+  }
+
+  #feedback{
+    min-height:48px;
+    margin:5px 7px 7px;
+    padding:7px 8px;
+    font-size:13px;
+  }
+
+  #next{
+    width:calc(100% - 14px);
+    margin:0 7px 7px;
+    min-height:42px;
+    padding:9px;
+    font-size:14px;
+  }
+}
+
+@media(max-width:380px){
+  .before-after{
+    grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);
+  }
+  .visual-panel{
+    min-height:132px;
+    height:132px;
+  }
+  .balloon-flat{
+    width:72px;
+    height:60px;
+  }
+  .balloon-big{
+    width:70px;
+    height:103px;
+  }
+  .inverted-demo,.scale{
+    transform:scale(.49);
+  }
+}
+
 </style>
 </head>
 <body>
@@ -776,7 +1060,6 @@ function nextExperiment(){
   if(!locked)return;
   i++;
   load();
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function finish(){
