@@ -2,312 +2,793 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Eco Energy Master Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Eco Energy Master Pro</title>
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(#eaf7ff,#ffffff);
-overflow:hidden;
+*{box-sizing:border-box}
+:root{
+  --blue:#0c7cc2;
+  --deep:#15456b;
+  --sky:#e9f8ff;
+  --green:#23a84a;
+  --green2:#45c86a;
+  --red:#e84d42;
+  --yellow:#ffd54d;
+  --cream:#fff9df;
 }
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#153b5e}
+body{
+  background:
+    radial-gradient(circle at 20% 15%,rgba(255,255,255,.95),rgba(255,255,255,0) 28%),
+    linear-gradient(#dff5ff,#f7fff4);
+  overflow-x:hidden;
+}
+button{font:inherit}
 
 /* SPLASH */
 #splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
+  position:fixed;inset:0;z-index:9999;background:white;
+  display:flex;align-items:center;justify-content:center;
+  animation:splashHide .45s 1.5s forwards;
 }
+#splash img{width:165px;max-width:50vw}
+@keyframes splashHide{to{opacity:0;visibility:hidden;pointer-events:none}}
 
 /* INTRO */
-#intro{
-display:none;
-height:100vh;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:20px;
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
 }
-
-.card{
-background:white;
-padding:22px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-max-width:520px;
+#intro{display:flex}
+.intro-card{
+  width:min(900px,96vw);
+  background:white;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 20px 55px rgba(32,88,120,.18);
+  border:5px solid rgba(255,255,255,.9);
 }
-
-.instruction{
-margin-top:10px;
-font-size:15px;
-color:#333;
-background:#f1f8ff;
-padding:10px;
-border-radius:10px;
+.hero{
+  min-height:360px;
+  padding:24px;
+  position:relative;
+  background:linear-gradient(#bdeaff 0 55%,#9cdb74 55% 100%);
+  overflow:hidden;
+  text-align:center;
 }
+.hero:before{
+  content:"";
+  position:absolute;left:-40px;right:-40px;bottom:52px;height:70px;
+  background:#78c95a;border-radius:50%;
+}
+.intro-logo{position:absolute;top:20px;left:24px;width:125px;z-index:4;background:white;padding:7px;border-radius:12px}
+.cloud{position:absolute;background:white;border-radius:999px;opacity:.9}
+.cloud:before,.cloud:after{content:"";position:absolute;background:white;border-radius:50%}
+.c1{width:120px;height:28px;top:70px;right:90px}.c1:before{width:42px;height:42px;left:18px;top:-18px}.c1:after{width:52px;height:52px;right:18px;top:-24px}
+.sun{position:absolute;right:35px;top:25px;width:74px;height:74px;border-radius:50%;background:#ffd83d;box-shadow:0 0 0 14px rgba(255,216,61,.18)}
+.windmill{position:absolute;bottom:72px;width:70px;height:150px}
+.windmill .pole{position:absolute;left:32px;top:55px;width:7px;height:95px;background:#e9f3f6}
+.windmill .hub{position:absolute;left:24px;top:41px;width:22px;height:22px;border-radius:50%;background:#eaf7fb;border:4px solid #6ba9bd}
+.blade{position:absolute;left:32px;top:50px;width:5px;height:56px;background:white;transform-origin:2px 2px;border-radius:5px}
+.blade.b1{transform:rotate(0deg)} .blade.b2{transform:rotate(120deg)} .blade.b3{transform:rotate(240deg)}
+.w1{left:90px}.w2{right:115px;transform:scale(.8)}
+.panel{
+  position:absolute;bottom:64px;left:210px;width:150px;height:88px;
+  background:repeating-linear-gradient(90deg,#185d93 0 22px,#4ca6d6 22px 24px);
+  border:6px solid #d5e9ef;transform:skew(-8deg);
+  box-shadow:inset 0 0 0 2px #0c4a75;
+}
+.dam{position:absolute;right:215px;bottom:48px;width:165px;height:75px;background:#b8c7cc;clip-path:polygon(8% 0,92% 0,100% 100%,0 100%)}
+.waterfall{position:absolute;right:260px;bottom:14px;width:74px;height:58px;background:linear-gradient(#67c9ff,#d8f6ff);border-radius:0 0 50% 50%}
+.title-wrap{position:relative;z-index:5;margin-top:95px}
+.title-wrap h1{
+  margin:0;font-size:clamp(38px,7vw,72px);line-height:.95;
+  color:#0c72bd;text-shadow:0 4px 0 white,0 8px 0 #0d426c;
+}
+.title-wrap h1 span{color:#3aad43}
+.title-wrap p{
+  display:inline-block;margin-top:16px;background:#fff5b6;border-radius:999px;
+  padding:10px 20px;font-weight:bold;font-size:18px;
+}
+.intro-bottom{padding:20px 24px 24px;text-align:center}
+.how{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px
+}
+.how div{background:#eff9ff;border:2px solid #c7e8fa;border-radius:16px;padding:11px;font-weight:bold}
+.primary{
+  border:0;border-radius:16px;padding:14px 28px;cursor:pointer;
+  background:linear-gradient(#39c85b,#15983c);color:white;font-size:18px;font-weight:bold;
+  box-shadow:0 5px 0 #0b7730;
+}
+.primary:active{transform:translateY(2px);box-shadow:0 3px 0 #0b7730}
 
 /* GAME */
-#game{
-display:none;
-height:100vh;
-flex-direction:column;
-}
-
-/* TOP */
+#game{display:none;min-height:100vh;padding:10px}
+.game-wrap{width:min(1180px,100%);margin:auto}
 .topbar{
-display:flex;
-justify-content:space-between;
-padding:10px 15px;
-background:white;
-font-weight:bold;
+  display:grid;grid-template-columns:150px 1fr 130px;gap:10px;align-items:center;margin-bottom:10px
+}
+.logo-box,.mission-box,.score-box{
+  background:white;border-radius:16px;padding:10px;box-shadow:0 6px 18px rgba(0,0,0,.08)
+}
+.logo-box img{width:120px;display:block;margin:auto}
+.mission-box{text-align:center;font-weight:bold;font-size:20px}
+.progress{display:flex;justify-content:center;gap:7px;margin-top:6px}
+.dot{width:18px;height:18px;border-radius:50%;background:#d5e0e6;border:2px solid #9fb1bc}
+.dot.active{background:#41c85c;border-color:#198b34}
+.dot.done{background:#5ab9ee;border-color:#277fab}
+.score-box{text-align:center;font-weight:bold;font-size:18px}
+
+.main{
+  display:grid;grid-template-columns:1.3fr .9fr;gap:12px
+}
+.resource-card,.choice-card{
+  background:white;border-radius:24px;box-shadow:0 10px 28px rgba(0,0,0,.1);overflow:hidden
+}
+.resource-head{
+  padding:14px 18px;background:linear-gradient(90deg,#0b7fc7,#0863aa);color:white;
+  font-size:22px;font-weight:bold;text-align:center
+}
+.resource-stage{
+  min-height:430px;position:relative;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(#dff5ff 0 62%,#a9de7a 62% 100%);
+}
+.resource-title{font-size:31px;font-weight:800;color:#123d66;margin-bottom:10px;text-align:center}
+.resource-sub{font-size:17px;font-weight:bold;text-align:center;max-width:620px;margin:0 auto 18px}
+.scene{
+  width:min(560px,95%);height:220px;position:relative;border-radius:20px;
+  background:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.9);overflow:hidden
+}
+.question-note{
+  margin-top:15px;background:#fff8d4;border:2px solid #f0d36b;border-radius:14px;padding:11px 16px;
+  font-weight:bold;text-align:center;width:min(600px,95%)
 }
 
-/* CARD */
-#cardArea{
-flex:1;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:15px;
-padding:20px;
+.choice-head{background:linear-gradient(#ffe36a,#ffd03e);padding:18px 12px;text-align:center;font-size:21px;font-weight:bold;color:#333}
+.choices{padding:18px}
+.choice{
+  width:100%;border:0;border-radius:18px;margin:8px 0;padding:18px 14px;cursor:pointer;
+  color:white;font-weight:bold;font-size:18px;min-height:92px;
+}
+.choice small{display:block;font-size:13px;font-weight:normal;margin-top:5px;opacity:.95}
+.choice.renew{background:linear-gradient(#36bf5a,#179941)}
+.choice.non{background:linear-gradient(#f06658,#d94037)}
+.choice.correct{outline:5px solid #b8f3c4}
+.choice.wrong{outline:5px solid #ffd0cf}
+.attempts{text-align:center;font-weight:bold;margin:5px 0 0}
+.feedback{
+  margin:12px 18px 14px;padding:12px;border-radius:14px;background:#f4f8fb;min-height:90px;
+  font-weight:bold;line-height:1.45
+}
+.next{
+  display:none;width:calc(100% - 36px);margin:0 18px 18px;padding:13px;border:0;border-radius:14px;
+  background:#0b7fc7;color:white;font-weight:bold;cursor:pointer
 }
 
-.energyCard{
-background:white;
-padding:35px;
-border-radius:18px;
-font-size:26px;
-box-shadow:0 10px 20px rgba(0,0,0,0.1);
-text-align:center;
-min-width:260px;
+/* POLISHED RESOURCE VISUALS */
+.scene{
+  width:min(590px,96%);
+  height:240px;
+  position:relative;
+  border-radius:22px;
+  overflow:hidden;
+  background:linear-gradient(#cfefff 0 62%,#a9dc7c 62% 100%);
+  border:3px solid rgba(255,255,255,.9);
+  box-shadow:inset 0 0 0 1px rgba(0,86,132,.08),0 8px 18px rgba(27,96,136,.12);
 }
-
-/* BUTTONS */
-.buttons{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-justify-content:center;
+.scene svg{width:100%;height:100%;display:block}
+.scene-label{
+  position:absolute;left:12px;bottom:10px;z-index:5;
+  background:rgba(255,255,255,.92);
+  border:2px solid #d4ecf7;border-radius:999px;
+  padding:5px 10px;font-size:12px;font-weight:bold;color:#1a5c82;
 }
-
-.btn{
-padding:15px 18px;
-border:none;
-border-radius:12px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-min-width:140px;
+.scene-chip{
+  position:absolute;right:12px;top:10px;z-index:5;
+  background:#fff7c7;border:2px solid #efd365;border-radius:999px;
+  padding:5px 10px;font-size:12px;font-weight:bold;color:#6e5700;
 }
-
-.renewable{
-background:#2ecc71;
-color:white;
+.scene .animate-spin{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:spin 4s linear infinite;
 }
+.scene .sun-ray{transform-origin:center;animation:pulse 2.2s ease-in-out infinite}
+.scene .water-flow{animation:flow 1.3s linear infinite}
+.scene .oil-bob{animation:bob 1.8s ease-in-out infinite}
+.scene .uranium-glow{animation:pulse 1.8s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{opacity:.55;transform:scale(1.04)}}
+@keyframes flow{to{transform:translateY(12px)}}
+@keyframes bob{50%{transform:translateY(-5px)}}
 
-.nonrenewable{
-background:#e74c3c;
-color:white;
+@media(max-width:600px){
+  .scene{height:150px}
+  .scene-label,.scene-chip{font-size:9px;padding:3px 7px}
 }
-
-/* TIMER */
-#timer{
-font-weight:bold;
-color:#ff6600;
-}
-
-/* FEEDBACK */
-#feedback{
-font-weight:bold;
-min-height:20px;
-}
-
 /* END */
 #end{
-display:none;
-height:100vh;
-align-items:center;
-justify-content:center;
-text-align:center;
+  display:none;min-height:100vh;align-items:center;justify-content:center;padding:18px
+}
+.end-card{
+  width:min(680px,96vw);background:white;border-radius:28px;text-align:center;padding:28px;
+  box-shadow:0 18px 45px rgba(0,0,0,.14)
+}
+.trophy{font-size:92px}
+.end-card h1{color:#0c76ba;font-size:38px;margin:8px}
+.rank{font-size:23px;font-weight:bold;color:#1d8f3e}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .topbar{grid-template-columns:1fr 1fr}
+  .logo-box{display:none}
+  .main{grid-template-columns:1fr}
+  .resource-stage{min-height:360px}
+}
+@media(max-width:600px){
+  body{background:#eef9ff}
+  #game{padding:5px}
+  .topbar{gap:5px;margin-bottom:5px}
+  .mission-box,.score-box{padding:7px;font-size:14px}
+  .progress{gap:4px}
+  .dot{width:13px;height:13px}
+  .main{gap:6px}
+  .resource-card,.choice-card{border-radius:14px}
+  .resource-head{font-size:16px;padding:8px}
+  .resource-stage{min-height:265px;padding:8px}
+  .resource-title{font-size:22px;margin-bottom:4px}
+  .resource-sub{font-size:13px;margin-bottom:7px}
+  .scene{height:145px}
+  .question-note{font-size:13px;margin-top:7px;padding:7px 8px}
+  .choice-head{font-size:15px;padding:9px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:7px}
+  .choice{margin:0;min-height:72px;font-size:14px;padding:8px}
+  .choice small{font-size:10px}
+  .attempts{font-size:12px;grid-column:1/-1}
+  .feedback{margin:5px 7px 7px;min-height:54px;padding:7px;font-size:12px}
+  .next{width:calc(100% - 14px);margin:0 7px 7px;padding:10px;font-size:14px}
+  .solar .sun2{left:20px;top:18px;width:45px;height:45px}
+  .solar .house{right:25px;bottom:25px;transform:scale(.68);transform-origin:bottom right}
+  .solar .roof{right:13px;bottom:85px;transform:scale(.68);transform-origin:bottom right}
+  .solar .solar-panel{right:40px;bottom:74px;transform:scale(.68) skew(-7deg);transform-origin:bottom right}
+  .wind .turbine{transform:scale(.68);transform-origin:bottom}.wind .turbine.t1{left:60px}.wind .turbine.t2{right:50px;transform:scale(.58)}
+  .hydro .dam2{left:50%;transform:translateX(-50%);width:170px;height:95px}.hydro .water2{left:50%;transform:translateX(-50%);width:60px;height:65px}
+  .coal .pile{font-size:70px}.coal .labelYears{top:12px;font-size:11px}
+  .oil .derrick{left:45px;transform:scale(.75);transform-origin:bottom}.oil .drop{right:35px;font-size:70px}
+  .uranium .rock{font-size:74px}.uranium .symbol{font-size:42px;top:14px}
+  .how{grid-template-columns:1fr 1fr}
+  .hero{min-height:300px}
+  .title-wrap{margin-top:82px}
+  .title-wrap h1{font-size:40px}
+  .intro-logo{width:90px;left:12px;top:12px}
+}
+@media(max-width:380px){
+  .choices{grid-template-columns:1fr}
+  .choice{min-height:56px}
+  .attempts{grid-column:auto}
+  .resource-stage{min-height:245px}
+  .scene{height:125px}
+  .how{grid-template-columns:1fr}
 }
 
-.endCard{
-background:white;
-padding:25px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+/* EXTRA MOBILE OPTIMISATION */
+@media(max-width:700px){
+  body{overflow-x:hidden}
+  #game{padding:4px}
+  .game-wrap{width:100%}
+  .topbar{
+    grid-template-columns:1fr 1fr;
+    gap:4px;
+    margin-bottom:4px;
+  }
+  .mission-box,.score-box{
+    padding:6px 7px;
+    border-radius:11px;
+    font-size:13px;
+  }
+  .progress{gap:3px;margin-top:4px}
+  .dot{width:12px;height:12px}
+
+  .main{
+    grid-template-columns:1fr;
+    gap:5px;
+  }
+
+  .resource-head{
+    font-size:15px;
+    padding:7px 8px;
+  }
+  .resource-stage{
+    min-height:auto;
+    padding:6px;
+  }
+  .resource-title{
+    font-size:20px;
+    margin:2px 0 3px;
+  }
+  .resource-sub{
+    font-size:12px;
+    line-height:1.25;
+    margin-bottom:5px;
+  }
+  .scene{
+    height:138px;
+    width:100%;
+    border-radius:13px;
+  }
+  .question-note{
+    margin-top:5px;
+    padding:6px 7px;
+    font-size:12px;
+    border-radius:10px;
+  }
+
+  .choice-card{
+    border-radius:13px;
+  }
+  .choice-head{
+    padding:7px;
+    font-size:14px;
+  }
+  .choices{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+    padding:6px;
+  }
+  .choice{
+    min-width:0;
+    min-height:62px;
+    padding:7px 5px;
+    margin:0;
+    border-radius:11px;
+    font-size:12.5px;
+    line-height:1.15;
+  }
+  .choice small{
+    font-size:9.5px;
+    margin-top:3px;
+  }
+  .attempts{
+    grid-column:1/-1;
+    font-size:11px;
+    margin-top:1px;
+  }
+
+  .feedback{
+    min-height:46px;
+    margin:4px 6px 6px;
+    padding:6px 7px;
+    font-size:11.5px;
+    line-height:1.3;
+  }
+  .next{
+    width:calc(100% - 12px);
+    margin:0 6px 6px;
+    padding:8px;
+    min-height:38px;
+    font-size:13px;
+  }
 }
+
+@media(max-width:430px){
+  .scene{height:128px}
+  .resource-title{font-size:18px}
+  .choice{font-size:11.5px;min-height:58px}
+  .choice small{font-size:8.8px}
+}
+
+@media(max-width:350px){
+  .choices{grid-template-columns:1fr}
+  .attempts{grid-column:1}
+  .scene{height:118px}
+}
+
 </style>
 </head>
-
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="assets/innovine-logo.png" width="150">
-</div>
+<div id="splash"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
 
-<!-- INTRO -->
-<div id="intro">
-<div class="card">
-<h1>🌍 Eco Energy Master Pro</h1>
+<section id="intro" class="screen">
+  <div class="intro-card">
+    <div class="hero">
+      <img src="assets/innovine-logo.png" class="intro-logo" alt="Innovine logo">
+      <div class="cloud c1"></div>
+      <div class="sun"></div>
+      <div class="windmill w1"><div class="pole"></div><div class="hub"></div><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+      <div class="windmill w2"><div class="pole"></div><div class="hub"></div><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+      <div class="panel"></div>
+      <div class="dam"></div><div class="waterfall"></div>
+      <div class="title-wrap">
+        <h1><span>ECO ENERGY</span><br>MASTER PRO</h1>
+        <p>Power a Cleaner, Brighter Tomorrow!</p>
+      </div>
+    </div>
+    <div class="intro-bottom">
+      <div class="how">
+        <div>🔎 Explore a resource</div>
+        <div>🌱 Classify it</div>
+        <div>❤️ 2 attempts</div>
+        <div>⭐ Earn stars</div>
+      </div>
+      <button class="primary" id="startBtn" type="button">START MISSION ➜</button>
+    </div>
+  </div>
+</section>
 
-<p><b>Mission:</b> Classify energy resources correctly</p>
+<main id="game">
+  <div class="game-wrap">
+    <div class="topbar">
+      <div class="logo-box"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
+      <div class="mission-box">
+        Mission <span id="qno">1</span> / 6
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="score-box">⭐ Score: <span id="score">0</span></div>
+    </div>
 
-<div class="instruction">
-👉 Tap Renewable or Non-Renewable based on the energy source shown<br>
-✔ You get 2 attempts per question<br>
-✔ Earn points and become Eco Master 🏆
-</div>
+    <div class="main">
+      <section class="resource-card">
+        <div class="resource-head" id="missionTitle">MISSION 1</div>
+        <div class="resource-stage">
+          <div class="resource-title" id="resourceTitle">Solar Energy</div>
+          <div class="resource-sub" id="resourceSub"></div>
+          <div class="scene" id="scene"></div>
+          <div class="question-note">Where does this resource belong?</div>
+        </div>
+      </section>
 
-<button onclick="startGame()">START MISSION</button>
-</div>
-</div>
+      <section class="choice-card">
+        <div class="choice-head">Classify the resource</div>
+        <div class="choices" id="choicesBox">
+          <div class="attempts">Attempts: <span id="attempts">❤️ ❤️</span></div>
+        </div>
+        <div class="feedback" id="feedback">Study the resource and choose the correct category.</div>
+        <button class="next" id="nextBtn" type="button">NEXT MISSION ➜</button>
+      </section>
+    </div>
+  </div>
+</main>
 
-<!-- GAME -->
-<div id="game">
+<section id="end">
+  <div class="end-card">
+    <img src="assets/innovine-logo.png" alt="Innovine logo" style="width:110px">
+    <div class="trophy">🏆</div>
+    <h1>Congratulations!</h1>
+    <div class="rank" id="rank"></div>
+    <p>You can identify renewable and non-renewable energy resources.</p>
+    <h2>⭐ Score: <span id="finalScore"></span> / 6</h2>
+    <button class="primary" id="againBtn" type="button">PLAY AGAIN</button>
+  </div>
+</section>
 
-<div class="topbar">
-<div>⭐ Score: <span id="score">0</span></div>
-<div id="timer">⏱ 10</div>
-<div>Q: <span id="qno">1</span>/6</div>
-</div>
-
-<div id="cardArea">
-
-<div class="energyCard" id="question">☀️ Solar Energy</div>
-
-<div class="buttons">
-<button class="btn renewable" onclick="check('renewable')">🌱 Renewable</button>
-<button class="btn nonrenewable" onclick="check('nonrenewable')">⛽ Non-Renewable</button>
-</div>
-
-<div id="feedback"></div>
-
-</div>
-</div>
-
-<!-- END -->
-<div id="end">
-<div class="endCard">
-<h1>🎉 Congratulations!</h1>
-<p id="rank"></p>
-<p>⭐ Score: <span id="final"></span>/6</p>
-<button onclick="location.reload()">PLAY AGAIN</button>
-</div>
-</div>
-
-<!-- AUDIO -->
-<audio id="correct" src="assets/correct.mp3"></audio>
-<audio id="wrong" src="assets/wrong.mp3"></audio>
-<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+<audio id="correctAudio" src="assets/correct.mp3"></audio>
+<audio id="wrongAudio" src="assets/wrong.mp3"></audio>
+<audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
-
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
-
+document.addEventListener("DOMContentLoaded",()=>{
 const data=[
-{q:"☀️ Solar Energy",a:"renewable"},
-{q:"🌬️ Wind Energy",a:"renewable"},
-{q:"💧 Hydropower",a:"renewable"},
-{q:"🪨 Coal",a:"nonrenewable"},
-{q:"🛢️ Oil",a:"nonrenewable"},
-{q:"☢️ Uranium",a:"nonrenewable"}
+{
+name:"Solar Energy",
+type:"renewable",
+sub:"Sunlight can be used to generate electricity using solar panels.",
+scene:"solar",
+explain:"Sunlight is continuously available and naturally replenished. Solar energy is therefore a renewable resource."
+},
+{
+name:"Wind Energy",
+type:"renewable",
+sub:"Moving air turns wind turbines to generate electricity.",
+scene:"wind",
+explain:"Wind is naturally replenished by atmospheric processes, so wind energy is renewable."
+},
+{
+name:"Hydropower",
+type:"renewable",
+sub:"Flowing water can turn turbines to produce electricity.",
+scene:"hydro",
+explain:"Water is continually renewed through the water cycle, so hydropower is considered a renewable resource."
+},
+{
+name:"Coal",
+type:"nonrenewable",
+sub:"Coal is a fossil fuel burned to release energy.",
+scene:"coal",
+explain:"Coal takes millions of years to form and is used much faster than nature can replace it. It is non-renewable."
+},
+{
+name:"Petroleum (Crude Oil)",
+type:"nonrenewable",
+sub:"Petroleum is a fossil fuel used to make fuels such as petrol and diesel.",
+scene:"oil",
+explain:"Petroleum forms over millions of years and exists in limited reserves. It is a non-renewable resource."
+},
+{
+name:"Uranium",
+type:"nonrenewable",
+sub:"Uranium is a mineral used as fuel in nuclear power stations.",
+scene:"uranium",
+explain:"Uranium comes from finite mineral deposits in Earth's crust and cannot be replenished on a human timescale, so it is non-renewable."
+}
 ];
 
-data.sort(()=>Math.random()-0.5);
+let i=0,score=0,attempt=1,locked=false;
+const $=id=>document.getElementById(id);
+let choices=[];
 
-let i=0;
-let score=0;
-let attempt=1;
-let time=10;
-let timer;
+const optionDefs=[
+  {value:"renewable",cls:"renew",title:"🌱 RENEWABLE RESOURCE",sub:"Can be naturally replenished"},
+  {value:"nonrenewable",cls:"non",title:"⛏️ NON-RENEWABLE RESOURCE",sub:"Limited supply; forms very slowly"}
+];
 
-function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="flex";
-load();
-startTimer();
+function shuffle(arr){
+  const a=[...arr];
+  for(let n=a.length-1;n>0;n--){
+    const j=Math.floor(Math.random()*(n+1));
+    [a[n],a[j]]=[a[j],a[n]];
+  }
+  return a;
+}
+
+function renderOptions(){
+  const box=$("choicesBox");
+  box.innerHTML="";
+
+  // Alternate the option positions on every mission.
+  // Odd-numbered missions: Renewable first.
+  // Even-numbered missions: Non-renewable first.
+  const ordered = (i % 2 === 0)
+    ? [optionDefs[0], optionDefs[1]]
+    : [optionDefs[1], optionDefs[0]];
+
+  ordered.forEach(def=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="choice "+def.cls;
+    b.dataset.choice=def.value;
+    b.innerHTML=def.title+"<small>"+def.sub+"</small>";
+    b.addEventListener("click",()=>check(def.value,b));
+    box.appendChild(b);
+  });
+
+  const attempts=document.createElement("div");
+  attempts.className="attempts";
+  attempts.innerHTML='Attempts: <span id="attempts">❤️ ❤️</span>';
+  box.appendChild(attempts);
+
+  choices=[...box.querySelectorAll(".choice")];
+}
+
+function play(id){
+  const a=$(id); if(!a)return;
+  a.currentTime=0;a.play().catch(()=>{});
+}
+
+function sceneHTML(type){
+ if(type==="solar") return `
+ <div class="scene-chip">Sunlight → Electricity</div>
+ <div class="scene-label">Solar panels capture sunlight</div>
+ <svg viewBox="0 0 600 240" aria-label="Solar energy scene">
+   <defs>
+     <linearGradient id="skyS" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c8efff"/><stop offset="1" stop-color="#eefbff"/></linearGradient>
+     <linearGradient id="panelS" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#165c96"/><stop offset="1" stop-color="#3f9fd5"/></linearGradient>
+   </defs>
+   <rect width="600" height="240" fill="url(#skyS)"/>
+   <circle cx="90" cy="65" r="33" fill="#ffd83d"/>
+   <g class="sun-ray" stroke="#ffd83d" stroke-width="5">
+     <line x1="90" y1="14" x2="90" y2="0"/><line x1="90" y1="116" x2="90" y2="132"/>
+     <line x1="39" y1="65" x2="22" y2="65"/><line x1="141" y1="65" x2="158" y2="65"/>
+     <line x1="54" y1="29" x2="42" y2="17"/><line x1="126" y1="101" x2="138" y2="113"/>
+   </g>
+   <path d="M0 177 Q150 135 300 172 T600 164 V240 H0Z" fill="#89cf6f"/>
+   <rect x="380" y="105" width="150" height="95" rx="4" fill="#f1dfbd" stroke="#8c6d50" stroke-width="4"/>
+   <polygon points="360,110 455,48 550,110" fill="#b86e49" stroke="#885038" stroke-width="4"/>
+   <rect x="425" y="145" width="34" height="55" fill="#8a674d"/>
+   <g transform="translate(395 70) skewX(-8)">
+     <rect width="120" height="55" rx="3" fill="url(#panelS)" stroke="#e3f2f7" stroke-width="4"/>
+     <g stroke="#bfe6f7" stroke-width="2">
+       <line x1="30" y1="0" x2="30" y2="55"/><line x1="60" y1="0" x2="60" y2="55"/><line x1="90" y1="0" x2="90" y2="55"/>
+       <line x1="0" y1="27" x2="120" y2="27"/>
+     </g>
+   </g>
+ </svg>`;
+
+ if(type==="wind") return `
+ <div class="scene-chip">Wind → Turbine → Electricity</div>
+ <div class="scene-label">Moving air turns turbine blades</div>
+ <svg viewBox="0 0 600 240" aria-label="Wind energy scene">
+   <rect width="600" height="240" fill="#d8f3ff"/>
+   <path d="M0 175 Q135 140 275 172 T600 160 V240 H0Z" fill="#8bd06f"/>
+   <path d="M0 195 Q150 165 300 198 T600 188 V240 H0Z" fill="#6cbd56"/>
+
+   <g transform="translate(170 42)">
+     <rect x="50" y="63" width="8" height="120" rx="3" fill="#edf6f8"/>
+     <g transform="translate(54 64)">
+       <g class="animate-spin">
+         <path d="M0 0 L8 -62 L-6 -19 Z" fill="white"/>
+         <path d="M0 0 L58 28 L18 7 Z" fill="white"/>
+         <path d="M0 0 L-52 36 L-14 13 Z" fill="white"/>
+       </g>
+       <circle r="10" fill="#f7fbfc" stroke="#6fa0ae" stroke-width="3"/>
+     </g>
+   </g>
+
+   <g transform="translate(390 70) scale(.75)">
+     <rect x="50" y="63" width="8" height="120" rx="3" fill="#edf6f8"/>
+     <g transform="translate(54 64)">
+       <g class="animate-spin">
+         <path d="M0 0 L8 -62 L-6 -19 Z" fill="white"/>
+         <path d="M0 0 L58 28 L18 7 Z" fill="white"/>
+         <path d="M0 0 L-52 36 L-14 13 Z" fill="white"/>
+       </g>
+       <circle r="10" fill="#f7fbfc" stroke="#6fa0ae" stroke-width="3"/>
+     </g>
+   </g>
+ </svg>`;
+
+ if(type==="hydro") return `
+ <div class="scene-chip">Moving Water → Turbine → Electricity</div>
+ <div class="scene-label">Hydropower uses flowing water</div>
+ <svg viewBox="0 0 600 240" aria-label="Hydropower scene">
+   <rect width="600" height="240" fill="#d5f1ff"/>
+   <path d="M0 95 L120 35 L220 115 L330 55 L470 125 L600 70 V240 H0Z" fill="#79bd68"/>
+   <rect x="0" y="128" width="600" height="112" fill="#75caf0"/>
+   <path d="M190 75 L410 75 L445 210 L155 210 Z" fill="#aebcc2" stroke="#7d8f97" stroke-width="4"/>
+   <rect x="278" y="75" width="44" height="145" fill="#4eb8e8"/>
+   <g class="water-flow" stroke="#e9fbff" stroke-width="5">
+     <line x1="290" y1="95" x2="290" y2="205"/><line x1="307" y1="95" x2="307" y2="205"/>
+   </g>
+   <path d="M0 215 Q55 197 110 215 T220 215 T330 215 T440 215 T550 215 T660 215" fill="none" stroke="#e7fbff" stroke-width="6"/>
+ </svg>`;
+
+ if(type==="coal") return `
+ <div class="scene-chip">Forms over millions of years</div>
+ <div class="scene-label">Coal is a fossil fuel</div>
+ <svg viewBox="0 0 600 240" aria-label="Coal scene">
+   <rect width="600" height="240" fill="#e7f5fb"/>
+   <rect y="145" width="600" height="95" fill="#8e684e"/>
+   <path d="M0 145 Q130 123 250 145 T500 142 T650 145" fill="#79bf62"/>
+   <g transform="translate(210 86)">
+     <polygon points="0,70 35,15 82,52 115,5 160,48 200,20 235,70" fill="#30363b" stroke="#16191b" stroke-width="4"/>
+     <polygon points="32,71 68,36 105,70" fill="#1c2023"/>
+     <polygon points="118,71 158,32 200,71" fill="#202427"/>
+   </g>
+   <g opacity=".65" fill="#4f351f">
+     <ellipse cx="100" cy="178" rx="55" ry="15"/><ellipse cx="500" cy="185" rx="60" ry="15"/>
+   </g>
+   <text x="300" y="45" text-anchor="middle" font-size="18" font-weight="bold" fill="#4c3425">Ancient organic matter → Coal</text>
+ </svg>`;
+
+ if(type==="oil") return `
+ <div class="scene-chip">Finite fossil fuel</div>
+ <div class="scene-label">Petroleum is extracted from underground deposits</div>
+ <svg viewBox="0 0 600 240" aria-label="Petroleum scene">
+   <rect width="600" height="240" fill="#dff3fb"/>
+   <rect y="150" width="600" height="90" fill="#987158"/>
+   <g transform="translate(100 38)">
+     <polygon points="75,0 120,160 30,160" fill="none" stroke="#46535a" stroke-width="7"/>
+     <line x1="50" y1="55" x2="102" y2="55" stroke="#46535a" stroke-width="5"/>
+     <line x1="42" y1="90" x2="110" y2="90" stroke="#46535a" stroke-width="5"/>
+     <line x1="34" y1="125" x2="117" y2="125" stroke="#46535a" stroke-width="5"/>
+   </g>
+   <g class="oil-bob">
+     <path d="M410 65 C386 98 374 116 374 135 A36 36 0 0 0 446 135 C446 116 434 98 410 65Z" fill="#22272b"/>
+     <path d="M397 105 C389 116 387 123 388 130" fill="none" stroke="#5d666c" stroke-width="5" stroke-linecap="round"/>
+   </g>
+   <path d="M350 192 Q410 155 470 192" fill="#2f2420" opacity=".55"/>
+ </svg>`;
+
+ return `
+ <div class="scene-chip">Mined from finite deposits</div>
+ <div class="scene-label">Uranium is used as nuclear fuel</div>
+ <svg viewBox="0 0 600 240" aria-label="Uranium scene">
+   <rect width="600" height="240" fill="#e5f5fb"/>
+   <rect y="154" width="600" height="86" fill="#9b755b"/>
+   <g transform="translate(250 80)">
+     <polygon points="10,75 40,8 92,26 126,78 84,118 24,108" fill="#6c7966" stroke="#38443b" stroke-width="4"/>
+     <g class="uranium-glow" transform="translate(69 62)">
+       <circle r="27" fill="#f4dc3c"/>
+       <text x="0" y="9" text-anchor="middle" font-size="30">☢</text>
+     </g>
+   </g>
+   <text x="300" y="44" text-anchor="middle" font-size="18" font-weight="bold" fill="#44533d">Uranium ore</text>
+ </svg>`;
+}
+
+function makeProgress(){
+  $("progress").innerHTML="";
+  data.forEach((_,idx)=>{
+    const d=document.createElement("div");
+    d.className="dot";
+    if(idx<i)d.classList.add("done");
+    if(idx===i)d.classList.add("active");
+    $("progress").appendChild(d);
+  });
 }
 
 function load(){
-document.getElementById("question").innerText=data[i].q;
-document.getElementById("feedback").innerText="";
-attempt=1;
-document.getElementById("qno").innerText=i+1;
-time=10;
+  const q=data[i];
+  attempt=1;locked=false;
+  $("qno").textContent=i+1;
+  $("score").textContent=score;
+  $("missionTitle").textContent="MISSION "+(i+1);
+  $("resourceTitle").textContent=q.name;
+  $("resourceSub").textContent=q.sub;
+  $("scene").innerHTML=sceneHTML(q.scene);
+  renderOptions();
+  $("attempts").textContent="❤️ ❤️";
+  $("feedback").textContent="Study the resource and choose the correct category.";
+  $("nextBtn").style.display="none";
+  choices.forEach(b=>{
+    b.disabled=false;
+    b.classList.remove("correct","wrong");
+  });
+  makeProgress();
 }
 
-function startTimer(){
-timer=setInterval(()=>{
-time--;
-document.getElementById("timer").innerText="⏱ "+time;
-if(time<=0){
-next();
-}
-},1000);
-}
+function check(choice,btn){
+  if(locked)return;
+  const q=data[i];
 
-function check(ans){
-let q=data[i];
-
-if(ans===q.a){
-score++;
-document.getElementById("correct").play();
-document.getElementById("feedback").innerText="✔ Correct!";
-next();
-}
-else{
-if(attempt===1){
-document.getElementById("wrong").play();
-document.getElementById("feedback").innerText="Try again!";
-attempt=2;
-}else{
-document.getElementById("feedback").innerText="Answer: "+q.a;
-next();
-}
-}
+  if(choice===q.type){
+    locked=true;
+    score++;
+    $("score").textContent=score;
+    btn.classList.add("correct");
+    choices.forEach(b=>b.disabled=true);
+    $("feedback").innerHTML="✅ Correct! ⭐<br>"+q.explain;
+    $("nextBtn").style.display="block";
+    play("correctAudio");
+  }else{
+    btn.classList.add("wrong");
+    play("wrongAudio");
+    if(attempt===1){
+      attempt=2;
+      $("attempts").textContent="❤️";
+      $("feedback").textContent="❌ Not quite. Think about whether this resource can be naturally replaced in a short time.";
+      setTimeout(()=>btn.classList.remove("wrong"),450);
+    }else{
+      locked=true;
+      $("attempts").textContent="—";
+      const correct=choices.find(b=>b.dataset.choice===q.type);
+      correct.classList.add("correct");
+      choices.forEach(b=>b.disabled=true);
+      $("feedback").innerHTML="💡 Correct category: <b>"+(q.type==="renewable"?"Renewable Resource":"Non-renewable Resource")+"</b><br>"+q.explain;
+      $("nextBtn").style.display="block";
+    }
+  }
 }
 
 function next(){
-clearInterval(timer);
-i++;
-document.getElementById("score").innerText=score;
-
-if(i<data.length){
-load();
-startTimer();
-}else{
-endGame();
-}
+  i++;
+  if(i<data.length) load();
+  else endGame();
 }
 
 function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="flex";
-document.getElementById("final").innerText=score;
-
-let rank="🌱 Beginner Eco Learner";
-if(score>=4) rank="🌍 Energy Explorer";
-if(score===6) rank="🏆 Eco Master Scientist";
-
-document.getElementById("rank").innerText=rank;
-
-let clap=document.getElementById("clap");
-clap.currentTime=0;
-clap.play();
+  $("game").style.display="none";
+  $("end").style.display="flex";
+  $("finalScore").textContent=score;
+  let rank="🌱 Beginner Eco Learner";
+  if(score>=4) rank="🌍 Energy Explorer";
+  if(score===6) rank="🏆 Eco Energy Master";
+  $("rank").textContent=rank;
+  play("clapAudio");
 }
 
+$("startBtn").addEventListener("click",()=>{
+  $("intro").style.display="none";
+  $("game").style.display="block";
+  i=0;score=0;load();
+});
+$("nextBtn").addEventListener("click",next);
+$("againBtn").addEventListener("click",()=>location.reload());
+});
 </script>
-
 </body>
 </html>
