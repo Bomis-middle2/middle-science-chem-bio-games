@@ -1,932 +1,1237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🦴 Skeleton Rescue Mission</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+🦴 Skeleton Explorer
+
+</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
 
-:root{
-  --blue:#1565c0;
-  --blue2:#1976d2;
-  --green:#2e7d32;
-  --green2:#43a047;
-  --orange:#ef6c00;
-  --red:#c62828;
-  --card:#ffffff;
-  --soft:#eef8ff;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-  font-family:'Segoe UI',Arial,sans-serif;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#e3f2fd 0,#f7fbff 38%,#ffffff 100%);
-  color:#24313f;
-  overflow-x:hidden;
+
+font-family:
+'Segoe UI',
+sans-serif;
+
+background:
+linear-gradient(
+#eef8ff,
+#ffffff
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
 }
 
-/* =========================
-   SPLASH
-========================= */
+/* SPLASH */
+
 #splashScreen{
-  position:fixed;
-  inset:0;
-  background:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
 }
 
 #splashLogo{
-  width:300px;
-  max-width:82vw;
-  animation:logoZoom 1.2s ease;
+
+width:320px;
+
+max-width:85%;
+
+animation:
+logoZoom 1.5s ease;
+
 }
 
 @keyframes logoZoom{
-  from{opacity:0;transform:scale(.7);}
-  to{opacity:1;transform:scale(1);}
+
+0%{
+opacity:0;
+transform:scale(.6);
 }
 
-/* =========================
-   INTRO
-========================= */
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+/* INTRO */
+
 #introScreen{
-  display:none;
-  min-height:100vh;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+
+display:none;
+
+min-height:100vh;
+
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
 }
 
 .introCard{
-  width:min(900px,100%);
-  background:white;
-  border-radius:30px;
-  padding:34px;
-  text-align:center;
-  box-shadow:0 15px 45px rgba(21,101,192,.15);
+
+background:white;
+
+max-width:1000px;
+
+width:100%;
+
+padding:35px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
 }
 
 .logo{
-  width:180px;
-  max-width:65vw;
-  margin-bottom:14px;
+
+width:220px;
+
+margin-bottom:20px;
+
 }
 
 .title{
-  font-size:clamp(2rem,5vw,3.1rem);
-  color:var(--blue);
-  margin-bottom:14px;
-  font-weight:800;
+
+font-size:3rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
+margin-bottom:20px;
+
 }
 
-.subtitle{
-  color:#506070;
-  font-size:1.05rem;
-  line-height:1.7;
-  max-width:680px;
-  margin:auto;
+.story{
+
+font-size:1.2rem;
+
+line-height:1.9;
+
+color:#444;
+
 }
 
-.missionStrip{
-  margin:24px auto 0;
-  max-width:680px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
+.startBtn{
+
+margin-top:25px;
+
+padding:
+18px 45px;
+
+border:none;
+
+border-radius:20px;
+
+background:#1976d2;
+
+color:white;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
-.missionPill{
-  background:#f3f8fd;
-  border:2px solid #d8ebfb;
-  border-radius:18px;
-  padding:14px 10px;
-  font-weight:700;
-  color:#31506c;
-}
+/* GAME */
 
-.startBtn,.nextBtn,.playBtn{
-  margin-top:24px;
-  padding:15px 28px;
-  border:none;
-  border-radius:16px;
-  background:var(--blue2);
-  color:white;
-  font-size:1.05rem;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 8px 18px rgba(25,118,210,.22);
-}
-
-.startBtn:hover,.nextBtn:hover,.playBtn:hover{
-  transform:translateY(-1px);
-}
-
-/* =========================
-   GAME
-========================= */
 #gameScreen{
-  display:none;
-  min-height:100vh;
-  padding:14px;
-}
 
-.gameWrap{
-  width:min(1180px,100%);
-  margin:auto;
+display:none;
+
+padding:20px;
+
 }
 
 .gameHeader{
-  text-align:center;
-  margin-bottom:10px;
+
+text-align:center;
+
+margin-bottom:20px;
+
 }
 
 .gameLogo{
-  width:135px;
-  max-width:45vw;
-  margin-bottom:4px;
+
+width:180px;
+
+margin-bottom:10px;
+
 }
 
 .gameTitle{
-  font-size:clamp(1.5rem,4vw,2.3rem);
-  color:var(--blue);
-  font-weight:800;
+
+font-size:2.8rem;
+
+font-weight:bold;
+
+color:#1565c0;
+
 }
 
 .hud{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
-  margin:12px 0;
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:15px;
+
+max-width:1100px;
+
+margin:auto;
+
+margin-bottom:20px;
+
 }
 
 .hudBox{
-  border-radius:16px;
-  color:white;
-  padding:12px 10px;
-  text-align:center;
-  font-weight:800;
-  box-shadow:0 6px 14px rgba(0,0,0,.08);
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:1.2rem;
+
+font-weight:bold;
+
+color:white;
+
 }
 
-.scoreBox{background:#43a047;}
-.progressBox{background:#1976d2;}
-.attemptBox{background:#8e24aa;}
+.scoreBox{
 
-.progressTrack{
-  height:10px;
-  background:#dfeaf5;
-  border-radius:999px;
-  overflow:hidden;
-  margin-bottom:14px;
+background:#43a047;
+
 }
 
-#progressFill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#42a5f5,#43a047);
-  transition:width .35s ease;
+.questionBox{
+
+background:#1976d2;
+
 }
 
 .mainCard{
-  background:white;
-  border-radius:28px;
-  box-shadow:0 14px 40px rgba(0,0,0,.12);
-  padding:18px;
+
+max-width:1100px;
+
+margin:auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+0 10px 30px
+rgba(0,0,0,.15);
+
 }
 
-.missionBanner{
-  background:linear-gradient(135deg,#1565c0,#42a5f5);
-  color:white;
-  border-radius:20px;
-  padding:16px;
-  text-align:center;
-  margin-bottom:16px;
-}
-
-.missionLabel{
-  font-size:.82rem;
-  letter-spacing:.08em;
-  font-weight:800;
-  opacity:.92;
-}
-
-#missionQuestion{
-  font-size:clamp(1.15rem,3vw,1.75rem);
-  line-height:1.35;
-  margin-top:7px;
-  font-weight:800;
-}
-
-.gameGrid{
-  display:grid;
-  grid-template-columns:minmax(320px,500px) 1fr;
-  gap:18px;
-  align-items:start;
-}
-
-/* =========================
-   SKELETON AREA
-========================= */
-.skeletonPanel{
-  background:#f8fbff;
-  border:2px solid #dceefe;
-  border-radius:22px;
-  padding:12px;
-}
-
-.skeletonStage{
-  position:relative;
-  width:min(100%,430px);
-  margin:auto;
-}
+/* SKELETON IMAGE */
 
 .skeletonImage{
-  display:block;
-  width:100%;
-  height:auto;
-  user-select:none;
-  -webkit-user-drag:none;
+
+display:block;
+
+margin:auto;
+
+max-width:450px;
+
+width:100%;
+
+margin-bottom:20px;
+
 }
 
-.hotspot{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  border:3px solid rgba(21,101,192,.65);
-  background:rgba(255,255,255,.35);
-  cursor:pointer;
-  transition:.2s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:transparent;
+/* QUESTION */
+
+.questionText{
+
+font-size:1.8rem;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:25px;
+
+color:#1565c0;
+
 }
 
-.hotspot:hover{
-  transform:translate(-50%,-50%) scale(1.12);
-  background:rgba(66,165,245,.22);
+/* OPTIONS */
+
+.optionsGrid{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:15px;
+
 }
 
-.hotspot.correctSpot{
-  border-color:#2e7d32;
-  background:rgba(76,175,80,.32);
-  box-shadow:0 0 0 9px rgba(76,175,80,.14);
+.optionBtn{
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-.hotspot.wrongSpot{
-  border-color:#c62828;
-  background:rgba(239,83,80,.25);
+.optionBtn:hover{
+
+transform:translateY(-2px);
+
 }
 
-.hotspot.targetFlash{
-  animation:targetPulse .8s ease 2;
+.optionA{
+background:#e8f5e9;
 }
 
-@keyframes targetPulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(255,152,0,.5);}
-  50%{box-shadow:0 0 0 14px rgba(255,152,0,.14);}
+.optionB{
+background:#e3f2fd;
 }
 
-/* approximate positions on a standard full-body skeleton */
-[data-bone="Skull"]{left:50%;top:8%;}
-[data-bone="Ribs"]{left:50%;top:29%;}
-[data-bone="Backbone"]{left:50%;top:39%;}
-[data-bone="Humerus"]{left:31%;top:36%;}
-[data-bone="Radius"]{left:23%;top:49%;}
-[data-bone="Ulna"]{left:78%;top:49%;}
-[data-bone="Femur"]{left:43%;top:67%;}
-[data-bone="Tibia"]{left:44%;top:84%;}
-[data-bone="Fibula"]{left:58%;top:84%;}
-
-.tapNote{
-  text-align:center;
-  margin-top:10px;
-  font-size:.92rem;
-  color:#5a6b79;
-  font-weight:700;
+.optionC{
+background:#fff8e1;
 }
 
-/* =========================
-   SIDE PANEL
-========================= */
-.infoPanel{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+.optionD{
+background:#fce4ec;
 }
 
-.detectiveCard{
-  background:#fff8e1;
-  border:2px solid #ffe082;
-  border-radius:18px;
-  padding:16px;
-  line-height:1.6;
+.feedback{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:1.15rem;
+
+font-weight:bold;
+
+min-height:80px;
+
 }
 
-.detectiveTitle{
-  font-weight:800;
-  color:#8d6e00;
-  margin-bottom:6px;
+@media(max-width:900px){
+
+.optionsGrid{
+
+grid-template-columns:1fr;
+
 }
 
-#hintText{
-  color:#5b4d1a;
+.title{
+
+font-size:2rem;
+
 }
 
-.foundCard{
-  background:#eef8ff;
-  border-radius:18px;
-  padding:14px;
+.gameTitle{
+
+font-size:2rem;
+
 }
 
-.foundTitle{
-  color:var(--blue);
-  font-weight:800;
-  margin-bottom:8px;
+.questionText{
+
+font-size:1.3rem;
+
 }
 
-#foundBones{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
 }
 
-.boneTag{
-  padding:8px 10px;
-  border-radius:999px;
-  background:white;
-  border:2px solid #d7eaff;
-  color:#4f6070;
-  font-size:.85rem;
-  font-weight:700;
-}
-
-.boneTag.found{
-  background:#e8f5e9;
-  border-color:#81c784;
-  color:#1b5e20;
-}
-
-#feedback{
-  min-height:105px;
-  border-radius:18px;
-  padding:16px;
-  background:#f7f9fb;
-  font-weight:700;
-  line-height:1.55;
-}
-
-.feedbackCorrect{
-  background:#e8f5e9 !important;
-  color:#1b5e20;
-  border:2px solid #81c784;
-}
-
-.feedbackWrong{
-  background:#ffebee !important;
-  color:#b71c1c;
-  border:2px solid #ef9a9a;
-}
-
-.nextBtn{
-  display:none;
-  width:100%;
-  margin-top:0;
-}
-
-/* =========================
-   CERTIFICATE
-========================= */
-.certificate{
-  text-align:center;
-  padding:12px;
-}
-
-.certificate h1{
-  color:var(--blue);
-  font-size:clamp(2rem,5vw,3rem);
-  margin-bottom:12px;
-}
-
-.certIcons{
-  font-size:clamp(2.4rem,8vw,4rem);
-  margin:12px 0;
-}
-
-.certText{
-  max-width:700px;
-  margin:auto;
-  line-height:1.75;
-  font-size:1.05rem;
-}
-
-.certBones{
-  margin:20px auto 0;
-  max-width:620px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.certBone{
-  padding:11px;
-  border-radius:14px;
-  background:#eef8ff;
-  color:#1565c0;
-  font-weight:800;
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media(max-width:820px){
-  .gameGrid{
-    grid-template-columns:1fr;
-  }
-
-  .skeletonStage{
-    width:min(92vw,390px);
-  }
-
-  .hotspot{
-    width:40px;
-    height:40px;
-  }
-
-  .hud{
-    grid-template-columns:1fr 1fr 1fr;
-  }
-
-  .missionStrip{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:520px){
-  #gameScreen{
-    padding:8px;
-  }
-
-  .gameLogo{
-    width:105px;
-  }
-
-  .gameTitle{
-    font-size:1.4rem;
-  }
-
-  .hud{
-    gap:6px;
-  }
-
-  .hudBox{
-    padding:10px 6px;
-    font-size:.78rem;
-    border-radius:12px;
-  }
-
-  .mainCard{
-    padding:10px;
-    border-radius:20px;
-  }
-
-  .missionBanner{
-    padding:12px 10px;
-    border-radius:15px;
-    margin-bottom:10px;
-  }
-
-  .skeletonPanel{
-    padding:8px;
-  }
-
-  .hotspot{
-    width:36px;
-    height:36px;
-    border-width:2px;
-  }
-
-  .detectiveCard,
-  .foundCard,
-  #feedback{
-    padding:12px;
-    border-radius:14px;
-  }
-
-  .certBones{
-    grid-template-columns:1fr 1fr;
-  }
-}
 </style>
+
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splashScreen">
-  <img id="splashLogo" src="assets/innovine-logo.png" alt="Innovine Solutions">
+
+<img
+id="splashLogo"
+src="assets/innovine-logo.png">
+
 </div>
 
-<!-- INTRO -->
 <div id="introScreen">
-  <div class="introCard">
-    <img src="assets/innovine-logo.png" class="logo" alt="Innovine Solutions">
-    <h1 class="title">🦴 SKELETON RESCUE MISSION</h1>
-    <p class="subtitle">
-      The labels have disappeared from the human skeleton.
-      Your mission is to find each important bone by tapping the correct place on the skeleton.
-    </p>
 
-    <div class="missionStrip">
-      <div class="missionPill">👆 Tap the correct bone</div>
-      <div class="missionPill">💡 Get a hint after a wrong try</div>
-      <div class="missionPill">⭐ Rescue all 9 bone labels</div>
-    </div>
+<div class="introCard">
 
-    <button class="startBtn" onclick="startGame()">🚀 START RESCUE MISSION</button>
-  </div>
+<img
+src="assets/innovine-logo.png"
+class="logo">
+
+<h1 class="title">
+
+🦴 SKELETON EXPLORER
+
+</h1>
+
+<div class="story">
+
+Study the skeleton carefully.
+
+<br><br>
+
+Read each question and choose the correct answer.
+
+<br><br>
+
+Learn about the important bones of the human body.
+
+<br><br>
+
+🏆 Score points and become a Skeleton Explorer!
+
 </div>
 
-<!-- GAME -->
+<button
+class="startBtn"
+onclick="startGame()">
+
+🚀 START GAME
+
+</button>
+
+</div>
+
+</div>
+
 <div id="gameScreen">
-  <div class="gameWrap">
 
-    <div class="gameHeader">
-      <img src="assets/innovine-logo.png" class="gameLogo" alt="Innovine Solutions">
-      <div class="gameTitle">🦴 Skeleton Rescue Mission</div>
-    </div>
+<div class="gameHeader">
 
-    <div class="hud">
-      <div class="hudBox scoreBox">⭐ Score: <span id="score">0</span></div>
-      <div class="hudBox progressBox">🦴 Found: <span id="foundCount">0</span>/9</div>
-      <div class="hudBox attemptBox">🎯 Attempts: <span id="attempts">2</span></div>
-    </div>
+<img
+src="assets/innovine-logo.png"
+class="gameLogo">
 
-    <div class="progressTrack">
-      <div id="progressFill"></div>
-    </div>
+<div class="gameTitle">
 
-    <div class="mainCard">
+🦴 SKELETON EXPLORER
 
-      <div class="missionBanner">
-        <div class="missionLabel">CURRENT RESCUE CLUE</div>
-        <div id="missionQuestion">Loading mission...</div>
-      </div>
+</div>
 
-      <div class="gameGrid">
+</div>
 
-        <div class="skeletonPanel">
-          <div class="skeletonStage">
-            <img src="assets/skeleton.png" class="skeletonImage" alt="Human skeleton">
+<div class="hud">
 
-            <button class="hotspot" data-bone="Skull" onclick="chooseBone('Skull',this)" aria-label="Skull"></button>
-            <button class="hotspot" data-bone="Ribs" onclick="chooseBone('Ribs',this)" aria-label="Ribs"></button>
-            <button class="hotspot" data-bone="Backbone" onclick="chooseBone('Backbone',this)" aria-label="Backbone"></button>
-            <button class="hotspot" data-bone="Humerus" onclick="chooseBone('Humerus',this)" aria-label="Humerus"></button>
-            <button class="hotspot" data-bone="Radius" onclick="chooseBone('Radius',this)" aria-label="Radius"></button>
-            <button class="hotspot" data-bone="Ulna" onclick="chooseBone('Ulna',this)" aria-label="Ulna"></button>
-            <button class="hotspot" data-bone="Femur" onclick="chooseBone('Femur',this)" aria-label="Femur"></button>
-            <button class="hotspot" data-bone="Tibia" onclick="chooseBone('Tibia',this)" aria-label="Tibia"></button>
-            <button class="hotspot" data-bone="Fibula" onclick="chooseBone('Fibula',this)" aria-label="Fibula"></button>
-          </div>
-          <div class="tapNote">👆 Tap the part of the skeleton that matches the clue.</div>
-        </div>
+<div class="hudBox scoreBox">
 
-        <div class="infoPanel">
+⭐ Score:
+<span id="score">
 
-          <div class="detectiveCard">
-            <div class="detectiveTitle">🔎 Skeleton Detective Hint</div>
-            <div id="hintText">Read the clue carefully, then inspect the skeleton.</div>
-          </div>
+0
 
-          <div class="foundCard">
-            <div class="foundTitle">✅ Bone Labels Rescued</div>
-            <div id="foundBones"></div>
-          </div>
+</span>
 
-          <div id="feedback">
-            Select a bone on the skeleton.
-          </div>
+</div>
 
-          <button id="nextBtn" class="nextBtn" onclick="nextMission()">NEXT BONE ➜</button>
+<div class="hudBox questionBox">
 
-        </div>
+📚 Question:
+<span id="questionNo">
 
-      </div>
-    </div>
-  </div>
+1
+
+</span>/9
+
+</div>
+
+</div>
+
+<div class="mainCard">
+
+<img
+src="assets/skeleton.png"
+class="skeletonImage">
+
+<div
+id="questionText"
+class="questionText">
+
+Loading...
+
+</div>
+
+<div
+id="optionsGrid"
+class="optionsGrid">
+
+</div>
+
+<div
+id="feedback"
+class="feedback">
+
+</div>
+</div>
+
 </div>
 
 <!-- AUDIO -->
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
-<audio id="clapSound" src="assets/clapping.mp3"></audio>
+
+<audio
+id="correctSound"
+src="assets/correct.mp3">
+</audio>
+
+<audio
+id="wrongSound"
+src="assets/wrong.mp3">
+</audio>
+
+<audio
+id="clapSound"
+src="assets/clapping.mp3">
+</audio>
 
 <script>
+
 /* =========================
    SPLASH
 ========================= */
+
 setTimeout(()=>{
-  document.getElementById("splashScreen").style.display="none";
-  document.getElementById("introScreen").style.display="flex";
+
+document.getElementById(
+"splashScreen"
+).style.display =
+"none";
+
+document.getElementById(
+"introScreen"
+).style.display =
+"flex";
+
 },1500);
 
 /* =========================
-   BONE MISSIONS
+   GAME VARIABLES
 ========================= */
-const missions = [
-  {
-    bone:"Skull",
-    question:"Which bone protects the brain?",
-    hint:"Look at the bones that surround the head.",
-    fact:"🧠 The skull protects the brain."
-  },
-  {
-    bone:"Ribs",
-    question:"Which bones form a protective cage around the heart and lungs?",
-    hint:"Look at the curved bones in the chest.",
-    fact:"❤️ The ribs protect the heart and lungs."
-  },
-  {
-    bone:"Backbone",
-    question:"Which bone structure runs down the back and helps the body stay upright?",
-    hint:"Look along the centre of the back.",
-    fact:"🏃 The backbone supports the body and helps us stand upright."
-  },
-  {
-    bone:"Humerus",
-    question:"Find the bone of the upper arm.",
-    hint:"Look between the shoulder and the elbow.",
-    fact:"💪 The humerus is the upper arm bone."
-  },
-  {
-    bone:"Radius",
-    question:"Find the forearm bone called the radius.",
-    hint:"Look at the lower arm, between the elbow and wrist.",
-    fact:"✋ The radius is one of the two bones of the forearm."
-  },
-  {
-    bone:"Ulna",
-    question:"Find the forearm bone called the ulna.",
-    hint:"Look at the lower arm. It lies beside the radius.",
-    fact:"🦾 The ulna is one of the two bones of the forearm."
-  },
-  {
-    bone:"Femur",
-    question:"Which is the longest bone in the human body?",
-    hint:"Look at the upper leg between the hip and knee.",
-    fact:"🦵 The femur is the longest bone in the human body."
-  },
-  {
-    bone:"Tibia",
-    question:"Find the larger shin bone.",
-    hint:"Look at the front of the lower leg.",
-    fact:"🚶 The tibia is the larger shin bone."
-  },
-  {
-    bone:"Fibula",
-    question:"Find the thinner bone beside the tibia in the lower leg.",
-    hint:"Look beside the larger shin bone.",
-    fact:"🦶 The fibula lies beside the tibia in the lower leg."
-  }
-];
 
-let gameMissions = [];
-let currentMission = 0;
-let attemptsLeft = 2;
 let score = 0;
-let locked = false;
-let found = new Set();
+
+let currentQuestion = 0;
 
 /* =========================
-   HELPERS
+   QUESTION BANK
 ========================= */
-function shuffleArray(arr){
-  const copy=[...arr];
-  for(let i=copy.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [copy[i],copy[j]]=[copy[j],copy[i]];
-  }
-  return copy;
+
+const questions = [
+
+{
+question:
+"Which bone protects the brain?",
+
+answer:
+"Skull",
+
+fact:
+"🧠 The skull protects the brain.",
+
+options:[
+"Femur",
+"Skull",
+"Ribs",
+"Tibia"
+]
+
+},
+
+{
+question:
+"Which bones protect the heart and lungs?",
+
+answer:
+"Ribs",
+
+fact:
+"❤️ The ribs protect the heart and lungs.",
+
+options:[
+"Radius",
+"Femur",
+"Ribs",
+"Ulna"
+]
+
+},
+
+{
+question:
+"Which bone supports the body and helps us stand upright?",
+
+answer:
+"Backbone",
+
+fact:
+"🏃 The backbone supports the body and keeps us upright.",
+
+options:[
+"Backbone",
+"Fibula",
+"Femur",
+"Radius"
+]
+
+},
+
+{
+question:
+"Which bone is found in the upper arm?",
+
+answer:
+"Humerus",
+
+fact:
+"💪 The humerus is the upper arm bone.",
+
+options:[
+"Humerus",
+"Tibia",
+"Fibula",
+"Ribs"
+]
+
+},
+
+{
+question:
+"Which forearm bone helps the arm rotate?",
+
+answer:
+"Radius",
+
+fact:
+"✋ The radius helps the forearm rotate.",
+
+options:[
+"Ulna",
+"Radius",
+"Femur",
+"Backbone"
+]
+
+},
+
+{
+question:
+"Which forearm bone supports the forearm?",
+
+answer:
+"Ulna",
+
+fact:
+"🦾 The ulna supports the forearm.",
+
+options:[
+"Radius",
+"Humerus",
+"Ulna",
+"Ribs"
+]
+
+},
+
+{
+question:
+"Which is the longest bone in the human body?",
+
+answer:
+"Femur",
+
+fact:
+"🦵 The femur is the longest bone in the body.",
+
+options:[
+"Tibia",
+"Femur",
+"Ulna",
+"Skull"
+]
+
+},
+
+{
+question:
+"Which is the larger shin bone?",
+
+answer:
+"Tibia",
+
+fact:
+"🚶 The tibia is the larger shin bone.",
+
+options:[
+"Fibula",
+"Tibia",
+"Radius",
+"Backbone"
+]
+
+},
+
+{
+question:
+"Which bone supports the lower leg beside the tibia?",
+
+answer:
+"Fibula",
+
+fact:
+"🦶 The fibula supports the lower leg.",
+
+options:[
+"Femur",
+"Fibula",
+"Ribs",
+"Humerus"
+]
+
 }
 
-function playAudio(id){
-  const audio=document.getElementById(id);
-  audio.currentTime=0;
-  audio.play().catch(()=>{});
+];
+
+/* =========================
+   SHUFFLE QUESTIONS
+========================= */
+
+function shuffleQuestions(){
+
+for(
+let i=
+questions.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+questions[i],
+questions[j]
+]
+=
+[
+questions[j],
+questions[i]
+];
+
 }
 
-function resetHotspots(){
-  document.querySelectorAll(".hotspot").forEach(btn=>{
-    btn.classList.remove("wrongSpot","targetFlash");
-    if(!found.has(btn.dataset.bone)){
-      btn.classList.remove("correctSpot");
-    }
-  });
-}
-
-function renderFoundBones(){
-  const area=document.getElementById("foundBones");
-  area.innerHTML="";
-
-  missions.forEach(m=>{
-    const tag=document.createElement("span");
-    tag.className="boneTag" + (found.has(m.bone) ? " found" : "");
-    tag.textContent=(found.has(m.bone) ? "✓ " : "• ") + m.bone;
-    area.appendChild(tag);
-  });
-}
-
-function updateHUD(){
-  document.getElementById("score").textContent=score;
-  document.getElementById("foundCount").textContent=found.size;
-  document.getElementById("attempts").textContent=attemptsLeft;
-  document.getElementById("progressFill").style.width=
-    ((found.size/missions.length)*100)+"%";
 }
 
 /* =========================
    START GAME
 ========================= */
+
 function startGame(){
-  document.getElementById("introScreen").style.display="none";
-  document.getElementById("gameScreen").style.display="block";
 
-  gameMissions=shuffleArray(missions);
-  currentMission=0;
-  score=0;
-  found.clear();
+document.getElementById(
+"introScreen"
+).style.display =
+"none";
 
-  renderFoundBones();
-  loadMission();
+document.getElementById(
+"gameScreen"
+).style.display =
+"block";
+
+shuffleQuestions();
+
+loadQuestion();
+
+}
+/* =========================
+   SHUFFLE OPTIONS
+========================= */
+
+function shuffleArray(
+array
+){
+
+const copy =
+[...array];
+
+for(
+let i=
+copy.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[
+copy[i],
+copy[j]
+]
+=
+[
+copy[j],
+copy[i]
+];
+
+}
+
+return copy;
+
 }
 
 /* =========================
-   LOAD MISSION
+   LOAD QUESTION
 ========================= */
-function loadMission(){
-  if(currentMission>=gameMissions.length){
-    showCertificate();
-    return;
-  }
 
-  locked=false;
-  attemptsLeft=2;
-  resetHotspots();
+function loadQuestion(){
 
-  const mission=gameMissions[currentMission];
+if(
+currentQuestion >=
+questions.length
+){
 
-  document.getElementById("missionQuestion").textContent=mission.question;
-  document.getElementById("hintText").textContent=
-    "Read the clue carefully, then inspect the skeleton.";
+showCertificate();
 
-  const feedback=document.getElementById("feedback");
-  feedback.className="";
-  feedback.innerHTML=
-    `Mission ${currentMission+1} of ${gameMissions.length}: tap the correct bone.`;
+return;
 
-  document.getElementById("nextBtn").style.display="none";
+}
 
-  updateHUD();
+/* UPDATE HUD */
+
+document.getElementById(
+"score"
+).innerHTML =
+score;
+
+document.getElementById(
+"questionNo"
+).innerHTML =
+currentQuestion + 1;
+
+/* GET QUESTION */
+
+const q =
+questions[
+currentQuestion
+];
+
+/* QUESTION */
+
+document.getElementById(
+"questionText"
+).innerHTML =
+q.question;
+
+/* CLEAR FEEDBACK */
+
+document.getElementById(
+"feedback"
+).innerHTML =
+"";
+
+/* OPTIONS */
+
+const optionsGrid =
+document.getElementById(
+"optionsGrid"
+);
+
+optionsGrid.innerHTML =
+"";
+
+/* SHUFFLE OPTIONS */
+
+const shuffledOptions =
+shuffleArray(
+q.options
+);
+
+const classes = [
+
+"optionA",
+"optionB",
+"optionC",
+"optionD"
+
+];
+
+/* CREATE BUTTONS */
+
+shuffledOptions.forEach(
+
+(
+option,
+index
+)=>{
+
+const btn =
+document.createElement(
+"button"
+);
+
+btn.className =
+`optionBtn ${classes[index]}`;
+
+btn.innerHTML =
+option;
+
+btn.onclick =
+()=>checkAnswer(
+option
+);
+
+optionsGrid.appendChild(
+btn
+);
+
+}
+
+);
+
 }
 
 /* =========================
-   CHOOSE BONE
+   CHECK ANSWER
 ========================= */
-function chooseBone(selectedBone,button){
-  if(locked) return;
 
-  const mission=gameMissions[currentMission];
+function checkAnswer(
+selectedOption
+){
 
-  if(selectedBone===mission.bone){
-    locked=true;
-    found.add(mission.bone);
+const q =
+questions[
+currentQuestion
+];
 
-    button.classList.remove("wrongSpot");
-    button.classList.add("correctSpot");
+/* CORRECT */
 
-    score += attemptsLeft===2 ? 10 : 5;
+if(
+selectedOption ===
+q.answer
+){
 
-    playAudio("correctSound");
+const correctSound =
+document.getElementById(
+"correctSound"
+);
 
-    const feedback=document.getElementById("feedback");
-    feedback.className="feedbackCorrect";
-    feedback.innerHTML=
-      `✅ Correct! <strong>${mission.bone}</strong><br><br>${mission.fact}`;
+correctSound.currentTime = 0;
 
-    document.getElementById("hintText").textContent=
-      "Excellent! You rescued this bone label.";
+correctSound.play().catch(()=>{});
 
-    renderFoundBones();
-    updateHUD();
+score += 10;
 
-    document.getElementById("nextBtn").style.display="block";
-  }
-  else{
-    attemptsLeft--;
-    playAudio("wrongSound");
+document.getElementById(
+"score"
+).innerHTML =
+score;
 
-    button.classList.add("wrongSpot");
-    setTimeout(()=>button.classList.remove("wrongSpot"),650);
+document.getElementById(
+"feedback"
+).innerHTML =
 
-    const feedback=document.getElementById("feedback");
-    feedback.className="feedbackWrong";
+`
+<div
+style="
+color:#2e7d32;
+">
 
-    if(attemptsLeft>0){
-      feedback.innerHTML=
-        `❌ Not that bone. You have <strong>1 attempt left</strong>.`;
-      document.getElementById("hintText").textContent=mission.hint;
-      updateHUD();
-    }
-    else{
-      locked=true;
-      feedback.innerHTML=
-        `🔎 The correct bone is <strong>${mission.bone}</strong>.<br><br>${mission.fact}`;
+✅ Correct!
 
-      document.getElementById("hintText").textContent=
-        "Watch the highlighted area, then continue to the next mission.";
+<br><br>
 
-      const target=document.querySelector(
-        `.hotspot[data-bone="${mission.bone}"]`
-      );
+${q.fact}
 
-      if(target){
-        target.classList.add("targetFlash","correctSpot");
-      }
+</div>
+`;
 
-      updateHUD();
-      document.getElementById("nextBtn").style.display="block";
-    }
-  }
+setTimeout(()=>{
+
+currentQuestion++;
+
+loadQuestion();
+
+},1800);
+
 }
 
-/* =========================
-   NEXT MISSION
-========================= */
-function nextMission(){
-  currentMission++;
-  loadMission();
-  window.scrollTo({top:0,behavior:"smooth"});
+/* WRONG */
+
+else{
+
+const wrongSound =
+document.getElementById(
+"wrongSound"
+);
+
+wrongSound.currentTime = 0;
+
+wrongSound.play().catch(()=>{});
+
+document.getElementById(
+"feedback"
+).innerHTML =
+
+`
+<div
+style="
+color:#c62828;
+">
+
+❌ Incorrect
+
+<br><br>
+
+Try again carefully.
+
+</div>
+`;
+
 }
 
+}
 /* =========================
-   CERTIFICATE
+   CERTIFICATE SCREEN
 ========================= */
+
 function showCertificate(){
-  playAudio("clapSound");
 
-  document.querySelector(".gameHeader").style.display="none";
-  document.querySelector(".hud").style.display="none";
-  document.querySelector(".progressTrack").style.display="none";
+/* HIDE HEADER */
 
-  document.querySelector(".mainCard").innerHTML=`
-    <div class="certificate">
-      <h1>🏆 MASTER SKELETON EXPLORER</h1>
+document.querySelector(
+".gameHeader"
+).style.display =
+"none";
 
-      <div class="certIcons">🦴 🧠 ❤️ 💪 🦵</div>
+/* PLAY CLAPS */
 
-      <p class="certText">
-        Congratulations! You completed the Skeleton Rescue Mission and explored
-        nine important bones of the human body.
-      </p>
+const clapSound =
+document.getElementById(
+"clapSound"
+);
 
-      <div class="certBones">
-        <div class="certBone">🦴 Skull</div>
-        <div class="certBone">🦴 Ribs</div>
-        <div class="certBone">🦴 Backbone</div>
-        <div class="certBone">🦴 Humerus</div>
-        <div class="certBone">🦴 Radius</div>
-        <div class="certBone">🦴 Ulna</div>
-        <div class="certBone">🦴 Femur</div>
-        <div class="certBone">🦴 Tibia</div>
-        <div class="certBone">🦴 Fibula</div>
-      </div>
+clapSound.currentTime = 0;
 
-      <h2 style="color:#2e7d32;margin-top:22px;">
-        ⭐ Final Score: ${score} / 90
-      </h2>
+clapSound.play().catch(()=>{});
 
-      <button class="playBtn" onclick="playAgain()">🔄 PLAY AGAIN</button>
-    </div>
-  `;
+/* SHOW CERTIFICATE */
+
+document.querySelector(
+".mainCard"
+).innerHTML =
+
+`
+<div
+style="
+text-align:center;
+padding:20px;
+">
+
+<h1
+style="
+font-size:3rem;
+color:#1565c0;
+margin-bottom:15px;
+">
+
+🏆 MASTER SKELETON EXPLORER
+
+</h1>
+
+<div
+style="
+font-size:4rem;
+margin-bottom:20px;
+">
+
+🦴 🧠 ❤️ 💪 🦵
+
+</div>
+
+<p
+style="
+font-size:1.2rem;
+line-height:1.8;
+max-width:700px;
+margin:auto;
+">
+
+Congratulations!
+
+<br><br>
+
+You successfully explored the major bones of the human skeleton and answered all the questions correctly.
+
+</p>
+
+<br>
+
+<div
+style="
+background:#eef8ff;
+padding:20px;
+border-radius:20px;
+max-width:500px;
+margin:auto;
+font-size:1.1rem;
+line-height:2;
+font-weight:bold;
+color:#1565c0;
+">
+
+🦴 Skull<br>
+
+🦴 Ribs<br>
+
+🦴 Backbone<br>
+
+🦴 Humerus<br>
+
+🦴 Radius<br>
+
+🦴 Ulna<br>
+
+🦴 Femur<br>
+
+🦴 Tibia<br>
+
+🦴 Fibula
+
+</div>
+
+<br><br>
+
+<h2
+style="
+color:#2e7d32;
+font-size:2rem;
+">
+
+⭐ Final Score:
+${score}/90
+
+</h2>
+
+<br>
+
+<div
+style="
+font-size:1.2rem;
+font-weight:bold;
+color:#ef6c00;
+">
+
+🎉 Excellent Work!
+
+</div>
+
+<br><br>
+
+<button
+
+onclick="playAgain()"
+
+style="
+padding:18px 40px;
+border:none;
+border-radius:20px;
+background:#1976d2;
+color:white;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+">
+
+🔄 PLAY AGAIN
+
+</button>
+
+</div>
+`;
+
 }
+
+/* =========================
+   PLAY AGAIN
+========================= */
 
 function playAgain(){
-  location.reload();
+
+location.reload();
+
 }
+
 </script>
 
 </body>
+
 </html>
