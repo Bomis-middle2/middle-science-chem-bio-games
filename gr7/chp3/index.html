@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Indicator Lab | Acids, Bases & Salts</title>
+
 <style>
 *{box-sizing:border-box}
 :root{
-  --purple:#6846b8;
-  --purple2:#8d6bd2;
-  --ink:#30283f;
-  --cream:#fffaf2;
-  --acid:#e95468;
+  --purple:#6545b8;
+  --purple2:#8c6bd3;
+  --ink:#302840;
+  --acid:#e95368;
   --base:#2f82c7;
-  --salt:#39a765;
-  --gold:#ffd45d;
+  --salt:#38a566;
 }
-html,body{margin:0;min-height:100%;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:linear-gradient(#f5efff,#fffdf8)}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:"Trebuchet MS",Arial,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(#f5efff,#fffdf8);
+}
 body{overflow-x:hidden}
 button,select{font:inherit}
 button{cursor:pointer}
@@ -24,148 +29,685 @@ button{cursor:pointer}
 
 /* SPLASH */
 #splash{
-  position:fixed;inset:0;z-index:9999;background:white;
-  display:flex;align-items:center;justify-content:center;
-  animation:splashOut .45s 1.3s forwards;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:splashOut .45s 1.25s forwards;
 }
-#splash img{width:150px}
-@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+#splash img{width:150px;max-width:45vw}
+@keyframes splashOut{
+  to{opacity:0;visibility:hidden;pointer-events:none}
+}
+
+/* COMMON */
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.panel{
+  width:min(1000px,97vw);
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(71,45,125,.18);
+}
+.primary{
+  border:0;
+  border-radius:14px;
+  padding:13px 25px;
+  background:linear-gradient(#8b69d9,#6244b4);
+  color:#fff;
+  font-weight:900;
+  box-shadow:0 5px 0 #46308a;
+}
+.primary:active{
+  transform:translateY(2px);
+  box-shadow:0 3px 0 #46308a;
+}
 
 /* INTRO */
-.screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:15px}
 #intro{display:flex}
-.panel{
-  width:min(1000px,97vw);background:white;border-radius:28px;overflow:hidden;
-  box-shadow:0 20px 50px rgba(71,45,125,.18)
-}
 .hero{
-  min-height:380px;position:relative;overflow:hidden;text-align:center;
-  background:linear-gradient(#e4d8ff,#c6b0f0);
+  min-height:370px;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  background:linear-gradient(#e5d9ff,#c6b1ef);
 }
 .hero:after{
-  content:"";position:absolute;left:-80px;right:-80px;bottom:-100px;height:190px;
-  background:#9d79da;border-radius:50%
+  content:"";
+  position:absolute;
+  left:-80px;
+  right:-80px;
+  bottom:-100px;
+  height:190px;
+  border-radius:50%;
+  background:#9d79da;
 }
-.logo{position:absolute;top:18px;left:20px;width:115px;background:white;padding:6px;border-radius:12px;z-index:3}
-.heroText{position:relative;z-index:3;padding-top:72px}
+.logo{
+  position:absolute;
+  top:18px;
+  left:20px;
+  width:115px;
+  background:#fff;
+  padding:6px;
+  border-radius:12px;
+  z-index:4;
+}
+.heroText{
+  position:relative;
+  z-index:3;
+  padding-top:70px;
+}
 .heroText h1{
-  margin:0;font-size:clamp(42px,7vw,70px);line-height:.94;color:#513697;font-weight:900;
-  text-shadow:0 2px white
+  margin:0;
+  font-size:clamp(42px,7vw,70px);
+  line-height:.94;
+  color:#513697;
+  font-weight:900;
+  text-shadow:0 2px #fff;
 }
-.heroText h1 span{display:block;color:#266c8d;font-size:.77em}
-.heroText p{display:inline-block;background:#4e378c;color:white;padding:8px 18px;border-radius:999px;font-weight:bold}
-.heroLab{position:absolute;z-index:2;bottom:20px;left:50%;transform:translateX(-50%);width:390px;height:150px}
+.heroText h1 span{
+  display:block;
+  color:#266c8d;
+  font-size:.76em;
+}
+.heroText p{
+  display:inline-block;
+  background:#4e378c;
+  color:#fff;
+  padding:8px 18px;
+  border-radius:999px;
+  font-weight:bold;
+}
+.heroLab{
+  position:absolute;
+  z-index:2;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:390px;
+  height:145px;
+}
 .heroBeaker{
-  position:absolute;bottom:10px;width:92px;height:103px;border:6px solid #5d4d77;border-top:0;border-radius:0 0 16px 16px;
-  background:linear-gradient(#fff 0 48%,var(--liq) 48%)
+  position:absolute;
+  bottom:10px;
+  width:92px;
+  height:103px;
+  border:6px solid #5d4d77;
+  border-top:0;
+  border-radius:0 0 16px 16px;
+  background:linear-gradient(#fff 0 48%,var(--liq) 48%);
 }
-.heroBeaker:before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;height:15px;border:5px solid #5d4d77;border-radius:50%;background:white}
-.h1{left:25px;--liq:#f37888}.h2{left:149px;--liq:#6bb1e5}.h3{right:25px;--liq:#78cd95}
+.heroBeaker:before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  right:-6px;
+  top:-8px;
+  height:15px;
+  border:5px solid #5d4d77;
+  border-radius:50%;
+  background:#fff;
+}
+.h1{left:25px;--liq:#f37888}
+.h2{left:149px;--liq:#6bb1e5}
+.h3{right:25px;--liq:#78cd95}
 .introBottom{padding:20px;text-align:center}
-.howGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 18px}
-.howGrid div{background:#f8f4ff;border:2px solid #dfd3f6;border-radius:13px;padding:10px;font-weight:bold}
-.primary{
-  border:0;border-radius:14px;padding:13px 25px;background:linear-gradient(#8c69d9,#6244b4);
-  color:white;font-weight:900;box-shadow:0 5px 0 #46308a
+.howGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:14px 0 18px;
+}
+.howGrid div{
+  background:#f8f4ff;
+  border:2px solid #dfd3f6;
+  border-radius:13px;
+  padding:10px;
+  font-weight:bold;
 }
 
 /* HOW */
 #how{display:none}
 .howPanel{padding:22px}
-.howTitle{margin:-22px -22px 18px;padding:14px;background:linear-gradient(90deg,#563ba2,#8d6bd4);color:white;text-align:center;font-size:28px;font-weight:900}
+.howTitle{
+  margin:-22px -22px 18px;
+  padding:14px;
+  background:linear-gradient(90deg,#563ba2,#8d6bd4);
+  color:#fff;
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+}
 .steps{display:grid;gap:9px}
-.step{display:grid;grid-template-columns:42px 1fr 48px;gap:10px;align-items:center;padding:10px;background:#faf7ff;border-radius:13px}
-.num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#7252bf;color:white;font-weight:900}
+.step{
+  display:grid;
+  grid-template-columns:42px 1fr 48px;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  background:#faf7ff;
+  border-radius:13px;
+}
+.num{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#7252bf;
+  color:#fff;
+  font-weight:900;
+}
 .icon{font-size:27px;text-align:center}
 
-/* GAME */
-#game{display:none;padding:7px;min-height:100vh}
-.wrap{width:min(1180px,100%);margin:auto}
-.topbar{display:grid;grid-template-columns:46px 125px 1fr 115px 46px;gap:6px;margin-bottom:6px}
+/* GAME SHELL */
+#game{
+  display:none;
+  padding:7px;
+  min-height:100vh;
+}
+.wrap{
+  width:min(1180px,100%);
+  margin:auto;
+}
+.topbar{
+  display:grid;
+  grid-template-columns:46px 125px 1fr 115px 46px;
+  gap:6px;
+  margin-bottom:6px;
+}
 .topbox,.iconBtn{
-  min-height:44px;border:0;border-radius:11px;background:white;box-shadow:0 4px 13px rgba(0,0,0,.08);
-  display:flex;align-items:center;justify-content:center;font-weight:900
+  min-height:44px;
+  border:0;
+  border-radius:11px;
+  background:#fff;
+  box-shadow:0 4px 13px rgba(0,0,0,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
 }
-.iconBtn{background:linear-gradient(#378fc8,#236da6);color:white;font-size:18px}
-.missionBox{background:linear-gradient(#7656c4,#573ba4);color:white}
-.scoreBox{background:linear-gradient(#fff3b5,#fff)}
-.progressRow{display:flex;align-items:center;gap:8px;background:white;border-radius:12px;padding:7px 10px;margin-bottom:6px;box-shadow:0 4px 12px rgba(0,0,0,.06);font-size:12px;font-weight:bold}
-.progress{flex:1;height:9px;border-radius:999px;background:#e9e0f5;overflow:hidden}
-.progressFill{height:100%;width:0;background:linear-gradient(90deg,#7352bf,#b58be1);transition:.3s}
+.iconBtn{
+  background:linear-gradient(#378fc8,#236da6);
+  color:#fff;
+  font-size:18px;
+}
+.missionBox{
+  background:linear-gradient(#7656c4,#573ba4);
+  color:#fff;
+}
+.scoreBox{
+  background:linear-gradient(#fff3b5,#fff);
+}
+.progressRow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+  border-radius:12px;
+  padding:7px 10px;
+  margin-bottom:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  font-size:12px;
+  font-weight:bold;
+}
+.progress{
+  flex:1;
+  height:9px;
+  border-radius:999px;
+  background:#e9e0f5;
+  overflow:hidden;
+}
+.progressFill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#7352bf,#b58be1);
+  transition:.3s;
+}
 
-.gameCard{background:white;border-radius:19px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.1)}
-.instruction{padding:10px 14px;background:#fff4d0;border-bottom:2px solid #ead57c;font-weight:900;text-align:center}
-.playArea{display:grid;grid-template-columns:1.08fr .92fr;min-height:510px}
+.gameCard{
+  background:#fff;
+  border-radius:19px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+.instruction{
+  padding:10px 14px;
+  background:#fff4d0;
+  border-bottom:2px solid #ead57c;
+  font-weight:900;
+  text-align:center;
+}
+.playArea{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  min-height:520px;
+}
 
-/* LAB SIDE */
-.labSide{padding:12px;background:linear-gradient(#f8f3ff,#fff8ee)}
+/* LAB */
+.labSide{
+  padding:12px;
+  background:linear-gradient(#f8f3ff,#fff8ee);
+}
 .labBench{
-  min-height:470px;border:3px solid #e3d8ef;border-radius:18px;position:relative;overflow:hidden;
-  background:linear-gradient(#f6fbff 0 72%,#d5a875 72% 100%)
+  min-height:445px;
+  border:3px solid #e3d8ef;
+  border-radius:18px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(#f6fbff 0 72%,#d5a875 72% 100%);
 }
-.sectionTitle{font-size:14px;font-weight:900;color:#5a4492;margin-bottom:7px}
 .selectionPanel{
-  position:absolute;left:12px;top:12px;width:calc(100% - 24px);
-  display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;
-  background:rgba(255,255,255,.94);border:2px solid #ddd0ef;border-radius:14px;padding:10px;z-index:4
+  position:absolute;
+  left:12px;
+  top:12px;
+  width:calc(100% - 24px);
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:8px;
+  align-items:end;
+  background:rgba(255,255,255,.96);
+  border:2px solid #ddd0ef;
+  border-radius:14px;
+  padding:10px;
+  z-index:8;
 }
-.control label{display:block;font-size:10px;font-weight:bold;margin-bottom:3px}
+.control label{
+  display:block;
+  font-size:10px;
+  font-weight:bold;
+  margin-bottom:3px;
+}
 .control select{
-  width:100%;min-height:40px;border:2px solid #c9b6e6;border-radius:9px;padding:7px;background:white;color:#3e3350
+  width:100%;
+  min-height:40px;
+  border:2px solid #c9b6e6;
+  border-radius:9px;
+  padding:7px;
+  background:#fff;
+  color:#3e3350;
 }
 .testBtn{
-  min-height:40px;border:0;border-radius:10px;padding:8px 13px;background:#5e43a7;color:white;font-weight:900
+  min-height:40px;
+  border:0;
+  border-radius:10px;
+  padding:8px 13px;
+  background:#5e43a7;
+  color:#fff;
+  font-weight:900;
 }
-.testBtn:disabled{opacity:.45;cursor:not-allowed}
 
-.experimentStage{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:410px;height:290px}
+.experimentStage{
+  position:absolute;
+  left:50%;
+  top:118px;
+  transform:translateX(-50%);
+  width:470px;
+  height:265px;
+}
+
+/* SAMPLE */
 .sampleBottle{
-  position:absolute;left:16px;bottom:30px;width:95px;height:125px;border:5px solid #695d77;border-radius:16px;background:linear-gradient(#fff 0 42%,var(--sampleColor,#e8eff2) 42%);
+  position:absolute;
+  left:8px;
+  bottom:32px;
+  width:100px;
+  height:132px;
+  border:5px solid #695d77;
+  border-radius:16px;
+  background:linear-gradient(#fff 0 42%,var(--sampleColor,#eef3f5) 42%);
 }
-.sampleBottle:before{content:"";position:absolute;left:27px;top:-28px;width:40px;height:30px;border:5px solid #695d77;border-bottom:0;border-radius:8px 8px 0 0;background:#fff}
-.sampleLabel{
-  position:absolute;left:8px;right:8px;bottom:18px;background:white;border-radius:7px;padding:5px;text-align:center;font-size:10px;font-weight:bold
+.sampleBottle:before{
+  content:"";
+  position:absolute;
+  left:29px;
+  top:-29px;
+  width:40px;
+  height:31px;
+  border:5px solid #695d77;
+  border-bottom:0;
+  border-radius:8px 8px 0 0;
+  background:#fff;
 }
-.beaker{
-  position:absolute;left:158px;bottom:27px;width:130px;height:130px;border:7px solid #675b75;border-top:0;border-radius:0 0 22px 22px;
-  background:linear-gradient(#fff 0 45%,#dfeef5 45%)
+.sampleLabel,
+.indicatorLabel{
+  position:absolute;
+  left:7px;
+  right:7px;
+  bottom:17px;
+  background:#fff;
+  border-radius:7px;
+  padding:5px 3px;
+  text-align:center;
+  font-size:9px;
+  font-weight:bold;
 }
-.beaker:before{content:"";position:absolute;left:-7px;right:-7px;top:-10px;height:18px;border:6px solid #675b75;border-radius:50%;background:#fff}
-.liquid{
-  position:absolute;left:8px;right:8px;bottom:8px;height:59px;border-radius:0 0 13px 13px;background:var(--resultColor,#dfeef5);transition:background .55s
+.sampleTitle,
+.indicatorTitle{
+  position:absolute;
+  left:8px;
+  right:8px;
+  top:8px;
+  text-align:center;
+  font-size:9px;
+  font-weight:900;
+  color:#5b4f68;
 }
-.indicatorTool{
-  position:absolute;right:23px;bottom:62px;width:62px;height:135px
-}
-.strip{
-  position:absolute;left:22px;top:0;width:20px;height:120px;border:3px solid #655a71;border-radius:4px;
-  background:linear-gradient(#f9f7f0 0 55%,var(--stripColor,#dcb6c2) 55%);transform:rotate(6deg);transition:.5s
-}
-.dropper{
-  display:none;position:absolute;left:7px;top:0;width:45px;height:55px;border:4px solid #66747c;border-radius:18px 18px 7px 7px;background:#dfe8ed
-}
-.dropper:after{content:"";position:absolute;left:16px;bottom:-38px;width:7px;height:40px;background:#66747c}
-.drop{
-  display:none;position:absolute;left:22px;top:95px;width:15px;height:18px;background:var(--dropColor,#cf3b78);border-radius:50% 50% 50% 0;transform:rotate(-45deg)
-}
-.animateDrop{display:block;animation:drop .75s ease-in forwards}
-@keyframes drop{from{top:80px;opacity:1}to{top:155px;opacity:.15}}
-.observation{
-  position:absolute;left:50%;bottom:7px;transform:translateX(-50%);
-  width:min(94%,450px);background:#fff7c9;border:3px solid #e5cc63;border-radius:12px;
-  padding:7px;text-align:center;font-size:12px;font-weight:900
-}
-.waiting{background:#f2eff7;border-color:#d7cce7;color:#746886}
 
-/* RIGHT */
-.answerSide{padding:13px;display:flex;flex-direction:column;background:#fffdf9}
-.phaseTag{display:inline-block;align-self:flex-start;background:#eee6ff;border:2px solid #d5c5f2;color:#6345a4;border-radius:999px;padding:4px 9px;font-size:10px;font-weight:bold;margin-bottom:7px}
-.question{font-size:17px;font-weight:900;margin-bottom:8px;line-height:1.35}
-.interpretBox{background:#f8f4ff;border:2px solid #ded2f3;border-radius:12px;padding:8px;margin-bottom:8px;font-size:11px}
+/* CENTRAL BEAKER */
+.beaker{
+  position:absolute;
+  left:50%;
+  bottom:28px;
+  transform:translateX(-50%);
+  width:135px;
+  height:135px;
+  border:7px solid #675b75;
+  border-top:0;
+  border-radius:0 0 22px 22px;
+  background:#fff;
+}
+.beaker:before{
+  content:"";
+  position:absolute;
+  left:-7px;
+  right:-7px;
+  top:-10px;
+  height:18px;
+  border:6px solid #675b75;
+  border-radius:50%;
+  background:#fff;
+}
+.liquid{
+  position:absolute;
+  left:8px;
+  right:8px;
+  bottom:8px;
+  height:61px;
+  border-radius:0 0 13px 13px;
+  background:var(--resultColor,#e9f2f5);
+  transition:background .55s ease;
+}
+.beakerLabel{
+  position:absolute;
+  left:50%;
+  bottom:2px;
+  transform:translateX(-50%);
+  font-size:8px;
+  font-weight:900;
+  color:#5c5268;
+  z-index:2;
+}
+
+/* LIQUID INDICATOR BOTTLE — ONLY TURMERIC / CHINA ROSE */
+.indicatorBottle{
+  display:none;
+  position:absolute;
+  right:8px;
+  bottom:32px;
+  width:100px;
+  height:132px;
+  border:5px solid #695d77;
+  border-radius:16px;
+  background:linear-gradient(#fff 0 42%,var(--indicatorColor,#f2edf7) 42%);
+}
+.indicatorBottle.visible{display:block}
+.indicatorBottle:before{
+  content:"";
+  position:absolute;
+  left:29px;
+  top:-29px;
+  width:40px;
+  height:31px;
+  border:5px solid #695d77;
+  border-bottom:0;
+  border-radius:8px 8px 0 0;
+  background:#fff;
+}
+
+/* LITMUS PAPER PACK — replaces false litmus bottle */
+.litmusPack{
+  display:none;
+  position:absolute;
+  right:5px;
+  bottom:35px;
+  width:112px;
+  height:118px;
+  border:4px solid #6b5d7b;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 5px 10px rgba(0,0,0,.08);
+}
+.litmusPack.visible{display:block}
+.litmusPackTitle{
+  position:absolute;
+  top:7px;
+  left:5px;
+  right:5px;
+  text-align:center;
+  font-size:8px;
+  font-weight:900;
+  color:#5b4f68;
+}
+.paperStack{
+  position:absolute;
+  left:18px;
+  right:18px;
+  top:33px;
+  height:52px;
+}
+.paper{
+  position:absolute;
+  width:62px;
+  height:16px;
+  left:7px;
+  border:2px solid rgba(50,50,70,.22);
+  border-radius:3px;
+  background:var(--paperColor,#337fc8);
+}
+.paper:nth-child(1){top:0;transform:rotate(-3deg)}
+.paper:nth-child(2){top:14px;transform:rotate(2deg)}
+.paper:nth-child(3){top:28px;transform:rotate(-1deg)}
+.litmusPackLabel{
+  position:absolute;
+  left:5px;
+  right:5px;
+  bottom:7px;
+  background:#f5f1fb;
+  border-radius:6px;
+  padding:4px 2px;
+  text-align:center;
+  font-size:8px;
+  font-weight:bold;
+}
+
+/* TOOL ABOVE BEAKER */
+.indicatorTool{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:88px;
+  height:166px;
+  z-index:5;
+  pointer-events:none;
+}
+
+/* Litmus paper strip */
+.strip{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%) rotate(3deg);
+  width:22px;
+  height:126px;
+  border:3px solid #655a71;
+  border-radius:4px;
+  background:var(--stripBase,#337fc8);
+  transition:background .55s ease;
+}
+.strip.show{display:block}
+.strip.dipped{
+  background:linear-gradient(
+    var(--stripBase,#337fc8) 0 56%,
+    var(--stripResult,#337fc8) 56% 100%
+  );
+}
+
+/* Liquid indicator dropper */
+.dropper{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:22px;
+  height:78px;
+  border:3px solid #71808a;
+  border-radius:9px 9px 5px 5px;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,.82) 0 26%,
+      var(--dropperLiquid,#e9cc48) 26% 78%,
+      rgba(255,255,255,.78) 78% 100%
+    );
+  box-shadow:inset 4px 0 0 rgba(255,255,255,.4);
+}
+.dropper.show{display:block}
+.dropper:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-25px;
+  transform:translateX(-50%);
+  width:42px;
+  height:31px;
+  border:4px solid #39444d;
+  border-radius:50% 50% 36% 36%;
+  background:linear-gradient(#4d5962,#27323b);
+}
+.dropper:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-31px;
+  transform:translateX(-50%);
+  width:5px;
+  height:33px;
+  border-radius:0 0 4px 4px;
+  background:#71808a;
+}
+.drop{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:132px;
+  transform:translateX(-50%) rotate(45deg);
+  width:15px;
+  height:18px;
+  background:var(--dropColor,#cf3b78);
+  border-radius:50% 50% 50% 0;
+}
+.animateDrop{
+  display:block;
+  animation:dropFall .76s ease-in forwards;
+}
+@keyframes dropFall{
+  from{top:130px;opacity:1}
+  to{top:174px;opacity:.12}
+}
+
+/* OBSERVATION */
+.observation{
+  position:relative;
+  left:auto;
+  bottom:auto;
+  transform:none;
+  width:100%;
+  margin-top:8px;
+  min-height:48px;
+  background:#f2eff7;
+  border:3px solid #d7cce7;
+  color:#746886;
+  border-radius:12px;
+  padding:9px 12px;
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1.35;
+}
+.observation.result{
+  background:#fff7c9;
+  border-color:#e5cc63;
+  color:#322b36;
+}
+
+/* ANSWER PANEL */
+.answerSide{
+  padding:13px;
+  display:flex;
+  flex-direction:column;
+  background:#fffdf9;
+}
+.phaseTag{
+  align-self:flex-start;
+  background:#eee6ff;
+  border:2px solid #d5c5f2;
+  color:#6345a4;
+  border-radius:999px;
+  padding:4px 9px;
+  font-size:10px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+.question{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:8px;
+  line-height:1.35;
+}
+.interpretBox{
+  background:#f8f4ff;
+  border:2px solid #ded2f3;
+  border-radius:12px;
+  padding:8px;
+  margin-bottom:8px;
+  font-size:11px;
+}
 .interpretBox b{color:#5b419a}
-.options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.option{min-height:70px;border:3px solid transparent;border-radius:12px;color:white;font-weight:900;padding:8px 5px}
-.option small{display:block;font-size:9px;font-weight:normal;margin-top:3px}
+.options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+.option{
+  min-height:70px;
+  border:3px solid transparent;
+  border-radius:12px;
+  color:#fff;
+  font-weight:900;
+  padding:8px 5px;
+}
+.option small{
+  display:block;
+  font-size:9px;
+  font-weight:normal;
+  margin-top:3px;
+}
 .acid{background:linear-gradient(#f26779,#d9475d)}
 .base{background:linear-gradient(#4f9edf,#2d7abe)}
 .salt{background:linear-gradient(#51b976,#2c9955)}
@@ -173,76 +715,327 @@ button{cursor:pointer}
 .option.wrong{outline:5px solid #ffd2ce}
 .option:disabled{cursor:default;opacity:.96}
 .optionsLocked{opacity:.4;pointer-events:none}
-.feedback{min-height:83px;margin-top:8px;border-radius:12px;padding:8px;background:#f6f6f7;border:2px solid #e3e3e4;line-height:1.4;font-weight:bold}
-.feedback.good{background:#e5f8e8;border-color:#9ad4a6}
-.feedback.bad{background:#fff0e9;border-color:#efb89c}
-.nextBtn{display:none;margin-top:8px;border:0;border-radius:11px;padding:10px;background:#347fc0;color:white;font-weight:900}
-.soundRow{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10px;color:#655b70}
-.soundBtn{border:0;border-radius:999px;padding:5px 9px;background:#eee6ff;color:#6243a8;font-weight:bold}
+
+.feedback{
+  min-height:86px;
+  margin-top:8px;
+  border-radius:12px;
+  padding:8px;
+  background:#f6f6f7;
+  border:2px solid #e3e3e4;
+  line-height:1.4;
+  font-weight:bold;
+}
+.feedback.good{
+  background:#e5f8e8;
+  border-color:#9ad4a6;
+}
+.feedback.bad{
+  background:#fff0e9;
+  border-color:#efb89c;
+}
+.nextBtn{
+  display:none;
+  margin-top:8px;
+  border:0;
+  border-radius:11px;
+  padding:10px;
+  background:#347fc0;
+  color:#fff;
+  font-weight:900;
+}
+.soundRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:7px;
+  font-size:10px;
+  color:#655b70;
+}
+.soundBtn{
+  border:0;
+  border-radius:999px;
+  padding:5px 9px;
+  background:#eee6ff;
+  color:#6243a8;
+  font-weight:bold;
+}
 
 /* END */
 #end{display:none}
-.endCard{width:min(640px,96vw);background:white;border-radius:26px;text-align:center;padding:28px;box-shadow:0 18px 45px rgba(0,0,0,.14)}
-.endCard img{width:105px}.trophy{font-size:84px}
-.endCard h1{color:#5b3fa1;margin:6px;font-size:36px}
-.badge{display:inline-block;background:#fff1b8;border:3px solid #e7c455;border-radius:14px;padding:9px 16px;font-size:22px;font-weight:900;color:#715012}
-.result{margin:14px auto;max-width:290px;background:#f8f3ff;border:2px solid #ddd0f6;border-radius:13px;padding:10px;font-size:19px;font-weight:bold}
+.endCard{
+  width:min(640px,96vw);
+  background:#fff;
+  border-radius:26px;
+  text-align:center;
+  padding:28px;
+  box-shadow:0 18px 45px rgba(0,0,0,.14);
+}
+.endCard img{width:105px}
+.trophy{font-size:84px}
+.endCard h1{
+  color:#5b3fa1;
+  margin:6px;
+  font-size:36px;
+}
+.badge{
+  display:inline-block;
+  background:#fff1b8;
+  border:3px solid #e7c455;
+  border-radius:14px;
+  padding:9px 16px;
+  font-size:22px;
+  font-weight:900;
+  color:#715012;
+}
+.result{
+  margin:14px auto;
+  max-width:290px;
+  background:#f8f3ff;
+  border:2px solid #ddd0f6;
+  border-radius:13px;
+  padding:10px;
+  font-size:19px;
+  font-weight:bold;
+}
 
+/* RESPONSIVE */
 @media(max-width:900px){
   .playArea{grid-template-columns:1fr}
-  .labBench{min-height:390px}
+  .labBench{min-height:410px}
   .topbar{grid-template-columns:40px 105px 1fr 95px 40px}
 }
 @media(max-width:620px){
   #game{padding:4px}
-  .topbar{gap:3px;margin-bottom:4px;grid-template-columns:35px 82px 1fr 72px 35px}
-  .topbox,.iconBtn{min-height:34px;font-size:9px;border-radius:8px}.iconBtn{font-size:14px}
-  .progressRow{padding:5px 6px;margin-bottom:4px;font-size:9px}.progress{height:7px}
+  .topbar{
+    gap:3px;
+    margin-bottom:4px;
+    grid-template-columns:35px 82px 1fr 72px 35px;
+  }
+  .topbox,.iconBtn{
+    min-height:34px;
+    font-size:9px;
+    border-radius:8px;
+  }
+  .iconBtn{font-size:14px}
+  .progressRow{
+    padding:5px 6px;
+    margin-bottom:4px;
+    font-size:9px;
+  }
+  .progress{height:7px}
   .instruction{padding:6px 7px;font-size:11px}
   .labSide{padding:4px}
-  .labBench{min-height:275px;height:275px;border-radius:12px}
-  .selectionPanel{left:5px;top:5px;width:calc(100% - 10px);grid-template-columns:1fr 1fr auto;gap:4px;padding:5px;border-radius:9px}
-  .control label{font-size:7.5px}.control select{min-height:32px;padding:4px;font-size:9px;border-radius:6px}.testBtn{min-height:32px;padding:4px 7px;font-size:8.5px}
-  .experimentStage{width:260px;height:175px;top:64%}
-  .sampleBottle{left:5px;bottom:20px;width:62px;height:78px;border-width:3px}.sampleBottle:before{left:18px;top:-18px;width:25px;height:20px;border-width:3px}
-  .sampleLabel{font-size:7px;padding:3px;bottom:10px}
-  .beaker{left:98px;bottom:18px;width:80px;height:82px;border-width:4px}.beaker:before{left:-4px;right:-4px;top:-6px;height:12px;border-width:4px}.liquid{height:36px}
-  .indicatorTool{right:12px;bottom:35px;width:40px;height:90px}.strip{left:14px;width:14px;height:78px;border-width:2px}.dropper{width:30px;height:38px;border-width:3px}.dropper:after{left:10px;bottom:-28px;width:6px;height:30px}.drop{left:14px;top:63px;width:11px;height:13px}
-  .observation{font-size:8px;padding:4px;border-width:2px;bottom:3px}
-  .answerSide{padding:6px}.phaseTag{font-size:7.5px;padding:3px 6px;margin-bottom:4px}.question{font-size:12px;margin-bottom:5px}
-  .interpretBox{font-size:8.5px;padding:5px;margin-bottom:5px}.options{gap:4px}.option{min-height:50px;padding:5px 3px;font-size:9.5px;border-radius:8px}.option small{font-size:7px}
-  .feedback{min-height:45px;margin-top:4px;padding:5px;font-size:9px}.nextBtn{margin-top:4px;padding:7px;font-size:9px}.soundRow{margin-top:4px;font-size:8px}.soundBtn{font-size:8px;padding:3px 6px}
-  .hero{min-height:330px}.heroText{padding-top:65px}.heroText h1{font-size:39px}.heroLab{transform:translateX(-50%) scale(.78);transform-origin:bottom}
+  .labBench{
+    min-height:282px;
+    height:282px;
+    border-radius:12px;
+  }
+  .selectionPanel{
+    left:5px;
+    top:5px;
+    width:calc(100% - 10px);
+    grid-template-columns:1fr 1fr auto;
+    gap:4px;
+    padding:5px;
+    border-radius:9px;
+  }
+  .control label{font-size:7.5px}
+  .control select{
+    min-height:32px;
+    padding:4px;
+    font-size:9px;
+    border-radius:6px;
+  }
+  .testBtn{
+    min-height:32px;
+    padding:4px 7px;
+    font-size:8.5px;
+  }
+  .experimentStage{
+    width:295px;
+    height:175px;
+    top:88px;
+    transform:translateX(-50%);
+  }
+  .sampleBottle,.indicatorBottle{
+    bottom:20px;
+    width:63px;
+    height:82px;
+    border-width:3px;
+  }
+  .sampleBottle{left:2px}
+  .indicatorBottle{right:2px}
+  .sampleBottle:before,.indicatorBottle:before{
+    left:18px;
+    top:-19px;
+    width:25px;
+    height:21px;
+    border-width:3px;
+  }
+  .sampleLabel,.indicatorLabel{
+    font-size:6.5px;
+    padding:2px;
+    bottom:9px;
+  }
+  .sampleTitle,.indicatorTitle{
+    font-size:6.5px;
+    top:5px;
+  }
+  .litmusPack{
+    right:0;
+    bottom:22px;
+    width:70px;
+    height:78px;
+    border-width:3px;
+  }
+  .litmusPackTitle{font-size:6px;top:4px}
+  .paperStack{left:9px;right:9px;top:23px;height:35px}
+  .paper{width:46px;height:10px;left:1px;border-width:1px}
+  .paper:nth-child(2){top:9px}
+  .paper:nth-child(3){top:18px}
+  .litmusPackLabel{font-size:6px;bottom:4px;padding:2px}
+  .beaker{
+    bottom:18px;
+    width:84px;
+    height:86px;
+    border-width:4px;
+  }
+  .beaker:before{
+    left:-4px;
+    right:-4px;
+    top:-6px;
+    height:12px;
+    border-width:4px;
+  }
+  .liquid{height:38px}
+  .indicatorTool{
+    top:0;
+    width:50px;
+    height:108px;
+  }
+  .strip{
+    width:14px;
+    height:85px;
+    border-width:2px;
+  }
+  .dropper{
+    top:18px;
+    width:15px;
+    height:54px;
+    border-width:2px;
+    border-radius:6px 6px 3px 3px;
+  }
+  .dropper:before{
+    top:-18px;
+    width:29px;
+    height:22px;
+    border-width:3px;
+  }
+  .dropper:after{
+    bottom:-22px;
+    width:4px;
+    height:24px;
+  }
+  .drop{
+    top:95px;
+    width:10px;
+    height:12px;
+  }
+  @keyframes dropFall{
+    from{top:93px;opacity:1}
+    to{top:122px;opacity:.12}
+  }
+  .observation{
+    position:relative;
+    left:auto;
+    bottom:auto;
+    transform:none;
+    width:100%;
+    margin-top:4px;
+    min-height:38px;
+    font-size:8.5px;
+    line-height:1.3;
+    padding:5px 7px;
+    border-width:2px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .answerSide{padding:6px}
+  .phaseTag{
+    font-size:7.5px;
+    padding:3px 6px;
+    margin-bottom:4px;
+  }
+  .question{font-size:12px;margin-bottom:5px}
+  .interpretBox{font-size:8.5px;padding:5px;margin-bottom:5px}
+  .options{gap:4px}
+  .option{
+    min-height:50px;
+    padding:5px 3px;
+    font-size:9.5px;
+    border-radius:8px;
+  }
+  .option small{font-size:7px}
+  .feedback{
+    min-height:45px;
+    margin-top:4px;
+    padding:5px;
+    font-size:9px;
+  }
+  .nextBtn{
+    margin-top:4px;
+    padding:7px;
+    font-size:9px;
+  }
+  .soundRow{margin-top:4px;font-size:8px}
+  .soundBtn{font-size:8px;padding:3px 6px}
+  .hero{min-height:330px}
+  .heroText{padding-top:65px}
+  .heroText h1{font-size:39px}
+  .heroLab{
+    transform:translateX(-50%) scale(.78);
+    transform-origin:bottom;
+  }
   .howGrid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
+
 <body>
 
-<div id="splash"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
+<div id="splash">
+  <img src="assets/innovine-logo.png" alt="Innovine logo">
+</div>
 
 <section id="intro" class="screen">
   <div class="panel">
     <div class="hero">
       <img src="assets/innovine-logo.png" class="logo" alt="Innovine logo">
+
       <div class="heroText">
         <h1>LIVE INDICATOR <span>LAB CHALLENGE</span></h1>
-        <p>Choose • Test • Observe • Interpret</p>
+        <p>Select • Test • Observe • Interpret</p>
       </div>
+
       <div class="heroLab">
         <div class="heroBeaker h1"></div>
         <div class="heroBeaker h2"></div>
         <div class="heroBeaker h3"></div>
       </div>
     </div>
+
     <div class="introBottom">
-      <p><b>Grade 7 Mission:</b> Perform virtual indicator tests and use your observation to classify each sample.</p>
+      <p><b>Grade 7 Mission:</b> Perform virtual indicator tests and classify the tested sample from your observation.</p>
+
       <div class="howGrid">
         <div>🧴 Select sample</div>
         <div>🧪 Select indicator</div>
-        <div>🎨 Observe result</div>
+        <div>🎨 Test & observe</div>
         <div>🧠 Interpret</div>
       </div>
+
       <button id="introNext" class="primary" type="button">HOW TO PLAY ➜</button>
     </div>
   </div>
@@ -251,12 +1044,33 @@ button{cursor:pointer}
 <section id="how" class="screen">
   <div class="panel howPanel">
     <div class="howTitle">HOW TO PERFORM THE EXPERIMENT</div>
+
     <div class="steps">
-      <div class="step"><div class="num">1</div><b>Select the sample named in the mission.</b><div class="icon">🧴</div></div>
-      <div class="step"><div class="num">2</div><b>Select a suitable indicator and click TEST SAMPLE.</b><div class="icon">🧪</div></div>
-      <div class="step"><div class="num">3</div><b>Observe the colour change shown in the virtual experiment.</b><div class="icon">🎨</div></div>
-      <div class="step"><div class="num">4</div><b>Interpret the observation and classify the sample as acid, base or neutral salt solution.</b><div class="icon">🧠</div></div>
+      <div class="step">
+        <div class="num">1</div>
+        <b>Select a sample. The selected sample appears on the lab bench and in the test beaker.</b>
+        <div class="icon">🧴</div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <b>Select an indicator. Litmus appears as paper; turmeric and China rose appear as liquid indicators.</b>
+        <div class="icon">🧪</div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <b>Click TEST SAMPLE. Only then will the indicator react and the observation appear.</b>
+        <div class="icon">🎨</div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <b>Use the observation to classify the tested sample as acid, base or neutral salt solution.</b>
+        <div class="icon">🧠</div>
+      </div>
     </div>
+
     <div style="text-align:center;margin-top:18px">
       <button id="startBtn" class="primary" type="button">ENTER LAB ➜</button>
     </div>
@@ -265,6 +1079,7 @@ button{cursor:pointer}
 
 <main id="game">
   <div class="wrap">
+
     <div class="topbar">
       <button id="homeBtn" class="iconBtn" type="button">⌂</button>
       <div class="topbox missionBox">Mission&nbsp;<span id="missionNo">1</span>/6</div>
@@ -297,10 +1112,10 @@ button{cursor:pointer}
                 <label for="indicatorSelect">2. INDICATOR</label>
                 <select id="indicatorSelect">
                   <option value="">Choose indicator</option>
-                  <option value="blueLitmus">Blue litmus</option>
-                  <option value="redLitmus">Red litmus</option>
-                  <option value="turmeric">Turmeric</option>
-                  <option value="chinaRose">China rose</option>
+                  <option value="blueLitmus">Blue litmus paper</option>
+                  <option value="redLitmus">Red litmus paper</option>
+                  <option value="turmeric">Turmeric indicator</option>
+                  <option value="chinaRose">China rose indicator</option>
                 </select>
               </div>
 
@@ -308,47 +1123,83 @@ button{cursor:pointer}
             </div>
 
             <div class="experimentStage">
+
+              <!-- SAMPLE -->
               <div class="sampleBottle" id="sampleBottle">
-                <div class="sampleLabel" id="bottleLabel">Sample</div>
+                <div class="sampleTitle">SAMPLE</div>
+                <div class="sampleLabel" id="sampleLabel">Choose sample</div>
               </div>
 
-              <div class="beaker">
-                <div class="liquid" id="liquid"></div>
-              </div>
-
+              <!-- INDICATOR TOOL ABOVE BEAKER -->
               <div class="indicatorTool">
                 <div id="strip" class="strip"></div>
                 <div id="dropper" class="dropper"></div>
                 <div id="drop" class="drop"></div>
               </div>
-            </div>
 
-            <div class="observation waiting" id="observation">
-              Select a sample and indicator, then run the test.
+              <!-- BEAKER -->
+              <div class="beaker">
+                <div class="liquid" id="liquid"></div>
+                <div class="beakerLabel">TEST BEAKER</div>
+              </div>
+
+              <!-- LIQUID INDICATOR BOTTLE -->
+              <div class="indicatorBottle" id="indicatorBottle">
+                <div class="indicatorTitle">LIQUID INDICATOR</div>
+                <div class="indicatorLabel" id="indicatorLabel">Choose indicator</div>
+              </div>
+
+              <!-- LITMUS PAPER PACK -->
+              <div class="litmusPack" id="litmusPack">
+                <div class="litmusPackTitle">INDICATOR PAPER</div>
+                <div class="paperStack">
+                  <div class="paper"></div>
+                  <div class="paper"></div>
+                  <div class="paper"></div>
+                </div>
+                <div class="litmusPackLabel" id="litmusPackLabel">Litmus paper</div>
+              </div>
+
             </div>
 
           </div>
+
+          <div class="observation" id="observation">
+            Select a sample and indicator, then click TEST SAMPLE.
+          </div>
+
         </div>
 
         <div class="answerSide">
           <div class="phaseTag">STEP 4 • INTERPRET THE RESULT</div>
 
           <div class="question">
-            Based on your observation, how should the tested sample be classified?
+            Based on the indicator observation, how should the tested sample be classified?
           </div>
 
           <div class="interpretBox">
-            <b>Think scientifically:</b> use the indicator colour change — not the sample name alone.
+            <b>Science skill:</b> First observe the change. Then interpret what that change means.
           </div>
 
           <div class="options optionsLocked" id="options">
-            <button class="option acid" data-value="acid" type="button">🍋 ACID<small>Acidic behaviour</small></button>
-            <button class="option base" data-value="base" type="button">🧼 BASE<small>Basic behaviour</small></button>
-            <button class="option salt" data-value="salt" type="button">🧂 NEUTRAL SALT<small>Neutral behaviour</small></button>
+            <button class="option acid" data-value="acid" type="button">
+              🍋 ACID
+              <small>Acidic solution</small>
+            </button>
+
+            <button class="option base" data-value="base" type="button">
+              🧼 BASE
+              <small>Basic solution</small>
+            </button>
+
+            <button class="option salt" data-value="salt" type="button">
+              🧂 NEUTRAL SALT
+              <small>Neutral salt solution</small>
+            </button>
           </div>
 
           <div class="feedback" id="feedback">
-            Run the experiment first. The answer options will unlock after you observe a result.
+            Run the experiment first. The answer options will unlock after the test.
           </div>
 
           <button id="nextBtn" class="nextBtn" type="button">NEXT EXPERIMENT ➜</button>
@@ -361,6 +1212,7 @@ button{cursor:pointer}
 
       </div>
     </section>
+
   </div>
 </main>
 
@@ -384,238 +1236,468 @@ button{cursor:pointer}
 document.addEventListener("DOMContentLoaded",()=>{
 
 const samples=[
-  {id:"lemon",name:"Lemon juice",type:"acid",colour:"#f2dc68"},
-  {id:"vinegar",name:"Vinegar",type:"acid",colour:"#e7d79b"},
+  {id:"lemon",name:"Lemon juice",type:"acid",colour:"#f1d768"},
+  {id:"vinegar",name:"Vinegar",type:"acid",colour:"#e8d99e"},
   {id:"soap",name:"Soap solution",type:"base",colour:"#d4ebfa"},
-  {id:"lime",name:"Lime water",type:"base",colour:"#eef3ec"},
-  {id:"salt",name:"Common salt solution",type:"salt",colour:"#e6f1f4"},
+  {id:"lime",name:"Lime water",type:"base",colour:"#edf3ed"},
+  {id:"salt",name:"Common salt solution",type:"salt",colour:"#e4f0f4"},
   {id:"baking",name:"Baking soda solution",type:"base",colour:"#e7edf2"}
 ];
 
-const missions=[
-  {sample:"lemon",recommended:"blueLitmus"},
-  {sample:"soap",recommended:"redLitmus"},
-  {sample:"salt",recommended:"blueLitmus"},
-  {sample:"vinegar",recommended:"chinaRose"},
-  {sample:"lime",recommended:"turmeric"},
-  {sample:"baking",recommended:"redLitmus"}
-];
-
 const indicators={
-  blueLitmus:"Blue litmus",
-  redLitmus:"Red litmus",
-  turmeric:"Turmeric",
-  chinaRose:"China rose"
+  blueLitmus:{
+    name:"Blue litmus paper",
+    mode:"paper",
+    colour:"#337fc8"
+  },
+  redLitmus:{
+    name:"Red litmus paper",
+    mode:"paper",
+    colour:"#dd5360"
+  },
+  turmeric:{
+    name:"Turmeric indicator",
+    mode:"liquid",
+    colour:"#e7c83f"
+  },
+  chinaRose:{
+    name:"China rose indicator",
+    mode:"liquid",
+    colour:"#b94783"
+  }
 };
 
-let index=0,score=0,attempt=1,locked=false,soundOn=true,testDone=false;
+const missions=["lemon","soap","salt","vinegar","lime","baking"];
+
+let index=0;
+let score=0;
+let attempt=1;
+let locked=false;
+let soundOn=true;
+let testDone=false;
+let testedSampleId="";
+
 const $=id=>document.getElementById(id);
 
 function show(id,display="flex"){$(id).style.display=display}
 function hide(id){$(id).style.display="none"}
 
+function getSample(id){
+  return samples.find(s=>s.id===id);
+}
+
 function playSound(id){
   if(!soundOn)return;
-  const a=$(id); if(!a)return;
+  const a=$(id);
+  if(!a)return;
+
   try{
-    a.pause();a.currentTime=0;a.muted=false;a.volume=1;
-    const p=a.play();if(p&&p.catch)p.catch(()=>{});
+    a.pause();
+    a.currentTime=0;
+    a.muted=false;
+    a.volume=1;
+    const p=a.play();
+    if(p && p.catch)p.catch(()=>{});
   }catch(e){}
 }
 
 function unlockAudio(){
   ["correctAudio","wrongAudio","clapAudio"].forEach(id=>{
-    const a=$(id); if(!a)return;
-    a.volume=1;a.muted=true;
+    const a=$(id);
+    if(!a)return;
+    a.volume=1;
+    a.muted=true;
+
     try{
       const p=a.play();
-      if(p&&p.then){
-        p.then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>a.muted=false);
-      }else a.muted=false;
-    }catch(e){a.muted=false}
+      if(p && p.then){
+        p.then(()=>{
+          a.pause();
+          a.currentTime=0;
+          a.muted=false;
+        }).catch(()=>a.muted=false);
+      }else{
+        a.muted=false;
+      }
+    }catch(e){
+      a.muted=false;
+    }
   });
 }
-
-function getSample(id){return samples.find(s=>s.id===id)}
 
 function populateSamples(){
   const select=$("sampleSelect");
   select.innerHTML='<option value="">Choose sample</option>';
-  samples.forEach(s=>{
-    const op=document.createElement("option");
-    op.value=s.id;op.textContent=s.name;
-    select.appendChild(op);
+
+  samples.forEach(sample=>{
+    const option=document.createElement("option");
+    option.value=sample.id;
+    option.textContent=sample.name;
+    select.appendChild(option);
   });
 }
 
-function resetVisual(){
-  $("observation").className="observation waiting";
-  $("observation").textContent="Select a sample and indicator, then run the test.";
-  $("liquid").style.setProperty("--resultColor","#dfeef5");
-  $("strip").style.display="block";
-  $("dropper").style.display="none";
-  $("drop").className="drop";
-  $("strip").style.setProperty("--stripColor","#dcb6c2");
+function lockAnswersAgain(){
+  testDone=false;
+  testedSampleId="";
   $("options").classList.add("optionsLocked");
-  document.querySelectorAll(".option").forEach(b=>{
-    b.classList.remove("correct","wrong");
-    b.disabled=false;
-  });
-}
-
-function loadMission(){
-  if(index>=missions.length){endGame();return}
-
-  const m=missions[index];
-  const sample=getSample(m.sample);
-
-  attempt=1;locked=false;testDone=false;
-
-  $("missionNo").textContent=index+1;
-  $("qno").textContent=index+1;
-  $("score").textContent=score;
-  $("progressFill").style.width=(index/missions.length*100)+"%";
-  $("attempts").textContent="❤️ ❤️";
-
-  $("missionText").textContent=
-    "Mission: Test "+sample.name+" with a suitable indicator. Observe the result, then classify the sample.";
-
-  $("sampleSelect").value="";
-  $("indicatorSelect").value="";
-  $("bottleLabel").textContent="Sample";
-  $("sampleBottle").style.setProperty("--sampleColor","#e8eff2");
-
-  $("feedback").className="feedback";
-  $("feedback").textContent="Run the experiment first. The answer options will unlock after you observe a result.";
   $("nextBtn").style.display="none";
 
-  resetVisual();
+  document.querySelectorAll(".option").forEach(btn=>{
+    btn.classList.remove("correct","wrong");
+    btn.disabled=false;
+  });
 }
 
-function observationFor(type,indicator){
+/* SAMPLE APPEARS IMMEDIATELY */
+function updateSamplePreview(){
+  lockAnswersAgain();
+
+  const id=$("sampleSelect").value;
+
+  if(!id){
+    $("sampleLabel").textContent="Choose sample";
+    $("sampleBottle").style.setProperty("--sampleColor","#eef3f5");
+    $("liquid").style.setProperty("--resultColor","#e9f2f5");
+    $("observation").className="observation";
+    $("observation").textContent="Select a sample and indicator, then click TEST SAMPLE.";
+    return;
+  }
+
+  const sample=getSample(id);
+
+  $("sampleLabel").textContent=sample.name;
+  $("sampleBottle").style.setProperty("--sampleColor",sample.colour);
+  $("liquid").style.setProperty("--resultColor",sample.colour);
+
+  $("observation").className="observation";
+  $("observation").textContent=
+    sample.name+" is now in the test beaker. Select an indicator.";
+}
+
+/* INDICATOR APPEARS IMMEDIATELY */
+function updateIndicatorPreview(){
+  lockAnswersAgain();
+
+  const id=$("indicatorSelect").value;
+
+  $("strip").className="strip";
+  $("dropper").className="dropper";
+  $("drop").className="drop";
+  $("indicatorBottle").classList.remove("visible");
+  $("litmusPack").classList.remove("visible");
+
+  if(!id){
+    $("indicatorLabel").textContent="Choose indicator";
+    $("litmusPackLabel").textContent="Litmus paper";
+
+    $("observation").className="observation";
+    $("observation").textContent=
+      $("sampleSelect").value
+      ? "Sample selected. Now choose an indicator."
+      : "Select a sample and indicator, then click TEST SAMPLE.";
+    return;
+  }
+
+  const info=indicators[id];
+
+  if(info.mode==="paper"){
+    /* No bottle at all for litmus */
+    $("litmusPack").classList.add("visible");
+    $("litmusPack").style.setProperty("--paperColor",info.colour);
+    $("litmusPackLabel").textContent=info.name;
+
+    $("strip").className="strip show";
+    $("strip").style.setProperty("--stripBase",info.colour);
+    $("strip").style.setProperty("--stripResult",info.colour);
+  }
+
+  if(info.mode==="liquid"){
+    $("indicatorBottle").classList.add("visible");
+    $("indicatorBottle").style.setProperty("--indicatorColor",info.colour);
+    $("indicatorLabel").textContent=info.name;
+
+    $("dropper").className="dropper show";
+    $("dropper").style.setProperty("--dropperLiquid",info.colour);
+    $("drop").style.setProperty("--dropColor",info.colour);
+  }
+
+  $("observation").className="observation";
+  $("observation").textContent=
+    $("sampleSelect").value
+    ? info.name+" is ready. Click TEST SAMPLE."
+    : info.name+" selected. Now choose a sample.";
+}
+
+/* SCIENTIFIC RESULTS */
+function getReaction(type,indicator){
+
   if(indicator==="blueLitmus"){
-    if(type==="acid")return {text:"Observation: Blue litmus turns red.",colour:"#df4457",kind:"strip"};
-    return {text:"Observation: Blue litmus shows no colour change.",colour:"#337fc8",kind:"strip"};
+    if(type==="acid"){
+      return{
+        text:"Observation: Blue litmus paper turns red.",
+        kind:"paper",
+        result:"#df4457"
+      };
+    }
+    return{
+      text:"Observation: Blue litmus paper remains blue.",
+      kind:"paper",
+      result:"#337fc8"
+    };
   }
 
   if(indicator==="redLitmus"){
-    if(type==="base")return {text:"Observation: Red litmus turns blue.",colour:"#337fc8",kind:"strip"};
-    return {text:"Observation: Red litmus shows no colour change.",colour:"#dd5360",kind:"strip"};
+    if(type==="base"){
+      return{
+        text:"Observation: Red litmus paper turns blue.",
+        kind:"paper",
+        result:"#337fc8"
+      };
+    }
+    return{
+      text:"Observation: Red litmus paper remains red.",
+      kind:"paper",
+      result:"#dd5360"
+    };
   }
 
   if(indicator==="turmeric"){
-    if(type==="base")return {text:"Observation: Yellow turmeric turns reddish-brown.",colour:"#9e4c2d",kind:"liquid"};
-    return {text:"Observation: Turmeric remains yellow.",colour:"#e8c948",kind:"liquid"};
+    if(type==="base"){
+      return{
+        text:"Observation: Yellow turmeric indicator turns reddish-brown.",
+        kind:"liquid",
+        result:"#9f4b2d"
+      };
+    }
+    return{
+      text:"Observation: Turmeric indicator remains yellow.",
+      kind:"liquid",
+      result:"#e7c83f"
+    };
   }
 
   if(indicator==="chinaRose"){
-    if(type==="acid")return {text:"Observation: China rose indicator turns dark pink/magenta.",colour:"#d42c79",kind:"liquid"};
-    if(type==="base")return {text:"Observation: China rose indicator turns green.",colour:"#47a564",kind:"liquid"};
-    return {text:"Observation: China rose indicator shows little/no characteristic acidic or basic change.",colour:"#b85b91",kind:"liquid"};
+    if(type==="acid"){
+      return{
+        text:"Observation: China rose indicator turns dark pink/magenta.",
+        kind:"liquid",
+        result:"#d42c79"
+      };
+    }
+
+    if(type==="base"){
+      return{
+        text:"Observation: China rose indicator turns green.",
+        kind:"liquid",
+        result:"#47a564"
+      };
+    }
+
+    return{
+      text:"Observation: China rose indicator shows no characteristic acidic or basic colour change.",
+      kind:"liquid",
+      result:"#b85b91"
+    };
   }
 }
 
 function runTest(){
   if(locked)return;
 
-  const selectedSample=$("sampleSelect").value;
-  const indicator=$("indicatorSelect").value;
+  const sampleId=$("sampleSelect").value;
+  const indicatorId=$("indicatorSelect").value;
 
-  if(!selectedSample || !indicator){
+  if(!sampleId || !indicatorId){
     $("feedback").className="feedback bad";
-    $("feedback").textContent="Select both a sample and an indicator before testing.";
+    $("feedback").textContent=
+      "Select both the sample and the indicator before clicking TEST SAMPLE.";
     return;
   }
 
-  const mission=missions[index];
-  const sample=getSample(selectedSample);
+  const sample=getSample(sampleId);
+  const info=indicators[indicatorId];
+  const reaction=getReaction(sample.type,indicatorId);
 
-  $("bottleLabel").textContent=sample.name;
-  $("sampleBottle").style.setProperty("--sampleColor",sample.colour);
+  testedSampleId=sampleId;
+  testDone=true;
 
-  const result=observationFor(sample.type,indicator);
+  /* PAPER TEST */
+  if(reaction.kind==="paper"){
+    $("litmusPack").classList.add("visible");
+    $("litmusPack").style.setProperty("--paperColor",info.colour);
+    $("litmusPackLabel").textContent=info.name;
 
-  $("observation").className="observation";
-  $("observation").textContent=result.text;
+    $("strip").className="strip show dipped";
+    $("strip").style.setProperty("--stripBase",info.colour);
+    $("strip").style.setProperty("--stripResult",reaction.result);
 
-  if(result.kind==="strip"){
-    $("strip").style.display="block";
-    $("dropper").style.display="none";
-    $("strip").style.setProperty("--stripColor",result.colour);
-  }else{
-    $("strip").style.display="none";
-    $("dropper").style.display="block";
-    $("drop").style.setProperty("--dropColor",result.colour);
+    $("indicatorBottle").classList.remove("visible");
+    $("dropper").className="dropper";
+    $("drop").className="drop";
+
+    $("liquid").style.setProperty("--resultColor",sample.colour);
+  }
+
+  /* LIQUID INDICATOR TEST */
+  if(reaction.kind==="liquid"){
+    $("litmusPack").classList.remove("visible");
+    $("strip").className="strip";
+
+    $("indicatorBottle").classList.add("visible");
+    $("indicatorBottle").style.setProperty("--indicatorColor",info.colour);
+    $("indicatorLabel").textContent=info.name;
+
+    $("dropper").className="dropper show";
+    $("dropper").style.setProperty("--dropperLiquid",info.colour);
+
+    $("drop").style.setProperty("--dropColor",info.colour);
     $("drop").className="drop";
     void $("drop").offsetWidth;
     $("drop").className="drop animateDrop";
-    setTimeout(()=>$("liquid").style.setProperty("--resultColor",result.colour),450);
+
+    $("liquid").style.setProperty("--resultColor",sample.colour);
+
+    setTimeout(()=>{
+      $("liquid").style.setProperty("--resultColor",reaction.result);
+    },430);
   }
 
-  testDone=true;
+  $("observation").className="observation result";
+  $("observation").textContent=reaction.text;
+
   $("options").classList.remove("optionsLocked");
 
-  if(selectedSample!==mission.sample){
-    $("feedback").className="feedback bad";
-    $("feedback").innerHTML=
-      "You tested <b>"+sample.name+"</b>. That experiment is valid, but this mission asks you to test <b>"+
-      getSample(mission.sample).name+"</b>. You may still interpret this result, or select the mission sample and test again.";
-  }else{
-    $("feedback").className="feedback";
-    $("feedback").textContent="Experiment complete. Now interpret the observation and classify the sample.";
+  $("feedback").className="feedback";
+  $("feedback").textContent=
+    "Experiment complete. Interpret the observation and select the correct classification.";
+}
+
+function resetForMission(){
+  attempt=1;
+  locked=false;
+  testDone=false;
+  testedSampleId="";
+
+  $("attempts").textContent="❤️ ❤️";
+
+  $("sampleSelect").value="";
+  $("indicatorSelect").value="";
+
+  $("sampleLabel").textContent="Choose sample";
+  $("sampleBottle").style.setProperty("--sampleColor","#eef3f5");
+
+  $("indicatorBottle").classList.remove("visible");
+  $("litmusPack").classList.remove("visible");
+
+  $("strip").className="strip";
+  $("dropper").className="dropper";
+  $("drop").className="drop";
+
+  $("liquid").style.setProperty("--resultColor","#e9f2f5");
+
+  $("observation").className="observation";
+  $("observation").textContent=
+    "Select a sample and indicator, then click TEST SAMPLE.";
+
+  $("options").classList.add("optionsLocked");
+
+  document.querySelectorAll(".option").forEach(btn=>{
+    btn.classList.remove("correct","wrong");
+    btn.disabled=false;
+  });
+
+  $("feedback").className="feedback";
+  $("feedback").textContent=
+    "Run the experiment first. The answer options will unlock after the test.";
+
+  $("nextBtn").style.display="none";
+}
+
+function loadMission(){
+  if(index>=missions.length){
+    endGame();
+    return;
   }
+
+  const target=getSample(missions[index]);
+
+  $("missionNo").textContent=index+1;
+  $("qno").textContent=index+1;
+  $("score").textContent=score;
+  $("progressFill").style.width=(index/missions.length*100)+"%";
+
+  $("missionText").textContent=
+    "Mission: Test "+target.name+
+    ". Select it from the sample list, choose an indicator, perform the test and interpret the result.";
+
+  resetForMission();
 }
 
 function checkAnswer(choice,btn){
-  if(locked || !testDone)return;
+  if(locked || !testDone || !testedSampleId)return;
 
-  const selectedSample=$("sampleSelect").value;
-  if(!selectedSample)return;
-
-  const sample=getSample(selectedSample);
+  const sample=getSample(testedSampleId);
   const buttons=[...document.querySelectorAll(".option")];
 
   if(choice===sample.type){
     locked=true;
     score++;
     $("score").textContent=score;
+
     btn.classList.add("correct");
     buttons.forEach(b=>b.disabled=true);
 
-    const label=sample.type==="acid"?"acid":sample.type==="base"?"base":"neutral salt solution";
+    const label=
+      sample.type==="acid"
+      ? "acid"
+      : sample.type==="base"
+      ? "base"
+      : "neutral salt solution";
 
     $("feedback").className="feedback good";
     $("feedback").innerHTML=
-      "✅ <b>Correct interpretation!</b><br>"+sample.name+" behaves as a <b>"+label+
+      "✅ <b>Correct interpretation!</b><br>"+
+      sample.name+" behaves as a <b>"+label+
       "</b> in this activity. Your conclusion is based on the indicator observation.";
 
     $("nextBtn").style.display="block";
     playSound("correctAudio");
-  }else{
+  }
+  else{
     btn.classList.add("wrong");
     playSound("wrongAudio");
 
     if(attempt===1){
       attempt=2;
       $("attempts").textContent="❤️";
+
       $("feedback").className="feedback bad";
       $("feedback").textContent=
-        "❌ Not quite. Re-read the colour change. You may also repeat the experiment using another indicator.";
+        "❌ Not quite. Look again at the observed colour change. You may also repeat the experiment with another indicator.";
+
       setTimeout(()=>btn.classList.remove("wrong"),450);
-    }else{
+    }
+    else{
       locked=true;
       $("attempts").textContent="—";
 
       const correct=buttons.find(b=>b.dataset.value===sample.type);
       if(correct)correct.classList.add("correct");
+
       buttons.forEach(b=>b.disabled=true);
 
-      const label=sample.type==="acid"?"Acid":sample.type==="base"?"Base":"Neutral salt solution";
+      const label=
+        sample.type==="acid"
+        ? "Acid"
+        : sample.type==="base"
+        ? "Base"
+        : "Neutral salt solution";
 
       $("feedback").className="feedback good";
       $("feedback").innerHTML=
         "💡 <b>Correct classification:</b> "+label+
-        ". Connect the observed indicator colour with the indicator rule.";
+        ". Use the indicator colour change to reach the conclusion.";
 
       $("nextBtn").style.display="block";
     }
@@ -623,7 +1705,9 @@ function checkAnswer(choice,btn){
 }
 
 function endGame(){
-  hide("game");show("end");
+  hide("game");
+  show("end");
+
   $("finalScore").textContent=score;
 
   let badge="🌱 Indicator Learner";
@@ -631,38 +1715,65 @@ function endGame(){
   if(score===6)badge="🏆 Live Lab Master";
 
   $("badge").textContent=badge;
+
   $("finalText").textContent=
     score===6
-    ? "Excellent! You selected indicators, observed virtual colour changes and interpreted every experiment correctly."
-    : "Good investigation! Replay the lab and focus on linking each indicator colour change to acidic, basic or neutral behaviour.";
+    ? "Excellent! You selected samples and indicators, observed the reactions and correctly interpreted all six experiments."
+    : "Good investigation! Replay the lab and focus on connecting each indicator change with acidic, basic or neutral behaviour.";
 
   playSound("clapAudio");
 }
 
 function toggleSound(){
   soundOn=!soundOn;
+
   $("topSound").textContent=soundOn?"🔊":"🔇";
   $("soundBtn").textContent=soundOn?"Mute":"Turn Sound On";
-  $("soundStatus").textContent=soundOn?"🔊 Sound feedback ON":"🔇 Sound feedback OFF";
+  $("soundStatus").textContent=
+    soundOn?"🔊 Sound feedback ON":"🔇 Sound feedback OFF";
+
   if(soundOn)playSound("correctAudio");
 }
 
 populateSamples();
 
-$("introNext").addEventListener("click",()=>{hide("intro");show("how")});
-$("startBtn").addEventListener("click",()=>{unlockAudio();hide("how");show("game","block");index=0;score=0;loadMission()});
+$("sampleSelect").addEventListener("change",updateSamplePreview);
+$("indicatorSelect").addEventListener("change",updateIndicatorPreview);
 $("testBtn").addEventListener("click",runTest);
-$("nextBtn").addEventListener("click",()=>{if(!locked)return;index++;loadMission()});
+
+document.querySelectorAll(".option").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    checkAnswer(btn.dataset.value,btn);
+  });
+});
+
+$("introNext").addEventListener("click",()=>{
+  hide("intro");
+  show("how");
+});
+
+$("startBtn").addEventListener("click",()=>{
+  unlockAudio();
+  hide("how");
+  show("game","block");
+  index=0;
+  score=0;
+  loadMission();
+});
+
+$("nextBtn").addEventListener("click",()=>{
+  if(!locked)return;
+  index++;
+  loadMission();
+});
+
 $("againBtn").addEventListener("click",()=>location.reload());
 $("homeBtn").addEventListener("click",()=>location.reload());
 $("topSound").addEventListener("click",toggleSound);
 $("soundBtn").addEventListener("click",toggleSound);
 
-document.querySelectorAll(".option").forEach(btn=>{
-  btn.addEventListener("click",()=>checkAnswer(btn.dataset.value,btn));
-});
-
 });
 </script>
+
 </body>
 </html>
