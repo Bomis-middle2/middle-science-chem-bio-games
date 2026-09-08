@@ -2,215 +2,3356 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Metal vs Non-Metal Explorer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal vs Non-Metal Explorer | Grade 7</title>
 
 <style>
-body {
-  margin:0; font-family:Arial, sans-serif; background:url('assets/metal-nonmetal-bg.png') center/cover no-repeat; background-size:cover;
+*{box-sizing:border-box}
+:root{
+  --navy:#0c4e78;
+  --blue:#1789c7;
+  --sky:#dff4ff;
+  --green:#35a65a;
+  --red:#e95555;
+  --gold:#ffc93d;
+  --ink:#203040;
+  --soft:#f6fbff;
+  --panel:#ffffff;
+  --line:#cfe0ec;
+}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:"Trebuchet MS",Arial,sans-serif;
+  color:var(--ink);
+  background:
+    linear-gradient(rgba(236,248,255,.92),rgba(255,255,255,.96)),
+    url('assets/metal-nonmetal-bg.png') center/cover fixed no-repeat;
+}
+body{overflow-x:hidden}
+button{font:inherit}
+button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
+
+/* ---------- SPLASH ---------- */
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  animation:splashOut .45s 1.25s forwards;
+}
+#splash img{width:155px;max-width:46vw}
+@keyframes splashOut{
+  to{opacity:0;visibility:hidden;pointer-events:none}
+}
+
+/* ---------- COMMON ---------- */
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.panel{
+  width:min(1020px,97vw);
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  border:4px solid #fff;
+  box-shadow:0 20px 50px rgba(19,75,112,.17);
+}
+.primary{
+  border:0;
+  border-radius:15px;
+  padding:13px 25px;
+  background:linear-gradient(#23aa55,#16843d);
+  color:#fff;
+  font-weight:900;
+  box-shadow:0 5px 0 #0c642c;
+  cursor:pointer;
+}
+.primary:active{transform:translateY(2px);box-shadow:0 3px 0 #0c642c}
+
+/* ---------- INTRO ---------- */
+#intro{display:flex}
+.introHero{
+  min-height:400px;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  background:
+    linear-gradient(rgba(223,244,255,.83),rgba(198,228,244,.9)),
+    url('assets/metal-nonmetal-bg.png') center/cover no-repeat;
+}
+.introLogo{
+  position:absolute;
+  left:20px;
+  top:18px;
+  width:115px;
+  background:#fff;
+  padding:6px;
+  border-radius:12px;
+  z-index:5;
+}
+.introTitle{
+  position:relative;
+  z-index:4;
+  padding-top:72px;
+}
+.introTitle h1{
+  margin:0;
+  font-size:clamp(43px,7vw,73px);
+  line-height:.92;
+  color:#08689d;
+  font-weight:900;
+  letter-spacing:.5px;
+  text-shadow:
+    0 2px 0 #fff,
+    0 5px 0 rgba(0,68,105,.12);
+}
+.introTitle h1 span{
+  display:block;
+  color:#093f68;
+  font-size:.77em;
+}
+.introTitle p{
+  display:inline-block;
+  margin-top:15px;
+  padding:8px 18px;
+  border-radius:999px;
+  background:#0b527d;
+  color:#fff;
+  font-weight:900;
+}
+.introSamples{
+  position:absolute;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  width:520px;
+  max-width:90%;
+  height:155px;
+  z-index:3;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:28px;
+}
+.introRock{
+  width:112px;
+  height:84px;
+  clip-path:polygon(12% 62%,24% 19%,52% 5%,88% 22%,100% 58%,80% 92%,30% 95%);
+  border-radius:18px;
+  filter:drop-shadow(0 8px 6px rgba(0,0,0,.18));
+}
+.introRock.r1{
+  background:linear-gradient(135deg,#ef8b4e 0 20%,#b85c25 21% 43%,#f1a06d 44% 65%,#96451d 66%);
+}
+.introRock.r2{
+  width:105px;height:105px;
+  border-radius:50%;
+  clip-path:none;
+  background:radial-gradient(circle at 30% 25%,#fff,#b9c3c9 24%,#65737d 62%,#dce2e6 75%,#606d75);
+}
+.introRock.r3{
+  background:linear-gradient(135deg,#65676e,#30343b 35%,#787a7d 45%,#1f2226 68%,#54565b);
+}
+.introBottom{
+  padding:20px 22px 24px;
+  text-align:center;
+}
+.howGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin:14px 0 18px;
+}
+.howGrid div{
+  background:#f2f9fd;
+  border:2px solid #cee4f2;
+  border-radius:14px;
+  padding:10px 8px;
+  font-weight:900;
+}
+
+/* ---------- HOW TO PLAY ---------- */
+#how{display:none}
+.howPanel{padding:22px}
+.howTitle{
+  margin:-22px -22px 18px;
+  padding:14px;
+  background:linear-gradient(90deg,#0c527f,#0875a8);
+  color:#fff;
+  font-size:30px;
+  font-weight:900;
+  text-align:center;
+}
+.steps{display:grid;gap:10px}
+.step{
+  display:grid;
+  grid-template-columns:44px 1fr 48px;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  border-radius:14px;
+  background:#f5fbff;
+  border:2px solid #e1eef6;
+}
+.num{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#1789c7;
+  color:#fff;
+  font-weight:900;
+}
+.stepIcon{
+  font-size:28px;
+  text-align:center;
+}
+
+/* ---------- GAME ---------- */
+#game{
+  display:none;
+  min-height:100vh;
+  padding:7px;
+}
+.gameWrap{
+  width:min(1180px,100%);
+  margin:auto;
+}
+.topbar{
+  display:grid;
+  grid-template-columns:44px 150px 1fr 112px 44px;
+  gap:6px;
+  margin-bottom:6px;
+}
+.topbox,.iconBtn{
+  min-height:44px;
+  border:0;
+  border-radius:11px;
+  background:#fff;
+  box-shadow:0 4px 13px rgba(0,0,0,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+.iconBtn{
+  background:linear-gradient(#1689c6,#0b6194);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+.missionBox{
+  background:linear-gradient(#0e628f,#084a72);
+  color:#fff;
+}
+.scoreBox{
+  background:linear-gradient(#fff3b9,#fff);
+}
+.progressRow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  margin-bottom:6px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  font-size:12px;
+  font-weight:900;
+}
+.progress{
+  flex:1;
+  height:9px;
+  border-radius:999px;
+  background:#dfeaf1;
+  overflow:hidden;
+}
+.progressFill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#0b7eb9,#22b1d9);
+  transition:.3s;
+}
+.gameCard{
+  overflow:hidden;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 10px 27px rgba(0,0,0,.1);
+}
+.missionPrompt{
+  padding:10px 14px;
+  text-align:center;
+  background:#fff7d8;
+  border-bottom:2px solid #ead783;
+  font-size:17px;
+  font-weight:900;
+}
+.playArea{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  min-height:520px;
+}
+
+/* ---------- LAB SIDE ---------- */
+.labSide{
+  padding:12px;
+  background:linear-gradient(#f5fbff,#eaf5fb);
+}
+.labCard{
+  min-height:495px;
+  border:3px solid #d5e5ee;
+  border-radius:18px;
+  background:linear-gradient(#f5fbff 0 76%,#c8a174 76%);
+  overflow:hidden;
+  position:relative;
+}
+.sampleStage{
+  position:absolute;
+  left:50%;
+  top:28px;
+  transform:translateX(-50%);
+  width:92%;
+  text-align:center;
+}
+.sampleTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#0a4e78;
+}
+.sampleSubtitle{
+  font-size:12px;
+  font-weight:bold;
+  color:#647887;
+  margin-top:2px;
+}
+.samplePlate{
+  position:relative;
+  width:230px;
+  height:125px;
+  margin:10px auto 4px;
+}
+.plate{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:210px;
+  height:48px;
+  border-radius:50%;
+  border:5px solid #9eb6c7;
+  background:radial-gradient(ellipse,#f4fbff 0 45%,#c5d6e1 46% 68%,#8fa8b8 69%);
+}
+.sampleRock{
+  position:absolute;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%);
+  width:116px;
+  height:90px;
+  clip-path:polygon(9% 66%,24% 20%,55% 5%,86% 20%,100% 59%,80% 94%,30% 95%);
+  background:linear-gradient(135deg,#7e858b,#b0b7bb 24%,#626970 46%,#9ea7ac 60%,#555c62 78%);
+  filter:drop-shadow(0 7px 5px rgba(0,0,0,.18));
+  transition:.45s ease;
+}
+.sampleRock.shiny{
+  background:linear-gradient(135deg,#f8fbfc,#8c969d 16%,#e9eef0 34%,#69737a 48%,#fff 62%,#7b858c 78%,#dce3e7);
+}
+.sampleRock.dull{
+  background:linear-gradient(135deg,#464b50,#777b7e 30%,#31363b 57%,#565b60);
+}
+.sampleRock.flat{
+  width:148px;
+  height:48px;
+  clip-path:polygon(5% 55%,15% 15%,83% 8%,98% 48%,87% 88%,12% 92%);
+}
+.sampleRock.cracked{
+  background:
+    linear-gradient(72deg,transparent 0 46%,#16191c 47% 52%,transparent 53%),
+    linear-gradient(135deg,#555b60,#272b30);
+}
+.sampleRock.wire{
+  width:145px;
+  height:15px;
+  clip-path:none;
+  border-radius:999px;
+  background:linear-gradient(#eef5f8,#606b72,#dce4e8);
+}
+.sampleRock.broken{
+  width:120px;
+  height:70px;
+  background:
+    linear-gradient(65deg,transparent 0 46%,#15191d 47% 53%,transparent 54%),
+    linear-gradient(135deg,#555b60,#292e32);
+}
+
+
+/* ---------- DISTINCT SAMPLE VISUALS ---------- */
+.sampleRock.sampleA{
+  clip-path:polygon(7% 57%,18% 14%,82% 7%,98% 44%,88% 88%,12% 92%);
+  background:linear-gradient(135deg,#f1a16f,#b75f2e 35%,#e88850 58%,#88421f);
+}
+.sampleRock.sampleB{
+  clip-path:polygon(8% 67%,20% 20%,53% 5%,88% 25%,98% 64%,75% 95%,27% 91%);
+  background:linear-gradient(135deg,#474b4e,#171a1d 41%,#686c70 58%,#25282b);
+}
+.sampleRock.sampleC{
+  clip-path:none;
+  border-radius:50%;
+  width:94px;
+  height:94px;
+  background:radial-gradient(circle at 28% 22%,#fff,#e7edf0 18%,#89959c 45%,#f6f9fa 63%,#66747c 78%,#ccd5da);
+}
+.sampleRock.sampleD{
+  clip-path:polygon(10% 70%,18% 30%,45% 4%,88% 19%,100% 61%,76% 92%,30% 96%);
+  background:linear-gradient(135deg,#ffe14b,#d9ad08 34%,#fff081 51%,#c89505 79%);
+}
+.sampleRock.sampleE{
+  clip-path:polygon(5% 54%,15% 14%,84% 8%,98% 48%,87% 88%,12% 91%);
+  background:linear-gradient(135deg,#f8fbfc,#aeb9bf 20%,#e7edef 42%,#7d8a91 63%,#f7fafb 79%);
+}
+.sampleRock.sampleX{
+  clip-path:polygon(10% 65%,24% 15%,55% 5%,90% 28%,97% 68%,70% 95%,25% 90%);
+  background:linear-gradient(135deg,#5d6165,#25282c 37%,#777b7e 55%,#34383c 76%);
+}
+
+/* TEST SELECTOR */
+.testPanel{
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:210px;
+}
+.testLabel{
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:7px;
+  color:#3c596b;
+}
+.testButtons{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+}
+.testBtn{
+  min-height:64px;
+  border:2px solid #bdd2df;
+  border-radius:11px;
+  background:#fff;
+  color:#28465a;
+  padding:5px 3px;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+.testBtn span{
+  display:block;
+  font-size:23px;
+  margin-bottom:2px;
+}
+.testBtn.selected{
+  background:#fff1b6;
+  border-color:#e5b82d;
+  box-shadow:0 0 0 3px rgba(255,205,57,.16);
+}
+.testBtn.required:not(.selected){
+  border-color:#57a9d0;
+}
+.testBtn.done{
+  background:#e7f6eb;
+  border-color:#6ab77f;
+}
+
+/* EXPERIMENT PANEL */
+.experimentBox{
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:304px;
+  bottom:12px;
+  border:3px solid #e2c95d;
+  border-radius:14px;
+  background:#fff9d9;
+  padding:9px;
+  text-align:center;
+}
+.experimentTitle{
+  font-size:16px;
+  font-weight:900;
+  color:#3a3a32;
+}
+.experimentVisual{
+  height:94px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:4px 0;
+  position:relative;
+}
+.runBtn{
+  border:0;
+  border-radius:11px;
+  padding:9px 22px;
+  background:linear-gradient(#f47c16,#d85706);
+  color:#fff;
+  font-weight:900;
+  box-shadow:0 4px 0 #a63b00;
+}
+.runBtn:disabled{
+  background:#b7b7b7;
+  box-shadow:0 4px 0 #8a8a8a;
+  cursor:not-allowed;
+}
+.observation{
+  display:none;
+  margin-top:7px;
+  padding:7px 9px;
+  border-radius:10px;
+  background:#fff;
+  border:2px solid #e3c85a;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.3;
+}
+.observation.show{display:block}
+
+/* apparatus */
+.shineStar{
+  display:none;
+  position:absolute;
+  color:#ffd134;
+  font-size:31px;
+  animation:twinkle .7s infinite alternate;
+}
+.s1{left:34%;top:18%}.s2{right:33%;top:32%;font-size:23px}
+@keyframes twinkle{to{transform:scale(1.25);opacity:.55}}
+
+.hammer{
+  font-size:52px;
+  transform:rotate(-18deg);
+}
+.hammer.hit{animation:hammerHit .55s}
+@keyframes hammerHit{
+  0%{transform:rotate(-18deg) translateY(-18px)}
+  60%{transform:rotate(12deg) translateY(8px)}
+  100%{transform:rotate(-18deg)}
+}
+
+
+/* ---------- CLEAR CONDUCTIVITY APPARATUS ---------- */
+.conductivityRig{
+  position:relative;
+  width:330px;
+  max-width:96%;
+  height:92px;
+  margin:auto;
+}
+.cBattery{
+  position:absolute;
+  left:2px;
+  top:28px;
+  width:34px;
+  height:48px;
+  border:3px solid #30363a;
+  border-radius:6px;
+  background:linear-gradient(90deg,#272c2f 0 27%,#e64040 28% 100%);
+}
+.cBattery:before{
+  content:"+";
+  position:absolute;
+  right:4px;
+  top:-18px;
+  color:#c72f2f;
+  font-weight:900;
+  font-size:14px;
+}
+.cBattery:after{
+  content:"−";
+  position:absolute;
+  left:4px;
+  top:-18px;
+  color:#30363a;
+  font-weight:900;
+  font-size:14px;
+}
+.cWire{
+  position:absolute;
+  height:4px;
+  background:#2e3438;
+  border-radius:999px;
+  transition:.3s;
+}
+.cWire.left{
+  left:34px;
+  top:54px;
+  width:90px;
+}
+.cWire.right{
+  right:49px;
+  top:54px;
+  width:80px;
+}
+.cWire.bottom{
+  left:17px;
+  right:21px;
+  top:81px;
+}
+.cClip{
+  position:absolute;
+  top:44px;
+  width:21px;
+  height:16px;
+  border:3px solid #465056;
+  border-radius:3px;
+  background:#c9d1d5;
+  z-index:3;
+}
+.cClip.left{left:111px}
+.cClip.right{right:112px}
+.cSample{
+  position:absolute;
+  left:50%;
+  top:39px;
+  transform:translateX(-50%);
+  width:78px;
+  height:32px;
+  clip-path:polygon(5% 60%,18% 8%,78% 4%,98% 45%,82% 94%,16% 90%);
+  background:linear-gradient(135deg,#747c81,#30363a 55%,#929a9f);
+  z-index:2;
+}
+.cBulb{
+  position:absolute;
+  right:0;
+  top:14px;
+  width:61px;
+  height:61px;
+  border:4px solid #66572e;
+  border-radius:50%;
+  background:#e9ece7;
+  transition:.35s;
+}
+.cBulb:before{
+  content:"";
+  position:absolute;
+  left:19px;
+  bottom:-14px;
+  width:20px;
+  height:17px;
+  border:3px solid #4e4e48;
+  border-radius:2px;
+  background:#8c8c82;
+}
+.cBulb:after{
+  content:"∿";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#777765;
+  font-size:25px;
+  font-weight:900;
+}
+.cStatus{
+  position:absolute;
+  left:50%;
+  bottom:-2px;
+  transform:translateX(-50%);
+  padding:3px 9px;
+  border-radius:999px;
+  background:#eef2f4;
+  color:#53636d;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.cLabel{
+  position:absolute;
+  top:72px;
+  font-size:7px;
+  font-weight:900;
+  color:#43525c;
+}
+.cLabel.battery{left:0}
+.cLabel.sample{left:50%;transform:translateX(-50%)}
+.cLabel.bulb{right:4px}
+.conductivityRig.conducting .cWire{
+  background:#2cb46a;
+  box-shadow:0 0 7px rgba(44,180,106,.7);
+}
+.conductivityRig.conducting .cSample{
+  background:linear-gradient(135deg,#f7fafb,#87939a 32%,#dfe6ea 61%,#66737b);
+}
+.conductivityRig.conducting .cBulb{
+  background:#ffe56f;
+  box-shadow:0 0 22px 9px rgba(255,210,58,.58);
+}
+.conductivityRig.conducting .cBulb:after{
+  color:#e48b00;
+}
+.conductivityRig.conducting .cStatus{
+  background:#ddf5e5;
+  color:#15713a;
+}
+.conductivityRig.nonconducting .cStatus{
+  background:#ffe6e3;
+  color:#a23831;
+}
+.cBreak{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:34px;
+  transform:translateX(-50%);
+  z-index:5;
+  color:#dd3e3e;
+  font-size:31px;
+  font-weight:900;
+}
+.conductivityRig.nonconducting .cBreak{display:block}
+
+/* ---------- CLEAR SONORITY APPARATUS ---------- */
+.sonorityRig{
+  position:relative;
+  width:300px;
+  max-width:94%;
+  height:92px;
+  margin:auto;
+}
+.sStand{
+  position:absolute;
+  left:50%;
+  bottom:7px;
+  transform:translateX(-50%);
+  width:190px;
+  height:9px;
+  border-radius:7px;
+  background:#7f8d96;
+}
+.sSupport{
+  position:absolute;
+  bottom:15px;
+  width:15px;
+  height:35px;
+  border-radius:5px 5px 0 0;
+  background:#9aa8b0;
+}
+.sSupport.left{left:82px}
+.sSupport.right{right:82px}
+.sSample{
+  position:absolute;
+  left:50%;
+  top:36px;
+  transform:translateX(-50%);
+  width:125px;
+  height:23px;
+  border:3px solid #4b565d;
+  border-radius:6px;
+  background:linear-gradient(#eff4f6,#7d8990 50%,#dce3e6);
+  transform-origin:center;
+}
+.sHammer{
+  position:absolute;
+  left:28px;
+  top:5px;
+  font-size:44px;
+  transform:rotate(-28deg);
+  transform-origin:70% 80%;
+}
+.sHammer.hit{
+  animation:sonorityHit .55s ease;
+}
+@keyframes sonorityHit{
+  0%{transform:rotate(-38deg)}
+  62%{transform:rotate(10deg) translate(28px,18px)}
+  100%{transform:rotate(-28deg)}
+}
+.sWaves{
+  position:absolute;
+  right:19px;
+  top:24px;
+  display:flex;
+  gap:1px;
+  align-items:center;
+  opacity:0;
+  color:#1789c7;
+  font-weight:900;
+}
+.sWaves span:nth-child(1){font-size:18px}
+.sWaves span:nth-child(2){font-size:27px}
+.sWaves span:nth-child(3){font-size:36px}
+.sWaves.ring{
+  animation:waveShow 1s ease;
+}
+@keyframes waveShow{
+  0%{opacity:0;transform:scale(.65)}
+  30%{opacity:1;transform:scale(1.05)}
+  100%{opacity:.9;transform:scale(1)}
+}
+.sSample.ringing{
+  animation:ringBar .12s linear 7;
+}
+@keyframes ringBar{
+  0%{transform:translateX(-50%) rotate(-1.5deg)}
+  50%{transform:translateX(-50%) rotate(1.5deg)}
+  100%{transform:translateX(-50%) rotate(0)}
+}
+.sSample.dullHit{
+  background:linear-gradient(#777d80,#44494d);
+}
+.sSample.dullHit:after{
+  content:"";
+  position:absolute;
+  left:57px;
+  top:-5px;
+  width:4px;
+  height:32px;
+  background:#202326;
+  transform:rotate(18deg);
+}
+.sonorityResult{
+  position:absolute;
+  left:50%;
+  bottom:-2px;
+  transform:translateX(-50%);
+  min-width:122px;
+  text-align:center;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#eef2f4;
+  color:#54636d;
+  font-size:9px;
+  font-weight:900;
+}
+.sonorityResult.ringing{
+  background:#def3ff;
+  color:#075f8b;
+}
+.sonorityResult.dull{
+  background:#f2e7e4;
+  color:#7e443b;
+}
+
+.ductilityVisual{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:41px;
+}
+.drawWire{
+  width:80px;
+  height:10px;
+  border-radius:999px;
+  background:#767f84;
+  transition:.5s;
+}
+.drawWire.long{width:145px;background:linear-gradient(#eee,#667178,#dce2e5)}
+.drawWire.snap{
+  background:linear-gradient(90deg,#555 0 43%,transparent 44% 57%,#555 58%);
+}
+
+/* ---------- ANSWER SIDE ---------- */
+.answerSide{
+  padding:13px;
+  display:flex;
+  flex-direction:column;
+  background:#fffdf9;
+}
+.phaseTag{
+  align-self:flex-start;
+  padding:4px 9px;
+  margin-bottom:7px;
+  border-radius:999px;
+  background:#e7f5fd;
+  border:2px solid #b6deef;
+  color:#0b658f;
+  font-size:10px;
+  font-weight:900;
+}
+.answerTitle{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+.evidenceBox{
+  min-height:72px;
+  padding:8px;
+  margin-bottom:8px;
+  border-radius:12px;
+  background:#f5f8fa;
+  border:2px solid #dce7ed;
+  font-size:11px;
+  line-height:1.4;
+}
+.evidenceBox strong{color:#0a5c89}
+.answerOptions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.answerBtn{
+  min-height:92px;
+  border:0;
+  border-radius:14px;
+  color:#fff;
+  font-size:19px;
+  font-weight:900;
+  cursor:pointer;
+  padding:10px 7px;
+}
+.answerBtn small{
+  display:block;
+  margin-top:4px;
+  font-size:10px;
+  font-weight:normal;
+}
+.answerBtn.metal{
+  background:linear-gradient(#188fd0,#0d6eac);
+}
+.answerBtn.nonmetal{
+  background:linear-gradient(#f15e66,#d94148);
+}
+.answerBtn.correct{outline:5px solid #ffe16c}
+.answerBtn.wrong{outline:5px solid #ffd2ce}
+.answerBtn:disabled{cursor:default;opacity:.96}
+.answersLocked{opacity:.4;pointer-events:none}
+
+.feedback{
+  min-height:98px;
+  margin-top:9px;
+  padding:9px;
+  border-radius:12px;
+  background:#f6f7f7;
+  border:2px solid #e2e4e5;
+  line-height:1.42;
+  font-weight:bold;
+}
+.feedback.good{
+  background:#e4f7e8;
+  border-color:#98d1a4;
+}
+.feedback.bad{
+  background:#fff0e9;
+  border-color:#efb89d;
+}
+.scienceNote{
+  margin-top:7px;
+  padding:7px;
+  border-radius:10px;
+  background:#edf7fc;
+  border:2px solid #c4e1ef;
+  color:#405764;
+  font-size:10px;
+}
+.nextBtn{
+  display:none;
+  margin-top:8px;
+  border:0;
+  border-radius:11px;
+  padding:10px;
+  background:#2b9a4b;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+.soundRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:7px;
+  font-size:10px;
+  color:#687780;
+}
+.soundBtn{
+  border:0;
+  border-radius:999px;
+  padding:5px 9px;
+  background:#e9f5fb;
+  color:#0c6592;
+  font-weight:bold;
+}
+
+/* MYSTERY EVIDENCE */
+.mysteryEvidence{
+  display:none;
+  grid-template-columns:repeat(2,1fr);
+  gap:5px;
+  margin-top:5px;
+}
+.mysteryEvidence.show{display:grid}
+.evCard{
+  padding:6px;
+  min-height:45px;
+  border-radius:9px;
+  border:2px solid #dce6ec;
+  background:#fff;
+  font-size:9px;
+  font-weight:bold;
+}
+.evCard.done{
+  background:#e7f6eb;
+  border-color:#80bf90;
+}
+
+/* ---------- END ---------- */
+#end{display:none}
+.endCard{
+  width:min(650px,96vw);
+  background:#fff;
+  border-radius:27px;
+  text-align:center;
+  padding:28px;
+  box-shadow:0 18px 45px rgba(0,0,0,.14);
+}
+.endCard img{width:105px}
+.trophy{font-size:88px}
+.endCard h1{
+  color:#0b6694;
+  font-size:37px;
+  margin:7px;
+}
+.badge{
+  display:inline-block;
+  padding:9px 16px;
+  border-radius:15px;
+  background:#fff0b9;
+  border:3px solid #e8c456;
+  color:#725113;
+  font-size:23px;
+  font-weight:900;
+}
+.finalScore{
+  margin:15px auto;
+  max-width:300px;
+  padding:11px;
+  border-radius:13px;
+  background:#f1f9fd;
+  border:2px solid #cce4f1;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .playArea{grid-template-columns:1fr}
+  .topbar{grid-template-columns:40px 112px 1fr 93px 40px}
+  .labCard{min-height:475px}
+}
+@media(max-width:620px){
+  #game{padding:4px}
+  .topbar{
+    grid-template-columns:34px 82px 1fr 70px 34px;
+    gap:3px;
+    margin-bottom:4px;
+  }
+  .topbox,.iconBtn{
+    min-height:34px;
+    font-size:8.8px;
+    border-radius:8px;
+  }
+  .iconBtn{font-size:14px}
+  .progressRow{
+    padding:5px 6px;
+    margin-bottom:4px;
+    font-size:9px;
+  }
+  .progress{height:7px}
+  .missionPrompt{
+    padding:6px 7px;
+    font-size:11px;
+  }
+  .labSide{padding:4px}
+  .labCard{
+    min-height:375px;
+    border-radius:12px;
+    border-width:2px;
+  }
+  .sampleStage{top:8px}
+  .sampleTitle{font-size:14px}
+  .sampleSubtitle{font-size:8px}
+  .samplePlate{
+    width:155px;
+    height:82px;
+    margin-top:5px;
+  }
+  .plate{
+    width:142px;
+    height:32px;
+    border-width:3px;
+  }
+  .sampleRock{
+    width:76px;
+    height:60px;
+    bottom:16px;
+  }
+  .sampleRock.flat{width:98px;height:31px}
+  .sampleRock.wire{width:100px;height:10px}
+  .sampleRock.broken{width:78px;height:46px}
+  .testPanel{
+    left:5px;
+    right:5px;
+    top:112px;
+  }
+  .testLabel{font-size:8px;margin-bottom:3px}
+  .testButtons{gap:3px}
+  .testBtn{
+    min-height:47px;
+    padding:3px 1px;
+    font-size:6.8px;
+    border-radius:7px;
+  }
+  .testBtn span{
+    font-size:17px;
+    margin-bottom:1px;
+  }
+  .experimentBox{
+    left:5px;
+    right:5px;
+    top:175px;
+    bottom:5px;
+    border-width:2px;
+    border-radius:9px;
+    padding:5px;
+  }
+  .experimentTitle{font-size:10px}
+  .experimentVisual{height:67px;margin:2px 0}
+  .runBtn{
+    padding:6px 14px;
+    font-size:9px;
+    border-radius:7px;
+  }
+  .observation{
+    margin-top:3px;
+    padding:4px 5px;
+    font-size:7.8px;
+  }
+  .hammer{font-size:37px}
+  .conductivityRig{
+    width:225px;
+    height:63px;
+  }
+  .cBattery{
+    top:20px;
+    width:23px;
+    height:33px;
+    border-width:2px;
+  }
+  .cBattery:before,.cBattery:after{
+    top:-13px;
+    font-size:9px;
+  }
+  .cWire{height:3px}
+  .cWire.left{left:23px;top:38px;width:61px}
+  .cWire.right{right:34px;top:38px;width:55px}
+  .cWire.bottom{left:12px;right:15px;top:57px}
+  .cClip{
+    top:31px;
+    width:14px;
+    height:11px;
+    border-width:2px;
+  }
+  .cClip.left{left:76px}
+  .cClip.right{right:76px}
+  .cSample{
+    top:28px;
+    width:54px;
+    height:23px;
+  }
+  .cBulb{
+    top:10px;
+    width:42px;
+    height:42px;
+    border-width:3px;
+  }
+  .cBulb:before{
+    left:13px;
+    bottom:-11px;
+    width:14px;
+    height:12px;
+    border-width:2px;
+  }
+  .cBulb:after{font-size:17px}
+  .cStatus{
+    bottom:-5px;
+    font-size:6px;
+    padding:2px 5px;
+  }
+  .cLabel{display:none}
+  .cBreak{top:24px;font-size:22px}
+
+  .sonorityRig{
+    width:215px;
+    height:63px;
+  }
+  .sStand{
+    width:130px;
+    height:6px;
+    bottom:5px;
+  }
+  .sSupport{
+    bottom:10px;
+    width:10px;
+    height:24px;
+  }
+  .sSupport.left{left:58px}
+  .sSupport.right{right:58px}
+  .sSample{
+    top:25px;
+    width:86px;
+    height:17px;
+    border-width:2px;
+  }
+  .sHammer{
+    left:20px;
+    top:3px;
+    font-size:30px;
+  }
+  .sWaves{
+    right:12px;
+    top:18px;
+  }
+  .sWaves span:nth-child(1){font-size:12px}
+  .sWaves span:nth-child(2){font-size:18px}
+  .sWaves span:nth-child(3){font-size:24px}
+  .sonorityResult{
+    bottom:-4px;
+    min-width:85px;
+    font-size:6px;
+    padding:2px 5px;
+  }
+  .ductilityVisual{font-size:30px;gap:8px}
+  .drawWire{width:55px;height:7px}
+  .drawWire.long{width:95px}
+  .answerSide{padding:6px}
+  .phaseTag{
+    font-size:7px;
+    padding:3px 6px;
+    margin-bottom:4px;
+  }
+  .answerTitle{
+    font-size:12px;
+    margin-bottom:5px;
+  }
+  .evidenceBox{
+    min-height:47px;
+    padding:5px;
+    margin-bottom:5px;
+    font-size:8.5px;
+  }
+  .answerOptions{gap:5px}
+  .answerBtn{
+    min-height:60px;
+    padding:6px 3px;
+    font-size:13px;
+    border-radius:9px;
+  }
+  .answerBtn small{font-size:7px}
+  .feedback{
+    min-height:50px;
+    margin-top:5px;
+    padding:5px;
+    font-size:8.5px;
+  }
+  .scienceNote{
+    margin-top:4px;
+    padding:4px;
+    font-size:7.5px;
+  }
+  .nextBtn{
+    margin-top:4px;
+    padding:7px;
+    font-size:9px;
+  }
+  .soundRow{
+    margin-top:4px;
+    font-size:8px;
+  }
+  .soundBtn{font-size:8px;padding:3px 6px}
+  .mysteryEvidence{gap:3px}
+  .evCard{min-height:34px;padding:4px;font-size:7px}
+
+  /* mobile intro logo never overlaps title */
+  .introLogo{
+    left:50%;
+    top:10px;
+    transform:translateX(-50%);
+    width:82px;
+    padding:4px;
+  }
+  .introTitle{padding-top:108px}
+  .introTitle h1{font-size:36px}
+  .introTitle p{
+    font-size:13px;
+    padding:7px 12px;
+  }
+  .introHero{min-height:360px}
+  .introSamples{
+    transform:translateX(-50%) scale(.72);
+    transform-origin:bottom;
+  }
+  .howGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:380px){
+  .introLogo{width:74px}
+  .introTitle{padding-top:100px}
+  .introTitle h1{font-size:31px}
+}
+
+/* ==========================================================
+   UPDATED LAB LAYOUT
+   - Testing area on top-left
+   - Sample on top-right
+   - Property tabs below the testing area
+   ========================================================== */
+
+.labCard{
+  min-height:500px;
+  padding:10px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 190px;
+  grid-template-rows:minmax(330px,1fr) auto;
+  grid-template-areas:
+    "testing sample"
+    "properties properties";
+  gap:10px;
+  align-items:stretch;
+  overflow:hidden;
+  background:linear-gradient(#f5fbff 0 80%,#c8a174 80% 100%);
+}
+
+/* TOP TESTING AREA */
+.experimentBox{
+  grid-area:testing;
+  position:relative;
+  left:auto;
+  right:auto;
+  top:auto;
+  bottom:auto;
+  min-width:0;
+  min-height:330px;
+  padding:12px 12px 10px;
+  border:3px solid #e2c95d;
+  border-radius:15px;
+  background:#fff9d9;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.experimentBox::before{
+  content:"TESTING AREA";
+  align-self:flex-start;
+  background:#0b6b9d;
+  color:#fff;
+  border-radius:999px;
+  padding:4px 9px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.5px;
+  margin-bottom:3px;
+}
+
+.experimentTitle{
+  font-size:18px;
+  margin-top:1px;
+}
+
+.experimentVisual{
+  width:100%;
+  height:150px;
+  min-height:150px;
+  margin:4px 0 6px;
+  animation:none;
+}
+
+.experimentVisual.swapIn{
+  animation:testSwapIn .42s ease both;
+}
+
+@keyframes testSwapIn{
+  from{opacity:0;transform:translateY(10px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.runBtn{
+  transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+.runBtn:not(:disabled):hover{filter:brightness(1.06)}
+.runBtn:not(:disabled):active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #a63b00;
+}
+
+.observation.show{
+  animation:observationReveal .38s ease both;
+}
+@keyframes observationReveal{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* SAMPLE AT RIGHT */
+.sampleStage{
+  grid-area:sample;
+  position:relative;
+  left:auto;
+  top:auto;
+  transform:none;
+  width:auto;
+  min-width:0;
+  padding:12px 6px 8px;
+  border:3px solid #c9dee9;
+  border-radius:15px;
+  background:linear-gradient(#fff,#edf7fc);
+  text-align:center;
   overflow:hidden;
 }
 
-/* SPLASH */
-#splash {
-  position:fixed; inset:0; background:white;
-  display:flex; align-items:center; justify-content:center;
-  z-index:999;
+.sampleStage::before{
+  content:"SAMPLE";
+  display:inline-block;
+  background:#e4f4fb;
+  border:1px solid #b8dbe9;
+  color:#0a638f;
+  border-radius:999px;
+  padding:3px 9px;
+  font-size:8px;
+  font-weight:900;
+  margin-bottom:5px;
 }
 
-/* INTRO */
-#intro {
-  display:none; position:fixed; inset:0;
-  background:#ffffffdd; align-items:center; justify-content:center;
-  text-align:center; padding:20px;
-}
-.card {
-  background:white; padding:20px; border-radius:16px;
-  max-width:500px; box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-button { padding:12px 20px; background:#0077b6; color:white;
-border:none; border-radius:10px; font-size:16px; cursor:pointer; }
-
-/* GAME */
-#game { display:none; position:fixed; inset:0; padding-top:60px; }
-
-/* TOPBAR */
-.topbar {
-  position:absolute; top:0; left:0; right:0;
-  display:flex; justify-content:space-between;
-  background:white; padding:10px; font-weight:bold; z-index:10;
-  border-radius:12px;
+.sampleTitle{
+  font-size:19px;
+  margin-top:1px;
 }
 
-/* PROPERTY BOX */
-#propertyBox {
-  position:absolute; top:70px; left:50%; transform:translateX(-50%);
-  background:#ffffffcc; padding:20px; border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.15);
-  text-align:center; max-width:90%; font-weight:bold; font-size:18px;
+.sampleSubtitle{
+  font-size:9px;
 }
 
-/* OPTIONS */
-#options {
-  position:absolute; bottom:40px; left:0; right:0;
-  display:flex; justify-content:center; gap:20px;
-}
-.opt {
-  width:120px; height:120px;
-  border-radius:18px;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;
+.samplePlate{
+  width:165px;
+  max-width:100%;
+  height:155px;
+  margin:12px auto 4px;
 }
 
-/* FEEDBACK */
-#feedback {
-  position:absolute; top:40px; width:100%;
-  text-align:center; font-weight:bold; font-size:16px;
+.plate{
+  width:155px;
+  max-width:94%;
+  height:39px;
+  border-width:4px;
 }
 
-/* END */
-#end {
-  display:none; position:fixed; inset:0; background:#ffffffcc;
-  align-items:center; justify-content:center; text-align:center;
+.sampleRock{
+  width:96px;
+  height:76px;
+  bottom:28px;
 }
-#end h2 { color:#0077b6; margin-bottom:5px; }
-#end p { font-weight:bold; font-size:16px; }
-#end button { margin-top:15px; padding:10px 18px; background:#0077b6; color:white; border:none; border-radius:12px; cursor:pointer; font-size:16px;}
+
+.sampleRock.flat{width:128px;height:41px}
+.sampleRock.wire{width:125px;height:12px}
+.sampleRock.broken{width:98px;height:58px}
+
+/* PROPERTY TABS BELOW TESTING AREA */
+.testPanel{
+  grid-area:properties;
+  position:relative;
+  left:auto;
+  right:auto;
+  top:auto;
+  bottom:auto;
+  width:100%;
+  padding:7px 8px 8px;
+  border:2px solid #cfe0ea;
+  border-radius:13px;
+  background:rgba(255,255,255,.94);
+}
+
+.testLabel{
+  margin-bottom:5px;
+  color:#0b5f8a;
+  font-size:10px;
+  letter-spacing:.2px;
+}
+
+.testButtons{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:6px;
+}
+
+.testBtn{
+  position:relative;
+  min-height:61px;
+  transition:
+    transform .22s ease,
+    background .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.testBtn:hover{
+  transform:translateY(-2px);
+}
+
+.testBtn.selected{
+  transform:translateY(-3px);
+}
+
+.testBtn.done::after{
+  content:"✓";
+  position:absolute;
+  right:5px;
+  top:4px;
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#35a65a;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+}
+
+/* ---------- MISSION TRANSITION ---------- */
+.missionTransition{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(8,58,88,.68);
+  backdrop-filter:blur(4px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.missionTransition.show{
+  visibility:visible;
+  animation:missionLayer 1.05s ease both;
+}
+
+.missionTransitionCard{
+  width:min(430px,90vw);
+  padding:25px 18px;
+  border:4px solid rgba(255,255,255,.9);
+  border-radius:24px;
+  background:linear-gradient(145deg,#ffffff,#eaf7fd);
+  text-align:center;
+  box-shadow:0 18px 45px rgba(0,0,0,.23);
+  animation:missionCardIn 1.05s ease both;
+}
+
+.missionTransitionIcon{
+  font-size:54px;
+  line-height:1;
+}
+
+.missionTransitionTitle{
+  margin-top:8px;
+  color:#0a5e8a;
+  font-size:30px;
+  font-weight:900;
+}
+
+.missionTransitionSub{
+  margin-top:6px;
+  color:#526875;
+  font-size:13px;
+  font-weight:900;
+}
+
+@keyframes missionLayer{
+  0%{opacity:0}
+  15%,72%{opacity:1}
+  100%{opacity:0}
+}
+
+@keyframes missionCardIn{
+  0%{opacity:0;transform:translateY(24px) scale(.93)}
+  20%,72%{opacity:1;transform:translateY(0) scale(1)}
+  100%{opacity:0;transform:translateY(-10px) scale(.98)}
+}
+
+/* Whole card gets a subtle arrival motion after each mission change */
+.gameCard.missionEnter{
+  animation:gameCardEnter .45s ease both;
+}
+@keyframes gameCardEnter{
+  from{opacity:.4;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.feedback.good,
+.feedback.bad{
+  animation:feedbackPop .3s ease both;
+}
+@keyframes feedbackPop{
+  from{opacity:.4;transform:scale(.98)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.nextBtn{
+  transition:transform .2s ease,filter .2s ease;
+}
+.nextBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+/* TABLET */
+@media(max-width:900px){
+  .labCard{
+    min-height:485px;
+    grid-template-columns:minmax(0,1fr) 175px;
+    grid-template-rows:minmax(320px,1fr) auto;
+  }
+}
+
+/* MOBILE */
+@media(max-width:620px){
+  .labCard{
+    min-height:355px;
+    height:auto;
+    padding:5px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 102px;
+    grid-template-rows:minmax(235px,auto) auto;
+    grid-template-areas:
+      "testing sample"
+      "properties properties";
+    gap:5px;
+  }
+
+  .experimentBox{
+    min-height:235px;
+    padding:5px;
+    border-width:2px;
+    border-radius:9px;
+  }
+
+  .experimentBox::before{
+    padding:2px 5px;
+    font-size:5.8px;
+    margin-bottom:1px;
+  }
+
+  .experimentTitle{
+    font-size:9.5px;
+    line-height:1.1;
+  }
+
+  .experimentVisual{
+    height:92px;
+    min-height:92px;
+    margin:1px 0 3px;
+  }
+
+  .runBtn{
+    padding:6px 12px;
+    font-size:8.5px;
+  }
+
+  .observation{
+    margin-top:3px;
+    padding:4px 5px;
+    font-size:7.4px;
+  }
+
+  .sampleStage{
+    padding:5px 2px 3px;
+    border-width:2px;
+    border-radius:9px;
+  }
+
+  .sampleStage::before{
+    padding:2px 5px;
+    font-size:5.5px;
+    margin-bottom:2px;
+  }
+
+  .sampleTitle{
+    margin-top:0;
+    font-size:10px;
+  }
+
+  .sampleSubtitle{
+    font-size:6px;
+  }
+
+  .samplePlate{
+    width:96px;
+    height:108px;
+    margin:7px auto 2px;
+  }
+
+  .plate{
+    width:91px;
+    height:25px;
+    border-width:2px;
+  }
+
+  .sampleRock{
+    width:59px;
+    height:49px;
+    bottom:19px;
+  }
+
+  .sampleRock.sampleC{
+    width:56px;
+    height:56px;
+  }
+
+  .sampleRock.flat{width:78px;height:26px}
+  .sampleRock.wire{width:76px;height:8px}
+  .sampleRock.broken{width:62px;height:38px}
+
+  .testPanel{
+    padding:4px;
+    border-width:1.5px;
+    border-radius:8px;
+  }
+
+  .testLabel{
+    font-size:6.8px;
+    margin-bottom:2px;
+  }
+
+  .testButtons{gap:3px}
+
+  .testBtn{
+    min-height:43px;
+    font-size:6.2px;
+    padding:2px 1px;
+    border-radius:6px;
+  }
+
+  .testBtn span{
+    font-size:15px;
+  }
+
+  .testBtn.done::after{
+    right:2px;
+    top:2px;
+    width:11px;
+    height:11px;
+    font-size:7px;
+  }
+
+  .missionTransitionCard{
+    width:min(300px,88vw);
+    padding:18px 12px;
+    border-radius:18px;
+  }
+
+  .missionTransitionIcon{font-size:42px}
+  .missionTransitionTitle{font-size:22px}
+  .missionTransitionSub{font-size:10px}
+}
+
+@media(max-width:380px){
+  .labCard{
+    grid-template-columns:minmax(0,1fr) 92px;
+  }
+}
+
+
+/* ===== CLEAR PROPERTY-EVIDENCE VISUALS IN TEST AREA ===== */
+.testStage{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+.testPlate{
+  position:absolute;
+  left:50%;
+  bottom:8px;
+  transform:translateX(-50%);
+  width:170px;
+  height:34px;
+  border-radius:50%;
+  border:4px solid #9eb6c7;
+  background:radial-gradient(ellipse,#f4fbff 0 45%,#c5d6e1 46% 68%,#8fa8b8 69%);
+}
+.testSample{
+  position:absolute;
+  left:50%;
+  bottom:27px;
+  transform:translateX(-50%);
+  width:92px;
+  height:74px;
+  clip-path:polygon(9% 66%,24% 20%,55% 5%,86% 20%,100% 59%,80% 94%,30% 95%);
+  background:linear-gradient(135deg,#7e858b,#b0b7bb 24%,#626970 46%,#9ea7ac 60%,#555c62 78%);
+  filter:drop-shadow(0 7px 5px rgba(0,0,0,.18));
+  transition:all .48s ease;
+}
+.testSample.sampleA{
+  clip-path:polygon(7% 57%,18% 14%,82% 7%,98% 44%,88% 88%,12% 92%);
+  background:linear-gradient(135deg,#f1a16f,#b75f2e 35%,#e88850 58%,#88421f);
+}
+.testSample.sampleB{
+  clip-path:polygon(8% 67%,20% 20%,53% 5%,88% 25%,98% 64%,75% 95%,27% 91%);
+  background:linear-gradient(135deg,#474b4e,#171a1d 41%,#686c70 58%,#25282b);
+}
+.testSample.sampleC{
+  clip-path:none;
+  border-radius:50%;
+  width:82px;
+  height:82px;
+  background:radial-gradient(circle at 28% 22%,#fff,#e7edf0 18%,#89959c 45%,#f6f9fa 63%,#66747c 78%,#ccd5da);
+}
+.testSample.sampleD{
+  clip-path:polygon(10% 70%,18% 30%,45% 4%,88% 19%,100% 61%,76% 92%,30% 96%);
+  background:linear-gradient(135deg,#ffe14b,#d9ad08 34%,#fff081 51%,#c89505 79%);
+}
+.testSample.sampleE{
+  clip-path:polygon(5% 54%,15% 14%,84% 8%,98% 48%,87% 88%,12% 91%);
+  background:linear-gradient(135deg,#f8fbfc,#aeb9bf 20%,#e7edef 42%,#7d8a91 63%,#f7fafb 79%);
+}
+.testSample.sampleX{
+  clip-path:polygon(10% 65%,24% 15%,55% 5%,90% 28%,97% 68%,70% 95%,25% 90%);
+  background:linear-gradient(135deg,#5d6165,#25282c 37%,#777b7e 55%,#34383c 76%);
+}
+.testSample.shiny{
+  box-shadow:0 0 18px rgba(255,224,92,.75),0 0 0 4px rgba(255,249,210,.9);
+}
+.testSample.dull{
+  filter:grayscale(.25) brightness(.82);
+}
+.testSample.flat{
+  width:126px;
+  height:36px;
+  clip-path:polygon(5% 55%,15% 15%,83% 8%,98% 48%,87% 88%,12% 92%);
+}
+.testSample.cracked{
+  background:
+    linear-gradient(72deg,transparent 0 46%,#16191c 47% 52%,transparent 53%),
+    linear-gradient(135deg,#555b60,#272b30);
+}
+.testSample.wire{
+  width:156px;
+  height:10px;
+  clip-path:none;
+  border-radius:999px;
+  background:linear-gradient(#eef5f8,#606b72,#dce4e8);
+}
+.testSample.broken{
+  width:112px;
+  height:60px;
+  background:
+    linear-gradient(65deg,transparent 0 46%,#15191d 47% 53%,transparent 54%),
+    linear-gradient(135deg,#555b60,#292e32);
+}
+.torchIcon{
+  position:absolute;
+  left:18%;
+  top:15px;
+  font-size:48px;
+  transform:rotate(-18deg);
+}
+.torchBeam{
+  position:absolute;
+  left:24%;
+  top:34px;
+  width:160px;
+  height:56px;
+  opacity:0;
+  background:linear-gradient(90deg,rgba(255,237,148,.68),rgba(255,237,148,.08),rgba(255,237,148,0));
+  clip-path:polygon(0 34%,100% 0,100% 100%,0 66%);
+}
+.torchBeam.show{
+  opacity:1;
+  animation:beamOn .45s ease both;
+}
+@keyframes beamOn{
+  from{opacity:0;transform:scaleX(.72)}
+  to{opacity:1;transform:scaleX(1)}
+}
+.shineBurst{
+  position:absolute;
+  display:none;
+  color:#ffd134;
+  font-size:34px;
+  animation:twinkleBurst .7s infinite alternate;
+}
+.shineBurst.show{display:block}
+.shineBurst.burst1{left:58%;top:14px}
+.shineBurst.burst2{left:67%;top:48px;font-size:24px}
+@keyframes twinkleBurst{
+  to{transform:scale(1.22);opacity:.55}
+}
+.evidenceTag{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  padding:4px 11px;
+  border-radius:999px;
+  background:#eef3f6;
+  color:#566772;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.evidenceTag.good{
+  background:#def3ff;
+  color:#055d88;
+}
+.evidenceTag.bad{
+  background:#ffe8e3;
+  color:#9a4136;
+}
+.ductilityRig{
+  position:relative;
+  width:320px;
+  max-width:95%;
+  height:100%;
+  margin:auto;
+}
+.clamp{
+  position:absolute;
+  top:44px;
+  font-size:44px;
+}
+.clamp.left{left:20px}
+.clamp.right{right:20px;transform:scaleX(-1)}
+.dTrack{
+  position:absolute;
+  left:66px;
+  right:66px;
+  top:62px;
+  height:6px;
+  border-radius:999px;
+  background:#cfd7dc;
+}
+.dSample{
+  position:absolute;
+  left:50%;
+  top:44px;
+  transform:translateX(-50%);
+  width:82px;
+  height:28px;
+  clip-path:polygon(9% 66%,24% 20%,55% 5%,86% 20%,100% 59%,80% 94%,30% 95%);
+  background:linear-gradient(135deg,#7e858b,#b0b7bb 24%,#626970 46%,#9ea7ac 60%,#555c62 78%);
+  transition:all .48s ease;
+}
+.dSample.sampleA{
+  clip-path:polygon(7% 57%,18% 14%,82% 7%,98% 44%,88% 88%,12% 92%);
+  background:linear-gradient(135deg,#f1a16f,#b75f2e 35%,#e88850 58%,#88421f);
+}
+.dSample.sampleB{
+  clip-path:polygon(8% 67%,20% 20%,53% 5%,88% 25%,98% 64%,75% 95%,27% 91%);
+  background:linear-gradient(135deg,#474b4e,#171a1d 41%,#686c70 58%,#25282b);
+}
+.dSample.sampleC{
+  clip-path:none;
+  border-radius:50%;
+  width:54px;
+  height:54px;
+  top:31px;
+  background:radial-gradient(circle at 28% 22%,#fff,#e7edf0 18%,#89959c 45%,#f6f9fa 63%,#66747c 78%,#ccd5da);
+}
+.dSample.sampleD{
+  clip-path:polygon(10% 70%,18% 30%,45% 4%,88% 19%,100% 61%,76% 92%,30% 96%);
+  background:linear-gradient(135deg,#ffe14b,#d9ad08 34%,#fff081 51%,#c89505 79%);
+}
+.dSample.sampleE{
+  clip-path:polygon(5% 54%,15% 14%,84% 8%,98% 48%,87% 88%,12% 91%);
+  background:linear-gradient(135deg,#f8fbfc,#aeb9bf 20%,#e7edef 42%,#7d8a91 63%,#f7fafb 79%);
+}
+.dSample.sampleX{
+  clip-path:polygon(10% 65%,24% 15%,55% 5%,90% 28%,97% 68%,70% 95%,25% 90%);
+  background:linear-gradient(135deg,#5d6165,#25282c 37%,#777b7e 55%,#34383c 76%);
+}
+.dSample.wire{
+  top:52px;
+  width:168px;
+  height:9px;
+  clip-path:none;
+  border-radius:999px;
+  background:linear-gradient(#eef5f8,#606b72,#dce4e8);
+}
+.dSample.broken{
+  background:
+    linear-gradient(90deg,#555 0 43%,transparent 44% 57%,#555 58%),
+    linear-gradient(135deg,#555b60,#272b30);
+}
+.drawArrow{
+  position:absolute;
+  left:50%;
+  top:20px;
+  transform:translateX(-50%);
+  font-size:18px;
+  font-weight:900;
+  color:#0b6b9d;
+  opacity:0;
+}
+.drawArrow.show{
+  opacity:1;
+  animation:pullArrow .55s ease both;
+}
+@keyframes pullArrow{
+  from{opacity:0;letter-spacing:-2px}
+  to{opacity:1;letter-spacing:1px}
+}
+
+@media(max-width:620px){
+  .testPlate{
+    width:112px;
+    height:24px;
+    border-width:2px;
+  }
+  .testSample{
+    width:58px;
+    height:48px;
+    bottom:18px;
+  }
+  .testSample.sampleC{
+    width:50px;
+    height:50px;
+  }
+  .testSample.flat{width:80px;height:24px}
+  .testSample.wire{width:93px;height:7px}
+  .testSample.broken{width:70px;height:36px}
+  .torchIcon{
+    left:10%;
+    top:10px;
+    font-size:31px;
+  }
+  .torchBeam{
+    left:18%;
+    top:25px;
+    width:105px;
+    height:32px;
+  }
+  .shineBurst{
+    font-size:20px;
+  }
+  .shineBurst.burst1{left:56%;top:14px}
+  .shineBurst.burst2{left:66%;top:35px;font-size:15px}
+  .evidenceTag{
+    padding:2px 6px;
+    font-size:6.5px;
+  }
+  .ductilityRig{
+    width:215px;
+  }
+  .clamp{
+    top:31px;
+    font-size:28px;
+  }
+  .clamp.left{left:10px}
+  .clamp.right{right:10px}
+  .dTrack{
+    left:36px;
+    right:36px;
+    top:43px;
+    height:4px;
+  }
+  .dSample{
+    top:31px;
+    width:54px;
+    height:18px;
+  }
+  .dSample.sampleC{
+    width:34px;
+    height:34px;
+    top:23px;
+  }
+  .dSample.wire{
+    top:38px;
+    width:98px;
+    height:6px;
+  }
+  .drawArrow{
+    top:11px;
+    font-size:11px;
+  }
+}
+
+
+/* ===== LUSTRE TEST: CORRECT TORCH POSITION ===== */
+.torchIcon{display:none !important;}
+
+.torchRig{
+  position:absolute;
+  left:13%;
+  top:12px;
+  width:78px;
+  height:30px;
+  transform:rotate(16deg);
+  transform-origin:center;
+  z-index:5;
+}
+
+.torchBody{
+  position:absolute;
+  left:0;
+  top:7px;
+  width:54px;
+  height:18px;
+  border:3px solid #444d54;
+  border-radius:8px 4px 4px 8px;
+  background:linear-gradient(#87959d,#4e5a61);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.25);
+}
+
+.torchBody::before{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:3px;
+  width:14px;
+  height:6px;
+  border-radius:4px;
+  background:#d9e2e6;
+}
+
+.torchHead{
+  position:absolute;
+  left:49px;
+  top:3px;
+  width:26px;
+  height:26px;
+  border:3px solid #444d54;
+  border-radius:4px 12px 12px 4px;
+  background:linear-gradient(90deg,#69777e,#d9e2e6);
+}
+
+.torchLens{
+  position:absolute;
+  right:-5px;
+  top:5px;
+  width:7px;
+  height:16px;
+  border-radius:50%;
+  background:#ffe773;
+  box-shadow:0 0 8px rgba(255,220,70,.65);
+}
+
+.torchBeam{
+  position:absolute;
+  left:29%;
+  top:35px;
+  width:44%;
+  height:67px;
+  opacity:0;
+  z-index:1;
+  transform:rotate(7deg);
+  transform-origin:left center;
+  background:linear-gradient(
+    90deg,
+    rgba(255,239,142,.58),
+    rgba(255,239,142,.25) 60%,
+    rgba(255,239,142,0)
+  );
+  clip-path:polygon(0 42%,100% 2%,100% 98%,0 58%);
+  pointer-events:none;
+}
+
+.torchBeam.show{
+  opacity:1;
+  animation:beamOnCorrect .42s ease both;
+}
+
+@keyframes beamOnCorrect{
+  from{opacity:0;transform:rotate(7deg) scaleX(.55)}
+  to{opacity:1;transform:rotate(7deg) scaleX(1)}
+}
+
+@media(max-width:620px){
+  .torchRig{
+    left:10%;
+    top:8px;
+    width:55px;
+    height:22px;
+    transform:rotate(15deg);
+  }
+
+  .torchBody{
+    top:5px;
+    width:38px;
+    height:13px;
+    border-width:2px;
+    border-radius:6px 3px 3px 6px;
+  }
+
+  .torchBody::before{
+    left:5px;
+    top:2px;
+    width:10px;
+    height:4px;
+  }
+
+  .torchHead{
+    left:35px;
+    top:2px;
+    width:19px;
+    height:19px;
+    border-width:2px;
+    border-radius:3px 8px 8px 3px;
+  }
+
+  .torchLens{
+    right:-4px;
+    top:4px;
+    width:5px;
+    height:11px;
+  }
+
+  .torchBeam{
+    left:27%;
+    top:26px;
+    width:48%;
+    height:44px;
+    transform:rotate(7deg);
+  }
+}
+
+
+/* ===== COMPLETE-SAMPLE INVESTIGATION ===== */
+.evidenceBox{
+  min-height:46px;
+}
+
+.mysteryEvidence{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:5px;
+  margin-top:0;
+  margin-bottom:8px;
+}
+
+.evCard{
+  display:grid;
+  grid-template-columns:26px 98px 1fr;
+  gap:7px;
+  align-items:center;
+  min-height:48px;
+  padding:6px 8px;
+  border-radius:10px;
+  border:2px solid #dce6ec;
+  background:#fff;
+  font-size:9px;
+  line-height:1.25;
+  transition:background .25s ease,border-color .25s ease,transform .25s ease;
+}
+
+.evCard .evIcon{
+  width:24px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#eef5f8;
+  font-size:15px;
+}
+
+.evCard .evName{
+  font-weight:900;
+  color:#375365;
+}
+
+.evCard .evResult{
+  color:#77858d;
+  font-weight:bold;
+}
+
+.evCard.done{
+  background:#e9f7ed;
+  border-color:#82c293;
+  transform:translateX(2px);
+}
+
+.evCard.done .evIcon{
+  background:#35a65a;
+  color:#fff;
+}
+
+.evCard.done .evResult{
+  color:#315d3c;
+}
+
+.evCard.active{
+  border-color:#f0c849;
+  background:#fff8d8;
+}
+
+.answerOptions.classificationReady{
+  animation:classificationReady .65s ease 2;
+}
+
+@keyframes classificationReady{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.018);filter:drop-shadow(0 0 7px rgba(255,200,55,.6))}
+}
+
+.testBtn.done{
+  background:#e7f6eb;
+  border-color:#6ab77f;
+}
+
+.testBtn.done.selected{
+  background:#dff4e5;
+  border-color:#43a663;
+}
+
+@media(max-width:620px){
+  .mysteryEvidence{gap:3px;margin-bottom:5px}
+  .evCard{
+    grid-template-columns:18px 66px 1fr;
+    gap:4px;
+    min-height:34px;
+    padding:4px;
+    font-size:6.6px;
+  }
+  .evCard .evIcon{
+    width:17px;
+    height:17px;
+    font-size:10px;
+  }
+}
+
+
+/* ===== CLEAR BREAKING ANIMATION ===== */
+.testSample.breakApart,
+.dSample.breakApart,
+.sampleRock.breakApart{
+  background:transparent !important;
+  clip-path:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+  overflow:visible;
+}
+
+.testSample.breakApart::before,
+.testSample.breakApart::after,
+.dSample.breakApart::before,
+.dSample.breakApart::after,
+.sampleRock.breakApart::before,
+.sampleRock.breakApart::after{
+  content:"";
+  position:absolute;
+  top:4px;
+  width:46%;
+  height:88%;
+  background:linear-gradient(135deg,#555b60,#25292d 55%,#747a7f);
+  border:2px solid #34393d;
+  box-shadow:0 4px 6px rgba(0,0,0,.18);
+}
+
+.testSample.breakApart::before,
+.dSample.breakApart::before,
+.sampleRock.breakApart::before{
+  left:5%;
+  clip-path:polygon(0 10%,100% 0,72% 45%,100% 100%,0 90%);
+  animation:pieceLeft .48s ease forwards;
+}
+
+.testSample.breakApart::after,
+.dSample.breakApart::after,
+.sampleRock.breakApart::after{
+  right:5%;
+  clip-path:polygon(0 0,100% 12%,100% 90%,0 100%,28% 48%);
+  animation:pieceRight .48s ease forwards;
+}
+
+@keyframes pieceLeft{
+  from{transform:translate(0,0) rotate(0)}
+  to{transform:translate(-18px,8px) rotate(-13deg)}
+}
+
+@keyframes pieceRight{
+  from{transform:translate(0,0) rotate(0)}
+  to{transform:translate(18px,9px) rotate(13deg)}
+}
+
+/* Small crack flash just before separation */
+.testSample.breakApart,
+.dSample.breakApart,
+.sampleRock.breakApart{
+  animation:breakFlash .22s ease;
+}
+@keyframes breakFlash{
+  0%{transform:translateX(-50%) scale(1)}
+  45%{transform:translateX(-50%) scale(1.05)}
+  100%{transform:translateX(-50%) scale(1)}
+}
+
+/* Right-side sample uses its own existing translate positioning */
+.sampleRock.breakApart{
+  transform:translateX(-50%);
+}
+.sampleRock.breakApart::before,
+.sampleRock.breakApart::after{
+  top:8px;
+  height:74%;
+}
+
+/* Ductility rig sample uses a different vertical position */
+.dSample.breakApart{
+  transform:translateX(-50%);
+}
+.dSample.breakApart::before,
+.dSample.breakApart::after{
+  top:0;
+  height:100%;
+}
+
+@media(max-width:620px){
+  .testSample.breakApart::before,
+  .dSample.breakApart::before,
+  .sampleRock.breakApart::before{
+    animation-name:pieceLeftMobile;
+  }
+  .testSample.breakApart::after,
+  .dSample.breakApart::after,
+  .sampleRock.breakApart::after{
+    animation-name:pieceRightMobile;
+  }
+  @keyframes pieceLeftMobile{
+    from{transform:translate(0,0) rotate(0)}
+    to{transform:translate(-10px,5px) rotate(-12deg)}
+  }
+  @keyframes pieceRightMobile{
+    from{transform:translate(0,0) rotate(0)}
+    to{transform:translate(10px,5px) rotate(12deg)}
+  }
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" width="150">
+  <img src="assets/innovine-logo.png" alt="Innovine logo">
 </div>
 
 <!-- INTRO -->
-<div id="intro">
-<div class="card">
-<h2>⚡ Metal vs Non-Metal Explorer</h2>
-<p>
-Tap the property card → then tap the correct category (Metal / Non-Metal)<br><br>
-✔ Two attempts per property<br>
-✔ Earn stars ⭐ for each correct answer<br>
-✔ Become an Element Explorer 🌟
-</p>
-<button onclick="startGame()">START GAME</button>
-</div>
-</div>
+<section id="intro" class="screen">
+  <div class="panel">
+    <div class="introHero">
+      <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
+
+      <div class="introTitle">
+        <h1>METAL vs <span>NON-METAL EXPLORER</span></h1>
+        <p>Investigate • Test • Observe • Classify</p>
+      </div>
+
+      <div class="introSamples">
+        <div class="introRock r1"></div>
+        <div class="introRock r2"></div>
+        <div class="introRock r3"></div>
+      </div>
+    </div>
+
+    <div class="introBottom">
+      <p><b>Grade 7 Mission:</b> Investigate each sample using five property tests, then classify it from the combined evidence.</p>
+
+      <div class="howGrid">
+        <div>🔎 Examine</div>
+        <div>🧪 Test</div>
+        <div>👁️ Observe</div>
+        <div>🧠 Classify</div>
+      </div>
+
+      <button id="introNext" class="primary" type="button">HOW TO PLAY ➜</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO PLAY -->
+<section id="how" class="screen">
+  <div class="panel howPanel">
+    <div class="howTitle">HOW TO PLAY</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <b>Examine the mystery sample shown on the laboratory plate.</b>
+        <div class="stepIcon">🔎</div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <b>Use all five property tabs to test the same sample.</b>
+        <div class="stepIcon">🧪</div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <b>Click RUN TEST and watch what happens to the sample or apparatus.</b>
+        <div class="stepIcon">👁️</div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <b>Each completed test is added to your Evidence Log.</b>
+        <div class="stepIcon">🧠</div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <b>After all five tests, classify the sample as METAL or NON-METAL. You get two attempts.</b>
+        <div class="stepIcon">⭐</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:18px">
+      <button id="startBtn" class="primary" type="button">START EXPLORING ➜</button>
+    </div>
+  </div>
+</section>
 
 <!-- GAME -->
-<div id="game">
-<div class="topbar">
-<div>⭐ Score: <span id="score">0</span></div>
-<div>Metal vs Non-Metal</div>
-</div>
+<main id="game">
+  <div class="gameWrap">
 
-<div id="feedback"></div>
-<div id="propertyBox"></div>
+    <div class="topbar">
+      <button id="homeBtn" class="iconBtn" type="button">⌂</button>
+      <div class="topbox missionBox">Mission&nbsp;<span id="missionNo">1</span>/4</div>
+      <div class="topbox">🔬 Metal vs Non-Metal Explorer</div>
+      <div class="topbox scoreBox">⭐ <span id="score">0</span></div>
+      <button id="topSound" class="iconBtn" type="button">🔊</button>
+    </div>
 
-<div id="options">
-<div class="opt" onclick="checkAnswer('metal')">
-<img src="assets/metal-buzzer.png" width="100%">
-</div>
-<div class="opt" onclick="checkAnswer('non-metal')">
-<img src="assets/non-metal-buzzer.png" width="100%">
-</div>
-</div>
-</div>
+    <div class="progressRow">
+      <span>Progress</span>
+      <div class="progress"><div class="progressFill" id="progressFill"></div></div>
+      <span>Attempts: <span id="attempts">❤️ ❤️</span></span>
+    </div>
+
+
+    <div id="missionTransition" class="missionTransition" aria-live="polite">
+      <div class="missionTransitionCard">
+        <div id="missionTransitionIcon" class="missionTransitionIcon">🔬</div>
+        <div id="missionTransitionTitle" class="missionTransitionTitle">MISSION 1</div>
+        <div id="missionTransitionSub" class="missionTransitionSub">Prepare to investigate the sample.</div>
+      </div>
+    </div>
+
+    <section class="gameCard">
+      <div class="missionPrompt" id="missionPrompt"></div>
+
+      <div class="playArea">
+
+        <!-- LAB -->
+        <div class="labSide">
+          <div class="labCard">
+
+            <div class="sampleStage">
+              <div class="sampleTitle" id="sampleTitle">Sample A</div>
+              <div class="sampleSubtitle">Unknown material</div>
+
+              <div class="samplePlate">
+                <div class="plate"></div>
+                <div class="sampleRock" id="sampleRock"></div>
+              </div>
+            </div>
+
+            <div class="testPanel">
+              <div class="testLabel">CHOOSE A PROPERTY TEST</div>
+
+              <div class="testButtons">
+                <button class="testBtn" data-test="lustre" type="button">
+                  <span>✨</span>Lustre
+                </button>
+                <button class="testBtn" data-test="malleability" type="button">
+                  <span>🔨</span>Malleability
+                </button>
+                <button class="testBtn" data-test="conductivity" type="button">
+                  <span>💡</span>Conductivity
+                </button>
+                <button class="testBtn" data-test="sonority" type="button">
+                  <span>🔔</span>Sonority
+                </button>
+                <button class="testBtn" data-test="ductility" type="button">
+                  <span>🧵</span>Ductility
+                </button>
+              </div>
+            </div>
+
+            <div class="experimentBox">
+              <div class="experimentTitle" id="experimentTitle">Select a test</div>
+
+              <div class="experimentVisual" id="experimentVisual"></div>
+
+              <button id="runBtn" class="runBtn" type="button" disabled>RUN TEST</button>
+
+              <div class="observation" id="observation"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ANSWER -->
+        <div class="answerSide">
+          <div class="phaseTag">OBSERVE • ANALYSE • CLASSIFY</div>
+
+          <div class="answerTitle">
+            Based on your experimental evidence, which category does this sample most likely belong to?
+          </div>
+
+          <div class="evidenceBox" id="evidenceBox">
+            <strong>Evidence Log:</strong> Complete all five property tests.
+          </div>
+
+          <div class="mysteryEvidence" id="mysteryEvidence"></div>
+
+          <div class="answerOptions answersLocked" id="answerOptions">
+            <button class="answerBtn metal" data-answer="metal" type="button">
+              METAL
+              <small>Most metals share characteristic physical properties</small>
+            </button>
+
+            <button class="answerBtn nonmetal" data-answer="non-metal" type="button">
+              NON-METAL
+              <small>Most non-metals show contrasting physical properties</small>
+            </button>
+          </div>
+
+          <div class="feedback" id="feedback">
+            Perform all five tests on this sample. The classification buttons will unlock when the Evidence Log is complete.
+          </div>
+
+          <div class="scienceNote">
+            🔎 <b>Scientist's note:</b> These are general trends. Some elements are exceptions, so scientists consider more than one property when identifying an unknown material.
+          </div>
+
+          <button id="nextBtn" class="nextBtn" type="button">NEXT MISSION ➜</button>
+
+          <div class="soundRow">
+            <span id="soundStatus">🔊 Sound feedback ON</span>
+            <button id="soundBtn" class="soundBtn" type="button">Mute</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</main>
 
 <!-- END -->
-<div id="end">
-<h2>🎉 Congratulations!</h2>
-<p>You have completed the Metal vs Non-Metal Explorer!</p>
-<p>⭐ Score: <span id="final"></span></p>
-<button onclick="location.reload()">PLAY AGAIN</button>
-</div>
+<section id="end" class="screen">
+  <div class="endCard">
+    <img src="assets/innovine-logo.png" alt="Innovine logo">
+    <div class="trophy">🏆</div>
+    <h1>Exploration Complete!</h1>
+    <div class="badge" id="badge">Element Explorer</div>
+    <div class="finalScore">⭐ Score: <span id="finalScore">0</span> / 4</div>
+    <p id="finalText"></p>
+    <button id="againBtn" class="primary" type="button">PLAY AGAIN</button>
+  </div>
+</section>
 
 <!-- AUDIO -->
-<audio id="correct" src="assets/correct.mp3"></audio>
-<audio id="wrong" src="assets/wrong.mp3"></audio>
-<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+<audio id="correctAudio" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongAudio" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
 
 <script>
-// Splash
-setTimeout(()=>{
-  document.getElementById("splash").style.display="none";
-  document.getElementById("intro").style.display="flex";
-},3000);
+document.addEventListener("DOMContentLoaded",()=>{
 
-// Question Data
-const questions = [
-  {property:"Physical State: Solid (except mercury)",answer:"metal"},
-  {property:"Physical State: Solid, liquid, or gas",answer:"non-metal"},
-  {property:"Hardness: Hard (some soft like Na,K)",answer:"metal"},
-  {property:"Hardness: Usually soft and brittle",answer:"non-metal"},
-  {property:"Lustre: Shiny (lustrous)",answer:"metal"},
-  {property:"Lustre: Dull (except iodine)",answer:"non-metal"},
-  {property:"Malleability: Can be hammered into sheets",answer:"metal"},
-  {property:"Malleability: Brittle, break easily",answer:"non-metal"},
-  {property:"Ductility: Can be drawn into wires",answer:"metal"},
-  {property:"Ductility: Not ductile",answer:"non-metal"}
+const tests = {
+  lustre:{
+    title:"LUSTRE TEST",
+    instruction:"Observe how strongly the surface reflects light.",
+    icon:"✨"
+  },
+  malleability:{
+    title:"MALLEABILITY TEST",
+    instruction:"Strike the sample with a hammer and observe whether it flattens or breaks.",
+    icon:"🔨"
+  },
+  conductivity:{
+    title:"ELECTRICAL CONDUCTIVITY TEST",
+    instruction:"Connect the sample between two clips in the circuit. If electric current passes through it, the bulb will glow.",
+    icon:"💡"
+  },
+  sonority:{
+    title:"SONORITY TEST",
+    instruction:"Strike the supported sample with the hammer and observe whether it gives a clear ringing sound or a dull thud.",
+    icon:"🔔"
+  },
+  ductility:{
+    title:"DUCTILITY TEST",
+    instruction:"Try to draw the material into a thin wire.",
+    icon:"🧵"
+  }
+};
+
+const missions = [
+  {
+    sample:"Sample A",
+    visual:"sampleA",
+    type:"metal",
+    results:{
+      lustre:"The surface reflects light strongly and appears shiny (lustrous).",
+      malleability:"The sample flattens into a thin sheet when hammered.",
+      conductivity:"The bulb glows because electric current passes through the sample.",
+      sonority:"The sample produces a clear ringing sound when struck.",
+      ductility:"The material can be drawn into a thin wire without breaking."
+    }
+  },
+  {
+    sample:"Sample B",
+    visual:"sampleB",
+    type:"non-metal",
+    results:{
+      lustre:"The surface remains dull and does not show a metallic shine.",
+      malleability:"The sample cracks and breaks instead of flattening into a sheet.",
+      conductivity:"The bulb remains off because the sample does not conduct electricity in this test.",
+      sonority:"The sample produces a dull thud rather than a clear ringing sound.",
+      ductility:"The sample breaks instead of being drawn into a wire."
+    }
+  },
+  {
+    sample:"Sample C",
+    visual:"sampleC",
+    type:"metal",
+    results:{
+      lustre:"The surface reflects light and shows a clear metallic shine.",
+      malleability:"The sample spreads into a thinner sheet when hammered.",
+      conductivity:"The bulb glows when the sample completes the electrical circuit.",
+      sonority:"The sample gives a clear ringing sound when struck.",
+      ductility:"The material stretches into a thin wire without breaking."
+    }
+  },
+  {
+    sample:"Sample D",
+    visual:"sampleD",
+    type:"non-metal",
+    results:{
+      lustre:"The surface remains dull rather than showing a metallic shine.",
+      malleability:"The sample breaks into pieces when hammered.",
+      conductivity:"The bulb stays off when the sample is placed in the circuit.",
+      sonority:"The sample gives a dull sound when struck.",
+      ductility:"The sample breaks instead of stretching into a wire."
+    }
+  }
 ];
 
+let index=0;
 let score=0;
-let qIndex=0;
 let attempt=1;
+let selectedTest="";
+let locked=false;
+let soundOn=true;
+let completedTests=new Set();
 
-// Start Game
-function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
-loadQ();
-}
+const $=id=>document.getElementById(id);
 
-// Load Question
-function loadQ(){
-if(qIndex>=questions.length){
-endGame();
-return;
-}
-attempt=1;
-document.getElementById("feedback").innerText="";
-document.getElementById("score").innerText=score;
-document.getElementById("propertyBox").innerText=questions[qIndex].property;
-}
+function show(id,display="flex"){$(id).style.display=display}
+function hide(id){$(id).style.display="none"}
 
-// Check Answer
-function checkAnswer(ans){
-let q=questions[qIndex];
-
-if(ans===q.answer){
-score++;
-document.getElementById("feedback").innerText="✔ Correct!";
-document.getElementById("correct").play();
-nextQ();
-}else{
-if(attempt===1){
-document.getElementById("feedback").innerText="❌ Try Again!";
-document.getElementById("wrong").play();
-attempt=2;
-}else{
-document.getElementById("feedback").innerText="Correct Answer: "+q.answer;
-nextQ();
-}
-}
+function playSound(id){
+  if(!soundOn)return;
+  const a=$(id);
+  if(!a)return;
+  try{
+    a.pause();
+    a.currentTime=0;
+    a.muted=false;
+    a.volume=1;
+    const p=a.play();
+    if(p && p.catch)p.catch(()=>{});
+  }catch(e){}
 }
 
-// Next Question
-function nextQ(){
-qIndex++;
-setTimeout(loadQ,700);
+function unlockAudio(){
+  ["correctAudio","wrongAudio","clapAudio"].forEach(id=>{
+    const a=$(id);
+    if(!a)return;
+    a.volume=1;
+    a.muted=true;
+    try{
+      const p=a.play();
+      if(p && p.then){
+        p.then(()=>{
+          a.pause();
+          a.currentTime=0;
+          a.muted=false;
+        }).catch(()=>a.muted=false);
+      }else{
+        a.muted=false;
+      }
+    }catch(e){
+      a.muted=false;
+    }
+  });
 }
 
-// End Game
+function resetRock(){
+  const mission=missions[index];
+  $("sampleRock").className="sampleRock "+(mission.visual||"");
+}
+
+function sampleVariantClass(){
+  const mission=missions[index];
+  return (mission && mission.visual) ? mission.visual : "";
+}
+
+function renderEmptyExperiment(){
+  $("experimentTitle").textContent="Choose a property tab below";
+  $("experimentVisual").innerHTML=
+    '<div style="text-align:center">'+
+      '<div style="font-size:46px">🧪</div>'+
+      '<div style="font-size:10px;font-weight:900;color:#60727d;margin-top:3px">Testing apparatus will appear here</div>'+
+    '</div>';
+  $("runBtn").disabled=true;
+  $("observation").className="observation";
+  $("observation").textContent="";
+}
+
+function selectTest(testName){
+  if(locked)return;
+
+  selectedTest=testName;
+
+  document.querySelectorAll(".testBtn").forEach(btn=>{
+    btn.classList.toggle("selected",btn.dataset.test===testName);
+  });
+
+  document.querySelectorAll(".evCard").forEach(card=>{
+    card.classList.toggle("active",card.dataset.test===testName);
+  });
+
+  const t=tests[testName];
+  $("experimentTitle").textContent=t.title;
+
+  resetExperimentVisual(testName);
+
+  const visual=$("experimentVisual");
+  visual.classList.remove("swapIn");
+  void visual.offsetWidth;
+  visual.classList.add("swapIn");
+
+  $("runBtn").disabled=false;
+  $("observation").className="observation";
+  $("observation").textContent="";
+
+  if(completedTests.has(testName)){
+    $("feedback").className="feedback";
+    $("feedback").innerHTML=
+      "You have already completed the <b>"+t.title+"</b>. You can run it again, or choose another property tab.";
+  }else{
+    $("feedback").className="feedback";
+    $("feedback").innerHTML=
+      "<b>"+t.title+"</b> selected. Click RUN TEST and watch the evidence appear in the testing area.";
+  }
+}
+
+function resetExperimentVisual(testName){
+  const box=$("experimentVisual");
+  const variant=sampleVariantClass();
+
+  if(testName==="lustre"){
+    box.innerHTML=
+      '<div class="testStage">'+
+        '<div class="torchRig"><div class="torchBody"></div><div class="torchHead"><div class="torchLens"></div></div></div>'+
+        '<div class="torchBeam" id="torchBeam"></div>'+
+        '<div class="testPlate"></div>'+
+        '<div class="testSample '+variant+'" id="testSample"></div>'+
+        '<div class="shineBurst burst1" id="burst1">✦</div>'+
+        '<div class="shineBurst burst2" id="burst2">✦</div>'+
+        '<div class="evidenceTag" id="evidenceTag">Light reflection test</div>'+
+      '</div>';
+  }
+
+  if(testName==="malleability"){
+    box.innerHTML=
+      '<div class="testStage">'+
+        '<div class="hammer" id="hammer">🔨</div>'+
+        '<div class="testPlate"></div>'+
+        '<div class="testSample '+variant+'" id="testSample"></div>'+
+        '<div class="evidenceTag" id="evidenceTag">Hammer the sample</div>'+
+      '</div>';
+  }
+
+  if(testName==="conductivity"){
+    box.innerHTML=
+      '<div class="conductivityRig" id="conductivityRig">'+
+        '<div class="cBattery"></div>'+
+        '<div class="cWire left"></div>'+
+        '<div class="cClip left"></div>'+
+        '<div class="cSample"></div>'+
+        '<div class="cBreak">✕</div>'+
+        '<div class="cClip right"></div>'+
+        '<div class="cWire right"></div>'+
+        '<div class="cBulb"></div>'+
+        '<div class="cWire bottom"></div>'+
+        '<div class="cLabel battery">BATTERY</div>'+
+        '<div class="cLabel sample">SAMPLE</div>'+
+        '<div class="cLabel bulb">BULB</div>'+
+        '<div class="cStatus" id="conductivityStatus">Run the test</div>'+
+      '</div>';
+  }
+
+  if(testName==="sonority"){
+    box.innerHTML=
+      '<div class="sonorityRig">'+
+        '<div class="sHammer" id="sonorityHammer">🔨</div>'+
+        '<div class="sStand"></div>'+
+        '<div class="sSupport left"></div>'+
+        '<div class="sSupport right"></div>'+
+        '<div class="sSample" id="sonoritySample"></div>'+
+        '<div class="sWaves" id="sonorityWaves"><span>)</span><span>)</span><span>)</span></div>'+
+        '<div class="sonorityResult" id="sonorityResult">Run the test</div>'+
+      '</div>';
+  }
+
+  if(testName==="ductility"){
+    box.innerHTML=
+      '<div class="ductilityRig">'+
+        '<div class="clamp left">🗜️</div>'+
+        '<div class="clamp right">🗜️</div>'+
+        '<div class="dTrack"></div>'+
+        '<div class="dSample '+variant+'" id="ductilitySample"></div>'+
+        '<div class="drawArrow" id="drawArrow">⇠ pull ⇢</div>'+
+        '<div class="evidenceTag" id="ductilityTag">Wire-drawing test</div>'+
+      '</div>';
+  }
+}
+
+
+function animateTest(testName,materialType){
+  resetRock();
+
+  if(testName==="lustre"){
+    const sample=$("testSample");
+    const beam=$("torchBeam");
+    const burst1=$("burst1");
+    const burst2=$("burst2");
+    const tag=$("evidenceTag");
+
+    if(beam)beam.classList.add("show");
+
+    if(materialType==="metal"){
+      $("sampleRock").classList.add("shiny");
+      if(sample)sample.classList.add("shiny");
+      if(burst1)burst1.classList.add("show");
+      if(burst2)burst2.classList.add("show");
+      if(tag){
+        tag.textContent="Bright shine is visible";
+        tag.className="evidenceTag good";
+      }
+    }else{
+      $("sampleRock").classList.add("dull");
+      if(sample)sample.classList.add("dull");
+      if(tag){
+        tag.textContent="Surface stays dull";
+        tag.className="evidenceTag bad";
+      }
+    }
+  }
+
+  if(testName==="malleability"){
+    const hammer=$("hammer");
+    const sample=$("testSample");
+    const tag=$("evidenceTag");
+
+    if(hammer){
+      hammer.classList.remove("hit");
+      void hammer.offsetWidth;
+      hammer.classList.add("hit");
+    }
+
+    setTimeout(()=>{
+      if(materialType==="metal"){
+        $("sampleRock").classList.add("flat");
+        if(sample)sample.classList.add("flat");
+        if(tag){
+          tag.textContent="Flattens into a sheet";
+          tag.className="evidenceTag good";
+        }
+      }else{
+        $("sampleRock").classList.add("breakApart");
+        if(sample)sample.classList.add("breakApart");
+        if(tag){
+          tag.textContent="Sample breaks into pieces";
+          tag.className="evidenceTag bad";
+        }
+      }
+    },330);
+  }
+
+  if(testName==="conductivity"){
+    const rig=$("conductivityRig");
+    const status=$("conductivityStatus");
+    if(rig){
+      rig.classList.remove("conducting","nonconducting");
+      setTimeout(()=>{
+        if(materialType==="metal"){
+          rig.classList.add("conducting");
+          if(status)status.textContent="CURRENT FLOWS • BULB GLOWS";
+        }else{
+          rig.classList.add("nonconducting");
+          if(status)status.textContent="NO CURRENT • BULB STAYS OFF";
+        }
+      },250);
+    }
+  }
+
+  if(testName==="sonority"){
+    const hammer=$("sonorityHammer");
+    const sample=$("sonoritySample");
+    const waves=$("sonorityWaves");
+    const result=$("sonorityResult");
+
+    if(hammer){
+      hammer.classList.remove("hit");
+      void hammer.offsetWidth;
+      hammer.classList.add("hit");
+    }
+
+    setTimeout(()=>{
+      if(materialType==="metal"){
+        if(sample){
+          sample.classList.remove("dullHit");
+          sample.classList.add("ringing");
+        }
+        if(waves){
+          waves.style.opacity="1";
+          waves.classList.remove("ring");
+          void waves.offsetWidth;
+          waves.classList.add("ring");
+        }
+        if(result){
+          result.textContent="CLEAR RINGING SOUND";
+          result.className="sonorityResult ringing";
+        }
+      }else{
+        if(sample){
+          sample.classList.remove("ringing");
+          sample.classList.add("dullHit");
+        }
+        if(waves)waves.style.opacity="0";
+        if(result){
+          result.textContent="DULL THUD";
+          result.className="sonorityResult dull";
+        }
+      }
+    },330);
+  }
+
+  if(testName==="ductility"){
+    const sample=$("ductilitySample");
+    const arrow=$("drawArrow");
+    const tag=$("ductilityTag");
+
+    if(arrow)arrow.classList.add("show");
+
+    setTimeout(()=>{
+      if(materialType==="metal"){
+        $("sampleRock").classList.add("wire");
+        if(sample)sample.classList.add("wire");
+        if(tag){
+          tag.textContent="Pulled into a wire";
+          tag.className="evidenceTag good";
+        }
+      }else{
+        $("sampleRock").classList.add("breakApart");
+        if(sample)sample.classList.add("breakApart");
+        if(tag){
+          tag.textContent="Sample snaps instead of forming a wire";
+          tag.className="evidenceTag bad";
+        }
+      }
+    },320);
+  }
+}
+
+
+function runTest(){
+  if(!selectedTest || locked)return;
+
+  const mission=missions[index];
+  const result=mission.results[selectedTest];
+
+  animateTest(selectedTest,mission.type);
+
+  $("observation").className="observation show";
+  $("observation").innerHTML="<b>Observation:</b> "+result;
+
+  completedTests.add(selectedTest);
+
+  const testButton=document.querySelector('.testBtn[data-test="'+selectedTest+'"]');
+  if(testButton)testButton.classList.add("done");
+
+  updateEvidence();
+
+  const remaining=Object.keys(tests).length-completedTests.size;
+
+  if(remaining===0){
+    unlockAnswers();
+
+    $("feedback").className="feedback good";
+    $("feedback").innerHTML=
+      "✅ <b>Investigation complete!</b><br>You have tested all five physical properties of "+
+      mission.sample+". Use the complete Evidence Log to classify the sample.";
+
+    $("answerOptions").classList.remove("classificationReady");
+    void $("answerOptions").offsetWidth;
+    $("answerOptions").classList.add("classificationReady");
+  }else{
+    $("feedback").className="feedback";
+    $("feedback").innerHTML=
+      "Evidence recorded. Complete <b>"+remaining+"</b> more different property test"+
+      (remaining===1?"":"s")+" on the same sample before classifying it.";
+  }
+}
+
+function updateEvidence(){
+  const mission=missions[index];
+  const total=Object.keys(tests).length;
+
+  $("evidenceBox").innerHTML=
+    "<strong>Evidence Log:</strong> "+completedTests.size+" / "+total+
+    " property tests completed for <b>"+mission.sample+"</b>.";
+
+  const container=$("mysteryEvidence");
+  container.className="mysteryEvidence";
+  container.innerHTML="";
+
+  Object.keys(tests).forEach(t=>{
+    const done=completedTests.has(t);
+    const card=document.createElement("div");
+    card.className="evCard"+(done?" done":"")+(selectedTest===t?" active":"");
+    card.dataset.test=t;
+
+    const icon=document.createElement("div");
+    icon.className="evIcon";
+    icon.textContent=done ? "✓" : tests[t].icon;
+
+    const name=document.createElement("div");
+    name.className="evName";
+    name.textContent=tests[t].title.replace(" TEST","");
+
+    const result=document.createElement("div");
+    result.className="evResult";
+    result.textContent=done ? mission.results[t] : "Not tested yet";
+
+    card.appendChild(icon);
+    card.appendChild(name);
+    card.appendChild(result);
+    container.appendChild(card);
+  });
+}
+
+function unlockAnswers(){
+  $("answerOptions").classList.remove("answersLocked");
+}
+
+function lockAnswers(){
+  $("answerOptions").classList.add("answersLocked");
+}
+
+function checkAnswer(answer,btn){
+  if(locked || $("answerOptions").classList.contains("answersLocked"))return;
+
+  const mission=missions[index];
+  const buttons=[...document.querySelectorAll(".answerBtn")];
+
+  if(answer===mission.type){
+    locked=true;
+    score++;
+    $("score").textContent=score;
+
+    btn.classList.add("correct");
+    buttons.forEach(b=>b.disabled=true);
+
+    $("feedback").className="feedback good";
+    $("feedback").innerHTML=
+      "✅ <b>Correct!</b><br>"+
+      (mission.type==="metal"
+        ? "Across the five tests, the sample shows the characteristic physical properties commonly associated with metals."
+        : "Across the five tests, the sample shows the characteristic physical properties commonly associated with non-metals.");
+
+    $("nextBtn").style.display="block";
+    playSound("correctAudio");
+  }else{
+    btn.classList.add("wrong");
+    playSound("wrongAudio");
+
+    if(attempt===1){
+      attempt=2;
+      $("attempts").textContent="❤️";
+
+      $("feedback").className="feedback bad";
+      $("feedback").textContent=
+        "❌ Not quite. Review the complete Evidence Log from all five tests before choosing again.";
+
+      setTimeout(()=>btn.classList.remove("wrong"),450);
+    }else{
+      locked=true;
+      $("attempts").textContent="—";
+
+      const correct=buttons.find(b=>b.dataset.answer===mission.type);
+      if(correct)correct.classList.add("correct");
+
+      buttons.forEach(b=>b.disabled=true);
+
+      $("feedback").className="feedback good";
+      $("feedback").innerHTML=
+        "💡 <b>Correct classification:</b> "+
+        (mission.type==="metal"?"Metal":"Non-metal")+
+        ". Use the combined evidence from all five property tests.";
+
+      $("nextBtn").style.display="block";
+    }
+  }
+}
+
+
+function showMissionTransition(mission){
+  const layer=$("missionTransition");
+  if(!layer)return;
+
+  $("missionTransitionIcon").textContent="🔬";
+  $("missionTransitionTitle").textContent="MISSION "+(index+1);
+  $("missionTransitionSub").textContent=
+    "Investigate "+mission.sample+" • Complete all 5 property tests";
+
+  layer.classList.remove("show");
+  void layer.offsetWidth;
+  layer.classList.add("show");
+
+  setTimeout(()=>{
+    layer.classList.remove("show");
+  },1050);
+
+  const card=document.querySelector(".gameCard");
+  if(card){
+    card.classList.remove("missionEnter");
+    void card.offsetWidth;
+    card.classList.add("missionEnter");
+  }
+}
+
+function loadMission(){
+  if(index>=missions.length){
+    endGame();
+    return;
+  }
+
+  const mission=missions[index];
+
+  attempt=1;
+  selectedTest="";
+  locked=false;
+  completedTests=new Set();
+
+  $("missionNo").textContent=index+1;
+  $("score").textContent=score;
+  $("progressFill").style.width=(index/missions.length*100)+"%";
+  $("attempts").textContent="❤️ ❤️";
+  $("sampleTitle").textContent=mission.sample;
+
+  resetRock();
+  renderEmptyExperiment();
+  lockAnswers();
+
+  document.querySelectorAll(".testBtn").forEach(btn=>{
+    btn.classList.remove("selected","required","done");
+  });
+
+  document.querySelectorAll(".answerBtn").forEach(btn=>{
+    btn.classList.remove("correct","wrong");
+    btn.disabled=false;
+  });
+
+  $("answerOptions").classList.remove("classificationReady");
+  $("nextBtn").style.display="none";
+
+  $("missionPrompt").textContent=
+    "Mission "+(index+1)+": Investigate "+mission.sample+
+    ". Perform ALL FIVE property tests, record the evidence, then classify the sample.";
+
+  $("feedback").className="feedback";
+  $("feedback").textContent=
+    "Choose any property tab below and click RUN TEST. Complete all five tests on the same sample.";
+
+  updateEvidence();
+  showMissionTransition(mission);
+}
+
 function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="flex";
-document.getElementById("final").innerText=score;
-document.getElementById("clap").play();
+  hide("game");
+  show("end");
+
+  $("progressFill").style.width="100%";
+  $("finalScore").textContent=score;
+
+  let badge="🌱 Property Investigator";
+  if(score>=3)badge="🔬 Element Explorer";
+  if(score===4)badge="🏆 Materials Master";
+
+  $("badge").textContent=badge;
+
+  $("finalText").textContent=
+    score===4
+    ? "Excellent! You investigated four samples by testing lustre, malleability, conductivity, sonority and ductility before classifying each material."
+    : "Good investigation! Replay the laboratory and use the combined evidence from all five tests before classifying each sample.";
+
+  playSound("clapAudio");
 }
+
+function toggleSound(){
+  soundOn=!soundOn;
+  $("topSound").textContent=soundOn?"🔊":"🔇";
+  $("soundBtn").textContent=soundOn?"Mute":"Turn Sound On";
+  $("soundStatus").textContent=
+    soundOn?"🔊 Sound feedback ON":"🔇 Sound feedback OFF";
+
+  if(soundOn)playSound("correctAudio");
+}
+
+/* listeners */
+document.querySelectorAll(".testBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>selectTest(btn.dataset.test));
+});
+
+document.querySelectorAll(".answerBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>checkAnswer(btn.dataset.answer,btn));
+});
+
+$("runBtn").addEventListener("click",runTest);
+
+$("introNext").addEventListener("click",()=>{
+  hide("intro");
+  show("how");
+});
+
+$("startBtn").addEventListener("click",()=>{
+  unlockAudio();
+  hide("how");
+  show("game","block");
+  index=0;
+  score=0;
+  loadMission();
+});
+
+$("nextBtn").addEventListener("click",()=>{
+  if(!locked)return;
+  index++;
+  loadMission();
+});
+
+$("homeBtn").addEventListener("click",()=>location.reload());
+$("againBtn").addEventListener("click",()=>location.reload());
+$("topSound").addEventListener("click",toggleSound);
+$("soundBtn").addEventListener("click",toggleSound);
+
+});
 </script>
 
 </body>
