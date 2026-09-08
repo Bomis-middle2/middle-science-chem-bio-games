@@ -1107,7 +1107,7 @@ button{cursor:pointer}
 
       <div class="step">
         <div class="num">4</div>
-        <b>Use the observation to classify the tested sample as acid, base or neutral salt solution.</b>
+        <b>Use the observation to classify the tested sample as acid, base or neutral solution.</b>
         <div class="icon">🧠</div>
       </div>
     </div>
@@ -1234,8 +1234,8 @@ button{cursor:pointer}
             </button>
 
             <button class="option salt" data-value="salt" type="button">
-              🧂 NEUTRAL SALT
-              <small>Neutral salt solution</small>
+              ⚪ NEUTRAL
+              <small>Neutral solution</small>
             </button>
           </div>
 
@@ -1694,7 +1694,7 @@ function checkAnswer(choice,btn){
       ? "acid"
       : sample.type==="base"
       ? "base"
-      : "neutral salt solution";
+      : "neutral solution";
 
     $("feedback").className="feedback good";
     $("feedback").innerHTML=
@@ -1733,7 +1733,7 @@ function checkAnswer(choice,btn){
         ? "Acid"
         : sample.type==="base"
         ? "Base"
-        : "Neutral salt solution";
+        : "Neutral solution";
 
       $("feedback").className="feedback good";
       $("feedback").innerHTML=
