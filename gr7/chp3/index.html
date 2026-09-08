@@ -2,292 +2,667 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Acid Source Matching Game</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Live Indicator Lab | Acids, Bases & Salts</title>
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#f7f0ff;
+*{box-sizing:border-box}
+:root{
+  --purple:#6846b8;
+  --purple2:#8d6bd2;
+  --ink:#30283f;
+  --cream:#fffaf2;
+  --acid:#e95468;
+  --base:#2f82c7;
+  --salt:#39a765;
+  --gold:#ffd45d;
 }
+html,body{margin:0;min-height:100%;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:linear-gradient(#f5efff,#fffdf8)}
+body{overflow-x:hidden}
+button,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
 /* SPLASH */
 #splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
+  position:fixed;inset:0;z-index:9999;background:white;
+  display:flex;align-items:center;justify-content:center;
+  animation:splashOut .45s 1.3s forwards;
+}
+#splash img{width:150px}
+@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+
+/* INTRO */
+.screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:15px}
+#intro{display:flex}
+.panel{
+  width:min(1000px,97vw);background:white;border-radius:28px;overflow:hidden;
+  box-shadow:0 20px 50px rgba(71,45,125,.18)
+}
+.hero{
+  min-height:380px;position:relative;overflow:hidden;text-align:center;
+  background:linear-gradient(#e4d8ff,#c6b0f0);
+}
+.hero:after{
+  content:"";position:absolute;left:-80px;right:-80px;bottom:-100px;height:190px;
+  background:#9d79da;border-radius:50%
+}
+.logo{position:absolute;top:18px;left:20px;width:115px;background:white;padding:6px;border-radius:12px;z-index:3}
+.heroText{position:relative;z-index:3;padding-top:72px}
+.heroText h1{
+  margin:0;font-size:clamp(42px,7vw,70px);line-height:.94;color:#513697;font-weight:900;
+  text-shadow:0 2px white
+}
+.heroText h1 span{display:block;color:#266c8d;font-size:.77em}
+.heroText p{display:inline-block;background:#4e378c;color:white;padding:8px 18px;border-radius:999px;font-weight:bold}
+.heroLab{position:absolute;z-index:2;bottom:20px;left:50%;transform:translateX(-50%);width:390px;height:150px}
+.heroBeaker{
+  position:absolute;bottom:10px;width:92px;height:103px;border:6px solid #5d4d77;border-top:0;border-radius:0 0 16px 16px;
+  background:linear-gradient(#fff 0 48%,var(--liq) 48%)
+}
+.heroBeaker:before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;height:15px;border:5px solid #5d4d77;border-radius:50%;background:white}
+.h1{left:25px;--liq:#f37888}.h2{left:149px;--liq:#6bb1e5}.h3{right:25px;--liq:#78cd95}
+.introBottom{padding:20px;text-align:center}
+.howGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 18px}
+.howGrid div{background:#f8f4ff;border:2px solid #dfd3f6;border-radius:13px;padding:10px;font-weight:bold}
+.primary{
+  border:0;border-radius:14px;padding:13px 25px;background:linear-gradient(#8c69d9,#6244b4);
+  color:white;font-weight:900;box-shadow:0 5px 0 #46308a
 }
 
-/* INTRO SCREEN */
-#intro{
-display:none;
-position:fixed;
-inset:0;
-background:#ffffffee;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:20px;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:16px;
-max-width:500px;
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-
-button{
-padding:12px 18px;
-background:#2e7d32;
-color:white;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-}
+/* HOW */
+#how{display:none}
+.howPanel{padding:22px}
+.howTitle{margin:-22px -22px 18px;padding:14px;background:linear-gradient(90deg,#563ba2,#8d6bd4);color:white;text-align:center;font-size:28px;font-weight:900}
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:42px 1fr 48px;gap:10px;align-items:center;padding:10px;background:#faf7ff;border-radius:13px}
+.num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#7252bf;color:white;font-weight:900}
+.icon{font-size:27px;text-align:center}
 
 /* GAME */
-#game{
-display:none;
+#game{display:none;padding:7px;min-height:100vh}
+.wrap{width:min(1180px,100%);margin:auto}
+.topbar{display:grid;grid-template-columns:46px 125px 1fr 115px 46px;gap:6px;margin-bottom:6px}
+.topbox,.iconBtn{
+  min-height:44px;border:0;border-radius:11px;background:white;box-shadow:0 4px 13px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:center;font-weight:900
 }
+.iconBtn{background:linear-gradient(#378fc8,#236da6);color:white;font-size:18px}
+.missionBox{background:linear-gradient(#7656c4,#573ba4);color:white}
+.scoreBox{background:linear-gradient(#fff3b5,#fff)}
+.progressRow{display:flex;align-items:center;gap:8px;background:white;border-radius:12px;padding:7px 10px;margin-bottom:6px;box-shadow:0 4px 12px rgba(0,0,0,.06);font-size:12px;font-weight:bold}
+.progress{flex:1;height:9px;border-radius:999px;background:#e9e0f5;overflow:hidden}
+.progressFill{height:100%;width:0;background:linear-gradient(90deg,#7352bf,#b58be1);transition:.3s}
 
-.topbar{
-display:flex;
-justify-content:space-between;
-padding:10px;
-background:white;
-font-weight:bold;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
+.gameCard{background:white;border-radius:19px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.instruction{padding:10px 14px;background:#fff4d0;border-bottom:2px solid #ead57c;font-weight:900;text-align:center}
+.playArea{display:grid;grid-template-columns:1.08fr .92fr;min-height:510px}
+
+/* LAB SIDE */
+.labSide{padding:12px;background:linear-gradient(#f8f3ff,#fff8ee)}
+.labBench{
+  min-height:470px;border:3px solid #e3d8ef;border-radius:18px;position:relative;overflow:hidden;
+  background:linear-gradient(#f6fbff 0 72%,#d5a875 72% 100%)
 }
-
-#questionBox{
-text-align:center;
-padding:20px;
-font-size:20px;
-font-weight:bold;
-background:#ffe3c2;
-margin:10px;
-border-radius:16px;
+.sectionTitle{font-size:14px;font-weight:900;color:#5a4492;margin-bottom:7px}
+.selectionPanel{
+  position:absolute;left:12px;top:12px;width:calc(100% - 24px);
+  display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;
+  background:rgba(255,255,255,.94);border:2px solid #ddd0ef;border-radius:14px;padding:10px;z-index:4
 }
-
-#options{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:12px;
-padding:10px;
+.control label{display:block;font-size:10px;font-weight:bold;margin-bottom:3px}
+.control select{
+  width:100%;min-height:40px;border:2px solid #c9b6e6;border-radius:9px;padding:7px;background:white;color:#3e3350
 }
-
-.cardopt{
-width:42%;
-height:120px;
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-font-weight:bold;
-font-size:14px;
-cursor:pointer;
-box-shadow:0 6px 15px rgba(0,0,0,0.2);
-color:white;
-padding:10px;
+.testBtn{
+  min-height:40px;border:0;border-radius:10px;padding:8px 13px;background:#5e43a7;color:white;font-weight:900
 }
+.testBtn:disabled{opacity:.45;cursor:not-allowed}
 
-.c1{background:#ff4d4d;}
-.c2{background:#4da6ff;}
-.c3{background:#4caf50;}
-.c4{background:#ff9800;}
+.experimentStage{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:410px;height:290px}
+.sampleBottle{
+  position:absolute;left:16px;bottom:30px;width:95px;height:125px;border:5px solid #695d77;border-radius:16px;background:linear-gradient(#fff 0 42%,var(--sampleColor,#e8eff2) 42%);
+}
+.sampleBottle:before{content:"";position:absolute;left:27px;top:-28px;width:40px;height:30px;border:5px solid #695d77;border-bottom:0;border-radius:8px 8px 0 0;background:#fff}
+.sampleLabel{
+  position:absolute;left:8px;right:8px;bottom:18px;background:white;border-radius:7px;padding:5px;text-align:center;font-size:10px;font-weight:bold
+}
+.beaker{
+  position:absolute;left:158px;bottom:27px;width:130px;height:130px;border:7px solid #675b75;border-top:0;border-radius:0 0 22px 22px;
+  background:linear-gradient(#fff 0 45%,#dfeef5 45%)
+}
+.beaker:before{content:"";position:absolute;left:-7px;right:-7px;top:-10px;height:18px;border:6px solid #675b75;border-radius:50%;background:#fff}
+.liquid{
+  position:absolute;left:8px;right:8px;bottom:8px;height:59px;border-radius:0 0 13px 13px;background:var(--resultColor,#dfeef5);transition:background .55s
+}
+.indicatorTool{
+  position:absolute;right:23px;bottom:62px;width:62px;height:135px
+}
+.strip{
+  position:absolute;left:22px;top:0;width:20px;height:120px;border:3px solid #655a71;border-radius:4px;
+  background:linear-gradient(#f9f7f0 0 55%,var(--stripColor,#dcb6c2) 55%);transform:rotate(6deg);transition:.5s
+}
+.dropper{
+  display:none;position:absolute;left:7px;top:0;width:45px;height:55px;border:4px solid #66747c;border-radius:18px 18px 7px 7px;background:#dfe8ed
+}
+.dropper:after{content:"";position:absolute;left:16px;bottom:-38px;width:7px;height:40px;background:#66747c}
+.drop{
+  display:none;position:absolute;left:22px;top:95px;width:15px;height:18px;background:var(--dropColor,#cf3b78);border-radius:50% 50% 50% 0;transform:rotate(-45deg)
+}
+.animateDrop{display:block;animation:drop .75s ease-in forwards}
+@keyframes drop{from{top:80px;opacity:1}to{top:155px;opacity:.15}}
+.observation{
+  position:absolute;left:50%;bottom:7px;transform:translateX(-50%);
+  width:min(94%,450px);background:#fff7c9;border:3px solid #e5cc63;border-radius:12px;
+  padding:7px;text-align:center;font-size:12px;font-weight:900
+}
+.waiting{background:#f2eff7;border-color:#d7cce7;color:#746886}
 
-#feedback{
-text-align:center;
-font-size:18px;
-font-weight:bold;
-margin-top:10px;
+/* RIGHT */
+.answerSide{padding:13px;display:flex;flex-direction:column;background:#fffdf9}
+.phaseTag{display:inline-block;align-self:flex-start;background:#eee6ff;border:2px solid #d5c5f2;color:#6345a4;border-radius:999px;padding:4px 9px;font-size:10px;font-weight:bold;margin-bottom:7px}
+.question{font-size:17px;font-weight:900;margin-bottom:8px;line-height:1.35}
+.interpretBox{background:#f8f4ff;border:2px solid #ded2f3;border-radius:12px;padding:8px;margin-bottom:8px;font-size:11px}
+.interpretBox b{color:#5b419a}
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.option{min-height:70px;border:3px solid transparent;border-radius:12px;color:white;font-weight:900;padding:8px 5px}
+.option small{display:block;font-size:9px;font-weight:normal;margin-top:3px}
+.acid{background:linear-gradient(#f26779,#d9475d)}
+.base{background:linear-gradient(#4f9edf,#2d7abe)}
+.salt{background:linear-gradient(#51b976,#2c9955)}
+.option.correct{outline:5px solid #ffe16c}
+.option.wrong{outline:5px solid #ffd2ce}
+.option:disabled{cursor:default;opacity:.96}
+.optionsLocked{opacity:.4;pointer-events:none}
+.feedback{min-height:83px;margin-top:8px;border-radius:12px;padding:8px;background:#f6f6f7;border:2px solid #e3e3e4;line-height:1.4;font-weight:bold}
+.feedback.good{background:#e5f8e8;border-color:#9ad4a6}
+.feedback.bad{background:#fff0e9;border-color:#efb89c}
+.nextBtn{display:none;margin-top:8px;border:0;border-radius:11px;padding:10px;background:#347fc0;color:white;font-weight:900}
+.soundRow{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10px;color:#655b70}
+.soundBtn{border:0;border-radius:999px;padding:5px 9px;background:#eee6ff;color:#6243a8;font-weight:bold}
+
+/* END */
+#end{display:none}
+.endCard{width:min(640px,96vw);background:white;border-radius:26px;text-align:center;padding:28px;box-shadow:0 18px 45px rgba(0,0,0,.14)}
+.endCard img{width:105px}.trophy{font-size:84px}
+.endCard h1{color:#5b3fa1;margin:6px;font-size:36px}
+.badge{display:inline-block;background:#fff1b8;border:3px solid #e7c455;border-radius:14px;padding:9px 16px;font-size:22px;font-weight:900;color:#715012}
+.result{margin:14px auto;max-width:290px;background:#f8f3ff;border:2px solid #ddd0f6;border-radius:13px;padding:10px;font-size:19px;font-weight:bold}
+
+@media(max-width:900px){
+  .playArea{grid-template-columns:1fr}
+  .labBench{min-height:390px}
+  .topbar{grid-template-columns:40px 105px 1fr 95px 40px}
+}
+@media(max-width:620px){
+  #game{padding:4px}
+  .topbar{gap:3px;margin-bottom:4px;grid-template-columns:35px 82px 1fr 72px 35px}
+  .topbox,.iconBtn{min-height:34px;font-size:9px;border-radius:8px}.iconBtn{font-size:14px}
+  .progressRow{padding:5px 6px;margin-bottom:4px;font-size:9px}.progress{height:7px}
+  .instruction{padding:6px 7px;font-size:11px}
+  .labSide{padding:4px}
+  .labBench{min-height:275px;height:275px;border-radius:12px}
+  .selectionPanel{left:5px;top:5px;width:calc(100% - 10px);grid-template-columns:1fr 1fr auto;gap:4px;padding:5px;border-radius:9px}
+  .control label{font-size:7.5px}.control select{min-height:32px;padding:4px;font-size:9px;border-radius:6px}.testBtn{min-height:32px;padding:4px 7px;font-size:8.5px}
+  .experimentStage{width:260px;height:175px;top:64%}
+  .sampleBottle{left:5px;bottom:20px;width:62px;height:78px;border-width:3px}.sampleBottle:before{left:18px;top:-18px;width:25px;height:20px;border-width:3px}
+  .sampleLabel{font-size:7px;padding:3px;bottom:10px}
+  .beaker{left:98px;bottom:18px;width:80px;height:82px;border-width:4px}.beaker:before{left:-4px;right:-4px;top:-6px;height:12px;border-width:4px}.liquid{height:36px}
+  .indicatorTool{right:12px;bottom:35px;width:40px;height:90px}.strip{left:14px;width:14px;height:78px;border-width:2px}.dropper{width:30px;height:38px;border-width:3px}.dropper:after{left:10px;bottom:-28px;width:6px;height:30px}.drop{left:14px;top:63px;width:11px;height:13px}
+  .observation{font-size:8px;padding:4px;border-width:2px;bottom:3px}
+  .answerSide{padding:6px}.phaseTag{font-size:7.5px;padding:3px 6px;margin-bottom:4px}.question{font-size:12px;margin-bottom:5px}
+  .interpretBox{font-size:8.5px;padding:5px;margin-bottom:5px}.options{gap:4px}.option{min-height:50px;padding:5px 3px;font-size:9.5px;border-radius:8px}.option small{font-size:7px}
+  .feedback{min-height:45px;margin-top:4px;padding:5px;font-size:9px}.nextBtn{margin-top:4px;padding:7px;font-size:9px}.soundRow{margin-top:4px;font-size:8px}.soundBtn{font-size:8px;padding:3px 6px}
+  .hero{min-height:330px}.heroText{padding-top:65px}.heroText h1{font-size:39px}.heroLab{transform:translateX(-50%) scale(.78);transform-origin:bottom}
+  .howGrid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
-
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="assets/innovine-logo.png" width="150">
-</div>
+<div id="splash"><img src="assets/innovine-logo.png" alt="Innovine logo"></div>
 
-<!-- INTRO -->
-<div id="intro">
-<div class="card">
+<section id="intro" class="screen">
+  <div class="panel">
+    <div class="hero">
+      <img src="assets/innovine-logo.png" class="logo" alt="Innovine logo">
+      <div class="heroText">
+        <h1>LIVE INDICATOR <span>LAB CHALLENGE</span></h1>
+        <p>Choose • Test • Observe • Interpret</p>
+      </div>
+      <div class="heroLab">
+        <div class="heroBeaker h1"></div>
+        <div class="heroBeaker h2"></div>
+        <div class="heroBeaker h3"></div>
+      </div>
+    </div>
+    <div class="introBottom">
+      <p><b>Grade 7 Mission:</b> Perform virtual indicator tests and use your observation to classify each sample.</p>
+      <div class="howGrid">
+        <div>🧴 Select sample</div>
+        <div>🧪 Select indicator</div>
+        <div>🎨 Observe result</div>
+        <div>🧠 Interpret</div>
+      </div>
+      <button id="introNext" class="primary" type="button">HOW TO PLAY ➜</button>
+    </div>
+  </div>
+</section>
 
-<h2>Acid Source Matching Game</h2>
+<section id="how" class="screen">
+  <div class="panel howPanel">
+    <div class="howTitle">HOW TO PERFORM THE EXPERIMENT</div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><b>Select the sample named in the mission.</b><div class="icon">🧴</div></div>
+      <div class="step"><div class="num">2</div><b>Select a suitable indicator and click TEST SAMPLE.</b><div class="icon">🧪</div></div>
+      <div class="step"><div class="num">3</div><b>Observe the colour change shown in the virtual experiment.</b><div class="icon">🎨</div></div>
+      <div class="step"><div class="num">4</div><b>Interpret the observation and classify the sample as acid, base or neutral salt solution.</b><div class="icon">🧠</div></div>
+    </div>
+    <div style="text-align:center;margin-top:18px">
+      <button id="startBtn" class="primary" type="button">ENTER LAB ➜</button>
+    </div>
+  </div>
+</section>
 
-<p>
-Some substances have forgotten the acids they contain.<br><br>
+<main id="game">
+  <div class="wrap">
+    <div class="topbar">
+      <button id="homeBtn" class="iconBtn" type="button">⌂</button>
+      <div class="topbox missionBox">Mission&nbsp;<span id="missionNo">1</span>/6</div>
+      <div class="topbox">🧪 Live Indicator Lab</div>
+      <div class="topbox scoreBox">⭐ <span id="score">0</span></div>
+      <button id="topSound" class="iconBtn" type="button">🔊</button>
+    </div>
 
-Your job is to help them remember.<br><br>
+    <div class="progressRow">
+      <span>Experiment <span id="qno">1</span>/6</span>
+      <div class="progress"><div id="progressFill" class="progressFill"></div></div>
+      <span>Attempts: <span id="attempts">❤️ ❤️</span></span>
+    </div>
 
-🎯 How to play:<br>
-• A substance card will appear<br>
-• Tap the correct acid card<br>
-• Correct answers give points<br>
-• You have limited time<br><br>
+    <section class="gameCard">
+      <div class="instruction" id="missionText"></div>
 
-🧠 Goal:<br>
-Match each substance with its correct acid
-</p>
+      <div class="playArea">
 
-<button onclick="startGame()">START GAME</button>
+        <div class="labSide">
+          <div class="labBench">
 
-</div>
-</div>
+            <div class="selectionPanel">
+              <div class="control">
+                <label for="sampleSelect">1. SAMPLE</label>
+                <select id="sampleSelect"></select>
+              </div>
 
-<!-- GAME -->
-<div id="game">
+              <div class="control">
+                <label for="indicatorSelect">2. INDICATOR</label>
+                <select id="indicatorSelect">
+                  <option value="">Choose indicator</option>
+                  <option value="blueLitmus">Blue litmus</option>
+                  <option value="redLitmus">Red litmus</option>
+                  <option value="turmeric">Turmeric</option>
+                  <option value="chinaRose">China rose</option>
+                </select>
+              </div>
 
-<div class="topbar">
-<div>Score: <span id="score">0</span></div>
-<div>Time: <span id="time">30</span></div>
-</div>
+              <button id="testBtn" class="testBtn" type="button">TEST SAMPLE</button>
+            </div>
 
-<div id="questionBox"></div>
+            <div class="experimentStage">
+              <div class="sampleBottle" id="sampleBottle">
+                <div class="sampleLabel" id="bottleLabel">Sample</div>
+              </div>
 
-<div id="options"></div>
+              <div class="beaker">
+                <div class="liquid" id="liquid"></div>
+              </div>
 
-<div id="feedback"></div>
+              <div class="indicatorTool">
+                <div id="strip" class="strip"></div>
+                <div id="dropper" class="dropper"></div>
+                <div id="drop" class="drop"></div>
+              </div>
+            </div>
 
-</div>
+            <div class="observation waiting" id="observation">
+              Select a sample and indicator, then run the test.
+            </div>
+
+          </div>
+        </div>
+
+        <div class="answerSide">
+          <div class="phaseTag">STEP 4 • INTERPRET THE RESULT</div>
+
+          <div class="question">
+            Based on your observation, how should the tested sample be classified?
+          </div>
+
+          <div class="interpretBox">
+            <b>Think scientifically:</b> use the indicator colour change — not the sample name alone.
+          </div>
+
+          <div class="options optionsLocked" id="options">
+            <button class="option acid" data-value="acid" type="button">🍋 ACID<small>Acidic behaviour</small></button>
+            <button class="option base" data-value="base" type="button">🧼 BASE<small>Basic behaviour</small></button>
+            <button class="option salt" data-value="salt" type="button">🧂 NEUTRAL SALT<small>Neutral behaviour</small></button>
+          </div>
+
+          <div class="feedback" id="feedback">
+            Run the experiment first. The answer options will unlock after you observe a result.
+          </div>
+
+          <button id="nextBtn" class="nextBtn" type="button">NEXT EXPERIMENT ➜</button>
+
+          <div class="soundRow">
+            <span id="soundStatus">🔊 Sound feedback ON</span>
+            <button id="soundBtn" class="soundBtn" type="button">Mute</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<section id="end" class="screen">
+  <div class="endCard">
+    <img src="assets/innovine-logo.png" alt="Innovine logo">
+    <div class="trophy">🏆</div>
+    <h1>Lab Investigation Complete!</h1>
+    <div id="badge" class="badge">Indicator Scientist</div>
+    <div class="result">⭐ Score: <span id="finalScore">0</span> / 6</div>
+    <p id="finalText"></p>
+    <button id="againBtn" class="primary" type="button">PLAY AGAIN</button>
+  </div>
+</section>
+
+<audio id="correctAudio" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongAudio" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
 
 <script>
+document.addEventListener("DOMContentLoaded",()=>{
 
-let score = 0;
-let index = 0;
-let time = 30;
-let timer;
-
-let correctSound = new Audio("assets/correct.mp3");
-let wrongSound = new Audio("assets/wrong.mp3");
-let clapSound = new Audio("assets/freesound_community-claps-44774.mp3");
-
-const data = [
-{
-q:"Tamarind",
-answer:"Tartaric acid",
-options:["Tartaric acid","Citric acid","Lactic acid","Malic acid"]
-},
-{
-q:"Tea",
-answer:"Tannic acid",
-options:["Tannic acid","Acetic acid","Oxalic acid","Malic acid"]
-},
-{
-q:"Spinach",
-answer:"Oxalic acid",
-options:["Oxalic acid","Citric acid","Lactic acid","Tartaric acid"]
-},
-{
-q:"Apple",
-answer:"Malic acid",
-options:["Malic acid","Acetic acid","Formic acid","Hydrochloric acid"]
-},
-{
-q:"Milk",
-answer:"Lactic acid",
-options:["Lactic acid","Citric acid","Tannic acid","Oxalic acid"]
-}
+const samples=[
+  {id:"lemon",name:"Lemon juice",type:"acid",colour:"#f2dc68"},
+  {id:"vinegar",name:"Vinegar",type:"acid",colour:"#e7d79b"},
+  {id:"soap",name:"Soap solution",type:"base",colour:"#d4ebfa"},
+  {id:"lime",name:"Lime water",type:"base",colour:"#eef3ec"},
+  {id:"salt",name:"Common salt solution",type:"salt",colour:"#e6f1f4"},
+  {id:"baking",name:"Baking soda solution",type:"base",colour:"#e7edf2"}
 ];
 
-function startGame(){
+const missions=[
+  {sample:"lemon",recommended:"blueLitmus"},
+  {sample:"soap",recommended:"redLitmus"},
+  {sample:"salt",recommended:"blueLitmus"},
+  {sample:"vinegar",recommended:"chinaRose"},
+  {sample:"lime",recommended:"turmeric"},
+  {sample:"baking",recommended:"redLitmus"}
+];
 
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
-
-loadQ();
-
-timer = setInterval(()=>{
-time--;
-document.getElementById("time").innerText = time;
-
-if(time<=0){
-clearInterval(timer);
-endGame();
-}
-},1000);
-}
-
-function loadQ(){
-
-if(index >= data.length){
-endGame();
-return;
-}
-
-let q = data[index];
-
-document.getElementById("questionBox").innerText =
-"I am " + q.q + ". Which acid do I contain?";
-
-let box = document.getElementById("options");
-box.innerHTML = "";
-
-q.options.sort(()=>Math.random()-0.5).forEach((o,i)=>{
-
-let div = document.createElement("div");
-div.className = "cardopt c"+((i%4)+1);
-div.innerText = o;
-
-div.onclick = ()=>{
-
-if(o === q.answer){
-score++;
-document.getElementById("score").innerText = score;
-document.getElementById("feedback").innerText = "Correct";
-correctSound.play();
-
-setTimeout(()=>{
-index++;
-loadQ();
-},700);
-
-}else{
-document.getElementById("feedback").innerText = "Wrong";
-wrongSound.play();
-}
-
+const indicators={
+  blueLitmus:"Blue litmus",
+  redLitmus:"Red litmus",
+  turmeric:"Turmeric",
+  chinaRose:"China rose"
 };
 
-box.appendChild(div);
-});
+let index=0,score=0,attempt=1,locked=false,soundOn=true,testDone=false;
+const $=id=>document.getElementById(id);
 
+function show(id,display="flex"){$(id).style.display=display}
+function hide(id){$(id).style.display="none"}
+
+function playSound(id){
+  if(!soundOn)return;
+  const a=$(id); if(!a)return;
+  try{
+    a.pause();a.currentTime=0;a.muted=false;a.volume=1;
+    const p=a.play();if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+
+function unlockAudio(){
+  ["correctAudio","wrongAudio","clapAudio"].forEach(id=>{
+    const a=$(id); if(!a)return;
+    a.volume=1;a.muted=true;
+    try{
+      const p=a.play();
+      if(p&&p.then){
+        p.then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>a.muted=false);
+      }else a.muted=false;
+    }catch(e){a.muted=false}
+  });
+}
+
+function getSample(id){return samples.find(s=>s.id===id)}
+
+function populateSamples(){
+  const select=$("sampleSelect");
+  select.innerHTML='<option value="">Choose sample</option>';
+  samples.forEach(s=>{
+    const op=document.createElement("option");
+    op.value=s.id;op.textContent=s.name;
+    select.appendChild(op);
+  });
+}
+
+function resetVisual(){
+  $("observation").className="observation waiting";
+  $("observation").textContent="Select a sample and indicator, then run the test.";
+  $("liquid").style.setProperty("--resultColor","#dfeef5");
+  $("strip").style.display="block";
+  $("dropper").style.display="none";
+  $("drop").className="drop";
+  $("strip").style.setProperty("--stripColor","#dcb6c2");
+  $("options").classList.add("optionsLocked");
+  document.querySelectorAll(".option").forEach(b=>{
+    b.classList.remove("correct","wrong");
+    b.disabled=false;
+  });
+}
+
+function loadMission(){
+  if(index>=missions.length){endGame();return}
+
+  const m=missions[index];
+  const sample=getSample(m.sample);
+
+  attempt=1;locked=false;testDone=false;
+
+  $("missionNo").textContent=index+1;
+  $("qno").textContent=index+1;
+  $("score").textContent=score;
+  $("progressFill").style.width=(index/missions.length*100)+"%";
+  $("attempts").textContent="❤️ ❤️";
+
+  $("missionText").textContent=
+    "Mission: Test "+sample.name+" with a suitable indicator. Observe the result, then classify the sample.";
+
+  $("sampleSelect").value="";
+  $("indicatorSelect").value="";
+  $("bottleLabel").textContent="Sample";
+  $("sampleBottle").style.setProperty("--sampleColor","#e8eff2");
+
+  $("feedback").className="feedback";
+  $("feedback").textContent="Run the experiment first. The answer options will unlock after you observe a result.";
+  $("nextBtn").style.display="none";
+
+  resetVisual();
+}
+
+function observationFor(type,indicator){
+  if(indicator==="blueLitmus"){
+    if(type==="acid")return {text:"Observation: Blue litmus turns red.",colour:"#df4457",kind:"strip"};
+    return {text:"Observation: Blue litmus shows no colour change.",colour:"#337fc8",kind:"strip"};
+  }
+
+  if(indicator==="redLitmus"){
+    if(type==="base")return {text:"Observation: Red litmus turns blue.",colour:"#337fc8",kind:"strip"};
+    return {text:"Observation: Red litmus shows no colour change.",colour:"#dd5360",kind:"strip"};
+  }
+
+  if(indicator==="turmeric"){
+    if(type==="base")return {text:"Observation: Yellow turmeric turns reddish-brown.",colour:"#9e4c2d",kind:"liquid"};
+    return {text:"Observation: Turmeric remains yellow.",colour:"#e8c948",kind:"liquid"};
+  }
+
+  if(indicator==="chinaRose"){
+    if(type==="acid")return {text:"Observation: China rose indicator turns dark pink/magenta.",colour:"#d42c79",kind:"liquid"};
+    if(type==="base")return {text:"Observation: China rose indicator turns green.",colour:"#47a564",kind:"liquid"};
+    return {text:"Observation: China rose indicator shows little/no characteristic acidic or basic change.",colour:"#b85b91",kind:"liquid"};
+  }
+}
+
+function runTest(){
+  if(locked)return;
+
+  const selectedSample=$("sampleSelect").value;
+  const indicator=$("indicatorSelect").value;
+
+  if(!selectedSample || !indicator){
+    $("feedback").className="feedback bad";
+    $("feedback").textContent="Select both a sample and an indicator before testing.";
+    return;
+  }
+
+  const mission=missions[index];
+  const sample=getSample(selectedSample);
+
+  $("bottleLabel").textContent=sample.name;
+  $("sampleBottle").style.setProperty("--sampleColor",sample.colour);
+
+  const result=observationFor(sample.type,indicator);
+
+  $("observation").className="observation";
+  $("observation").textContent=result.text;
+
+  if(result.kind==="strip"){
+    $("strip").style.display="block";
+    $("dropper").style.display="none";
+    $("strip").style.setProperty("--stripColor",result.colour);
+  }else{
+    $("strip").style.display="none";
+    $("dropper").style.display="block";
+    $("drop").style.setProperty("--dropColor",result.colour);
+    $("drop").className="drop";
+    void $("drop").offsetWidth;
+    $("drop").className="drop animateDrop";
+    setTimeout(()=>$("liquid").style.setProperty("--resultColor",result.colour),450);
+  }
+
+  testDone=true;
+  $("options").classList.remove("optionsLocked");
+
+  if(selectedSample!==mission.sample){
+    $("feedback").className="feedback bad";
+    $("feedback").innerHTML=
+      "You tested <b>"+sample.name+"</b>. That experiment is valid, but this mission asks you to test <b>"+
+      getSample(mission.sample).name+"</b>. You may still interpret this result, or select the mission sample and test again.";
+  }else{
+    $("feedback").className="feedback";
+    $("feedback").textContent="Experiment complete. Now interpret the observation and classify the sample.";
+  }
+}
+
+function checkAnswer(choice,btn){
+  if(locked || !testDone)return;
+
+  const selectedSample=$("sampleSelect").value;
+  if(!selectedSample)return;
+
+  const sample=getSample(selectedSample);
+  const buttons=[...document.querySelectorAll(".option")];
+
+  if(choice===sample.type){
+    locked=true;
+    score++;
+    $("score").textContent=score;
+    btn.classList.add("correct");
+    buttons.forEach(b=>b.disabled=true);
+
+    const label=sample.type==="acid"?"acid":sample.type==="base"?"base":"neutral salt solution";
+
+    $("feedback").className="feedback good";
+    $("feedback").innerHTML=
+      "✅ <b>Correct interpretation!</b><br>"+sample.name+" behaves as a <b>"+label+
+      "</b> in this activity. Your conclusion is based on the indicator observation.";
+
+    $("nextBtn").style.display="block";
+    playSound("correctAudio");
+  }else{
+    btn.classList.add("wrong");
+    playSound("wrongAudio");
+
+    if(attempt===1){
+      attempt=2;
+      $("attempts").textContent="❤️";
+      $("feedback").className="feedback bad";
+      $("feedback").textContent=
+        "❌ Not quite. Re-read the colour change. You may also repeat the experiment using another indicator.";
+      setTimeout(()=>btn.classList.remove("wrong"),450);
+    }else{
+      locked=true;
+      $("attempts").textContent="—";
+
+      const correct=buttons.find(b=>b.dataset.value===sample.type);
+      if(correct)correct.classList.add("correct");
+      buttons.forEach(b=>b.disabled=true);
+
+      const label=sample.type==="acid"?"Acid":sample.type==="base"?"Base":"Neutral salt solution";
+
+      $("feedback").className="feedback good";
+      $("feedback").innerHTML=
+        "💡 <b>Correct classification:</b> "+label+
+        ". Connect the observed indicator colour with the indicator rule.";
+
+      $("nextBtn").style.display="block";
+    }
+  }
 }
 
 function endGame(){
-clearInterval(timer);
+  hide("game");show("end");
+  $("finalScore").textContent=score;
 
-document.getElementById("game").innerHTML =
-"<div style='text-align:center;margin-top:60px;'>" +
-"<h2>Game Over</h2>" +
-"<h3>Score: " + score + "</h3>" +
-"<button onclick='location.reload()'>Play Again</button>" +
-"</div>";
+  let badge="🌱 Indicator Learner";
+  if(score>=4)badge="🧪 Indicator Scientist";
+  if(score===6)badge="🏆 Live Lab Master";
 
-clapSound.play();
+  $("badge").textContent=badge;
+  $("finalText").textContent=
+    score===6
+    ? "Excellent! You selected indicators, observed virtual colour changes and interpreted every experiment correctly."
+    : "Good investigation! Replay the lab and focus on linking each indicator colour change to acidic, basic or neutral behaviour.";
+
+  playSound("clapAudio");
 }
 
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="flex";
-},3000);
+function toggleSound(){
+  soundOn=!soundOn;
+  $("topSound").textContent=soundOn?"🔊":"🔇";
+  $("soundBtn").textContent=soundOn?"Mute":"Turn Sound On";
+  $("soundStatus").textContent=soundOn?"🔊 Sound feedback ON":"🔇 Sound feedback OFF";
+  if(soundOn)playSound("correctAudio");
+}
 
+populateSamples();
+
+$("introNext").addEventListener("click",()=>{hide("intro");show("how")});
+$("startBtn").addEventListener("click",()=>{unlockAudio();hide("how");show("game","block");index=0;score=0;loadMission()});
+$("testBtn").addEventListener("click",runTest);
+$("nextBtn").addEventListener("click",()=>{if(!locked)return;index++;loadMission()});
+$("againBtn").addEventListener("click",()=>location.reload());
+$("homeBtn").addEventListener("click",()=>location.reload());
+$("topSound").addEventListener("click",toggleSound);
+$("soundBtn").addEventListener("click",toggleSound);
+
+document.querySelectorAll(".option").forEach(btn=>{
+  btn.addEventListener("click",()=>checkAnswer(btn.dataset.value,btn));
+});
+
+});
 </script>
-
 </body>
 </html>
