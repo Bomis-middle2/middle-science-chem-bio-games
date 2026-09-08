@@ -806,6 +806,29 @@ button{cursor:pointer}
   .topbar{grid-template-columns:40px 105px 1fr 95px 40px}
 }
 @media(max-width:620px){
+  /* MOBILE INTRO LOGO FIX:
+     Centre and reduce the logo, then start the title below it. */
+  .logo{
+    top:10px;
+    left:50%;
+    width:84px;
+    padding:4px;
+    border-radius:10px;
+    transform:translateX(-50%);
+  }
+  .heroText{
+    padding-top:112px;
+  }
+  .heroText h1{
+    font-size:36px;
+    line-height:.96;
+  }
+  .heroText p{
+    margin-top:12px;
+    padding:7px 14px;
+    font-size:14px;
+  }
+
   #game{padding:4px}
   .topbar{
     gap:3px;
@@ -1000,6 +1023,24 @@ button{cursor:pointer}
   }
   .howGrid{grid-template-columns:1fr 1fr}
 }
+
+@media(max-width:390px){
+  .logo{
+    width:76px;
+    top:9px;
+  }
+  .heroText{
+    padding-top:103px;
+  }
+  .heroText h1{
+    font-size:32px;
+  }
+  .heroText p{
+    font-size:12px;
+    padding:6px 11px;
+  }
+}
+
 </style>
 </head>
 
