@@ -2,257 +2,718 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Fact or Myth Game</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fact or Myth — Menstrual Awareness</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <style>
+*{box-sizing:border-box}
+:root{
+  --green:#2e7d32;
+  --green2:#1f6a28;
+  --red:#c62828;
+  --red2:#a51f1f;
+  --ink:#233742;
+  --muted:#667b85;
+  --card:#ffffff;
+  --soft:#f6fbf8;
+  --line:#d7e5df;
+  --gold:#f0b63f;
+}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,sans-serif;
+  color:var(--ink);
+}
 body{
-margin:0;
-font-family:Arial;
-background:url("assets/mensurationbg.png") no-repeat center center fixed;
-background-size:cover;
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  background:
+    linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,.72)),
+    url("assets/mensurationbg.png") center/cover fixed no-repeat;
 }
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(255,255,255,0.35);
-z-index:0;
-}
-
-#splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
-}
-
-#intro{
-display:none;
-position:fixed;
-inset:0;
-z-index:2;
-text-align:center;
-padding:20px;
-}
-
-.card{
-max-width:650px;
-margin:auto;
-margin-top:60px;
-padding:20px;
-border-radius:16px;
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(6px);
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-}
-
 button{
-padding:14px 18px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+button:focus-visible{
+  outline:3px solid #f2bd4f;
+  outline-offset:3px;
+}
+button:disabled{cursor:default}
+[hidden]{display:none!important}
+
+/* SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  transition:opacity .35s ease,visibility .35s ease;
+}
+#splash.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+#splash img{
+  width:150px;
+  max-width:44vw;
 }
 
-.btn{
-width:45%;
-margin:10px;
-font-weight:bold;
-color:white;
+/* SCREENS */
+.screen{
+  min-height:100vh;
+  min-height:100dvh;
+  padding:16px;
+  display:grid;
+  place-items:center;
+}
+.panel{
+  width:min(720px,100%);
+  border-radius:24px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 16px 42px rgba(35,58,57,.14);
+  backdrop-filter:blur(7px);
 }
 
-.fact{background:#2e7d32;}
-.myth{background:#c62828;}
+/* INTRO */
+.introCard{
+  padding:30px 24px 24px;
+  text-align:center;
+}
+.introLogo{
+  width:92px;
+  margin-bottom:8px;
+}
+.eyebrow{
+  font-size:10px;
+  letter-spacing:1.7px;
+  text-transform:uppercase;
+  color:#648077;
+  font-weight:900;
+}
+.introCard h1{
+  margin:8px 0 6px;
+  color:#205f3b;
+  font-size:clamp(34px,7vw,56px);
+  line-height:.98;
+}
+.introCard p{
+  margin:0 auto;
+  max-width:540px;
+  color:#5e747c;
+  font-size:16px;
+  line-height:1.45;
+}
+.introFlow{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:20px 0;
+}
+.introFlow div{
+  padding:10px 7px;
+  border-radius:12px;
+  background:#eef7f1;
+  border:1px solid #d8e9dd;
+  color:#366b4a;
+  font-weight:900;
+  font-size:12px;
+}
+.primary{
+  min-height:46px;
+  border:0;
+  border-radius:12px;
+  padding:12px 22px;
+  background:linear-gradient(#3a9144,#256f2f);
+  color:#fff;
+  font-weight:900;
+  box-shadow:0 4px 0 #1c5925;
+}
+.primary:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #1c5925;
+}
 
+/* GAME */
 #game{
-display:none;
-height:100vh;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:20px;
-z-index:2;
-position:relative;
+  display:none;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:10px;
+}
+.gameShell{
+  width:min(760px,100%);
+  margin:auto;
+}
+.topbar{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:8px;
+  align-items:center;
+  margin-bottom:8px;
+}
+.topPill{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 5px 16px rgba(35,58,57,.08);
+  font-size:12px;
+  font-weight:900;
+}
+.titleBox{
+  color:#285e3c;
+}
+.scoreBox{
+  background:#fff4cf;
+  color:#77571e;
+}
+.progressCard{
+  margin-bottom:8px;
+  padding:9px 11px;
+  border-radius:13px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 5px 16px rgba(35,58,57,.07);
+}
+.progressMeta{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:6px;
+  font-size:11px;
+  font-weight:900;
+  color:#5a737a;
+}
+.progressTrack{
+  height:8px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#dfeae4;
+}
+.progressFill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#3b9a4a,#66b66f);
+  transition:width .25s ease;
 }
 
-#imageCard{
-width:90%;
-max-width:500px;
-background:rgba(255,255,255,0.9);
-border-radius:16px;
-padding:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+.questionCard{
+  padding:14px;
+  border-radius:20px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 12px 32px rgba(35,58,57,.12);
+}
+.questionLabel{
+  text-align:center;
+  color:#477061;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  margin-bottom:8px;
 }
 
-#imageCard img{
-width:100%;
-border-radius:12px;
+/* IMAGE: DO NOT UPSCALE LOW-RES FILES */
+.imageFrame{
+  width:100%;
+  min-height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(#fbfdfc,#f2f8f4);
+  border:1px solid #d9e6de;
+}
+#img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:54vh;
+  object-fit:contain;
+  image-rendering:auto;
+  border-radius:12px;
 }
 
+/* ANSWERS */
+.answers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.answerBtn{
+  min-height:56px;
+  border:0;
+  border-radius:13px;
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 4px 0 rgba(0,0,0,.16);
+}
+.answerBtn.fact{
+  background:linear-gradient(#3b9343,#2b742f);
+}
+.answerBtn.myth{
+  background:linear-gradient(#dc4747,#b62626);
+}
+.answerBtn:disabled{
+  opacity:.75;
+}
+.answerBtn.correct{
+  outline:4px solid #f6cf68;
+}
+.answerBtn.wrong{
+  outline:4px solid #ffd0c9;
+}
+
+/* FEEDBACK */
+.feedbackCard{
+  min-height:82px;
+  margin-top:11px;
+  padding:11px 12px;
+  border-radius:13px;
+  background:#f5f7f7;
+  border:1px solid #dfe7e4;
+  text-align:left;
+}
 #feedback{
-margin-top:10px;
-font-weight:bold;
-font-size:18px;
+  font-size:15px;
+  font-weight:900;
 }
-
 #explain{
-margin-top:10px;
-font-size:14px;
-padding:10px;
-background:rgba(255,248,225,0.9);
-border-radius:10px;
-display:none;
+  margin-top:5px;
+  color:#526b73;
+  font-size:13px;
+  line-height:1.42;
+}
+.feedbackCard.good{
+  background:#eaf6ed;
+  border-color:#9bc7a4;
+}
+.feedbackCard.bad{
+  background:#fff0ec;
+  border-color:#e0aaa0;
+}
+.nextBtn{
+  width:100%;
+  min-height:46px;
+  margin-top:10px;
+  border:0;
+  border-radius:12px;
+  background:#2d7551;
+  color:#fff;
+  font-weight:900;
 }
 
+/* END */
 #end{
-display:none;
-text-align:center;
-padding:30px;
-position:relative;
-z-index:2;
+  display:none;
+}
+.endCard{
+  padding:26px 22px;
+  text-align:center;
+}
+.trophy{
+  font-size:64px;
+}
+.endCard h2{
+  margin:5px 0;
+  color:#285f3b;
+  font-size:28px;
+}
+.finalScore{
+  display:inline-block;
+  margin:10px 0;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#fff1c9;
+  color:#73551d;
+  font-size:18px;
+  font-weight:900;
+}
+.endCard p{
+  color:#58717a;
+  font-size:14px;
 }
 
-.badge{
-font-size:50px;
-animation:pop 1s infinite alternate;
+/* MOBILE */
+@media(max-width:600px){
+  body{
+    background-attachment:scroll;
+  }
+  .screen{
+    padding:9px;
+  }
+  .panel{
+    border-radius:18px;
+  }
+  .introCard{
+    padding:22px 14px 18px;
+  }
+  .introLogo{
+    width:76px;
+  }
+  .introCard h1{
+    font-size:34px;
+  }
+  .introCard p{
+    font-size:14px;
+  }
+  .introFlow{
+    gap:5px;
+    margin:15px 0;
+  }
+  .introFlow div{
+    font-size:9px;
+    padding:8px 4px;
+  }
+
+  #game{
+    padding:5px;
+  }
+  .topbar{
+    gap:4px;
+    margin-bottom:5px;
+  }
+  .topPill{
+    min-height:36px;
+    padding:6px 7px;
+    border-radius:9px;
+    font-size:9px;
+  }
+  .progressCard{
+    margin-bottom:5px;
+    padding:7px 8px;
+    border-radius:9px;
+  }
+  .progressMeta{
+    font-size:9px;
+    margin-bottom:4px;
+  }
+  .progressTrack{
+    height:6px;
+  }
+  .questionCard{
+    padding:8px;
+    border-radius:14px;
+  }
+  .questionLabel{
+    font-size:9px;
+    margin-bottom:6px;
+  }
+  .imageFrame{
+    min-height:190px;
+    padding:5px;
+    border-radius:11px;
+  }
+  #img{
+    max-height:48vh;
+    border-radius:9px;
+  }
+  .answers{
+    gap:7px;
+    margin-top:8px;
+  }
+  .answerBtn{
+    min-height:50px;
+    font-size:15px;
+    border-radius:10px;
+  }
+  .feedbackCard{
+    min-height:70px;
+    margin-top:8px;
+    padding:9px 10px;
+    border-radius:10px;
+  }
+  #feedback{
+    font-size:13px;
+  }
+  #explain{
+    font-size:12px;
+  }
+  .nextBtn{
+    min-height:43px;
+    margin-top:7px;
+    font-size:12px;
+  }
 }
 
-@keyframes pop{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
+@media(max-width:380px){
+  .imageFrame{
+    min-height:170px;
+  }
+  #img{
+    max-height:44vh;
+  }
+  .answerBtn{
+    min-height:47px;
+    font-size:14px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
-<!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" style="width:160px;">
+  <img src="assets/innovine-logo.png" alt="Innovine logo">
 </div>
 
-<!-- INTRO -->
-<div id="intro">
-<div class="card">
-<h2>🌸 Fact or Myth Game</h2>
-<p>Learn menstrual awareness step by step 🌿</p>
-<button onclick="startGame()" style="background:#2e7d32;color:white;">START</button>
-</div>
-</div>
+<section id="intro" class="screen">
+  <div class="panel introCard">
+    <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
+    <div class="eyebrow">Grade 7 • Chapter 7</div>
+    <h1>🌸 Fact or Myth?</h1>
+    <p>Explore common statements about menstrual health and decide whether each one is a fact or a myth.</p>
 
-<!-- GAME -->
-<div id="game">
+    <div class="introFlow">
+      <div>👀 Observe</div>
+      <div>🧠 Decide</div>
+      <div>🌿 Learn</div>
+    </div>
 
-<div id="imageCard">
-<img id="img" src="">
-</div>
+    <button id="startBtn" class="primary" type="button">START GAME →</button>
+  </div>
+</section>
 
-<div style="margin-top:15px;">
-<button class="btn fact" onclick="answer('FACT')">FACT</button>
-<button class="btn myth" onclick="answer('MYTH')">MYTH</button>
-</div>
+<main id="game">
+  <div class="gameShell">
 
-<div id="feedback"></div>
-<div id="explain"></div>
+    <div class="topbar">
+      <div class="topPill">🌸</div>
+      <div class="topPill titleBox">Fact or Myth</div>
+      <div class="topPill scoreBox">⭐ <span id="score">0</span>/8</div>
+    </div>
 
-</div>
+    <div class="progressCard">
+      <div class="progressMeta">
+        <span>Card <span id="cardNo">1</span> of 8</span>
+        <span id="progressText">0% complete</span>
+      </div>
+      <div class="progressTrack">
+        <div id="progressFill" class="progressFill"></div>
+      </div>
+    </div>
 
-<!-- END -->
-<div id="end"></div>
+    <section class="questionCard">
+      <div class="questionLabel">Look at the statement and decide</div>
 
-<!-- AUDIO (FIXED) -->
-<audio id="correctSound" src="assets/correct.mp3"></audio>
-<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+      <div class="imageFrame">
+        <img id="img" src="" alt="Fact or myth statement card">
+      </div>
+
+      <div class="answers">
+        <button id="factBtn" class="answerBtn fact" type="button">FACT</button>
+        <button id="mythBtn" class="answerBtn myth" type="button">MYTH</button>
+      </div>
+
+      <div id="feedbackCard" class="feedbackCard">
+        <div id="feedback">Choose FACT or MYTH.</div>
+        <div id="explain"></div>
+      </div>
+
+      <button id="nextBtn" class="nextBtn" type="button" hidden>NEXT CARD →</button>
+    </section>
+
+  </div>
+</main>
+
+<section id="end" class="screen">
+  <div class="panel endCard">
+    <div class="trophy">🏅</div>
+    <h2>Game Complete</h2>
+    <div class="finalScore">Score: <span id="finalScore">0</span> / 8</div>
+    <p id="finalMessage"></p>
+    <button id="againBtn" class="primary" type="button">PLAY AGAIN</button>
+  </div>
+</section>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
 
 <script>
+document.addEventListener("DOMContentLoaded",()=>{
 
-let index = 0;
-let score = 0;
-
-/* ❗ NO RANDOM — FIXED ORDER */
-const cards = [
-{img:"assets/1.png", answer:"MYTH", explain:"Girls can attend school during periods. It is normal and safe."},
-{img:"assets/2.png", answer:"FACT", explain:"Sports help reduce cramps and improve mood."},
-{img:"assets/3.png", answer:"MYTH", explain:"Menstruation is not dirty or impure."},
-{img:"assets/4.png", answer:"FACT", explain:"Balanced diet supports health during periods."},
-{img:"assets/5.png", answer:"MYTH", explain:"Talking about periods is not shameful."},
-{img:"assets/6.png", answer:"FACT", explain:"Pads and cloth pads are safe if maintained properly."},
-{img:"assets/7.png", answer:"MYTH", explain:"Bathing during periods is safe and recommended."},
-{img:"assets/8.png", answer:"FACT", explain:"Mood changes are normal due to hormones."}
+const cards=[
+  {img:"assets/1.png",answer:"MYTH",explain:"Girls can attend school during periods. Menstruation does not prevent normal school activities."},
+  {img:"assets/2.png",answer:"FACT",explain:"Physical activity can help some people feel better and may reduce menstrual discomfort."},
+  {img:"assets/3.png",answer:"MYTH",explain:"Menstruation is a normal biological process. It does not make a person dirty or impure."},
+  {img:"assets/4.png",answer:"FACT",explain:"A balanced diet supports overall health and well-being during menstruation."},
+  {img:"assets/5.png",answer:"MYTH",explain:"Talking about menstruation is not shameful. Accurate information helps people make healthy choices."},
+  {img:"assets/6.png",answer:"FACT",explain:"Sanitary pads and clean reusable cloth pads can be used safely when they are changed, washed, dried and stored properly."},
+  {img:"assets/7.png",answer:"MYTH",explain:"Bathing during menstruation is safe and helps maintain personal hygiene."},
+  {img:"assets/8.png",answer:"FACT",explain:"Hormonal changes around menstruation can affect mood for some people."}
 ];
 
-/* SPLASH */
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="block";
-},2000);
+let index=0;
+let score=0;
+let answered=false;
+let audioUnlocked=false;
 
-function startGame(){
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="flex";
-loadCard();
+const $=id=>document.getElementById(id);
+
+function unlockAudio(){
+  if(audioUnlocked)return;
+  audioUnlocked=true;
+
+  ["correctSound","wrongSound"].forEach(id=>{
+    const a=$(id);
+    a.muted=true;
+    try{
+      const p=a.play();
+      if(p&&p.then){
+        p.then(()=>{
+          a.pause();
+          a.currentTime=0;
+          a.muted=false;
+        }).catch(()=>{a.muted=false});
+      }else{
+        a.muted=false;
+      }
+    }catch(e){
+      a.muted=false;
+    }
+  });
+}
+
+function playSound(id){
+  const a=$(id);
+  try{
+    a.pause();
+    a.currentTime=0;
+    a.muted=false;
+    a.volume=1;
+    const p=a.play();
+    if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+
+function showGame(){
+  $("intro").style.display="none";
+  $("end").style.display="none";
+  $("game").style.display="block";
 }
 
 function loadCard(){
+  if(index>=cards.length){
+    endGame();
+    return;
+  }
 
-if(index >= cards.length){
-endGame();
-return;
-}
+  answered=false;
 
-document.getElementById("img").src = cards[index].img;
-document.getElementById("feedback").innerText = "";
-document.getElementById("explain").style.display = "none";
+  $("cardNo").textContent=index+1;
+  $("score").textContent=score;
+  $("progressText").textContent=Math.round(index/cards.length*100)+"% complete";
+  $("progressFill").style.width=(index/cards.length*100)+"%";
+
+  $("factBtn").disabled=false;
+  $("mythBtn").disabled=false;
+  $("factBtn").classList.remove("correct","wrong");
+  $("mythBtn").classList.remove("correct","wrong");
+
+  $("feedbackCard").className="feedbackCard";
+  $("feedback").textContent="Choose FACT or MYTH.";
+  $("explain").textContent="";
+  $("nextBtn").hidden=true;
+
+  const img=$("img");
+  img.onload=()=>{
+    /* Never stretch a low-resolution image above its natural pixel width.
+       This avoids making small PNG files look even more pixelated. */
+    const safeWidth=Math.min(img.naturalWidth||520,520);
+    img.style.maxWidth=safeWidth+"px";
+  };
+  img.src=cards[index].img;
 }
 
 function answer(choice){
+  if(answered)return;
+  answered=true;
 
-let correctSound = document.getElementById("correctSound");
-let wrongSound = document.getElementById("wrongSound");
+  const card=cards[index];
+  const factBtn=$("factBtn");
+  const mythBtn=$("mythBtn");
+  const clicked=choice==="FACT"?factBtn:mythBtn;
+  const correct=card.answer==="FACT"?factBtn:mythBtn;
 
-if(choice === cards[index].answer){
-score++;
-document.getElementById("feedback").innerText = "✔ Correct!";
-correctSound.play();   // ✅ FIXED AUDIO
-}else{
-document.getElementById("feedback").innerText = "❌ Not quite right!";
-wrongSound.play();     // ✅ FIXED AUDIO
+  factBtn.disabled=true;
+  mythBtn.disabled=true;
+
+  if(choice===card.answer){
+    score++;
+    $("score").textContent=score;
+    clicked.classList.add("correct");
+    $("feedbackCard").className="feedbackCard good";
+    $("feedback").textContent="✔ Correct!";
+    playSound("correctSound");
+  }else{
+    clicked.classList.add("wrong");
+    correct.classList.add("correct");
+    $("feedbackCard").className="feedbackCard bad";
+    $("feedback").textContent="❌ Not quite.";
+    playSound("wrongSound");
+  }
+
+  $("explain").textContent=card.explain;
+  $("nextBtn").hidden=false;
 }
 
-/* explanation */
-document.getElementById("explain").style.display="block";
-document.getElementById("explain").innerText = cards[index].explain;
-
-setTimeout(()=>{
-index++;
-loadCard();
-},1500);
+function nextCard(){
+  index++;
+  loadCard();
 }
 
 function endGame(){
+  $("game").style.display="none";
+  $("intro").style.display="none";
+  $("end").style.display="grid";
 
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="block";
-
-document.getElementById("end").innerHTML = `
-<div class="badge">🏅</div>
-<h2>Game Completed</h2>
-<p>Score: ${score}/8</p>
-<p>${score >= 6 ? "🌸 You are a Menstrual Health Champion!" : "🌱 Great effort!"}</p>
-
-<button onclick="location.reload()" style="background:#2e7d32;color:white;padding:12px;border:none;border-radius:10px;">
-Play Again
-</button>
-`;
+  $("finalScore").textContent=score;
+  $("finalMessage").textContent=
+    score>=7
+      ?"🌸 Excellent! You showed strong menstrual health awareness."
+      :score>=5
+      ?"🌿 Good work. Replay the cards to strengthen the ideas you missed."
+      :"🌱 Keep learning. Read each explanation carefully and try again.";
 }
 
+$("startBtn").addEventListener("click",()=>{
+  unlockAudio();
+  index=0;
+  score=0;
+  showGame();
+  loadCard();
+});
+
+$("factBtn").addEventListener("click",()=>answer("FACT"));
+$("mythBtn").addEventListener("click",()=>answer("MYTH"));
+$("nextBtn").addEventListener("click",nextCard);
+$("againBtn").addEventListener("click",()=>location.reload());
+
+setTimeout(()=>$("splash").classList.add("hide"),1200);
+
+});
 </script>
 
 </body>
