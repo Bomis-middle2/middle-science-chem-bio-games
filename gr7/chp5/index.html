@@ -2430,6 +2430,127 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
   }
 }
 
+
+/* ===== RIGHT-SIDE REFERENCE SAMPLE ===== */
+.sampleStage::after{
+  content:"REFERENCE SAMPLE";
+  position:absolute;
+  left:50%;
+  bottom:9px;
+  transform:translateX(-50%);
+  padding:3px 8px;
+  border-radius:999px;
+  background:#e8f4fa;
+  color:#0b678f;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.3px;
+  white-space:nowrap;
+}
+
+.sampleStage .sampleRock{
+  opacity:1 !important;
+  visibility:visible !important;
+}
+
+/* ===== TIGHTER MOBILE LAB ===== */
+@media(max-width:620px){
+  .labCard{
+    min-height:315px;
+    grid-template-columns:minmax(0,1fr) 104px;
+    grid-template-rows:205px auto;
+  }
+
+  .experimentBox{
+    min-height:205px;
+    max-height:205px;
+  }
+
+  .experimentVisual{
+    height:78px;
+    min-height:78px;
+  }
+
+  .sampleStage{
+    min-height:205px;
+    max-height:205px;
+  }
+
+  .samplePlate{
+    width:94px;
+    height:92px;
+    margin:4px auto 0;
+  }
+
+  .sampleStage .sampleRock{
+    bottom:18px;
+  }
+
+  .sampleStage::after{
+    bottom:4px;
+    font-size:5.5px;
+    padding:2px 5px;
+  }
+
+  .testPanel{
+    margin-top:0;
+  }
+
+  .testBtn{
+    min-height:39px;
+  }
+
+  .testBtn span{
+    font-size:14px;
+  }
+
+  .observation{
+    line-height:1.22;
+  }
+}
+
+
+/* ===== SONORITY HAMMER POSITION FIX ===== */
+.sHammer{
+  left:72px !important;
+  top:26px !important;
+  font-size:38px !important;
+  transform:rotate(-18deg) !important;
+  transform-origin:78% 72% !important;
+  z-index:6;
+}
+
+.sHammer.hit{
+  animation:sonorityHitFixed .55s ease !important;
+}
+
+@keyframes sonorityHitFixed{
+  0%{transform:rotate(-26deg) translate(0,0)}
+  45%{transform:rotate(-4deg) translate(18px,3px)}
+  60%{transform:rotate(4deg) translate(22px,4px)}
+  100%{transform:rotate(-18deg) translate(0,0)}
+}
+
+@media(max-width:620px){
+  .sHammer{
+    left:50px !important;
+    top:18px !important;
+    font-size:24px !important;
+    transform:rotate(-18deg) !important;
+  }
+
+  .sHammer.hit{
+    animation:sonorityHitFixedMobile .55s ease !important;
+  }
+
+  @keyframes sonorityHitFixedMobile{
+    0%{transform:rotate(-28deg) translate(0,0)}
+    45%{transform:rotate(-6deg) translate(10px,2px)}
+    60%{transform:rotate(4deg) translate(13px,2px)}
+    100%{transform:rotate(-18deg) translate(0,0)}
+  }
+}
+
 </style>
 </head>
 
@@ -2549,7 +2670,7 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
 
             <div class="sampleStage">
               <div class="sampleTitle" id="sampleTitle">Sample A</div>
-              <div class="sampleSubtitle">Unknown material</div>
+              <div class="sampleSubtitle">Reference sample</div>
 
               <div class="samplePlate">
                 <div class="plate"></div>
@@ -2936,7 +3057,6 @@ function animateTest(testName,materialType){
     if(beam)beam.classList.add("show");
 
     if(materialType==="metal"){
-      $("sampleRock").classList.add("shiny");
       if(sample)sample.classList.add("shiny");
       if(burst1)burst1.classList.add("show");
       if(burst2)burst2.classList.add("show");
@@ -2945,7 +3065,6 @@ function animateTest(testName,materialType){
         tag.className="evidenceTag good";
       }
     }else{
-      $("sampleRock").classList.add("dull");
       if(sample)sample.classList.add("dull");
       if(tag){
         tag.textContent="Surface stays dull";
@@ -2967,14 +3086,12 @@ function animateTest(testName,materialType){
 
     setTimeout(()=>{
       if(materialType==="metal"){
-        $("sampleRock").classList.add("flat");
         if(sample)sample.classList.add("flat");
         if(tag){
           tag.textContent="Flattens into a sheet";
           tag.className="evidenceTag good";
         }
       }else{
-        $("sampleRock").classList.add("breakApart");
         if(sample)sample.classList.add("breakApart");
         if(tag){
           tag.textContent="Sample breaks into pieces";
@@ -3052,14 +3169,12 @@ function animateTest(testName,materialType){
 
     setTimeout(()=>{
       if(materialType==="metal"){
-        $("sampleRock").classList.add("wire");
         if(sample)sample.classList.add("wire");
         if(tag){
           tag.textContent="Pulled into a wire";
           tag.className="evidenceTag good";
         }
       }else{
-        $("sampleRock").classList.add("breakApart");
         if(sample)sample.classList.add("breakApart");
         if(tag){
           tag.textContent="Sample snaps instead of forming a wire";
