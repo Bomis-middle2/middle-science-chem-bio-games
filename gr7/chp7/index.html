@@ -2,473 +2,350 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Fact or Myth — Menstrual Awareness</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chat With a Friend — Menstrual Health</title>
 <style>
 *{box-sizing:border-box}
 :root{
-  --green:#2e7d32;
-  --green2:#1f6a28;
-  --red:#c62828;
-  --red2:#a51f1f;
-  --ink:#233742;
-  --muted:#667b85;
-  --card:#ffffff;
-  --soft:#f6fbf8;
-  --line:#d7e5df;
-  --gold:#f0b63f;
+  --ink:#243448;--muted:#718093;--line:#e5e9ef;
+  --purple:#6f5bd3;--purpleDark:#5846b0;
+  --green:#2f9d62;--greenSoft:#e8f6ed;
+  --red:#df5a61;--redSoft:#fff0ed;
+  --goldSoft:#fff7df;--white:#fff;
+  --shadow:0 14px 36px rgba(53,42,79,.15);
 }
-html,body{
-  margin:0;
-  min-height:100%;
-  font-family:Arial,sans-serif;
-  color:var(--ink);
-}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:var(--ink)}
 body{
-  min-height:100vh;
-  min-height:100dvh;
-  overflow-x:hidden;
-  background:
-    linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,.72)),
-    url("assets/mensurationbg.png") center/cover fixed no-repeat;
+  min-height:100vh;min-height:100dvh;overflow-x:hidden;
+  background:linear-gradient(rgba(255,255,255,.86),rgba(255,255,255,.9)),
+  url("assets/mensurationbg.png") center/cover fixed no-repeat;
 }
-button{
-  font:inherit;
-  cursor:pointer;
-  touch-action:manipulation;
-}
-button:focus-visible{
-  outline:3px solid #f2bd4f;
-  outline-offset:3px;
-}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
 button:disabled{cursor:default}
+button:focus-visible{outline:3px solid #9b8df0;outline-offset:3px}
 [hidden]{display:none!important}
+h1,h2,p{margin:0}
 
 /* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  display:grid;
-  place-items:center;
-  background:#fff;
-  transition:opacity .35s ease,visibility .35s ease;
+  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  background:#fff;transition:opacity .35s ease,visibility .35s ease;
 }
-#splash.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-#splash img{
-  width:150px;
-  max-width:44vw;
-}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+#splash img{width:145px;max-width:42vw}
 
-/* SCREENS */
-.screen{
-  min-height:100vh;
-  min-height:100dvh;
-  padding:16px;
-  display:grid;
-  place-items:center;
+/* COMMON */
+.screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:14px}
+.shell{width:min(680px,100%)}
+.introCard,.endCard{
+  overflow:hidden;border-radius:25px;background:rgba(255,255,255,.97);box-shadow:var(--shadow)
 }
-.panel{
-  width:min(720px,100%);
-  border-radius:24px;
-  background:rgba(255,255,255,.94);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 16px 42px rgba(35,58,57,.14);
-  backdrop-filter:blur(7px);
+.primary{
+  min-height:49px;border:0;border-radius:14px;padding:12px 20px;
+  background:linear-gradient(#37aa6a,#238a52);color:#fff;font-weight:900;
+  box-shadow:0 4px 0 #176b40
+}
+.secondary{
+  min-height:45px;border:1.5px solid #d8dfe7;border-radius:13px;
+  background:#fff;color:#4a596d;font-weight:900
 }
 
 /* INTRO */
-.introCard{
-  padding:30px 24px 24px;
-  text-align:center;
+.introHero{
+  position:relative;padding:82px 20px 25px;text-align:center;
+  background:radial-gradient(circle at 14% 10%,rgba(255,255,255,.98),transparent 28%),
+  linear-gradient(145deg,#fff0f6,#eef7ff 54%,#edf9f2)
 }
 .introLogo{
-  width:92px;
-  margin-bottom:8px;
+  position:absolute;top:14px;left:18px;width:98px;padding:5px;border-radius:12px;background:#fff
 }
 .eyebrow{
-  font-size:10px;
-  letter-spacing:1.7px;
-  text-transform:uppercase;
-  color:#648077;
-  font-weight:900;
+  font-size:10px;font-weight:900;text-transform:uppercase;
+  letter-spacing:1.4px;color:#847c92
 }
-.introCard h1{
-  margin:8px 0 6px;
-  color:#205f3b;
-  font-size:clamp(34px,7vw,56px);
-  line-height:.98;
+.introHero h1{
+  margin-top:8px;font-size:clamp(35px,7vw,56px);line-height:.98;color:var(--purple)
 }
-.introCard p{
-  margin:0 auto;
-  max-width:540px;
-  color:#5e747c;
-  font-size:16px;
-  line-height:1.45;
+.introHero h1 span{
+  display:block;margin-top:7px;font-size:.72em;color:var(--green)
 }
-.introFlow{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin:20px 0;
+.introHero p{
+  max-width:540px;margin:13px auto 0;color:#626c7a;font-size:15px;line-height:1.45;font-weight:700
 }
-.introFlow div{
-  padding:10px 7px;
-  border-radius:12px;
-  background:#eef7f1;
-  border:1px solid #d8e9dd;
-  color:#366b4a;
-  font-weight:900;
-  font-size:12px;
+.phoneMock{
+  width:min(390px,94%);margin:22px auto 0;padding:10px;border-radius:24px;
+  background:#fff;box-shadow:0 11px 27px rgba(60,49,85,.12)
 }
-.primary{
-  min-height:46px;
-  border:0;
-  border-radius:12px;
-  padding:12px 22px;
-  background:linear-gradient(#3a9144,#256f2f);
-  color:#fff;
-  font-weight:900;
-  box-shadow:0 4px 0 #1c5925;
+.mockTop{display:flex;align-items:center;gap:9px;padding-bottom:8px;border-bottom:1px solid #ececf1}
+.avatar{
+  width:40px;height:40px;display:grid;place-items:center;flex:0 0 auto;
+  border-radius:50%;background:linear-gradient(#ffdce7,#f3bbc9);font-size:21px
 }
-.primary:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 #1c5925;
+.mockName{text-align:left}
+.mockName strong{display:block;font-size:12px;color:#49425d}
+.mockName span{display:block;margin-top:2px;font-size:9px;color:#87909c}
+.mockChat{padding-top:10px}
+.mockBubble{
+  max-width:82%;padding:9px 10px;border-radius:14px 14px 14px 4px;
+  background:#f1effb;color:#524c66;text-align:left;font-size:10px;line-height:1.35
+}
+.mockReply{
+  width:max-content;max-width:78%;margin:8px 0 0 auto;padding:9px 10px;
+  border-radius:14px 14px 4px 14px;background:#ddf3e6;color:#34694d;
+  text-align:left;font-size:10px;font-weight:800
+}
+.introBottom{padding:18px 20px 22px;text-align:center}
+.introSteps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:17px}
+.introSteps div{
+  padding:9px 5px;border-radius:12px;border:1px solid #dfe8e2;
+  background:#f8faf9;color:#4d685b;font-size:10px;font-weight:900
 }
 
-/* GAME */
-#game{
-  display:none;
-  min-height:100vh;
-  min-height:100dvh;
-  padding:10px;
+/* GAME SHELL */
+#game{display:none;min-height:100vh;min-height:100dvh;padding:8px}
+.app{
+  width:min(680px,100%);margin:auto;overflow:hidden;border-radius:23px;
+  background:#fff;box-shadow:var(--shadow)
 }
-.gameShell{
-  width:min(760px,100%);
-  margin:auto;
+.appHeader{
+  display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;
+  padding:9px 10px;border-bottom:1px solid var(--line);background:#fff
 }
-.topbar{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:8px;
-  align-items:center;
-  margin-bottom:8px;
+.backBtn{
+  width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:12px;
+  background:#f4f5f8;color:#5c6574;font-size:19px;font-weight:900
 }
-.topPill{
-  min-height:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:8px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,.94);
-  box-shadow:0 5px 16px rgba(35,58,57,.08);
-  font-size:12px;
-  font-weight:900;
+.contact{display:flex;align-items:center;gap:9px;min-width:0}
+.contactAvatar{
+  position:relative;width:42px;height:42px;display:grid;place-items:center;
+  flex:0 0 auto;border-radius:50%;background:linear-gradient(#ffdce7,#f4bacd);font-size:21px
 }
-.titleBox{
-  color:#285e3c;
+.onlineDot{
+  position:absolute;right:0;bottom:1px;width:10px;height:10px;border:2px solid #fff;
+  border-radius:50%;background:#38ad66
 }
-.scoreBox{
-  background:#fff4cf;
-  color:#77571e;
+.contactText{min-width:0}
+.contactText strong{
+  display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#48405d;font-size:13px
 }
-.progressCard{
-  margin-bottom:8px;
-  padding:9px 11px;
-  border-radius:13px;
-  background:rgba(255,255,255,.94);
-  box-shadow:0 5px 16px rgba(35,58,57,.07);
+.contactText span{display:block;margin-top:2px;color:#84909d;font-size:9px}
+.scorePill{
+  padding:7px 9px;border-radius:999px;background:#fff3cf;color:#7e5d20;
+  font-size:10px;font-weight:900;white-space:nowrap
 }
+
+/* PROGRESS */
+.progressBox{padding:6px 9px 7px;border-bottom:1px solid var(--line);background:#fbfbfd}
 .progressMeta{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:6px;
-  font-size:11px;
-  font-weight:900;
-  color:#5a737a;
+  display:flex;justify-content:space-between;gap:8px;margin-bottom:4px;
+  color:#7b8593;font-size:9px;font-weight:900
 }
-.progressTrack{
-  height:8px;
-  overflow:hidden;
-  border-radius:999px;
-  background:#dfeae4;
-}
+.progressTrack{height:6px;overflow:hidden;border-radius:999px;background:#e9e8ef}
 .progressFill{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#3b9a4a,#66b66f);
-  transition:width .25s ease;
+  width:0;height:100%;background:linear-gradient(90deg,#7e6ad7,#ee7393);
+  transition:width .35s ease
 }
 
-.questionCard{
-  padding:14px;
-  border-radius:20px;
-  background:rgba(255,255,255,.96);
-  box-shadow:0 12px 32px rgba(35,58,57,.12);
+/* ACTIVE CHAT */
+.chatBody{
+  position:relative;min-height:610px;padding:13px;transition:background .35s ease
 }
-.questionLabel{
-  text-align:center;
-  color:#477061;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.8px;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
+.theme1{background:linear-gradient(145deg,#fff3f8,#ffe7ef)}
+.theme2{background:linear-gradient(145deg,#eef8ff,#dff2ff)}
+.theme3{background:linear-gradient(145deg,#eefaf1,#ddf5e6)}
+.theme4{background:linear-gradient(145deg,#fff8e8,#fff0c8)}
+.theme5{background:linear-gradient(145deg,#f4f0ff,#e9e1ff)}
+.theme6{background:linear-gradient(145deg,#fff2ec,#ffe3d5)}
+.theme7{background:linear-gradient(145deg,#effcff,#dcf8ff)}
+.theme8{background:linear-gradient(145deg,#fef4ff,#f6e7ff)}
+.theme9{background:linear-gradient(145deg,#f2fff2,#e2f8e1)}
+.theme10{background:linear-gradient(145deg,#fff7f1,#ffe8d5)}
 
-/* IMAGE: DO NOT UPSCALE LOW-RES FILES */
-.imageFrame{
-  width:100%;
-  min-height:230px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:8px;
-  border-radius:16px;
-  overflow:hidden;
-  background:linear-gradient(#fbfdfc,#f2f8f4);
-  border:1px solid #d9e6de;
+.topicLine{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}
+.topicChip,.newChip{
+  padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.75);
+  color:#666f7f;font-size:8px;font-weight:900;letter-spacing:.8px;text-transform:uppercase
 }
-#img{
-  display:block;
-  width:auto;
-  height:auto;
-  max-width:100%;
-  max-height:54vh;
-  object-fit:contain;
-  image-rendering:auto;
-  border-radius:12px;
-}
+.newChip{background:#fff;color:#8b5d77;box-shadow:0 3px 9px rgba(65,50,85,.07)}
 
-/* ANSWERS */
-.answers{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
+.chatCard{
+  min-height:360px;padding:12px;border:1px solid rgba(255,255,255,.68);
+  border-radius:19px;background:rgba(255,255,255,.82);
+  box-shadow:0 9px 22px rgba(65,50,85,.08)
 }
-.answerBtn{
-  min-height:56px;
-  border:0;
-  border-radius:13px;
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-  box-shadow:0 4px 0 rgba(0,0,0,.16);
+.row{display:flex;align-items:flex-end;gap:7px;margin:9px 0}
+.row.me{justify-content:flex-end}
+.miniAvatar{
+  width:28px;height:28px;display:grid;place-items:center;flex:0 0 auto;
+  border-radius:50%;background:#f7d3dd;font-size:14px
 }
-.answerBtn.fact{
-  background:linear-gradient(#3b9343,#2b742f);
+.bubble{
+  max-width:82%;padding:10px 11px;border-radius:15px;font-size:13px;line-height:1.42;
+  box-shadow:0 3px 9px rgba(54,48,68,.06)
 }
-.answerBtn.myth{
-  background:linear-gradient(#dc4747,#b62626);
+.friendBubble{
+  border-bottom-left-radius:5px;background:#f2effb;color:#514b65
 }
-.answerBtn:disabled{
-  opacity:.75;
+.meBubble{
+  border-bottom-right-radius:5px;background:#dff3e7;color:#33694d
 }
-.answerBtn.correct{
-  outline:4px solid #f6cf68;
+.popIn{animation:messagePop .24s ease both}
+@keyframes messagePop{
+  from{opacity:0;transform:translateY(8px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
 }
-.answerBtn.wrong{
-  outline:4px solid #ffd0c9;
+.typingBubble{
+  display:inline-flex;align-items:center;gap:4px;padding:11px 13px;
+  border-radius:15px 15px 15px 5px;background:#f2effb;
+  box-shadow:0 3px 9px rgba(54,48,68,.06)
+}
+.typingBubble i{
+  width:6px;height:6px;border-radius:50%;background:#91899e;
+  animation:typingDot .8s infinite alternate
+}
+.typingBubble i:nth-child(2){animation-delay:.16s}
+.typingBubble i:nth-child(3){animation-delay:.32s}
+@keyframes typingDot{
+  from{opacity:.35;transform:translateY(0)}
+  to{opacity:1;transform:translateY(-3px)}
 }
 
 /* FEEDBACK */
-.feedbackCard{
-  min-height:82px;
-  margin-top:11px;
-  padding:11px 12px;
-  border-radius:13px;
-  background:#f5f7f7;
-  border:1px solid #dfe7e4;
-  text-align:left;
+.feedback{
+  display:none;margin-top:10px;padding:10px 11px;border-radius:13px;
+  font-size:12px;line-height:1.42
 }
-#feedback{
-  font-size:15px;
-  font-weight:900;
+.feedback.show{display:block;animation:messagePop .24s ease both}
+.feedback.good{
+  border:1px solid #9bcbaa;background:var(--greenSoft);color:#346d4c
 }
-#explain{
-  margin-top:5px;
-  color:#526b73;
-  font-size:13px;
-  line-height:1.42;
+.feedback.bad{
+  border:1px solid #e4aaa4;background:var(--redSoft);color:#7d514d
 }
-.feedbackCard.good{
-  background:#eaf6ed;
-  border-color:#9bc7a4;
+.feedback strong{display:block;margin-bottom:3px;font-size:13px}
+.takeaway{
+  display:none;margin-top:8px;padding:10px 11px;border:1px solid #ead69b;
+  border-radius:13px;background:var(--goldSoft);color:#715d30;
+  font-size:11px;line-height:1.4
 }
-.feedbackCard.bad{
-  background:#fff0ec;
-  border-color:#e0aaa0;
+.takeaway.show{display:block;animation:messagePop .24s ease .05s both}
+
+/* REPLIES */
+.replySection{margin-top:11px}
+.replyLabel{
+  margin-bottom:6px;color:#707988;font-size:8px;font-weight:900;
+  letter-spacing:.9px;text-transform:uppercase
 }
+.options{display:grid;gap:6px}
+.replyBtn{
+  min-height:45px;display:grid;grid-template-columns:29px 1fr;gap:7px;align-items:center;
+  padding:7px 8px;border:1.5px solid #d8dfe7;border-radius:11px;background:#fff;
+  color:#3f4e62;text-align:left;font-size:11px;line-height:1.3;font-weight:800;
+  transition:transform .15s ease,background .2s ease,border-color .2s ease
+}
+.replyBtn:not(:disabled):active{transform:scale(.985)}
+.replyLetter{
+  width:25px;height:25px;display:grid;place-items:center;border-radius:50%;
+  background:#f0f2f5;color:#697281;font-size:9px;font-weight:900
+}
+.replyBtn.correct{border-color:#78b990;background:#e8f6ed}
+.replyBtn.correct .replyLetter{background:#35a460;color:#fff}
+.replyBtn.wrong{border-color:#e3a49f;background:#fff0ed}
+.replyBtn.wrong .replyLetter{background:#df5853;color:#fff}
 .nextBtn{
-  width:100%;
-  min-height:46px;
-  margin-top:10px;
-  border:0;
-  border-radius:12px;
-  background:#2d7551;
-  color:#fff;
-  font-weight:900;
+  width:100%;min-height:44px;margin-top:8px;border:0;border-radius:11px;
+  background:linear-gradient(#8875d8,#6754ba);color:#fff;font-size:11px;font-weight:900;
+  box-shadow:0 3px 0 #4d3c97
 }
 
 /* END */
-#end{
-  display:none;
+#end{display:none}
+.endInner{padding:24px 18px;text-align:center}
+.endLogo{width:84px}
+.endEmoji{margin-top:7px;font-size:56px}
+.endInner h2{margin-top:5px;color:var(--purple);font-size:27px}
+.finalScore{margin:12px auto 7px;color:var(--green);font-size:39px;font-weight:900}
+.levelBadge{
+  display:inline-block;padding:7px 12px;border-radius:999px;background:#ffe7ef;
+  color:#9e4161;font-size:11px;font-weight:900
 }
-.endCard{
-  padding:26px 22px;
-  text-align:center;
+.resultGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:15px 0}
+.resultTile{
+  padding:9px 5px;border:1px solid #dfe5eb;border-radius:11px;background:#f8fafb;
+  color:#667484;font-size:8px
 }
-.trophy{
-  font-size:64px;
+.resultTile strong{display:block;margin-top:3px;color:#2f6f50;font-size:14px}
+.reviewBox{
+  padding:10px;border-radius:12px;background:#f4f5fa;color:#596678;
+  text-align:left;font-size:11px;line-height:1.45
 }
-.endCard h2{
-  margin:5px 0;
-  color:#285f3b;
-  font-size:28px;
-}
-.finalScore{
-  display:inline-block;
-  margin:10px 0;
-  padding:8px 14px;
-  border-radius:999px;
-  background:#fff1c9;
-  color:#73551d;
-  font-size:18px;
-  font-weight:900;
-}
-.endCard p{
-  color:#58717a;
-  font-size:14px;
-}
+.endActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
 
 /* MOBILE */
 @media(max-width:600px){
-  body{
-    background-attachment:scroll;
+  body{background-attachment:scroll}
+  .screen{padding:7px}
+  .introCard,.endCard{border-radius:18px}
+  .introHero{padding:90px 12px 18px}
+  .introLogo{top:9px;left:50%;width:75px;transform:translateX(-50%)}
+  .introHero h1{font-size:32px}
+  .introHero p{font-size:13px}
+  .phoneMock{margin-top:15px;padding:8px;border-radius:17px}
+  .avatar{width:34px;height:34px;font-size:17px}
+  .mockName strong{font-size:10px}
+  .mockName span{font-size:8px}
+  .mockBubble,.mockReply{font-size:9px}
+  .introBottom{padding:14px 12px 16px}
+  .introSteps{gap:5px;margin-bottom:13px}
+  .introSteps div{padding:8px 3px;font-size:8px}
+  #game{padding:0}
+  .app{width:100%;min-height:100dvh;border-radius:0;box-shadow:none}
+  .appHeader{grid-template-columns:36px 1fr auto;gap:5px;padding:7px}
+  .backBtn{width:36px;height:36px;border-radius:10px;font-size:17px}
+  .contactAvatar{width:36px;height:36px;font-size:18px}
+  .contactText strong{font-size:11px}
+  .contactText span{font-size:8px}
+  .scorePill{padding:6px 7px;font-size:9px}
+  .progressBox{padding:5px 7px 6px}
+  .progressMeta{font-size:8px}
+  .progressTrack{height:5px}
+  .chatBody{min-height:calc(100dvh - 88px);padding:9px}
+  .topicLine{margin-bottom:7px}
+  .topicChip,.newChip{padding:4px 6px;font-size:7px}
+  .chatCard{min-height:0;padding:9px;border-radius:15px}
+  .row{gap:5px;margin:7px 0}
+  .miniAvatar{width:24px;height:24px;font-size:12px}
+  .bubble{max-width:86%;padding:8px 9px;border-radius:13px;font-size:12px;line-height:1.37}
+  .typingBubble{padding:9px 11px}
+  .feedback{margin-top:8px;padding:8px 9px;border-radius:10px;font-size:11px}
+  .feedback strong{font-size:12px}
+  .takeaway{margin-top:6px;padding:8px 9px;border-radius:10px;font-size:10px}
+  .replySection{margin-top:8px}
+  .replyLabel{font-size:7px;margin-bottom:5px}
+  .options{gap:5px}
+  .replyBtn{
+    min-height:41px;grid-template-columns:26px 1fr;gap:5px;padding:6px 7px;
+    border-radius:9px;font-size:10px
   }
-  .screen{
-    padding:9px;
-  }
-  .panel{
-    border-radius:18px;
-  }
-  .introCard{
-    padding:22px 14px 18px;
-  }
-  .introLogo{
-    width:76px;
-  }
-  .introCard h1{
-    font-size:34px;
-  }
-  .introCard p{
-    font-size:14px;
-  }
-  .introFlow{
-    gap:5px;
-    margin:15px 0;
-  }
-  .introFlow div{
-    font-size:9px;
-    padding:8px 4px;
-  }
-
-  #game{
-    padding:5px;
-  }
-  .topbar{
-    gap:4px;
-    margin-bottom:5px;
-  }
-  .topPill{
-    min-height:36px;
-    padding:6px 7px;
-    border-radius:9px;
-    font-size:9px;
-  }
-  .progressCard{
-    margin-bottom:5px;
-    padding:7px 8px;
-    border-radius:9px;
-  }
-  .progressMeta{
-    font-size:9px;
-    margin-bottom:4px;
-  }
-  .progressTrack{
-    height:6px;
-  }
-  .questionCard{
-    padding:8px;
-    border-radius:14px;
-  }
-  .questionLabel{
-    font-size:9px;
-    margin-bottom:6px;
-  }
-  .imageFrame{
-    min-height:190px;
-    padding:5px;
-    border-radius:11px;
-  }
-  #img{
-    max-height:48vh;
-    border-radius:9px;
-  }
-  .answers{
-    gap:7px;
-    margin-top:8px;
-  }
-  .answerBtn{
-    min-height:50px;
-    font-size:15px;
-    border-radius:10px;
-  }
-  .feedbackCard{
-    min-height:70px;
-    margin-top:8px;
-    padding:9px 10px;
-    border-radius:10px;
-  }
-  #feedback{
-    font-size:13px;
-  }
-  #explain{
-    font-size:12px;
-  }
-  .nextBtn{
-    min-height:43px;
-    margin-top:7px;
-    font-size:12px;
-  }
+  .replyLetter{width:23px;height:23px;font-size:8px}
+  .nextBtn{min-height:40px;margin-top:6px;border-radius:9px;font-size:10px}
+  .endInner{padding:18px 11px}
+  .endLogo{width:70px}
+  .endEmoji{font-size:47px}
+  .endInner h2{font-size:22px}
+  .finalScore{font-size:33px}
+  .levelBadge{font-size:9px}
+  .resultTile{font-size:7px}
+  .resultTile strong{font-size:11px}
+  .reviewBox{font-size:10px}
 }
-
-@media(max-width:380px){
-  .imageFrame{
-    min-height:170px;
-  }
-  #img{
-    max-height:44vh;
-  }
-  .answerBtn{
-    min-height:47px;
-    font-size:14px;
-  }
+@media(max-width:360px){
+  .bubble{font-size:11px}
+  .replyBtn{font-size:9px}
 }
-
 @media(prefers-reduced-motion:reduce){
-  *{
-    animation:none!important;
-    transition:none!important;
-  }
+  *{animation:none!important;transition:none!important}
 }
 </style>
 </head>
@@ -480,113 +357,365 @@ button:disabled{cursor:default}
 </div>
 
 <section id="intro" class="screen">
-  <div class="panel introCard">
-    <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
-    <div class="eyebrow">Grade 7 • Chapter 7</div>
-    <h1>🌸 Fact or Myth?</h1>
-    <p>Explore common statements about menstrual health and decide whether each one is a fact or a myth.</p>
+  <div class="shell">
+    <div class="introCard">
+      <div class="introHero">
+        <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
+        <div class="eyebrow">Grade 7 • Chapter 7</div>
 
-    <div class="introFlow">
-      <div>👀 Observe</div>
-      <div>🧠 Decide</div>
-      <div>🌿 Learn</div>
+        <h1>
+          Chat With a Friend
+          <span>Menstrual Health</span>
+        </h1>
+
+        <p>
+          Your friend has questions and has heard a few myths.
+          Choose a helpful, scientifically accurate reply.
+        </p>
+
+        <div class="phoneMock" aria-hidden="true">
+          <div class="mockTop">
+            <div class="avatar">👧</div>
+            <div class="mockName">
+              <strong>Your Friend</strong>
+              <span>online • typing…</span>
+            </div>
+          </div>
+
+          <div class="mockChat">
+            <div class="mockBubble">
+              Is bathing during periods unsafe?
+            </div>
+            <div class="mockReply">
+              No. Bathing is safe and helps maintain hygiene. ✓
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="introBottom">
+        <div class="introSteps">
+          <div>💬 Read</div>
+          <div>🧠 Reply</div>
+          <div>🌸 Learn</div>
+        </div>
+
+        <button id="startBtn" class="primary" type="button">
+          OPEN CHAT →
+        </button>
+      </div>
     </div>
-
-    <button id="startBtn" class="primary" type="button">START GAME →</button>
   </div>
 </section>
 
 <main id="game">
-  <div class="gameShell">
+  <div class="app">
 
-    <div class="topbar">
-      <div class="topPill">🌸</div>
-      <div class="topPill titleBox">Fact or Myth</div>
-      <div class="topPill scoreBox">⭐ <span id="score">0</span>/8</div>
-    </div>
+    <header class="appHeader">
+      <button id="backBtn" class="backBtn" type="button">‹</button>
 
-    <div class="progressCard">
-      <div class="progressMeta">
-        <span>Card <span id="cardNo">1</span> of 8</span>
-        <span id="progressText">0% complete</span>
+      <div class="contact">
+        <div class="contactAvatar">
+          👧
+          <span class="onlineDot"></span>
+        </div>
+
+        <div class="contactText">
+          <strong>Your Friend</strong>
+          <span id="statusText">online</span>
+        </div>
       </div>
+
+      <div class="scorePill">
+        ⭐ <span id="score">0</span>/10
+      </div>
+    </header>
+
+    <div class="progressBox">
+      <div class="progressMeta">
+        <span id="counter">Chat 1 of 10</span>
+        <span id="levelText">🌱 Learning</span>
+      </div>
+
       <div class="progressTrack">
         <div id="progressFill" class="progressFill"></div>
       </div>
     </div>
 
-    <section class="questionCard">
-      <div class="questionLabel">Look at the statement and decide</div>
+    <section id="chatBody" class="chatBody theme1">
 
-      <div class="imageFrame">
-        <img id="img" src="" alt="Fact or myth statement card">
+      <div class="topicLine">
+        <div id="topicChip" class="topicChip">MYTH CHECK</div>
+        <div class="newChip">NEW MESSAGE</div>
       </div>
 
-      <div class="answers">
-        <button id="factBtn" class="answerBtn fact" type="button">FACT</button>
-        <button id="mythBtn" class="answerBtn myth" type="button">MYTH</button>
+      <div class="chatCard">
+
+        <div id="questionRow" class="row">
+          <div class="miniAvatar">👧</div>
+          <div id="questionBubble" class="bubble friendBubble"></div>
+        </div>
+
+        <div id="answerRow" class="row me" hidden>
+          <div id="answerBubble" class="bubble meBubble"></div>
+        </div>
+
+        <div id="typingRow" class="row" hidden>
+          <div class="miniAvatar">👧</div>
+          <div class="typingBubble">
+            <i></i><i></i><i></i>
+          </div>
+        </div>
+
+        <div id="reactionRow" class="row" hidden>
+          <div class="miniAvatar">👧</div>
+          <div id="reactionBubble" class="bubble friendBubble"></div>
+        </div>
+
+        <div id="feedback" class="feedback">
+          <strong id="feedbackTitle"></strong>
+          <span id="feedbackText"></span>
+        </div>
+
+        <div id="takeaway" class="takeaway"></div>
       </div>
 
-      <div id="feedbackCard" class="feedbackCard">
-        <div id="feedback">Choose FACT or MYTH.</div>
-        <div id="explain"></div>
+      <div class="replySection">
+        <div id="replyLabel" class="replyLabel">CHOOSE YOUR REPLY</div>
+        <div id="options" class="options"></div>
+
+        <button id="nextBtn" class="nextBtn" type="button" hidden>
+          NEXT MESSAGE →
+        </button>
       </div>
 
-      <button id="nextBtn" class="nextBtn" type="button" hidden>NEXT CARD →</button>
     </section>
 
   </div>
 </main>
 
 <section id="end" class="screen">
-  <div class="panel endCard">
-    <div class="trophy">🏅</div>
-    <h2>Game Complete</h2>
-    <div class="finalScore">Score: <span id="finalScore">0</span> / 8</div>
-    <p id="finalMessage"></p>
-    <button id="againBtn" class="primary" type="button">PLAY AGAIN</button>
+  <div class="shell">
+    <div class="endCard">
+      <div class="endInner">
+
+        <img src="assets/innovine-logo.png" class="endLogo" alt="Innovine logo">
+
+        <div class="endEmoji">🌸💬</div>
+
+        <h2>Chat Complete!</h2>
+
+        <div id="finalScore" class="finalScore">0 / 10</div>
+
+        <div id="levelBadge" class="levelBadge"></div>
+
+        <div class="resultGrid">
+          <div class="resultTile">
+            Myths corrected
+            <strong id="mythScore">0/4</strong>
+          </div>
+
+          <div class="resultTile">
+            Healthy choices
+            <strong id="habitScore">0/3</strong>
+          </div>
+
+          <div class="resultTile">
+            Support choices
+            <strong id="supportScore">0/3</strong>
+          </div>
+        </div>
+
+        <div id="reviewBox" class="reviewBox"></div>
+
+        <div class="endActions">
+          <button id="reviewBtn" class="secondary" type="button">
+            PLAY AGAIN
+          </button>
+
+          <button id="restartBtn" class="primary" type="button">
+            RESTART
+          </button>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
 <audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
 <audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
 
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
 
-const cards=[
-  {img:"assets/1.png",answer:"MYTH",explain:"Girls can attend school during periods. Menstruation does not prevent normal school activities."},
-  {img:"assets/2.png",answer:"FACT",explain:"Physical activity can help some people feel better and may reduce menstrual discomfort."},
-  {img:"assets/3.png",answer:"MYTH",explain:"Menstruation is a normal biological process. It does not make a person dirty or impure."},
-  {img:"assets/4.png",answer:"FACT",explain:"A balanced diet supports overall health and well-being during menstruation."},
-  {img:"assets/5.png",answer:"MYTH",explain:"Talking about menstruation is not shameful. Accurate information helps people make healthy choices."},
-  {img:"assets/6.png",answer:"FACT",explain:"Sanitary pads and clean reusable cloth pads can be used safely when they are changed, washed, dried and stored properly."},
-  {img:"assets/7.png",answer:"MYTH",explain:"Bathing during menstruation is safe and helps maintain personal hygiene."},
-  {img:"assets/8.png",answer:"FACT",explain:"Hormonal changes around menstruation can affect mood for some people."}
+const $=id=>document.getElementById(id);
+
+const chats=[
+  {
+    group:"myth",
+    topic:"Myth check",
+    friend:"My cousin said girls should stay home from school during their periods. Is that true?",
+    replies:[
+      "Yes. Periods make school unsafe.",
+      "No. Girls can attend school and continue normal activities during menstruation.",
+      "Only if nobody knows she has her period."
+    ],
+    answer:1,
+    feedback:"Menstruation does not prevent a student from attending school or taking part in normal activities.",
+    takeaway:"Menstruation is a normal biological process."
+  },
+  {
+    group:"myth",
+    topic:"Myth check",
+    friend:"Someone told me menstruation makes a person dirty or impure. Is that right?",
+    replies:[
+      "No. That is a myth. Menstruation is a normal body process.",
+      "Yes. Menstrual blood makes a person impure.",
+      "It depends on the person's age."
+    ],
+    answer:0,
+    feedback:"Menstruation does not make a person dirty or impure.",
+    takeaway:"Hygiene matters, but menstruation itself is not unclean."
+  },
+  {
+    group:"myth",
+    topic:"Myth check",
+    friend:"I heard bathing during a period is unsafe. Should I avoid it?",
+    replies:[
+      "Yes. Avoid bathing until the period ends.",
+      "No. Bathing is safe and helps maintain personal hygiene.",
+      "Only wash your hands during a period."
+    ],
+    answer:1,
+    feedback:"Bathing during menstruation is safe and supports hygiene and comfort.",
+    takeaway:"Regular bathing can help a person feel clean and comfortable."
+  },
+  {
+    group:"myth",
+    topic:"Myth check",
+    friend:"Is it embarrassing to ask questions or talk about periods?",
+    replies:[
+      "Yes. Periods should always be kept secret.",
+      "No. Respectful conversations can help people get reliable information and support.",
+      "Only adults are allowed to talk about menstruation."
+    ],
+    answer:1,
+    feedback:"Open and respectful conversations can reduce myths and help people get support.",
+    takeaway:"There is no need for shame around a normal body process."
+  },
+  {
+    group:"habit",
+    topic:"Healthy habit",
+    friend:"I feel okay today, but I have my period. Can I still take part in PE?",
+    replies:[
+      "You must avoid all exercise.",
+      "You may participate if you feel comfortable, and rest if you need to.",
+      "Exercise is dangerous during menstruation."
+    ],
+    answer:1,
+    feedback:"Physical activity is generally safe during menstruation when a person feels comfortable.",
+    takeaway:"Listen to your body and rest when needed."
+  },
+  {
+    group:"habit",
+    topic:"Healthy habit",
+    friend:"What is a sensible food and drink choice during menstruation?",
+    replies:[
+      "Skip meals so the body can rest.",
+      "Eat a balanced diet and drink enough fluids.",
+      "Avoid drinking water."
+    ],
+    answer:1,
+    feedback:"A balanced diet and adequate fluids support general health and well-being.",
+    takeaway:"Healthy eating supports the body throughout the menstrual cycle."
+  },
+  {
+    group:"habit",
+    topic:"Healthy habit",
+    friend:"I use reusable cloth pads. What should I remember?",
+    replies:[
+      "Wash them thoroughly, dry them completely and store them clean and dry.",
+      "Keep them damp after washing.",
+      "Use them again without washing."
+    ],
+    answer:0,
+    feedback:"Reusable cloth pads need careful washing, complete drying and clean storage.",
+    takeaway:"Good menstrual product hygiene supports health and comfort."
+  },
+  {
+    group:"support",
+    topic:"Support choice",
+    friend:"My pad has been on for many hours and now it feels wet and uncomfortable. What should I do?",
+    replies:[
+      "Keep using it all day.",
+      "Change to a clean menstrual product.",
+      "Stop drinking water."
+    ],
+    answer:1,
+    feedback:"Changing to a clean menstrual product when needed supports hygiene and comfort.",
+    takeaway:"Menstrual products should be changed as needed."
+  },
+  {
+    group:"support",
+    topic:"Support choice",
+    friend:"What if someone has very severe period pain, faints, or keeps missing school because of it?",
+    replies:[
+      "Ignore it because severe pain is always normal.",
+      "Tell a trusted adult and seek medical advice.",
+      "Keep it secret."
+    ],
+    answer:1,
+    feedback:"Severe or unusual symptoms that interfere with daily life should be discussed with a trusted adult and healthcare professional.",
+    takeaway:"Seeking help for severe symptoms is a healthy choice."
+  },
+  {
+    group:"support",
+    topic:"Support choice",
+    friend:"I have questions about periods, but I am not sure which information online is reliable. What should I do?",
+    replies:[
+      "Believe every forwarded message.",
+      "Avoid asking anyone.",
+      "Ask a trusted adult, teacher or healthcare professional and use reliable information."
+    ],
+    answer:2,
+    feedback:"Reliable sources and trusted adults can help answer menstrual health questions accurately.",
+    takeaway:"Asking questions is a healthy way to learn."
+  }
+];
+
+const themes=[
+  "theme1","theme2","theme3","theme4","theme5",
+  "theme6","theme7","theme8","theme9","theme10"
 ];
 
 let index=0;
 let score=0;
-let answered=false;
+let mythScore=0;
+let habitScore=0;
+let supportScore=0;
+let locked=false;
 let audioUnlocked=false;
-
-const $=id=>document.getElementById(id);
+const missed=[];
 
 function unlockAudio(){
   if(audioUnlocked)return;
   audioUnlocked=true;
 
-  ["correctSound","wrongSound"].forEach(id=>{
+  ["correctSound","wrongSound","clapSound"].forEach(id=>{
     const a=$(id);
     a.muted=true;
+
     try{
       const p=a.play();
+
       if(p&&p.then){
         p.then(()=>{
           a.pause();
           a.currentTime=0;
           a.muted=false;
-        }).catch(()=>{a.muted=false});
+        }).catch(()=>a.muted=false);
       }else{
         a.muted=false;
       }
@@ -596,92 +725,240 @@ function unlockAudio(){
   });
 }
 
-function playSound(id){
-  const a=$(id);
-  try{
+function stopSounds(){
+  ["correctSound","wrongSound","clapSound"].forEach(id=>{
+    const a=$(id);
     a.pause();
-    a.currentTime=0;
+    try{a.currentTime=0}catch(e){}
+  });
+}
+
+function playSound(id){
+  stopSounds();
+
+  const a=$(id);
+
+  try{
     a.muted=false;
     a.volume=1;
+    a.currentTime=0;
+
     const p=a.play();
+
     if(p&&p.catch)p.catch(()=>{});
   }catch(e){}
 }
 
-function showGame(){
-  $("intro").style.display="none";
-  $("end").style.display="none";
-  $("game").style.display="block";
+function getLevelText(){
+  if(score>=8)return "🌸 Awareness Star";
+  if(score>=5)return "🔎 Health Helper";
+  return "🌱 Learning";
 }
 
-function loadCard(){
-  if(index>=cards.length){
+function updateHeader(){
+  $("score").textContent=score;
+  $("counter").textContent="Chat "+(index+1)+" of "+chats.length;
+  $("levelText").textContent=getLevelText();
+
+  const progress=Math.round(index/chats.length*100);
+  $("progressFill").style.width=progress+"%";
+}
+
+function resetChat(){
+  $("answerRow").hidden=true;
+  $("reactionRow").hidden=true;
+  $("typingRow").hidden=true;
+
+  $("feedback").className="feedback";
+  $("feedbackTitle").textContent="";
+  $("feedbackText").textContent="";
+
+  $("takeaway").className="takeaway";
+  $("takeaway").textContent="";
+
+  $("nextBtn").hidden=true;
+
+  $("replyLabel").textContent="CHOOSE YOUR REPLY";
+  $("statusText").textContent="online";
+}
+
+function buildOptions(chat){
+  $("options").replaceChildren();
+
+  ["A","B","C"].forEach((letter,i)=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="replyBtn";
+
+    button.innerHTML=
+      '<span class="replyLetter">'+letter+'</span>'+
+      '<span>'+chat.replies[i]+'</span>';
+
+    button.addEventListener("click",()=>answer(i,button));
+
+    $("options").appendChild(button);
+  });
+}
+
+function showTyping(callback){
+  $("statusText").textContent="typing…";
+  $("typingRow").hidden=false;
+
+  setTimeout(()=>{
+    $("typingRow").hidden=true;
+    $("statusText").textContent="online";
+    callback();
+  },650);
+}
+
+function loadChat(){
+  if(index>=chats.length){
     endGame();
     return;
   }
 
-  answered=false;
+  locked=false;
+  resetChat();
+  updateHeader();
 
-  $("cardNo").textContent=index+1;
-  $("score").textContent=score;
-  $("progressText").textContent=Math.round(index/cards.length*100)+"% complete";
-  $("progressFill").style.width=(index/cards.length*100)+"%";
+  const chat=chats[index];
 
-  $("factBtn").disabled=false;
-  $("mythBtn").disabled=false;
-  $("factBtn").classList.remove("correct","wrong");
-  $("mythBtn").classList.remove("correct","wrong");
+  $("chatBody").className="chatBody "+themes[index];
+  $("topicChip").textContent=chat.topic;
+  $("questionBubble").textContent="";
+  buildOptions(chat);
 
-  $("feedbackCard").className="feedbackCard";
-  $("feedback").textContent="Choose FACT or MYTH.";
-  $("explain").textContent="";
-  $("nextBtn").hidden=true;
+  $("options").style.visibility="hidden";
+  $("replyLabel").style.visibility="hidden";
+  $("questionRow").hidden=true;
 
-  const img=$("img");
-  img.onload=()=>{
-    /* Never stretch a low-resolution image above its natural pixel width.
-       This avoids making small PNG files look even more pixelated. */
-    const safeWidth=Math.min(img.naturalWidth||520,520);
-    img.style.maxWidth=safeWidth+"px";
-  };
-  img.src=cards[index].img;
+  $("statusText").textContent="typing…";
+
+  const typing=document.createElement("div");
+  typing.id="openingTyping";
+  typing.className="row";
+
+  typing.innerHTML=
+    '<div class="miniAvatar">👧</div>'+
+    '<div class="typingBubble"><i></i><i></i><i></i></div>';
+
+  const card=document.querySelector(".chatCard");
+  card.insertBefore(typing,card.firstChild);
+
+  setTimeout(()=>{
+    const opening=$("openingTyping");
+    if(opening)opening.remove();
+
+    $("statusText").textContent="online";
+    $("questionBubble").textContent=chat.friend;
+    $("questionRow").hidden=false;
+    $("questionRow").classList.remove("popIn");
+    void $("questionRow").offsetWidth;
+    $("questionRow").classList.add("popIn");
+
+    setTimeout(()=>{
+      $("options").style.visibility="visible";
+      $("replyLabel").style.visibility="visible";
+    },180);
+
+  },650);
 }
 
-function answer(choice){
-  if(answered)return;
-  answered=true;
+function answer(choice,selectedButton){
+  if(locked)return;
+  locked=true;
 
-  const card=cards[index];
-  const factBtn=$("factBtn");
-  const mythBtn=$("mythBtn");
-  const clicked=choice==="FACT"?factBtn:mythBtn;
-  const correct=card.answer==="FACT"?factBtn:mythBtn;
+  const chat=chats[index];
+  const buttons=[...document.querySelectorAll(".replyBtn")];
+  buttons.forEach(button=>button.disabled=true);
 
-  factBtn.disabled=true;
-  mythBtn.disabled=true;
+  const correct=choice===chat.answer;
 
-  if(choice===card.answer){
+  selectedButton.classList.add(correct?"correct":"wrong");
+
+  if(!correct){
+    buttons[chat.answer].classList.add("correct");
+  }
+
+  $("answerBubble").textContent=chat.replies[choice];
+  $("answerRow").hidden=false;
+  $("answerRow").classList.remove("popIn");
+  void $("answerRow").offsetWidth;
+  $("answerRow").classList.add("popIn");
+
+  if(correct){
     score++;
-    $("score").textContent=score;
-    clicked.classList.add("correct");
-    $("feedbackCard").className="feedbackCard good";
-    $("feedback").textContent="✔ Correct!";
+
+    if(chat.group==="myth")mythScore++;
+    if(chat.group==="habit")habitScore++;
+    if(chat.group==="support")supportScore++;
+
     playSound("correctSound");
   }else{
-    clicked.classList.add("wrong");
-    correct.classList.add("correct");
-    $("feedbackCard").className="feedbackCard bad";
-    $("feedback").textContent="❌ Not quite.";
+    missed.push(chat.friend);
     playSound("wrongSound");
   }
 
-  $("explain").textContent=card.explain;
-  $("nextBtn").hidden=false;
+  updateHeader();
+
+  $("options").replaceChildren();
+  $("replyLabel").textContent="YOUR REPLY";
+
+  setTimeout(()=>{
+    showTyping(()=>{
+
+      $("reactionBubble").textContent=
+        correct
+        ? "That makes sense! Thanks for explaining it. 🌸"
+        : "Hmm… I think we should check that information. 🌿";
+
+      $("reactionRow").hidden=false;
+      $("reactionRow").classList.remove("popIn");
+      void $("reactionRow").offsetWidth;
+      $("reactionRow").classList.add("popIn");
+
+      setTimeout(()=>{
+        $("feedback").className="feedback show "+(correct?"good":"bad");
+
+        $("feedbackTitle").textContent=
+          correct
+          ? "✓ Good reply"
+          : "✕ Let's correct that";
+
+        $("feedbackText").textContent=
+          correct
+          ? chat.feedback
+          : "The correct idea is: "+chat.feedback;
+
+        $("takeaway").className="takeaway show";
+        $("takeaway").textContent="💡 Remember: "+chat.takeaway;
+
+        $("replyLabel").textContent="READY FOR THE NEXT MESSAGE";
+        $("nextBtn").hidden=false;
+      },180);
+
+    });
+  },300);
 }
 
-function nextCard(){
+function nextChat(){
   index++;
-  loadCard();
+  loadChat();
+}
+
+function startGame(){
+  $("intro").style.display="none";
+  $("end").style.display="none";
+  $("game").style.display="block";
+
+  index=0;
+  score=0;
+  mythScore=0;
+  habitScore=0;
+  supportScore=0;
+  missed.length=0;
+
+  loadChat();
 }
 
 function endGame(){
@@ -689,29 +966,46 @@ function endGame(){
   $("intro").style.display="none";
   $("end").style.display="grid";
 
-  $("finalScore").textContent=score;
-  $("finalMessage").textContent=
-    score>=7
-      ?"🌸 Excellent! You showed strong menstrual health awareness."
-      :score>=5
-      ?"🌿 Good work. Replay the cards to strengthen the ideas you missed."
-      :"🌱 Keep learning. Read each explanation carefully and try again.";
+  $("finalScore").textContent=score+" / "+chats.length;
+  $("mythScore").textContent=mythScore+"/4";
+  $("habitScore").textContent=habitScore+"/3";
+  $("supportScore").textContent=supportScore+"/3";
+
+  let level="🌱 Growing Health Helper";
+
+  if(score>=9){
+    level="🌸 Menstrual Health Champion";
+  }else if(score>=7){
+    level="⭐ Confident Health Helper";
+  }else if(score>=5){
+    level="🔎 Health Detective";
+  }
+
+  $("levelBadge").textContent=level;
+
+  if(missed.length===0){
+    $("reviewBox").innerHTML=
+      "<strong>Excellent!</strong> You gave accurate and supportive replies throughout the conversation.";
+    playSound("clapSound");
+  }else{
+    $("reviewBox").innerHTML=
+      "<strong>Idea to review:</strong> "+missed[0];
+  }
 }
 
 $("startBtn").addEventListener("click",()=>{
   unlockAudio();
-  index=0;
-  score=0;
-  showGame();
-  loadCard();
+  startGame();
 });
 
-$("factBtn").addEventListener("click",()=>answer("FACT"));
-$("mythBtn").addEventListener("click",()=>answer("MYTH"));
-$("nextBtn").addEventListener("click",nextCard);
-$("againBtn").addEventListener("click",()=>location.reload());
+$("nextBtn").addEventListener("click",nextChat);
+$("backBtn").addEventListener("click",()=>location.reload());
+$("reviewBtn").addEventListener("click",startGame);
+$("restartBtn").addEventListener("click",()=>location.reload());
 
-setTimeout(()=>$("splash").classList.add("hide"),1200);
+setTimeout(()=>{
+  $("splash").classList.add("hide");
+},1200);
 
 });
 </script>
