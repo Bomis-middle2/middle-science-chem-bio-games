@@ -2,332 +2,838 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Biology UNO Game</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Biology UNO Challenge</title>
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#eef5ff;
+*{box-sizing:border-box}
+:root{--ink:#243248;--muted:#728095;--purple:#6d5bd2;--green:#2f9d62;--orange:#f39a45;--blue:#4f8ed8;--red:#e15b63;--white:#fff;--line:#e0e6ee;--shadow:0 14px 34px rgba(47,43,74,.16)}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:var(--ink);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;background:radial-gradient(circle at 10% 10%,#eaf4ff,transparent 26%),radial-gradient(circle at 90% 15%,#fff1da,transparent 24%),linear-gradient(145deg,#eef5ff,#f7f2ff 48%,#eefaf2);overflow-x:hidden;overscroll-behavior-y:contain}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+button:disabled{cursor:default}
+[hidden]{display:none!important}
+h1,h2,p{margin:0}
+
+#splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#fff;transition:opacity .35s ease,visibility .35s ease}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+#splash img{width:145px;max-width:42vw}
+.splashTitle{margin-top:10px;color:var(--purple);font-size:15px;font-weight:900;text-align:center}
+
+.screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:14px}
+.shell{width:min(780px,100%)}
+.panel{overflow:hidden;border-radius:26px;background:rgba(255,255,255,.97);box-shadow:var(--shadow)}
+.primaryBtn{min-height:50px;border:0;border-radius:14px;padding:12px 20px;background:linear-gradient(#37ac6b,#238c53);color:#fff;font-weight:900;box-shadow:0 4px 0 #176b40}
+.secondaryBtn{min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:10px 15px;background:#fff;color:#4a596c;font-weight:900}
+
+#intro{display:none}
+.introHero{position:relative;padding:86px 22px 25px;text-align:center;background:radial-gradient(circle at 10% 10%,rgba(255,255,255,.98),transparent 30%),linear-gradient(145deg,#edf5ff,#f4efff 53%,#eef9f1)}
+.introLogo{position:absolute;left:18px;top:15px;width:100px;padding:5px;border-radius:12px;background:#fff}
+.eyebrow{color:#807990;text-transform:uppercase;letter-spacing:1.5px;font-size:10px;font-weight:900}
+.introHero h1{margin-top:8px;color:var(--purple);font-size:clamp(38px,8vw,60px);line-height:.95}
+.introHero h1 span{display:block;margin-top:8px;color:var(--green);font-size:.72em}
+.introHero p{max-width:560px;margin:14px auto 0;color:#5f6c7d;font-size:15px;line-height:1.45;font-weight:700}
+
+.unoPreview{position:relative;width:min(430px,94%);height:185px;margin:24px auto 0}
+.previewCard{position:absolute;width:115px;height:155px;border-radius:20px;padding:8px;background:#fff;box-shadow:0 11px 25px rgba(44,42,65,.15);border:5px solid #fff}
+.previewCard::before{content:"";position:absolute;inset:9px;border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,255,255,.55))}
+.previewCard span{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font-size:50px}
+.previewCard.one{left:17%;top:16px;transform:rotate(-12deg);background:#e9656c}
+.previewCard.two{left:50%;top:4px;transform:translateX(-50%) rotate(2deg);background:#4e8ddb;z-index:2}
+.previewCard.three{right:17%;top:16px;transform:rotate(12deg);background:#48ad73}
+
+.introBottom{padding:20px 20px 23px;text-align:center}
+.introLead{max-width:560px;margin:auto;color:#617081;font-size:14px;line-height:1.45}
+.howGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 19px}
+.howGrid div{min-height:68px;display:flex;flex-direction:column;justify-content:center;gap:5px;border:1px solid #dde6df;border-radius:13px;background:#f7faf8;color:#4e665b;font-size:10px;font-weight:900}
+.howGrid span{font-size:23px}
+
+#game{display:none;min-height:100vh;min-height:100dvh;padding:8px}
+.gameShell{width:min(780px,100%);margin:auto}
+.topbar{display:grid;grid-template-columns:42px 1fr auto;gap:7px;align-items:center;margin-bottom:7px}
+.topBox{min-height:42px;display:flex;align-items:center;justify-content:center;padding:8px 10px;border-radius:13px;background:#fff;box-shadow:0 5px 15px rgba(49,43,71,.08);font-size:11px;font-weight:900}
+.homeBtn{width:42px;border:0;color:#586579}
+.gameName{color:var(--purple)}
+.scoreBox{background:#fff3cf;color:#79591f;white-space:nowrap}
+
+.progressCard{margin-bottom:7px;padding:8px 10px;border-radius:13px;background:#fff;box-shadow:0 5px 15px rgba(49,43,71,.07)}
+.progressTop{display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;color:#6e7b8c;font-size:10px;font-weight:900}
+.track{height:7px;overflow:hidden;border-radius:999px;background:#e9e9ef}
+.fill{width:0;height:100%;background:linear-gradient(90deg,#6d5bd2,#ee6e90,#f0bc50);transition:width .3s ease}
+
+.questionCard{margin-bottom:8px;overflow:hidden;border-radius:20px;background:#fff;box-shadow:var(--shadow)}
+.questionTop{padding:11px 13px;background:linear-gradient(135deg,#fff2dd,#fff8ed);border-bottom:1px solid #f2dfc5}
+.questionLabel{color:#936329;text-transform:uppercase;letter-spacing:1.1px;font-size:8px;font-weight:900}
+#questionBox{margin-top:5px;color:#354155;font-size:21px;line-height:1.25;font-weight:900}
+.questionHint{margin-top:5px;color:#85745f;font-size:10px;font-weight:700}
+
+#grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
+.cardImg{position:relative;min-height:220px;overflow:hidden;border:0;border-radius:20px;padding:8px;background:#fff;box-shadow:0 8px 18px rgba(37,43,67,.13);transition:transform .15s ease,box-shadow .15s ease}
+.cardImg:not(:disabled):hover{transform:translateY(-3px);box-shadow:0 12px 22px rgba(37,43,67,.17)}
+.cardImg:not(:disabled):active{transform:scale(.985)}
+.unoFrame{position:absolute;inset:0;border-radius:20px;padding:8px}
+.unoFrame.red{background:linear-gradient(145deg,#ed696e,#cf4852)}
+.unoFrame.blue{background:linear-gradient(145deg,#5a99e3,#377ac7)}
+.unoFrame.green{background:linear-gradient(145deg,#55b77c,#2c9660)}
+.unoFrame.orange{background:linear-gradient(145deg,#f6a151,#e78331)}
+.innerCard{position:relative;z-index:2;width:100%;height:100%;min-height:204px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;border-radius:15px;background:rgba(255,255,255,.96)}
+.cardImg img{width:100%;height:150px;object-fit:contain;display:block}
+.label{margin-top:7px;color:#303d50;text-transform:capitalize;font-size:13px;font-weight:900}
+.cornerTag{position:absolute;top:11px;left:12px;z-index:3;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#fff;color:#4a5363;font-size:10px;font-weight:900;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.cardImg.correct{outline:5px solid #70c98b}
+.cardImg.correct .innerCard{background:#edf9f1}
+.cardImg.wrong{outline:5px solid #ef9a9f}
+.cardImg.wrong .innerCard{background:#fff1f1}
+
+.feedbackWrap{padding:0 12px 12px}
+#feedback{display:none;padding:10px 12px;border-radius:12px;font-size:12px;line-height:1.4;font-weight:800}
+#feedback.good{display:block;border:1px solid #98c8a6;background:#eaf7ee;color:#356d4d}
+#feedback.bad{display:block;border:1px solid #e2aaa5;background:#fff0ed;color:#7d514d}
+#nextBtn{width:100%;min-height:44px;margin-top:7px;border:0;border-radius:11px;background:linear-gradient(#7d69d6,#624fb6);color:#fff;font-size:11px;font-weight:900}
+
+#end{display:none}
+.endInner{padding:26px 20px;text-align:center}
+.endLogo{width:86px}
+.trophy{margin-top:7px;font-size:60px}
+.endInner h2{margin-top:5px;color:var(--purple);font-size:28px}
+.finalScore{margin:12px auto 6px;color:var(--green);font-size:40px;font-weight:900}
+.level{display:inline-block;padding:7px 12px;border-radius:999px;background:#ffe7ef;color:#a04362;font-size:11px;font-weight:900}
+.endStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.endTile{padding:10px 5px;border:1px solid var(--line);border-radius:12px;background:#f8fafb;color:#687687;font-size:9px}
+.endTile strong{display:block;margin-top:3px;color:#2f6f50;font-size:15px}
+.reviewBox{padding:11px;border-radius:12px;background:#f3f5fa;color:#5b6879;font-size:12px;line-height:1.4}
+.endActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+
+@media(max-width:600px){
+  body{
+    background-attachment:scroll;
+  }
+
+  .screen{
+    padding:
+      max(7px,env(safe-area-inset-top))
+      max(7px,env(safe-area-inset-right))
+      max(7px,env(safe-area-inset-bottom))
+      max(7px,env(safe-area-inset-left));
+  }
+
+  .panel{
+    border-radius:18px;
+  }
+
+  /* INTRO */
+  .introHero{
+    padding:88px 12px 17px;
+  }
+
+  .introLogo{
+    top:9px;
+    left:50%;
+    width:76px;
+    transform:translateX(-50%);
+  }
+
+  .introHero h1{
+    font-size:33px;
+    line-height:1;
+  }
+
+  .introHero p{
+    max-width:330px;
+    font-size:13px;
+    line-height:1.4;
+  }
+
+  .unoPreview{
+    height:142px;
+    margin-top:14px;
+  }
+
+  .previewCard{
+    width:86px;
+    height:120px;
+    border-width:4px;
+    border-radius:17px;
+  }
+
+  .previewCard span{
+    font-size:38px;
+  }
+
+  .previewCard.one{
+    left:12%;
+  }
+
+  .previewCard.three{
+    right:12%;
+  }
+
+  .introBottom{
+    padding:14px 12px 16px;
+  }
+
+  .introLead{
+    max-width:330px;
+    font-size:12px;
+    line-height:1.4;
+  }
+
+  .howGrid{
+    gap:5px;
+    margin:11px 0 14px;
+  }
+
+  .howGrid div{
+    min-height:58px;
+    padding:6px 3px;
+    font-size:9px;
+  }
+
+  .howGrid span{
+    font-size:19px;
+  }
+
+  .primaryBtn,
+  .secondaryBtn{
+    min-height:46px;
+    font-size:13px;
+  }
+
+  /* GAME */
+  #game{
+    padding:
+      max(4px,env(safe-area-inset-top))
+      max(4px,env(safe-area-inset-right))
+      max(7px,env(safe-area-inset-bottom))
+      max(4px,env(safe-area-inset-left));
+  }
+
+  .gameShell{
+    width:100%;
+  }
+
+  .topbar{
+    grid-template-columns:40px minmax(0,1fr) auto;
+    gap:5px;
+    margin-bottom:5px;
+  }
+
+  .topBox{
+    min-height:40px;
+    padding:6px 7px;
+    border-radius:10px;
+    font-size:10px;
+  }
+
+  .homeBtn{
+    width:40px;
+    font-size:18px;
+  }
+
+  .gameName{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+
+  .scoreBox{
+    min-width:52px;
+  }
+
+  .progressCard{
+    margin-bottom:5px;
+    padding:7px 8px;
+    border-radius:10px;
+  }
+
+  .progressTop{
+    margin-bottom:5px;
+    font-size:9px;
+  }
+
+  .track{
+    height:6px;
+  }
+
+  .questionCard{
+    margin-bottom:5px;
+    border-radius:15px;
+  }
+
+  .questionTop{
+    padding:10px 11px;
+  }
+
+  .questionLabel{
+    font-size:8px;
+  }
+
+  #questionBox{
+    margin-top:5px;
+    font-size:18px;
+    line-height:1.28;
+  }
+
+  .questionHint{
+    margin-top:5px;
+    font-size:10px;
+    line-height:1.3;
+  }
+
+  /* Two-column cards remain readable on normal phones */
+  #grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    padding:9px;
+  }
+
+  .cardImg{
+    width:100%;
+    min-width:0;
+    min-height:170px;
+    padding:5px;
+    border-radius:15px;
+  }
+
+  .unoFrame{
+    border-radius:15px;
+    padding:5px;
+  }
+
+  .innerCard{
+    width:100%;
+    min-height:160px;
+    padding:7px 5px;
+    border-radius:11px;
+  }
+
+  .cardImg img{
+    width:100%;
+    height:112px;
+    max-width:100%;
+    object-fit:contain;
+  }
+
+  .label{
+    margin-top:6px;
+    font-size:12px;
+    line-height:1.2;
+  }
+
+  .cornerTag{
+    top:8px;
+    left:8px;
+    width:24px;
+    height:24px;
+    font-size:9px;
+  }
+
+  .feedbackWrap{
+    padding:0 9px 9px;
+  }
+
+  #feedback{
+    padding:9px 10px;
+    border-radius:10px;
+    font-size:11px;
+    line-height:1.4;
+  }
+
+  #nextBtn{
+    min-height:44px;
+    margin-top:7px;
+    border-radius:10px;
+    font-size:11px;
+  }
+
+  /* RESULTS */
+  .endInner{
+    padding:18px 12px;
+  }
+
+  .endLogo{
+    width:72px;
+  }
+
+  .trophy{
+    font-size:48px;
+  }
+
+  .endInner h2{
+    font-size:23px;
+  }
+
+  .finalScore{
+    font-size:34px;
+  }
+
+  .level{
+    font-size:10px;
+  }
+
+  .endStats{
+    gap:6px;
+    margin:13px 0;
+  }
+
+  .endTile{
+    padding:8px 4px;
+    font-size:8px;
+  }
+
+  .endTile strong{
+    font-size:12px;
+  }
+
+  .reviewBox{
+    font-size:11px;
+    line-height:1.4;
+  }
 }
 
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
+@media(max-width:380px){
+  #questionBox{
+    font-size:17px;
+  }
+
+  #grid{
+    gap:6px;
+    padding:7px;
+  }
+
+  .cardImg{
+    min-height:156px;
+  }
+
+  .innerCard{
+    min-height:146px;
+  }
+
+  .cardImg img{
+    height:100px;
+  }
+
+  .label{
+    font-size:11px;
+  }
+
+  .topBox{
+    font-size:9px;
+  }
 }
 
-/* INTRO */
-#intro{
-display:none;
-position:fixed;
-inset:0;
-background:white;
-padding:20px;
-text-align:center;
+/* Landscape phones: keep the board compact */
+@media(max-width:900px) and (orientation:landscape){
+  .introHero{
+    padding-top:74px;
+  }
+
+  .unoPreview{
+    height:112px;
+  }
+
+  .previewCard{
+    width:74px;
+    height:100px;
+  }
+
+  #game{
+    padding:4px;
+  }
+
+  #grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+
+  .cardImg{
+    min-height:150px;
+  }
+
+  .innerCard{
+    min-height:140px;
+  }
+
+  .cardImg img{
+    height:92px;
+  }
 }
 
-.card{
-max-width:600px;
-margin:auto;
-margin-top:40px;
-padding:20px;
-border-radius:16px;
-background:#fff;
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-
-button{
-padding:12px 18px;
-background:#2e7d32;
-color:white;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-}
-
-/* GAME */
-#game{
-display:none;
-}
-
-/* TOP BAR */
-.topbar{
-display:flex;
-justify-content:space-between;
-padding:10px;
-background:white;
-font-weight:bold;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-/* QUESTION */
-#questionBox{
-text-align:center;
-padding:18px;
-font-size:18px;
-font-weight:bold;
-background:#fff3e0;
-margin:10px;
-border-radius:12px;
-}
-
-/* INSTRUCTION */
-#instruction{
-text-align:center;
-font-size:14px;
-margin:5px;
-padding:8px;
-background:#fff8d6;
-border-radius:10px;
-font-weight:bold;
-}
-
-/* GRID */
-#grid{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-padding:10px;
-}
-
-/* CARD STYLE */
-.cardImg{
-width:42%;
-aspect-ratio:1/1;
-background:white;
-border-radius:14px;
-padding:10px;
-box-shadow:0 6px 15px rgba(0,0,0,0.2);
-cursor:pointer;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-transition:0.2s;
-}
-
-.cardImg img{
-width:100%;
-height:80%;
-object-fit:contain;
-border-radius:10px;
-}
-
-.label{
-margin-top:5px;
-font-weight:bold;
-font-size:13px;
-color:#333;
-}
-
-.cardImg:hover{
-transform:scale(1.05);
-}
-
-/* FEEDBACK */
-#feedback{
-text-align:center;
-font-weight:bold;
-font-size:18px;
-margin-top:10px;
-}
-
-/* END */
-#end{
-display:none;
-text-align:center;
-padding:20px;
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
 }
 </style>
 </head>
-
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
-<img src="assets/innovine-logo.png" width="150">
+  <div>
+    <img src="assets/innovine-logo.png" alt="Innovine logo">
+    <div class="splashTitle">Biology UNO Challenge</div>
+  </div>
 </div>
 
-<!-- INTRO -->
-<div id="intro">
-<div class="card">
+<section id="intro" class="screen">
+  <div class="shell">
+    <div class="panel">
+      <div class="introHero">
+        <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
+        <div class="eyebrow">Grade 7 • Biology</div>
+        <h1>Biology UNO <span>Image Challenge</span></h1>
+        <p>Match each biological function with the correct structure. Think fast, choose carefully and build your streak.</p>
 
-<h2>🧠 Biology UNO Image Game</h2>
+        <div class="unoPreview" aria-hidden="true">
+          <div class="previewCard one"><span>❤️</span></div>
+          <div class="previewCard two"><span>🌿</span></div>
+          <div class="previewCard three"><span>🧬</span></div>
+        </div>
+      </div>
 
-<p>
-🎯 Instructions:<br><br>
+      <div class="introBottom">
+        <p class="introLead">Each round shows four biological structure cards. Only one matches the function.</p>
 
-✔ Click on the correct image to match the function<br>
-✔ Each question has 4 image options<br>
-✔ Only ONE is correct<br>
-✔ Learn biology visually and interactively<br><br>
+        <div class="howGrid">
+          <div><span>👀</span>Read the function</div>
+          <div><span>🃏</span>Pick a card</div>
+          <div><span>🔥</span>Build your streak</div>
+        </div>
 
-🏆 Goal: Match all structures correctly
-</p>
+        <button id="startBtn" class="primaryBtn" type="button">START CHALLENGE →</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-<button onclick="startGame()">START GAME</button>
+<main id="game">
+  <div class="gameShell">
 
-</div>
-</div>
+    <div class="topbar">
+      <button id="homeBtn" class="topBox homeBtn" type="button">⌂</button>
+      <div class="topBox gameName">🧠 Biology UNO</div>
+      <div class="topBox scoreBox">⭐ <span id="score">0</span></div>
+    </div>
 
-<!-- GAME -->
-<div id="game">
+    <div class="progressCard">
+      <div class="progressTop">
+        <span id="roundCounter">Round 1 / 6</span>
+        <span>🔥 Streak: <span id="streak">0</span></span>
+      </div>
+      <div class="track">
+        <div id="progressFill" class="fill"></div>
+      </div>
+    </div>
 
-<div class="topbar">
-<div>Score: <span id="score">0</span></div>
-<div>Biology UNO</div>
-</div>
+    <section class="questionCard">
+      <div class="questionTop">
+        <div class="questionLabel">Match the biological function</div>
+        <div id="questionBox"></div>
+        <div class="questionHint">Tap the structure that performs this function.</div>
+      </div>
 
-<div id="questionBox"></div>
+      <div id="grid"></div>
 
-<div id="instruction">
-Click on the correct image to match the function.
-</div>
+      <div class="feedbackWrap">
+        <div id="feedback"></div>
+        <button id="nextBtn" type="button" hidden>NEXT ROUND →</button>
+      </div>
+    </section>
 
-<div id="grid"></div>
+  </div>
+</main>
 
-<div id="feedback"></div>
+<section id="end" class="screen">
+  <div class="shell">
+    <div class="panel">
+      <div class="endInner">
+        <img src="assets/innovine-logo.png" class="endLogo" alt="Innovine logo">
+        <div class="trophy">🏆</div>
+        <h2>Challenge Complete!</h2>
+        <div id="finalScore" class="finalScore">0 / 6</div>
+        <div id="level" class="level"></div>
 
-</div>
+        <div class="endStats">
+          <div class="endTile">Correct<strong id="correctCount">0</strong></div>
+          <div class="endTile">Best streak<strong id="bestStreak">0</strong></div>
+          <div class="endTile">Accuracy<strong id="accuracy">0%</strong></div>
+        </div>
 
-<!-- END -->
-<div id="end">
-<h2>🎉 Congratulations!</h2>
-<p>You completed the Biology UNO Game</p>
-<p>Final Score: <span id="final"></span></p>
-<button onclick="location.reload()">Play Again</button>
-</div>
+        <div id="reviewBox" class="reviewBox"></div>
+
+        <div class="endActions">
+          <button id="reviewBtn" class="secondaryBtn" type="button">PLAY AGAIN</button>
+          <button id="restartBtn" class="primaryBtn" type="button">RESTART</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
 
 <script>
+document.addEventListener("DOMContentLoaded",()=>{
 
-let score = 0;
-let index = 0;
+const $=id=>document.getElementById(id);
 
-let correctSound = new Audio("assets/correct.mp3");
-let wrongSound = new Audio("assets/wrong.mp3");
-let clapSound = new Audio("assets/freesound_community-claps-44774.mp3");
-
-const questions = [
-{
-q:"Transport of water in plants",
-answer:"xylem.png"
-},
-{
-q:"Transport of food in plants",
-answer:"phloem.png"
-},
-{
-q:"Gas exchange in leaves",
-answer:"stomata.png"
-},
-{
-q:"Blood pumping organ",
-answer:"heart.png"
-},
-{
-q:"Excretion of waste from blood",
-answer:"kidneys.png"
-},
-{
-q:"Blood clotting function",
-answer:"platlet.png"
-}
+const questions=[
+  {
+    q:"Which structure transports water and minerals from the roots to other parts of the plant?",
+    answer:"xylem.png",
+    explanation:"Xylem transports water and dissolved minerals mainly from the roots to the stem and leaves."
+  },
+  {
+    q:"Which structure transports prepared food to different parts of a plant?",
+    answer:"phloem.png",
+    explanation:"Phloem transports food, especially sugars made in the leaves, to other parts of the plant."
+  },
+  {
+    q:"Which structure allows gas exchange through the surface of a leaf?",
+    answer:"stomata.png",
+    explanation:"Stomata are tiny pores that allow gases such as carbon dioxide and oxygen to move in and out of leaves."
+  },
+  {
+    q:"Which organ pumps blood throughout the human body?",
+    answer:"heart.png",
+    explanation:"The heart is a muscular organ that pumps blood through the circulatory system."
+  },
+  {
+    q:"Which organs filter the blood and help remove nitrogenous wastes?",
+    answer:"kidneys.png",
+    explanation:"The kidneys filter the blood and remove wastes and excess water to form urine."
+  },
+  {
+    q:"Which blood component helps in blood clotting?",
+    answer:"platlet.png",
+    explanation:"Platelets help form blood clots and reduce blood loss after an injury."
+  }
 ];
 
-const allImages = [
-"heart.png",
-"kidneys.png",
-"xylem.png",
-"phloem.png",
-"stomata.png",
-"platlet.png"
-];
+const allImages=["heart.png","kidneys.png","xylem.png","phloem.png","stomata.png","platlet.png"];
 
-function startGame(){
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="none";
-document.getElementById("game").style.display="block";
-loadQ();
-}
-
-function loadQ(){
-
-if(index >= questions.length){
-endGame();
-return;
-}
-
-let q = questions[index];
-document.getElementById("questionBox").innerText = q.q;
-
-let grid = document.getElementById("grid");
-grid.innerHTML = "";
-
-let correct = q.answer;
-let wrongs = allImages.filter(i => i !== correct);
-wrongs.sort(()=>Math.random()-0.5);
-
-let options = [correct, wrongs[0], wrongs[1], wrongs[2]];
-options.sort(()=>Math.random()-0.5);
-
-options.forEach(img=>{
-
-let div = document.createElement("div");
-div.className = "cardImg";
-
-/* IMAGE + LABEL */
-div.innerHTML = `
-  <img src="assets/${img}">
-  <div class="label">${img.replace('.png','')}</div>
-`;
-
-div.onclick = ()=>{
-
-if(img === correct){
-score++;
-document.getElementById("score").innerText = score;
-document.getElementById("feedback").innerText = "Correct!";
-correctSound.play();
-
-setTimeout(()=>{
-index++;
-loadQ();
-},700);
-
-}else{
-document.getElementById("feedback").innerText = "Wrong!";
-wrongSound.play();
-}
-
+const labels={
+  "heart.png":"Heart",
+  "kidneys.png":"Kidneys",
+  "xylem.png":"Xylem",
+  "phloem.png":"Phloem",
+  "stomata.png":"Stomata",
+  "platlet.png":"Platelets"
 };
 
-grid.appendChild(div);
-});
+const frameColours=["red","blue","green","orange"];
 
+let score=0,index=0,streak=0,bestStreak=0,locked=false,audioUnlocked=false;
+let mistakes=[];
+
+function shuffle(array){
+  const copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function unlockAudio(){
+  if(audioUnlocked)return;
+  audioUnlocked=true;
+
+  ["correctSound","wrongSound","clapSound"].forEach(id=>{
+    const audio=$(id);
+    audio.muted=true;
+    try{
+      const p=audio.play();
+      if(p&&p.then){
+        p.then(()=>{
+          audio.pause();
+          audio.currentTime=0;
+          audio.muted=false;
+        }).catch(()=>audio.muted=false);
+      }else{
+        audio.muted=false;
+      }
+    }catch(e){
+      audio.muted=false;
+    }
+  });
+}
+
+function stopSounds(){
+  ["correctSound","wrongSound","clapSound"].forEach(id=>{
+    const audio=$(id);
+    audio.pause();
+    try{audio.currentTime=0}catch(e){}
+  });
+}
+
+function playSound(id){
+  stopSounds();
+  const audio=$(id);
+  try{
+    audio.muted=false;
+    audio.volume=1;
+    audio.currentTime=0;
+    const p=audio.play();
+    if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+
+function startGame(){
+  $("intro").style.display="none";
+  $("end").style.display="none";
+  $("game").style.display="block";
+
+  score=0;
+  index=0;
+  streak=0;
+  bestStreak=0;
+  mistakes=[];
+
+  loadQuestion();
+}
+
+function loadQuestion(){
+  if(index>=questions.length){
+    endGame();
+    return;
+  }
+
+  locked=false;
+
+  const q=questions[index];
+
+  $("score").textContent=score;
+  $("streak").textContent=streak;
+  $("roundCounter").textContent="Round "+(index+1)+" / "+questions.length;
+  $("progressFill").style.width=(index/questions.length*100)+"%";
+  $("questionBox").textContent=q.q;
+
+  $("feedback").className="";
+  $("feedback").textContent="";
+  $("nextBtn").hidden=true;
+
+  const wrongs=shuffle(allImages.filter(img=>img!==q.answer)).slice(0,3);
+  const options=shuffle([q.answer,...wrongs]);
+
+  const grid=$("grid");
+  grid.replaceChildren();
+
+  options.forEach((img,optionIndex)=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="cardImg";
+
+    const frame=frameColours[optionIndex%frameColours.length];
+
+    button.innerHTML=`
+      <div class="unoFrame ${frame}">
+        <div class="cornerTag">${optionIndex+1}</div>
+        <div class="innerCard">
+          <img src="assets/${img}" alt="${labels[img]}">
+          <div class="label">${labels[img]}</div>
+        </div>
+      </div>
+    `;
+
+    button.querySelector("img").addEventListener("error",e=>{
+      e.currentTarget.style.opacity=".22";
+    });
+
+    button.addEventListener("click",()=>selectAnswer(img,button));
+
+    grid.appendChild(button);
+  });
+}
+
+function selectAnswer(img,selectedButton){
+  if(locked)return;
+  locked=true;
+
+  const q=questions[index];
+  const buttons=[...document.querySelectorAll(".cardImg")];
+  buttons.forEach(btn=>btn.disabled=true);
+
+  const correct=img===q.answer;
+
+  if(correct){
+    score++;
+    streak++;
+    if(streak>bestStreak)bestStreak=streak;
+
+    selectedButton.classList.add("correct");
+    $("feedback").className="good";
+    $("feedback").textContent="✅ Correct! "+q.explanation;
+    playSound("correctSound");
+  }else{
+    streak=0;
+    mistakes.push(q.q);
+
+    selectedButton.classList.add("wrong");
+
+    buttons.forEach(btn=>{
+      const image=btn.querySelector("img");
+      if(image && image.getAttribute("src")==="assets/"+q.answer){
+        btn.classList.add("correct");
+      }
+    });
+
+    $("feedback").className="bad";
+    $("feedback").textContent="❌ Not quite. "+q.explanation;
+    playSound("wrongSound");
+  }
+
+  $("score").textContent=score;
+  $("streak").textContent=streak;
+  $("nextBtn").hidden=false;
+}
+
+function nextQuestion(){
+  index++;
+  loadQuestion();
 }
 
 function endGame(){
-document.getElementById("game").style.display="none";
-document.getElementById("end").style.display="block";
-document.getElementById("final").innerText = score;
-clapSound.play();
+  $("game").style.display="none";
+  $("intro").style.display="none";
+  $("end").style.display="grid";
+
+  $("finalScore").textContent=score+" / "+questions.length;
+  $("correctCount").textContent=score;
+  $("bestStreak").textContent=bestStreak;
+
+  const accuracy=Math.round(score/questions.length*100);
+  $("accuracy").textContent=accuracy+"%";
+
+  let level="🌱 Biology Explorer";
+  if(score===6)level="🏆 Biology UNO Master";
+  else if(score>=4)level="⭐ Structure Specialist";
+  else if(score>=2)level="🔎 Biology Detective";
+
+  $("level").textContent=level;
+
+  if(mistakes.length===0){
+    $("reviewBox").textContent="Excellent! You matched every biological function with the correct structure.";
+    playSound("clapSound");
+  }else{
+    $("reviewBox").textContent="Review the structures connected with: "+mistakes.slice(0,2).join(" • ");
+  }
 }
 
+$("startBtn").addEventListener("click",()=>{
+  unlockAudio();
+  startGame();
+});
+
+$("nextBtn").addEventListener("click",nextQuestion);
+$("homeBtn").addEventListener("click",()=>location.reload());
+$("reviewBtn").addEventListener("click",startGame);
+$("restartBtn").addEventListener("click",()=>location.reload());
+
 setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("intro").style.display="block";
-},3000);
+  $("splash").classList.add("hide");
+  $("intro").style.display="grid";
+},1100);
 
+});
 </script>
-
 </body>
 </html>
