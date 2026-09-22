@@ -2,336 +2,2254 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Water Conservation Quiz</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Water Hero: Fill the Community Reservoir</title>
 
 <style>
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:url("assets/water_conservation_bg.png") center/cover no-repeat fixed;
-  min-height:100vh;
-  overflow:hidden;
+*{box-sizing:border-box}
+
+:root{
+  --ink:#1f344a;
+  --muted:#6c7b8c;
+  --blue:#137fc2;
+  --blue2:#47b9eb;
+  --deep:#0b5d91;
+  --green:#2f9d62;
+  --green2:#56b77b;
+  --red:#df5962;
+  --gold:#f0bd4d;
+  --white:#fff;
+  --line:#dfe8ef;
+  --shadow:0 16px 38px rgba(35,70,105,.16);
 }
 
-/* SPLASH */
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,sans-serif;
+  color:var(--ink);
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+body{
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  background:
+    linear-gradient(rgba(235,248,255,.88),rgba(247,253,255,.92)),
+    url("assets/water_conservation_bg.png") center/cover fixed no-repeat;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+button:disabled{cursor:default}
+
+button:focus-visible{
+  outline:3px solid #8ed4f6;
+  outline-offset:3px;
+}
+
+[hidden]{display:none!important}
+
+h1,h2,h3,p{margin:0}
+
+
+/* =========================
+   SPLASH
+========================= */
+
 #splash{
   position:fixed;
   inset:0;
-  background:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  transition:opacity .35s ease,visibility .35s ease;
 }
-#splash img{width:150px; max-width:70%;}
 
-/* INTRO & END */
-#intro,#end{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#ffffffee;
-  align-items:center;
-  justify-content:center;
+#splash.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.splashInner{
   text-align:center;
-  padding:20px;
 }
-.card{
-  background:white;
-  padding:22px;
-  border-radius:18px;
-  max-width:520px;
-  width:95%;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+.splashInner img{
+  width:145px;
+  max-width:42vw;
 }
-button{
-  padding:13px 22px;
-  background:#0077b6;
-  color:white;
-  border:none;
+
+.splashText{
+  margin-top:10px;
+  color:var(--blue);
+  font-size:15px;
+  font-weight:900;
+}
+
+
+/* =========================
+   COMMON
+========================= */
+
+.screen{
+  min-height:100vh;
+  min-height:100dvh;
+  display:grid;
+  place-items:center;
+  padding:14px;
+}
+
+.shell{
+  width:min(760px,100%);
+}
+
+.panel{
+  overflow:hidden;
+  border-radius:26px;
+  background:rgba(255,255,255,.97);
+  box-shadow:var(--shadow);
+}
+
+.primary{
+  min-height:50px;
+  border:0;
+  border-radius:14px;
+  padding:12px 22px;
+  background:linear-gradient(#2ca6df,#1478b9);
+  color:#fff;
+  font-weight:900;
+  box-shadow:0 4px 0 #0e5e91;
+}
+
+.secondary{
+  min-height:46px;
+  border:1.5px solid var(--line);
+  border-radius:13px;
+  padding:10px 15px;
+  background:#fff;
+  color:#4c5b6d;
+  font-weight:900;
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+#intro{display:none}
+
+.introHero{
+  position:relative;
+  padding:86px 22px 24px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,255,255,.98),transparent 28%),
+    linear-gradient(145deg,#e8f8ff,#edf5ff 54%,#eef9f2);
+}
+
+.introLogo{
+  position:absolute;
+  top:14px;
+  left:18px;
+  width:98px;
+  padding:5px;
   border-radius:12px;
-  font-size:17px;
-  cursor:pointer;
-  font-weight:bold;
+  background:#fff;
 }
-button:hover{background:#005f8f;}
 
-/* GAME */
-#game{ display:none; position:fixed; inset:0; }
+.eyebrow{
+  color:#718395;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  font-size:10px;
+  font-weight:900;
+}
 
-/* TOPBAR */
-.topbar{
+.introHero h1{
+  margin-top:8px;
+  color:var(--blue);
+  font-size:clamp(39px,8vw,61px);
+  line-height:.95;
+}
+
+.introHero h1 span{
+  display:block;
+  margin-top:8px;
+  color:var(--green);
+  font-size:.7em;
+}
+
+.introHero p{
+  max-width:560px;
+  margin:14px auto 0;
+  color:#617283;
+  font-size:15px;
+  line-height:1.45;
+  font-weight:700;
+}
+
+
+/* intro mission scene */
+
+.heroWorld{
+  position:relative;
+  width:min(480px,96%);
+  height:205px;
+  margin:18px auto 0;
+}
+
+.city{
   position:absolute;
-  top:10px;
-  left:10px;
-  right:10px;
+  left:0;
+  right:0;
+  bottom:0;
+  height:88px;
   display:flex;
-  justify-content:space-between;
-  gap:10px;
-  background:white;
-  padding:12px;
-  font-weight:bold;
-  border-radius:12px;
-  z-index:5;
-}
-
-/* FEEDBACK */
-#feedback{
-  position:absolute;
-  top:75px;
-  width:100%;
-  text-align:center;
-  font-weight:bold;
-  font-size:20px;
-  color:#0077b6;
-}
-
-/* QUESTION */
-#questionBox{
-  position:absolute;
-  top:125px;
-  left:50%;
-  transform:translateX(-50%);
-  background:white;
-  padding:22px;
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.2);
-  width:90%;
-  max-width:650px;
-  text-align:center;
-  font-weight:bold;
-  font-size:22px;
-}
-
-/* OPTIONS */
-#options{
-  position:absolute;
-  left:10px;
-  right:10px;
-  bottom:80px;
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-}
-.opt{
-  background:white;
-  padding:16px 20px;
-  border-radius:16px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  cursor:pointer;
-  font-weight:bold;
-  min-width:170px;
-  text-align:center;
-  font-size:18px;
-  transition:0.25s;
-  display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
   gap:5px;
 }
-.opt:hover{transform:scale(1.05);}
-.shake{animation:shake 0.35s;}
-@keyframes shake{
-  0%,100%{transform:translateX(0);}
-  25%{transform:translateX(-8px);}
-  50%{transform:translateX(8px);}
-  75%{transform:translateX(-8px);}
-}
-.glow{animation:glow 0.8s infinite alternate; border:4px solid #00b894;}
-@keyframes glow{from{box-shadow:0 0 8px #00b894;} to{box-shadow:0 0 25px #00b894;}}
 
-/* DROPLETS */
-#droplets{
+.building{
+  width:38px;
+  border-radius:6px 6px 0 0;
+  background:linear-gradient(#8cc8e8,#589dc5);
+  position:relative;
+}
+
+.building:nth-child(1){height:52px}
+.building:nth-child(2){height:70px}
+.building:nth-child(3){height:44px}
+.building:nth-child(4){height:78px}
+.building:nth-child(5){height:58px}
+.building:nth-child(6){height:67px}
+
+.building::after{
+  content:"";
   position:absolute;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:7px;
+  inset:10px 8px auto;
+  height:5px;
+  border-radius:2px;
+  background:#f9d985;
+  box-shadow:0 15px 0 #f9d985,0 30px 0 #f9d985;
 }
-.droplet{
-  width:24px;
-  height:24px;
-  background:#d0e6ff;
-  border-radius:50%;
-  border:2px solid #8ecae6;
-}
-.filled{background:#0077b6;}
 
-/* END SCREEN */
-#end h2{color:#0077b6;margin-bottom:10px;}
-#end p{font-weight:bold;margin:5px 0;}
-#end button{margin-top:10px;padding:10px 16px;background:#0077b6;color:white;border:none;border-radius:10px;cursor:pointer;}
+.introTank{
+  position:absolute;
+  left:50%;
+  top:5px;
+  transform:translateX(-50%);
+  width:126px;
+  height:105px;
+  border:5px solid #55a6d4;
+  border-radius:18px 18px 28px 28px;
+  overflow:hidden;
+  background:#effaff;
+  box-shadow:0 12px 25px rgba(38,129,182,.18);
+}
+
+.introWater{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:36%;
+  background:linear-gradient(#6fd5f4,#2d9ed8);
+}
+
+.introWater::before{
+  content:"";
+  position:absolute;
+  top:-5px;
+  left:-10px;
+  width:150px;
+  height:11px;
+  border-radius:50%;
+  background:rgba(255,255,255,.56);
+}
+
+.introTankText{
+  position:absolute;
+  left:50%;
+  top:45px;
+  transform:translateX(-50%);
+  color:#216f9d;
+  font-size:26px;
+  z-index:3;
+}
+
+.cloud{
+  position:absolute;
+  top:30px;
+  font-size:36px;
+}
+.cloud.a{left:18px}
+.cloud.b{right:18px}
+
+.introBottom{
+  padding:18px 20px 22px;
+  text-align:center;
+}
+
+.introLead{
+  max-width:560px;
+  margin:auto;
+  color:#607181;
+  font-size:14px;
+  line-height:1.45;
+}
+
+.introSteps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:15px 0 18px;
+}
+
+.introSteps div{
+  min-height:64px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  border:1px solid #dce8ee;
+  border-radius:13px;
+  background:#f7fbfd;
+  color:#4d6975;
+  font-size:10px;
+  font-weight:900;
+}
+
+.introSteps span{font-size:22px}
+
+
+/* =========================
+   GAME
+========================= */
+
+#game{
+  display:none;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:8px;
+}
+
+.gameShell{
+  width:min(760px,100%);
+  margin:auto;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:7px;
+  align-items:center;
+  margin-bottom:6px;
+}
+
+.topBox{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 10px;
+  border-radius:13px;
+  background:#fff;
+  box-shadow:0 5px 14px rgba(38,79,110,.08);
+  font-size:11px;
+  font-weight:900;
+}
+
+.homeBtn{
+  width:42px;
+  border:0;
+  color:#5d6b79;
+}
+
+.gameTitle{color:var(--blue)}
+
+.scoreBox{
+  color:#75591e;
+  background:#fff3cf;
+  white-space:nowrap;
+}
+
+
+/* =========================
+   MISSION HUD
+========================= */
+
+.hud{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:6px;
+  margin-bottom:6px;
+}
+
+.progressCard,
+.streakCard{
+  padding:8px 10px;
+  border-radius:13px;
+  background:#fff;
+  box-shadow:0 5px 14px rgba(38,79,110,.07);
+}
+
+.progressMeta{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+  color:#6e7c8d;
+  font-size:10px;
+  font-weight:900;
+}
+
+.track{
+  height:7px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#e7eef4;
+}
+
+.fill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#42a5f5,#4ec9da,#59b77c);
+  transition:width .35s ease;
+}
+
+.streakCard{
+  min-width:86px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  color:#8a5d1b;
+}
+
+.streakCard strong{
+  font-size:13px;
+}
+
+.streakCard span{
+  margin-top:2px;
+  font-size:8px;
+  color:#8a7a63;
+}
+
+
+/* =========================
+   COMMUNITY RESERVOIR
+========================= */
+
+.reservoirStage{
+  position:relative;
+  margin-bottom:6px;
+  padding:10px 10px 8px;
+  overflow:hidden;
+  border-radius:18px;
+  background:
+    linear-gradient(#eaf8ff 0 62%,#e6f4df 62% 100%);
+  box-shadow:0 8px 18px rgba(38,79,110,.09);
+}
+
+.reservoirHeader{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:7px;
+  color:#5c7485;
+  font-size:9px;
+  font-weight:900;
+}
+
+.reservoirScene{
+  position:relative;
+  height:118px;
+}
+
+.cityMini{
+  position:absolute;
+  left:5px;
+  bottom:0;
+  display:flex;
+  gap:4px;
+  align-items:flex-end;
+}
+
+.cityMini div{
+  width:23px;
+  border-radius:4px 4px 0 0;
+  background:#83b9d5;
+}
+
+.cityMini div:nth-child(1){height:35px}
+.cityMini div:nth-child(2){height:48px}
+.cityMini div:nth-child(3){height:29px}
+
+.mainTank{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:170px;
+  height:104px;
+  border:5px solid #5ba8d4;
+  border-radius:20px 20px 28px 28px;
+  overflow:hidden;
+  background:#f3fbff;
+  box-shadow:0 9px 20px rgba(38,129,182,.15);
+}
+
+.tankWater{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:0%;
+  background:linear-gradient(#68d1f4,#2d9cd6);
+  transition:height .9s cubic-bezier(.2,.7,.2,1);
+}
+
+.tankWater::before{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:-15px;
+  width:210px;
+  height:14px;
+  border-radius:50%;
+  background:rgba(255,255,255,.58);
+  animation:wave 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes wave{
+  from{transform:translateX(-5px)}
+  to{transform:translateX(7px)}
+}
+
+.tankLabel{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  display:grid;
+  place-items:center;
+  color:#216f9d;
+  text-align:center;
+  font-size:11px;
+  font-weight:900;
+  pointer-events:none;
+}
+
+.tankLabel strong{
+  display:block;
+  font-size:17px;
+}
+
+.cityMini.right{
+  left:auto;
+  right:5px;
+}
+
+.splashFx{
+  position:absolute;
+  left:50%;
+  bottom:77px;
+  width:120px;
+  height:60px;
+  transform:translateX(-50%);
+  pointer-events:none;
+  opacity:0;
+}
+
+.splashFx.active{
+  opacity:1;
+  animation:splashFade .9s ease forwards;
+}
+
+.splashFx span{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  font-size:20px;
+}
+
+.splashFx span:nth-child(1){transform:translateX(-50%) rotate(-25deg)}
+.splashFx span:nth-child(2){transform:translateX(-50%) rotate(20deg)}
+.splashFx span:nth-child(3){transform:translateX(-50%) rotate(55deg)}
+.splashFx.active span:nth-child(1){animation:dropFly1 .8s ease forwards}
+.splashFx.active span:nth-child(2){animation:dropFly2 .8s ease forwards}
+.splashFx.active span:nth-child(3){animation:dropFly3 .8s ease forwards}
+
+@keyframes splashFade{
+  0%{opacity:1}
+  85%{opacity:1}
+  100%{opacity:0}
+}
+
+@keyframes dropFly1{
+  to{transform:translate(-52px,-38px) rotate(-25deg);opacity:0}
+}
+@keyframes dropFly2{
+  to{transform:translate(6px,-52px) rotate(20deg);opacity:0}
+}
+@keyframes dropFly3{
+  to{transform:translate(48px,-34px) rotate(55deg);opacity:0}
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.questionCard{
+  overflow:hidden;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.questionHead{
+  padding:11px 13px;
+  border-bottom:1px solid #dde8ef;
+}
+
+.theme1{background:linear-gradient(135deg,#eaf7ff,#f8fcff)}
+.theme2{background:linear-gradient(135deg,#effbf3,#fbfffc)}
+.theme3{background:linear-gradient(135deg,#fff5e5,#fffaf2)}
+.theme4{background:linear-gradient(135deg,#f4efff,#fbf8ff)}
+.theme5{background:linear-gradient(135deg,#ebfbff,#f9feff)}
+.theme6{background:linear-gradient(135deg,#fff0f4,#fff9fb)}
+
+.questionLabel{
+  color:#6b8091;
+  text-transform:uppercase;
+  letter-spacing:1.1px;
+  font-size:8px;
+  font-weight:900;
+}
+
+.scenarioRow{
+  display:grid;
+  grid-template-columns:76px 1fr;
+  gap:11px;
+  align-items:center;
+  margin-top:8px;
+}
+
+.scenarioIcon{
+  width:72px;
+  height:72px;
+  display:grid;
+  place-items:center;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 7px 16px rgba(36,74,108,.09);
+  font-size:36px;
+}
+
+#questionBox{
+  color:#324154;
+  font-size:19px;
+  line-height:1.28;
+  font-weight:900;
+}
+
+#hint{
+  margin-top:5px;
+  color:#748494;
+  font-size:10px;
+  line-height:1.3;
+}
+
+
+/* =========================
+   OPTIONS
+========================= */
+
+.optionsArea{padding:13px}
+
+#options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+
+.opt{
+  min-height:118px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:11px 9px;
+  border:2px solid #dce5ec;
+  border-radius:17px;
+  background:#fff;
+  color:#3d4e61;
+  text-align:center;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:900;
+  box-shadow:0 7px 15px rgba(36,74,108,.07);
+  transition:transform .15s ease,border-color .2s ease,background .2s ease;
+}
+
+.opt:not(:disabled):hover{
+  transform:translateY(-2px);
+}
+
+.optEmoji{
+  font-size:37px;
+}
+
+.opt small{
+  color:#7b8897;
+  font-size:9px;
+  font-weight:700;
+}
+
+.opt.correct{
+  border-color:#73bd8c;
+  background:#eaf7ee;
+  color:#326e4b;
+}
+
+.opt.wrong{
+  border-color:#e0a49f;
+  background:#fff0ed;
+  color:#81514d;
+  animation:shake .3s;
+}
+
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedbackWrap{
+  padding:0 13px 13px;
+}
+
+#feedback{
+  display:none;
+  padding:10px 11px;
+  border-radius:12px;
+  font-size:12px;
+  line-height:1.42;
+  font-weight:800;
+}
+
+#feedback.good{
+  display:block;
+  border:1px solid #9ac9a8;
+  background:#eaf7ee;
+  color:#356d4d;
+}
+
+#feedback.bad{
+  display:block;
+  border:1px solid #e1aaa4;
+  background:#fff0ed;
+  color:#7d514d;
+}
+
+.rewardBanner{
+  display:none;
+  margin-top:7px;
+  padding:8px 10px;
+  border-radius:11px;
+  text-align:center;
+  background:linear-gradient(135deg,#e8f8ff,#eefcf4);
+  color:#2e769f;
+  font-size:10px;
+  font-weight:900;
+}
+
+.rewardBanner.show{
+  display:block;
+  animation:rewardPop .35s ease;
+}
+
+@keyframes rewardPop{
+  0%{transform:scale(.92);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
+
+#nextBtn{
+  width:100%;
+  min-height:44px;
+  margin-top:8px;
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(#2796d6,#1574b5);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+}
+
+
+/* =========================
+   END
+========================= */
+
+#end{display:none}
+
+.endInner{
+  padding:25px 20px;
+  text-align:center;
+}
+
+.endLogo{width:86px}
+
+.trophy{
+  margin-top:7px;
+  font-size:58px;
+}
+
+.endInner h2{
+  margin-top:5px;
+  color:var(--blue);
+  font-size:27px;
+}
+
+.finalScore{
+  margin:12px auto 6px;
+  color:var(--green);
+  font-size:40px;
+  font-weight:900;
+}
+
+.level{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#e8f5ff;
+  color:#2475a8;
+  font-size:11px;
+  font-weight:900;
+}
+
+.finalTank{
+  position:relative;
+  width:190px;
+  height:115px;
+  margin:15px auto;
+  overflow:hidden;
+  border:5px solid #5ba8d4;
+  border-radius:20px 20px 30px 30px;
+  background:#f1fbff;
+}
+
+.finalWater{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:100%;
+  background:linear-gradient(#6bd2f4,#2d9cd6);
+}
+
+.finalWater::before{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:-15px;
+  width:220px;
+  height:14px;
+  border-radius:50%;
+  background:rgba(255,255,255,.58);
+}
+
+.finalTankText{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.18);
+  font-weight:900;
+}
+
+.resultGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:15px 0;
+}
+
+.resultTile{
+  padding:9px 5px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:#f8fafb;
+  color:#687687;
+  font-size:8px;
+}
+
+.resultTile strong{
+  display:block;
+  margin-top:3px;
+  color:#2f6f50;
+  font-size:14px;
+}
+
+.reviewBox{
+  padding:11px;
+  border-radius:12px;
+  background:#f3f7fa;
+  color:#5b6879;
+  text-align:left;
+  font-size:11px;
+  line-height:1.45;
+}
+
+.endActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  body{
+    background-attachment:scroll;
+  }
+
+  .screen{
+    min-height:100svh;
+    min-height:100dvh;
+    padding:
+      max(6px,env(safe-area-inset-top))
+      max(6px,env(safe-area-inset-right))
+      max(8px,env(safe-area-inset-bottom))
+      max(6px,env(safe-area-inset-left));
+  }
+
+  .panel{
+    border-radius:18px;
+  }
+
+  /* INTRO */
+  .introHero{
+    padding:82px 10px 12px;
+  }
+
+  .introLogo{
+    top:8px;
+    left:50%;
+    width:70px;
+    transform:translateX(-50%);
+  }
+
+  .eyebrow{
+    font-size:8px;
+    letter-spacing:1px;
+  }
+
+  .introHero h1{
+    font-size:30px;
+    line-height:.98;
+  }
+
+  .introHero h1 span{
+    margin-top:6px;
+    font-size:.68em;
+  }
+
+  .introHero p{
+    max-width:330px;
+    margin-top:10px;
+    font-size:12px;
+    line-height:1.35;
+  }
+
+  .heroWorld{
+    height:138px;
+    margin-top:8px;
+  }
+
+  .introTank{
+    top:1px;
+    width:92px;
+    height:76px;
+    border-width:4px;
+  }
+
+  .introTankText{
+    top:29px;
+    font-size:20px;
+  }
+
+  .city{
+    height:62px;
+    gap:3px;
+  }
+
+  .building{
+    width:24px;
+  }
+
+  .building:nth-child(1){height:32px}
+  .building:nth-child(2){height:45px}
+  .building:nth-child(3){height:28px}
+  .building:nth-child(4){height:51px}
+  .building:nth-child(5){height:37px}
+  .building:nth-child(6){height:43px}
+
+  .building::after{
+    inset:7px 6px auto;
+    height:4px;
+    box-shadow:0 11px 0 #f9d985,0 22px 0 #f9d985;
+  }
+
+  .cloud{
+    top:18px;
+    font-size:24px;
+  }
+
+  .introBottom{
+    padding:11px 10px 13px;
+  }
+
+  .introLead{
+    max-width:330px;
+    font-size:11px;
+    line-height:1.35;
+  }
+
+  .introSteps{
+    gap:4px;
+    margin:9px 0 11px;
+  }
+
+  .introSteps div{
+    min-height:48px;
+    padding:5px 2px;
+    border-radius:10px;
+    font-size:7px;
+  }
+
+  .introSteps span{
+    font-size:16px;
+  }
+
+  .primary,
+  .secondary{
+    min-height:44px;
+    padding:10px 14px;
+    font-size:12px;
+  }
+
+  /* GAME */
+  #game{
+    min-height:100svh;
+    min-height:100dvh;
+    padding:
+      max(4px,env(safe-area-inset-top))
+      max(4px,env(safe-area-inset-right))
+      max(8px,env(safe-area-inset-bottom))
+      max(4px,env(safe-area-inset-left));
+  }
+
+  .gameShell{
+    width:100%;
+  }
+
+  .topbar{
+    position:sticky;
+    top:max(4px,env(safe-area-inset-top));
+    z-index:20;
+    grid-template-columns:38px minmax(0,1fr) auto;
+    gap:4px;
+    margin-bottom:4px;
+  }
+
+  .topBox{
+    min-height:38px;
+    padding:5px 6px;
+    border-radius:9px;
+    font-size:9px;
+  }
+
+  .homeBtn{
+    width:38px;
+    font-size:17px;
+  }
+
+  .gameTitle{
+    min-width:0;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+
+  .scoreBox{
+    min-width:50px;
+  }
+
+  .hud{
+    grid-template-columns:minmax(0,1fr) 68px;
+    gap:4px;
+    margin-bottom:4px;
+  }
+
+  .progressCard,
+  .streakCard{
+    padding:6px 7px;
+    border-radius:9px;
+  }
+
+  .progressMeta{
+    margin-bottom:4px;
+    font-size:8px;
+  }
+
+  .track{
+    height:5px;
+  }
+
+  .streakCard{
+    min-width:68px;
+  }
+
+  .streakCard strong{
+    font-size:10px;
+  }
+
+  .streakCard span{
+    font-size:6px;
+  }
+
+  /* COMMUNITY RESERVOIR */
+  .reservoirStage{
+    margin-bottom:4px;
+    padding:6px 7px 5px;
+    border-radius:12px;
+  }
+
+  .reservoirHeader{
+    margin-bottom:2px;
+    font-size:7px;
+  }
+
+  .reservoirScene{
+    height:72px;
+  }
+
+  .mainTank{
+    width:118px;
+    height:66px;
+    border-width:3px;
+    border-radius:13px 13px 18px 18px;
+  }
+
+  .tankWater::before{
+    top:-4px;
+    height:9px;
+  }
+
+  .tankLabel{
+    font-size:7px;
+  }
+
+  .tankLabel strong{
+    font-size:12px;
+  }
+
+  .cityMini{
+    gap:2px;
+  }
+
+  .cityMini div{
+    width:14px;
+  }
+
+  .cityMini div:nth-child(1){height:19px}
+  .cityMini div:nth-child(2){height:27px}
+  .cityMini div:nth-child(3){height:16px}
+
+  .splashFx{
+    bottom:43px;
+    width:90px;
+    height:45px;
+  }
+
+  .splashFx span{
+    font-size:16px;
+  }
+
+  /* QUESTION */
+  .questionCard{
+    border-radius:13px;
+  }
+
+  .questionHead{
+    padding:8px 9px;
+  }
+
+  .questionLabel{
+    font-size:7px;
+  }
+
+  .scenarioRow{
+    grid-template-columns:46px minmax(0,1fr);
+    gap:7px;
+    margin-top:5px;
+  }
+
+  .scenarioIcon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    font-size:23px;
+  }
+
+  #questionBox{
+    font-size:15px;
+    line-height:1.24;
+  }
+
+  #hint{
+    margin-top:3px;
+    font-size:8px;
+    line-height:1.25;
+  }
+
+  /* OPTIONS */
+  .optionsArea{
+    padding:8px;
+  }
+
+  #options{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+  }
+
+  .opt{
+    min-width:0;
+    min-height:82px;
+    padding:6px 5px;
+    border-width:1.5px;
+    border-radius:11px;
+    font-size:9px;
+    line-height:1.2;
+  }
+
+  .optEmoji{
+    font-size:24px;
+  }
+
+  .opt small{
+    font-size:7px;
+    line-height:1.15;
+  }
+
+  /* FEEDBACK */
+  .feedbackWrap{
+    padding:0 8px 8px;
+  }
+
+  #feedback{
+    padding:7px 8px;
+    border-radius:9px;
+    font-size:9px;
+    line-height:1.3;
+  }
+
+  .rewardBanner{
+    margin-top:5px;
+    padding:6px 7px;
+    border-radius:9px;
+    font-size:8px;
+  }
+
+  #nextBtn{
+    min-height:40px;
+    margin-top:6px;
+    border-radius:9px;
+    font-size:9px;
+  }
+
+  /* END */
+  .endInner{
+    padding:15px 9px;
+  }
+
+  .endLogo{
+    width:64px;
+  }
+
+  .trophy{
+    margin-top:4px;
+    font-size:42px;
+  }
+
+  .endInner h2{
+    font-size:20px;
+  }
+
+  .finalScore{
+    margin:8px auto 4px;
+    font-size:30px;
+  }
+
+  .level{
+    padding:6px 10px;
+    font-size:8px;
+  }
+
+  .finalTank{
+    width:145px;
+    height:84px;
+    margin:11px auto;
+    border-width:4px;
+  }
+
+  .finalTankText{
+    font-size:10px;
+  }
+
+  .resultGrid{
+    gap:4px;
+    margin:10px 0;
+  }
+
+  .resultTile{
+    padding:7px 3px;
+    border-radius:9px;
+    font-size:6px;
+  }
+
+  .resultTile strong{
+    font-size:10px;
+  }
+
+  .reviewBox{
+    padding:9px;
+    border-radius:10px;
+    font-size:9px;
+    line-height:1.35;
+  }
+
+  .endActions{
+    gap:6px;
+    margin-top:10px;
+  }
+}
+
+@media(max-width:370px){
+
+  .introHero h1{
+    font-size:28px;
+  }
+
+  .reservoirScene{
+    height:66px;
+  }
+
+  .mainTank{
+    width:108px;
+    height:60px;
+  }
+
+  #questionBox{
+    font-size:14px;
+  }
+
+  .opt{
+    min-height:76px;
+    font-size:8.5px;
+  }
+
+  .optEmoji{
+    font-size:22px;
+  }
+
+  .opt small{
+    display:none;
+  }
+}
+
+/* Phone landscape mode */
+@media(max-width:900px) and (orientation:landscape){
+
+  #game{
+    padding:4px;
+  }
+
+  .gameShell{
+    max-width:900px;
+  }
+
+  .reservoirStage{
+    padding:5px 8px;
+  }
+
+  .reservoirScene{
+    height:62px;
+  }
+
+  .mainTank{
+    width:120px;
+    height:57px;
+  }
+
+  .questionHead{
+    padding:7px 9px;
+  }
+
+  .scenarioRow{
+    grid-template-columns:45px 1fr;
+  }
+
+  .scenarioIcon{
+    width:42px;
+    height:42px;
+  }
+
+  #questionBox{
+    font-size:14px;
+  }
+
+  .optionsArea{
+    padding:7px 9px;
+  }
+
+  .opt{
+    min-height:67px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
-  <img src="assets/innovine-logo.png" alt="Innovine Logo">
-</div>
-
-<!-- INTRO -->
-<div id="intro">
-  <div class="card">
-    <h2>💧 Water Conservation Quiz</h2>
-    <p>
-      Help save water by selecting the right option in each scenario.<br>
-      Tap the scenario → then tap the correct choice.<br><br>
-      ✔ Two attempts per question<br>
-      ✔ Wrong answer will wiggle<br>
-      ✔ Correct answer will glow after two wrong attempts<br>
-      ✔ Become a Water Champion 🌊
-    </p>
-    <button onclick="startGame()">START QUIZ</button>
+  <div class="splashInner">
+    <img src="assets/innovine-logo.png" alt="Innovine logo">
+    <div class="splashText">Water Hero Mission</div>
   </div>
 </div>
 
-<!-- GAME -->
-<div id="game">
-  <div class="topbar">
-    <div>⭐ Score: <span id="score">0</span></div>
-    <div>Water Conservation Quiz</div>
+
+<section id="intro" class="screen">
+  <div class="shell">
+    <div class="panel">
+
+      <div class="introHero">
+        <img src="assets/innovine-logo.png" class="introLogo" alt="Innovine logo">
+
+        <div class="eyebrow">Water Conservation • Grade Challenge</div>
+
+        <h1>
+          Water Hero
+          <span>Fill the Community Reservoir</span>
+        </h1>
+
+        <p>
+          The community reservoir is running low. Make smart water-saving choices and refill it before the mission ends.
+        </p>
+
+        <div class="heroWorld" aria-hidden="true">
+          <div class="cloud a">☁️</div>
+          <div class="cloud b">☁️</div>
+
+          <div class="introTank">
+            <div class="introWater"></div>
+            <div class="introTankText">💧</div>
+          </div>
+
+          <div class="city">
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="introBottom">
+
+        <p class="introLead">
+          Solve six situations. Every solved situation raises the reservoir. First-attempt answers earn a star and build your streak.
+        </p>
+
+        <div class="introSteps">
+          <div><span>🎯</span>Solve the situation</div>
+          <div><span>⭐</span>Earn first-try stars</div>
+          <div><span>🌊</span>Fill the reservoir</div>
+        </div>
+
+        <button id="startBtn" class="primary" type="button">
+          START WATER MISSION →
+        </button>
+
+      </div>
+    </div>
   </div>
+</section>
 
-  <div id="feedback"></div>
-  <div id="questionBox"></div>
-  <div id="options"></div>
-  <div id="droplets"></div>
-</div>
 
-<!-- END -->
-<div id="end">
-  <div class="card">
-    <h2>🎉 Congratulations!</h2>
-    <p>You completed the Water Conservation Quiz!</p>
-    <p>⭐ Score: <span id="final"></span></p>
-    <button onclick="location.reload()">PLAY AGAIN</button>
+<main id="game">
+  <div class="gameShell">
+
+    <div class="topbar">
+      <button id="homeBtn" class="topBox homeBtn" type="button">⌂</button>
+      <div class="topBox gameTitle">💧 Water Hero Mission</div>
+      <div class="topBox scoreBox">⭐ <span id="score">0</span>/6</div>
+    </div>
+
+    <div class="hud">
+
+      <div class="progressCard">
+        <div class="progressMeta">
+          <span id="roundCounter">Mission 1 / 6</span>
+          <span id="statusText">Save water</span>
+        </div>
+        <div class="track">
+          <div id="progressFill" class="fill"></div>
+        </div>
+      </div>
+
+      <div class="streakCard">
+        <strong>🔥 <span id="streak">0</span></strong>
+        <span>STREAK</span>
+      </div>
+
+    </div>
+
+
+    <section class="reservoirStage">
+
+      <div class="reservoirHeader">
+        <span>🏘️ COMMUNITY RESERVOIR</span>
+        <span id="tankPercent">0% full</span>
+      </div>
+
+      <div class="reservoirScene">
+
+        <div class="cityMini">
+          <div></div><div></div><div></div>
+        </div>
+
+        <div class="mainTank">
+          <div id="tankWater" class="tankWater"></div>
+
+          <div class="tankLabel">
+            <div>
+              <strong id="tankStage">LOW</strong>
+              WATER LEVEL
+            </div>
+          </div>
+        </div>
+
+        <div class="cityMini right">
+          <div></div><div></div><div></div>
+        </div>
+
+        <div id="splashFx" class="splashFx">
+          <span>💧</span>
+          <span>💦</span>
+          <span>💧</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="questionCard">
+
+      <div id="questionHead" class="questionHead theme1">
+
+        <div class="questionLabel">Choose the water-wise action</div>
+
+        <div class="scenarioRow">
+
+          <div id="scenarioIcon" class="scenarioIcon"></div>
+
+          <div>
+            <div id="questionBox"></div>
+            <div id="hint"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="optionsArea">
+        <div id="options"></div>
+      </div>
+
+
+      <div class="feedbackWrap">
+
+        <div id="feedback"></div>
+
+        <div id="rewardBanner" class="rewardBanner"></div>
+
+        <button id="nextBtn" type="button" hidden>
+          NEXT MISSION →
+        </button>
+
+      </div>
+
+    </section>
+
   </div>
-</div>
+</main>
 
-<!-- AUDIO -->
-<audio id="correct" src="assets/correct.mp3"></audio>
-<audio id="wrong" src="assets/wrong.mp3"></audio>
-<audio id="clap" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<section id="end" class="screen">
+  <div class="shell">
+    <div class="panel">
+      <div class="endInner">
+
+        <img src="assets/innovine-logo.png" class="endLogo" alt="Innovine logo">
+
+        <div class="trophy">🏆🌊</div>
+
+        <h2>Reservoir Mission Complete!</h2>
+
+        <div id="finalScore" class="finalScore">0 / 6</div>
+
+        <div id="finalLevel" class="level"></div>
+
+
+        <div class="finalTank">
+          <div class="finalWater"></div>
+          <div class="finalTankText">COMMUNITY RESERVOIR<br>FULL 💧</div>
+        </div>
+
+
+        <div class="resultGrid">
+          <div class="resultTile">
+            First-try stars
+            <strong id="firstTryCount">0</strong>
+          </div>
+
+          <div class="resultTile">
+            Best streak
+            <strong id="bestStreak">0</strong>
+          </div>
+
+          <div class="resultTile">
+            Reservoir
+            <strong>100%</strong>
+          </div>
+        </div>
+
+
+        <div id="reviewBox" class="reviewBox"></div>
+
+
+        <div class="endActions">
+          <button id="againBtn" class="secondary" type="button">PLAY AGAIN</button>
+          <button id="restartBtn" class="primary" type="button">RESTART</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<audio id="correct" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrong" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clap" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
+
 
 <script>
-// Splash screen
-setTimeout(()=>{
-  document.getElementById("splash").style.display="none";
-  document.getElementById("intro").style.display="flex";
-},3000);
+document.addEventListener("DOMContentLoaded",()=>{
 
-// Questions
-const questions = [
-  {q:"Brushing teeth: Which is the better way to save water?", options:["Running tap","Glass of water"], answer:"Glass of water", icons:["🪥","💧"]},
-  {q:"Washing vegetables: Which option saves more water?", options:["Running water","Using bowl"], answer:"Using bowl", icons:["🚰","🥣"]},
-  {q:"Bathing: Which option saves more water?", options:["Shower","Bucket"], answer:"Bucket", icons:["🚿","🪣"]},
-  {q:"Cleaning a small spill: What should we use?", options:["Running water","Cloth"], answer:"Cloth", icons:["💦","🧽"]},
-  {q:"Rainwater: What should we do with it?", options:["Ignore it","Collect it"], answer:"Collect it", icons:["❌","🌧️"]},
-  {q:"Leaking tap: What should we do?", options:["Ignore it","Fix it"], answer:"Fix it", icons:["🚰","🔧"]}
+const $=id=>document.getElementById(id);
+
+const questions=[
+  {
+    icon:"🪥",
+    q:"While brushing your teeth, which choice saves more water?",
+    hint:"The tap does not need to run continuously.",
+    options:[
+      {text:"Keep the tap running",icon:"🚰",note:"Water keeps flowing"},
+      {text:"Use a glass and close the tap",icon:"🥛",note:"Use only what you need"}
+    ],
+    answer:1,
+    explanation:"Closing the tap while brushing prevents unnecessary water loss."
+  },
+
+  {
+    icon:"🥬",
+    q:"You need to wash vegetables. Which choice uses water more carefully?",
+    hint:"Can the same water wash several vegetables?",
+    options:[
+      {text:"Wash them in a bowl",icon:"🥣",note:"Uses a limited amount"},
+      {text:"Wash under a running tap",icon:"🚰",note:"Water keeps flowing"}
+    ],
+    answer:0,
+    explanation:"Using a bowl can reduce the amount of water used for washing vegetables."
+  },
+
+  {
+    icon:"🛁",
+    q:"For a short bath, which option makes it easier to control water use?",
+    hint:"Choose the option where the amount of water is easier to measure.",
+    options:[
+      {text:"Keep the shower running",icon:"🚿",note:"Continuous water flow"},
+      {text:"Use a bucket and mug",icon:"🪣",note:"Amount can be limited"}
+    ],
+    answer:1,
+    explanation:"A bucket and mug can help you control how much water is used."
+  },
+
+  {
+    icon:"🧹",
+    q:"There is a small spill on the floor. What is the better way to clean it?",
+    hint:"A small spill does not need a continuous stream of water.",
+    options:[
+      {text:"Wipe it with a cloth",icon:"🧽",note:"Needs little or no extra water"},
+      {text:"Wash it with running water",icon:"💦",note:"Uses more water"}
+    ],
+    answer:0,
+    explanation:"Using a cloth for a small spill avoids wasting water."
+  },
+
+  {
+    icon:"🌧️",
+    q:"It is raining. What is a useful way to conserve some of that rainwater?",
+    hint:"Think about saving it for a later purpose.",
+    options:[
+      {text:"Let all of it flow away",icon:"➡️",note:"Water is not stored"},
+      {text:"Collect it for suitable uses",icon:"🪣",note:"Water can be reused"}
+    ],
+    answer:1,
+    explanation:"Collected rainwater can be used for suitable purposes such as watering plants or cleaning."
+  },
+
+  {
+    icon:"🚰",
+    q:"A tap keeps dripping after it is closed. What should you do?",
+    hint:"Small leaks can waste water over time.",
+    options:[
+      {text:"Repair or report the leak",icon:"🔧",note:"Stops repeated water loss"},
+      {text:"Ignore the dripping",icon:"🙈",note:"Water continues to be wasted"}
+    ],
+    answer:0,
+    explanation:"Repairing or reporting a leaking tap prevents continuous water wastage."
+  }
 ];
 
-let score = 0;
-let qIndex = 0;
-let attempt = 1;
-let locked = false;
+const themes=["theme1","theme2","theme3","theme4","theme5","theme6"];
 
-// Safe audio play
-function safePlay(id){
-  const audio = document.getElementById(id);
-  if(audio){ audio.currentTime=0; audio.play().catch(()=>{}); }
-}
+let score=0;
+let index=0;
+let attempts=0;
+let solvedCount=0;
+let streak=0;
+let bestStreak=0;
+let locked=false;
+let audioUnlocked=false;
+let audioCtx=null;
 
-// Start game
-function startGame(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("game").style.display="block";
-  initDroplets();
-  loadQuestion();
-}
 
-// Initialize droplets
-function initDroplets(){
-  const box = document.getElementById("droplets");
-  box.innerHTML="";
-  for(let i=0;i<questions.length;i++){
-    const d = document.createElement("div"); d.className="droplet";
-    box.appendChild(d);
-  }
-}
+/* =========================
+   AUDIO
+========================= */
 
-// Load question
-function loadQuestion(){
-  if(qIndex >= questions.length){ endGame(); return; }
-  locked=false; attempt=1;
-  document.getElementById("feedback").innerText="";
-  document.getElementById("score").innerText=score;
+function unlockAudio(){
 
-  const q=questions[qIndex];
-  document.getElementById("questionBox").innerText=q.q;
+  if(audioUnlocked)return;
+  audioUnlocked=true;
 
-  const optBox=document.getElementById("options");
-  optBox.innerHTML="";
-  q.options.forEach((opt,i)=>{
-    const div=document.createElement("div");
-    div.className="opt";
-    div.innerHTML=q.icons[i]+" "+opt;
-    div.onclick=()=>checkAnswer(opt, div);
-    optBox.appendChild(div);
+  try{
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended"){
+      audioCtx.resume();
+    }
+  }catch(e){}
+
+  ["correct","wrong","clap"].forEach(id=>{
+    const audio=$(id);
+    audio.muted=true;
+
+    try{
+      const p=audio.play();
+
+      if(p&&p.then){
+        p.then(()=>{
+          audio.pause();
+          audio.currentTime=0;
+          audio.muted=false;
+        }).catch(()=>{
+          audio.muted=false;
+        });
+      }else{
+        audio.muted=false;
+      }
+    }catch(e){
+      audio.muted=false;
+    }
   });
 }
 
-// Check answer
-function checkAnswer(selected, element){
-  if(locked) return;
-  const q=questions[qIndex];
+function stopSounds(){
+  ["correct","wrong","clap"].forEach(id=>{
+    const audio=$(id);
+    audio.pause();
+    try{audio.currentTime=0}catch(e){}
+  });
+}
 
-  if(selected===q.answer){
-    locked=true;
-    score++;
-    document.getElementById("feedback").style.color="green";
-    document.getElementById("feedback").innerText="✔ Correct!";
-    safePlay("correct");
-    fillDroplet(qIndex);
-    setTimeout(()=>{ qIndex++; loadQuestion(); },1200);
-  } else {
-    element.classList.add("shake");
-    safePlay("wrong");
-    setTimeout(()=>{ element.classList.remove("shake"); },400);
-    if(attempt===1){
-      attempt=2;
-      document.getElementById("feedback").style.color="red";
-      document.getElementById("feedback").innerText="❌ Try again!";
-    } else {
-      locked=true;
-      document.getElementById("feedback").style.color="#0077b6";
-      document.getElementById("feedback").innerText="✅ Correct Answer: "+q.answer;
-      document.querySelectorAll(".opt").forEach(option=>{
-        if(option.innerText.includes(q.answer)) option.classList.add("glow");
-      });
-      setTimeout(()=>{ qIndex++; loadQuestion(); },1800);
+function playSound(id){
+  stopSounds();
+  const audio=$(id);
+
+  try{
+    audio.muted=false;
+    audio.volume=1;
+    audio.currentTime=0;
+    const p=audio.play();
+    if(p&&p.catch)p.catch(()=>{});
+  }catch(e){}
+}
+
+
+/* Synthetic water-pouring sound:
+   No extra MP3 file is required. */
+function playWaterFillSound(){
+
+  if(!audioCtx)return;
+
+  try{
+    if(audioCtx.state==="suspended"){
+      audioCtx.resume();
     }
+
+    const now=audioCtx.currentTime;
+    const duration=1.25;
+
+    const bufferSize=Math.floor(audioCtx.sampleRate*duration);
+    const buffer=audioCtx.createBuffer(1,bufferSize,audioCtx.sampleRate);
+    const data=buffer.getChannelData(0);
+
+    for(let i=0;i<bufferSize;i++){
+      const t=i/bufferSize;
+      const envelope=Math.sin(Math.PI*t);
+      data[i]=(Math.random()*2-1)*envelope*0.34;
+    }
+
+    const noise=audioCtx.createBufferSource();
+    noise.buffer=buffer;
+
+    const lowpass=audioCtx.createBiquadFilter();
+    lowpass.type="lowpass";
+    lowpass.frequency.setValueAtTime(1300,now);
+    lowpass.frequency.exponentialRampToValueAtTime(520,now+duration);
+
+    const gain=audioCtx.createGain();
+    gain.gain.setValueAtTime(.0001,now);
+    gain.gain.exponentialRampToValueAtTime(.23,now+.08);
+    gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
+
+    noise.connect(lowpass);
+    lowpass.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    noise.start(now);
+    noise.stop(now+duration);
+
+    // soft "glug" bubbles
+    [0,.25,.48,.72,.94].forEach((offset,j)=>{
+      const osc=audioCtx.createOscillator();
+      const g=audioCtx.createGain();
+
+      osc.type="sine";
+      osc.frequency.setValueAtTime(210+(j%2)*35,now+offset);
+      osc.frequency.exponentialRampToValueAtTime(105,now+offset+.12);
+
+      g.gain.setValueAtTime(.0001,now+offset);
+      g.gain.exponentialRampToValueAtTime(.09,now+offset+.02);
+      g.gain.exponentialRampToValueAtTime(.0001,now+offset+.13);
+
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+
+      osc.start(now+offset);
+      osc.stop(now+offset+.15);
+    });
+
+  }catch(e){}
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getLevel(){
+  if(score>=5)return "🏆 Water Champion";
+  if(score>=3)return "💧 Water Saver";
+  return "🌱 Water Learner";
+}
+
+function updateTank(){
+
+  const percent=Math.round(solvedCount/questions.length*100);
+
+  $("tankWater").style.height=percent+"%";
+  $("tankPercent").textContent=percent+"% full";
+
+  if(percent===0){
+    $("tankStage").textContent="LOW";
+  }else if(percent<50){
+    $("tankStage").textContent="RISING";
+  }else if(percent<100){
+    $("tankStage").textContent="GOOD";
+  }else{
+    $("tankStage").textContent="FULL!";
   }
 }
 
-// Fill droplet
-function fillDroplet(index){
-  const droplets=document.querySelectorAll(".droplet");
-  if(droplets[index]) droplets[index].classList.add("filled");
+function triggerSplash(){
+
+  const fx=$("splashFx");
+
+  fx.classList.remove("active");
+  void fx.offsetWidth;
+  fx.classList.add("active");
 }
 
-// End game
-function endGame(){
-  document.getElementById("game").style.display="none";
-  document.getElementById("end").style.display="flex";
-  document.getElementById("final").innerText=score+" / "+questions.length;
-  safePlay("clap");
+function updateHeader(){
+
+  $("score").textContent=score;
+  $("streak").textContent=streak;
+  $("roundCounter").textContent="Mission "+(index+1)+" / "+questions.length;
+  $("statusText").textContent=getLevel();
+  $("progressFill").style.width=Math.round(index/questions.length*100)+"%";
+
+  updateTank();
 }
+
+
+/* =========================
+   START
+========================= */
+
+function startGame(){
+
+  $("intro").style.display="none";
+  $("end").style.display="none";
+  $("game").style.display="block";
+
+  score=0;
+  index=0;
+  attempts=0;
+  solvedCount=0;
+  streak=0;
+  bestStreak=0;
+
+  loadQuestion();
+}
+
+
+/* =========================
+   LOAD QUESTION
+========================= */
+
+function loadQuestion(){
+
+  if(index>=questions.length){
+    endGame();
+    return;
+  }
+
+  locked=false;
+  attempts=0;
+
+  const q=questions[index];
+
+  updateHeader();
+
+  $("questionHead").className="questionHead "+themes[index];
+  $("scenarioIcon").textContent=q.icon;
+  $("questionBox").textContent=q.q;
+  $("hint").textContent=q.hint;
+
+  $("feedback").className="";
+  $("feedback").textContent="";
+
+  $("rewardBanner").className="rewardBanner";
+  $("rewardBanner").textContent="";
+
+  $("nextBtn").hidden=true;
+
+  const box=$("options");
+  box.replaceChildren();
+
+  q.options.forEach((option,i)=>{
+
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="opt";
+
+    btn.innerHTML=`
+      <div class="optEmoji">${option.icon}</div>
+      <div>${option.text}</div>
+      <small>${option.note}</small>
+    `;
+
+    btn.addEventListener(
+      "click",
+      ()=>checkAnswer(i,btn)
+    );
+
+    box.appendChild(btn);
+
+  });
+}
+
+
+/* =========================
+   CHECK ANSWER
+========================= */
+
+function checkAnswer(choice,selectedButton){
+
+  if(locked)return;
+
+  const q=questions[index];
+
+  attempts++;
+
+  if(choice===q.answer){
+
+    locked=true;
+
+    const buttons=[
+      ...document.querySelectorAll(".opt")
+    ];
+
+    buttons.forEach(btn=>btn.disabled=true);
+
+    selectedButton.classList.add("correct");
+
+    solvedCount++;
+
+    if(attempts===1){
+
+      score++;
+      streak++;
+
+      if(streak>bestStreak){
+        bestStreak=streak;
+      }
+
+      $("rewardBanner").className="rewardBanner show";
+      $("rewardBanner").textContent="⭐ FIRST-TRY STAR! Reservoir +1 level • Streak +1";
+
+    }else{
+
+      streak=0;
+
+      $("rewardBanner").className="rewardBanner show";
+      $("rewardBanner").textContent="💧 Mission solved! The reservoir rises.";
+
+    }
+
+    $("score").textContent=score;
+    $("streak").textContent=streak;
+
+    $("feedback").className="good";
+
+    $("feedback").textContent=
+      "✅ Water saved! "+q.explanation;
+
+    updateTank();
+    triggerSplash();
+
+    // Correct sound first, followed immediately by the reservoir-filling sound.
+    playSound("correct");
+    setTimeout(playWaterFillSound,180);
+
+    $("nextBtn").hidden=false;
+
+  }else{
+
+    selectedButton.classList.add("wrong");
+    selectedButton.disabled=true;
+
+    playSound("wrong");
+
+    if(attempts===1){
+
+      streak=0;
+      $("streak").textContent=streak;
+
+      $("feedback").className="bad";
+      $("feedback").textContent=
+        "❌ Water is still being wasted. You have one more chance — choose the action that saves more water.";
+
+    }else{
+
+      locked=true;
+
+      const buttons=[
+        ...document.querySelectorAll(".opt")
+      ];
+
+      buttons.forEach((btn,i)=>{
+        btn.disabled=true;
+
+        if(i===q.answer){
+          btn.classList.add("correct");
+        }
+      });
+
+      $("feedback").className="bad";
+
+      $("feedback").textContent=
+        "💡 The water-wise choice is: "+q.options[q.answer].text+". Tap NEXT to continue.";
+
+      // Let the learner proceed after seeing the correct answer.
+      // Reservoir will rise only after they press NEXT and the mission is treated as resolved.
+      $("nextBtn").hidden=false;
+      $("nextBtn").dataset.forceResolve="yes";
+    }
+
+  }
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function nextQuestion(){
+
+  const q=questions[index];
+
+  if($("nextBtn").dataset.forceResolve==="yes"){
+
+    delete $("nextBtn").dataset.forceResolve;
+
+    solvedCount++;
+    streak=0;
+
+    updateTank();
+    triggerSplash();
+    setTimeout(playWaterFillSound,100);
+  }
+
+  index++;
+
+  loadQuestion();
+}
+
+
+/* =========================
+   END
+========================= */
+
+function endGame(){
+
+  $("game").style.display="none";
+  $("intro").style.display="none";
+  $("end").style.display="grid";
+
+  $("finalScore").textContent=
+    score+" / "+questions.length;
+
+  $("firstTryCount").textContent=score;
+  $("bestStreak").textContent=bestStreak;
+  $("finalLevel").textContent=getLevel();
+
+  if(score===6){
+
+    $("reviewBox").innerHTML=
+      "<strong>Perfect mission!</strong> You made every water-saving choice correctly on the first attempt and filled the community reservoir.";
+
+    playSound("clap");
+
+  }else if(score>=4){
+
+    $("reviewBox").innerHTML=
+      "<strong>Great work!</strong> The reservoir is full. Remember to close running taps, repair leaks, collect rainwater and use only the water you need.";
+
+  }else{
+
+    $("reviewBox").innerHTML=
+      "<strong>Reservoir restored!</strong> Review the water-wise choices and try again to earn more first-try stars.";
+
+  }
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+$("startBtn").addEventListener("click",()=>{
+
+  unlockAudio();
+  startGame();
+
+});
+
+$("nextBtn").addEventListener("click",nextQuestion);
+
+$("homeBtn").addEventListener("click",()=>location.reload());
+
+$("againBtn").addEventListener("click",startGame);
+
+$("restartBtn").addEventListener("click",()=>location.reload());
+
+
+setTimeout(()=>{
+
+  $("splash").classList.add("hide");
+  $("intro").style.display="grid";
+
+},1100);
+
+});
 </script>
+
 </body>
 </html>
