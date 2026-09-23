@@ -38,7 +38,62 @@ button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button
 .header{display:grid;grid-template-columns:50px minmax(0,1fr) 72px;gap:5px;margin-bottom:5px}.box{min-height:50px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(26,61,91,.09)}.home{border:0;color:#536c7c;font-size:21px}.title{min-width:0;color:var(--navy);font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.score{background:#fff3ca;color:#86641e;font-size:11px;font-weight:900}
 .missionBar{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:5px;margin-bottom:5px}.progressCard,.clueCard{min-height:55px;padding:8px 9px;border-radius:14px;background:#fff;box-shadow:0 6px 16px rgba(26,61,91,.08)}.meta{display:flex;justify-content:space-between;gap:8px;margin-bottom:7px;color:#687b89;font-size:8px;font-weight:900}.track{height:8px;overflow:hidden;border-radius:999px;background:#eaf0f3}.fill{width:0;height:100%;background:linear-gradient(90deg,#4da7e4,#7bc6df);transition:.35s}.clueCard{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#4f6e82}.clueCard strong{font-size:10px}.clueCard small{margin-top:2px;font-size:6px;font-weight:900;color:#7d8a94}
 .scene{overflow:hidden;border-radius:18px;background:#fff;box-shadow:var(--shadow)}.sceneHead{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line)}.sceneHead strong{font-size:9px;color:#36566d}.sceneHead span{font-size:7px;color:#788892;font-weight:900}
-#gameArea{position:relative;width:100%;overflow:hidden;background:#dbe8ed}#cafeteria{width:100%;height:auto;display:block;pointer-events:none;user-select:none}.hotspot{position:absolute;width:38px;height:38px;display:grid;place-items:center;transform:translate(-50%,-50%);border:0;border-radius:50%;background:rgba(255,255,255,.94);color:#3499e1;font-size:25px;line-height:1;z-index:4;box-shadow:0 3px 11px rgba(5,41,74,.25);text-shadow:0 0 6px #fff;animation:pulse 1.5s ease-in-out infinite}.hotspot:active{transform:translate(-50%,-50%) scale(.92)}.hotspot.found{animation:none;background:#eaf7ef;color:#2f9b5c;font-size:20px}.hotspot.found:after{content:"";position:absolute;width:48px;height:48px;border:2px solid rgba(47,155,92,.22);border-radius:50%}.sceneFooter{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;padding:8px}.dot{width:12px;height:12px;border-radius:50%;display:grid;place-items:center;background:#dfe8ed;color:#fff;font-size:7px;font-weight:900}.dot.done{background:#55aa72}
+#gameArea{position:relative;width:100%;overflow:hidden;background:#dbe8ed}#cafeteria{width:100%;height:auto;display:block;pointer-events:none;user-select:none}.hotspot{
+  position:absolute;
+  width:44px;
+  height:44px;
+  transform:translate(-50%,-50%);
+  border:0;
+  padding:0;
+  background:transparent;
+  z-index:4;
+  display:grid;
+  place-items:center;
+}
+.hotspot::before{
+  content:attr(data-label);
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:2px solid #278fd6;
+  background:rgba(255,255,255,.96);
+  color:#1d75ae;
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  box-shadow:
+    0 2px 8px rgba(10,53,85,.25),
+    0 0 0 4px rgba(255,255,255,.48);
+  animation:markerPulse 1.55s ease-in-out infinite;
+}
+.hotspot::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:3px;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  border-top:6px solid #278fd6;
+  opacity:.9;
+}
+.hotspot:active::before{transform:scale(.9)}
+.hotspot.found::before{
+  content:"✓";
+  border-color:#2f9b5c;
+  background:#eaf7ef;
+  color:#2f9b5c;
+  animation:none;
+}
+.hotspot.found::after{border-top-color:#2f9b5c}
+@keyframes markerPulse{
+  0%,100%{box-shadow:0 2px 8px rgba(10,53,85,.24),0 0 0 3px rgba(255,255,255,.45)}
+  50%{box-shadow:0 3px 10px rgba(10,53,85,.28),0 0 0 6px rgba(64,161,225,.18)}
+}.sceneFooter{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;padding:8px}.dot{width:12px;height:12px;border-radius:50%;display:grid;place-items:center;background:#dfe8ed;color:#fff;font-size:7px;font-weight:900}.dot.done{background:#55aa72}
 
 /* popup */
 #backdrop{position:fixed;inset:0;z-index:1000;display:none;background:rgba(7,31,52,.66)}#backdrop.show{display:block}
@@ -54,11 +109,59 @@ button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button
 
 @media(max-width:600px){
   #intro{padding:6px}.introCard{border-radius:18px}.introTop{padding:78px 10px 12px}.introTop h1{font-size:28px}.introTop p{font-size:10px}.introScene{min-height:155px;margin-top:11px}.demo{font-size:28px}.introBottom{padding:10px}.steps{gap:5px}.step{min-height:50px;font-size:6px}.step span{font-size:17px}
-  .app{padding:4px}.header{grid-template-columns:44px minmax(0,1fr) 64px;gap:4px;margin-bottom:4px}.box{min-height:45px;border-radius:12px}.title{font-size:11px}.score{font-size:10px}.missionBar{gap:4px;margin-bottom:4px}.progressCard,.clueCard{min-height:49px;border-radius:12px;padding:7px 8px}.meta{font-size:7px}.clueCard{min-width:78px}.clueCard strong{font-size:9px}.scene{border-radius:14px}.sceneHead{padding:7px 8px}.sceneHead strong{font-size:8px}.sceneHead span{font-size:6px}.hotspot{width:32px;height:32px;font-size:21px}.hotspot.found{font-size:17px}.sceneFooter{padding:6px}.dot{width:11px;height:11px;font-size:6px}
+  .app{padding:4px}.header{grid-template-columns:44px minmax(0,1fr) 64px;gap:4px;margin-bottom:4px}.box{min-height:45px;border-radius:12px}.title{font-size:11px}.score{font-size:10px}.missionBar{gap:4px;margin-bottom:4px}.progressCard,.clueCard{min-height:49px;border-radius:12px;padding:7px 8px}.meta{font-size:7px}.clueCard{min-width:78px}.clueCard strong{font-size:9px}.scene{border-radius:14px}.sceneHead{padding:7px 8px}.sceneHead strong{font-size:8px}.sceneHead span{font-size:6px}.hotspot{width:42px;height:42px}.hotspot::before{width:25px;height:25px;font-size:11px}.sceneFooter{padding:6px}.dot{width:11px;height:11px;font-size:6px}
   #modal{padding:8px;align-items:flex-end}.modalCard{border-radius:20px 20px 12px 12px;max-height:88dvh}.modalTop{grid-template-columns:72px 1fr;gap:9px;padding:12px 46px 7px 12px}.contextCrop{width:68px;height:68px}.contextLabel{font-size:7px}.contextText h2{font-size:15px}.questionBox{padding:6px 14px 3px;font-size:15px}.microbeFact{margin:7px 14px 0;font-size:9px}.yesNoPrompt{margin:10px 14px 7px;font-size:9px}.yesNo{gap:12px;padding:0 14px 10px}.ynBtn{min-height:49px;font-size:11px}.feedback{margin:0 14px 9px;font-size:9px}.returnBtn{width:calc(100% - 28px);margin:0 14px 13px}.closeX{width:34px;height:34px;font-size:21px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+
+<style id="object-marker-mobile-fix">
+@media(max-width:600px){
+  .contextCrop{
+    width:74px;
+    height:74px;
+    background-size:720% auto;
+  }
+  .modalTop{
+    grid-template-columns:78px 1fr;
+    gap:10px;
+    padding:13px 47px 8px 13px;
+  }
+  .contextLabel{font-size:7px;line-height:1.35}
+  .contextText h2{font-size:16px}
+  .questionBox{
+    padding:7px 15px 4px;
+    font-size:16px;
+    line-height:1.3;
+  }
+  .microbeFact{
+    margin:8px 15px 0;
+    font-size:9px;
+  }
+  .yesNoPrompt{
+    margin:10px 15px 7px;
+    font-size:9px;
+  }
+  .yesNo{
+    max-width:none;
+    gap:10px;
+    padding:0 15px 11px;
+  }
+  .ynBtn{
+    min-height:50px;
+    font-size:10px;
+  }
+  .feedback{
+    margin:0 15px 9px;
+    font-size:9px;
+  }
+  .returnBtn{
+    width:calc(100% - 30px);
+    margin:0 15px 14px;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -88,7 +191,7 @@ button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button
       <div class="clueCard"><strong>🔍 <span id="remaining">12</span> left</strong><small>CONTEXT CLUES</small></div>
     </div>
     <section class="scene">
-      <div class="sceneHead"><strong>🏫 Cafeteria Investigation</strong><span>Tap a glowing clue on an object or person</span></div>
+      <div class="sceneHead"><strong>🏫 Cafeteria Investigation</strong><span>Tap a numbered clue placed on an object or person</span></div>
       <div id="gameArea"><img src="assets/cafeteria_microbe_game_under_200kb.png" id="cafeteria" alt="Cafeteria scene"></div>
       <div id="sceneFooter" class="sceneFooter"></div>
     </section>
@@ -100,13 +203,13 @@ button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button
   <div class="modalCard">
     <div class="modalTop">
       <div id="contextCrop" class="contextCrop"></div>
-      <div class="contextText"><div class="contextLabel">YOU TAPPED: <span id="contextName"></span></div><h2 id="contextTitle"></h2></div>
+      <div class="contextText"><div class="contextLabel">CLUE <span id="modalClueNumber"></span> • YOU TAPPED: <span id="contextName"></span></div><h2 id="contextTitle"></h2></div>
       <button id="closeX" class="closeX" type="button">×</button>
     </div>
     <div id="questionBox" class="questionBox"></div>
     <div id="microbeFact" class="microbeFact"></div>
     <div class="yesNoPrompt">Do these microbes help people in this situation?</div>
-    <div class="yesNo"><button id="yesBtn" class="ynBtn" type="button">YES 👍</button><button id="noBtn" class="ynBtn" type="button">NO 👎</button></div>
+    <div class="yesNo"><button id="yesBtn" class="ynBtn" type="button">HELPFUL 👍</button><button id="noBtn" class="ynBtn" type="button">HARMFUL 👎</button></div>
     <div id="feedback" class="feedback"></div>
     <button id="returnBtn" class="returnBtn" type="button" hidden>BACK TO CAFETERIA →</button>
   </div>
@@ -145,18 +248,18 @@ const $=id=>document.getElementById(id);
 /* IMPORTANT: each hotspot, scene object and question live in ONE object.
    Therefore the question can never become detached from the place clicked. */
 const clues=[
-  {x:6.5,y:38.5,object:'Milk dispenser',title:'Milk and useful bacteria',question:'This cafeteria serves milk. Some bacteria such as Lactobacillus are used to turn milk into curd or yoghurt.',fact:'These bacteria carry out useful fermentation in food production.',helpful:true},
-  {x:12.5,y:42.5,object:'Orange juice',title:'Juice left out too long',question:'Juice that is stored badly can be spoiled by microorganisms, changing its smell, taste and quality.',fact:'Food-spoilage microbes make food or drink unsuitable to consume.',helpful:false},
-  {x:31.5,y:10.5,object:'Sink / hand-washing area',title:'Unwashed hands near food',question:'If students do not wash their hands, disease-causing microbes can move from hands to food and surfaces.',fact:'Hand washing helps reduce the transfer of harmful microorganisms.',helpful:false},
-  {x:65.5,y:15.5,object:'Pizza',title:'Yeast in pizza dough',question:'The pizza dough was made with yeast. Yeast releases carbon dioxide and helps the dough rise.',fact:'Yeast is a useful microorganism in baking.',helpful:true},
-  {x:64.5,y:25.5,object:'Salad / raw food',title:'Raw food contamination',question:'If raw salad becomes contaminated with Salmonella, people who eat it may get food poisoning.',fact:'Salmonella is a harmful bacterium that can cause illness.',helpful:false},
-  {x:81.5,y:20.5,object:'Food-preparation knife',title:'Cross-contamination',question:'A dirty knife used on contaminated food can transfer harmful bacteria to ready-to-eat food.',fact:'Cross-contamination can spread disease-causing microorganisms.',helpful:false},
-  {x:42.5,y:58.5,object:'Student eating lunch',title:'Helpful microbes inside us',question:'Some bacteria living in the human gut help digest food and support normal body functions.',fact:'Many gut bacteria are helpful members of the human microbiome.',helpful:true},
-  {x:38.5,y:25.5,object:'Student’s mouth',title:'Bacteria and dental plaque',question:'If this student does not brush and floss, plaque-forming bacteria can build up on the teeth and contribute to tooth decay.',fact:'These bacteria can harm teeth when plaque is allowed to build up.',helpful:false},
-  {x:9.0,y:82.5,object:'Water dispenser',title:'Microbes in unsafe water',question:'If drinking water is contaminated with cholera-causing bacteria, it can spread serious illness.',fact:'Safe drinking water helps prevent water-borne diseases.',helpful:false},
-  {x:15.5,y:92.0,object:'Potted plant',title:'Bacteria that help plants',question:'Rhizobium bacteria living with certain plant roots help make nitrogen available to the plant.',fact:'Nitrogen-fixing bacteria support soil fertility and plant growth.',helpful:true},
-  {x:75.5,y:88.0,object:'Compost bin',title:'Microbes at work in compost',question:'Bacteria and fungi break down food scraps in compost and return nutrients to the soil.',fact:'Decomposer microorganisms are useful nutrient recyclers.',helpful:true},
-  {x:88.0,y:18.0,object:'Fruit bowl',title:'Microbes and food spoilage',question:'Moulds and other spoilage microbes can grow on damaged or old fruit and make it rot.',fact:'Spoilage microorganisms can make food unsuitable to eat.',helpful:false}
+  {x:4.8,y:35.0,object:'Milk dispenser',title:'Milk and useful bacteria',question:'This cafeteria serves milk. Some bacteria such as Lactobacillus are used to turn milk into curd or yoghurt.',fact:'These bacteria carry out useful fermentation in food production.',helpful:true},
+  {x:11.0,y:36.0,object:'Orange juice dispenser',title:'Juice left out too long',question:'Juice that is stored badly can be spoiled by microorganisms, changing its smell, taste and quality.',fact:'Food-spoilage microbes make food or drink unsuitable to consume.',helpful:false},
+  {x:31.2,y:8.8,object:'Hand-washing sink',title:'Unwashed hands near food',question:'If students do not wash their hands, disease-causing microbes can move from hands to food and surfaces.',fact:'Hand washing helps reduce the transfer of harmful microorganisms.',helpful:false},
+  {x:65.0,y:11.8,object:'Pizza',title:'Yeast in pizza dough',question:'The pizza dough was made with yeast. Yeast releases carbon dioxide and helps the dough rise.',fact:'Yeast is a useful microorganism in baking.',helpful:true},
+  {x:62.0,y:25.0,object:'Raw salad',title:'Raw food contamination',question:'If raw salad becomes contaminated with Salmonella, people who eat it may get food poisoning.',fact:'Salmonella is a harmful bacterium that can cause illness.',helpful:false},
+  {x:84.0,y:12.6,object:'Food-preparation knife',title:'Cross-contamination',question:'A dirty knife used on contaminated food can transfer harmful bacteria to ready-to-eat food.',fact:'Cross-contamination can spread disease-causing microorganisms.',helpful:false},
+  {x:48.0,y:60.0,object:'Student eating lunch',title:'Helpful microbes inside us',question:'After this student eats lunch, some bacteria living in the gut help digest food and support normal body functions.',fact:'Many gut bacteria are helpful members of the human microbiome.',helpful:true},
+  {x:41.5,y:29.0,object:'Student’s mouth',title:'Bacteria and dental plaque',question:'If this student does not brush and floss, plaque-forming bacteria can build up on the teeth and contribute to tooth decay.',fact:'These bacteria can harm teeth when plaque is allowed to build up.',helpful:false},
+  {x:6.8,y:78.5,object:'Water dispenser',title:'Microbes in unsafe water',question:'If drinking water is contaminated with cholera-causing bacteria, it can spread serious illness.',fact:'Safe drinking water helps prevent water-borne diseases.',helpful:false},
+  {x:16.4,y:89.0,object:'Potted plant and soil',title:'Bacteria that help plants',question:'Rhizobium bacteria living with certain plant roots help make nitrogen available to the plant.',fact:'Nitrogen-fixing bacteria support soil fertility and plant growth.',helpful:true},
+  {x:76.5,y:88.2,object:'Compost bin',title:'Microbes at work in compost',question:'Bacteria and fungi break down food scraps in compost and return nutrients to the soil.',fact:'Decomposer microorganisms are useful nutrient recyclers.',helpful:true},
+  {x:90.0,y:18.0,object:'Fruit bowl',title:'Microbes and food spoilage',question:'Moulds and other spoilage microbes can grow on damaged or old fruit and make it rot.',fact:'Spoilage microorganisms can make food unsuitable to eat.',helpful:false}
 ];
 
 let current=null,solved=0,firstTry=0,hadWrong=false;
@@ -166,13 +269,33 @@ function play(id){const a=$(id);try{a.pause();a.currentTime=0;a.play().catch(()=
 function renderDots(){const box=$('sceneFooter');box.replaceChildren();completed.forEach(done=>{const d=document.createElement('div');d.className='dot'+(done?' done':'');d.textContent=done?'✓':'';box.appendChild(d)})}
 function update(){ $('score').textContent=solved; $('progressText').textContent=`${solved} of 12 solved`; $('remaining').textContent=12-solved; $('progressFill').style.width=(solved/12*100)+'%'; renderDots(); }
 function renderHotspots(){
-  const area=$('gameArea'); area.querySelectorAll('.hotspot').forEach(x=>x.remove());
-  clues.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='hotspot'+(completed[i]?' found':'');b.dataset.index=i;b.style.left=c.x+'%';b.style.top=c.y+'%';b.textContent=completed[i]?'✓':'★';if(!completed[i])b.addEventListener('click',()=>openClue(i));area.appendChild(b)});
+  const area=$('gameArea');
+  area.querySelectorAll('.hotspot').forEach(x=>x.remove());
+
+  clues.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='hotspot'+(completed[i]?' found':'');
+    b.dataset.index=i;
+    b.dataset.label=String(i+1);
+    b.style.left=c.x+'%';
+    b.style.top=c.y+'%';
+    b.setAttribute('aria-label','Clue '+(i+1)+': '+c.object);
+    b.title='Clue '+(i+1)+': '+c.object;
+
+    if(!completed[i]){
+      b.addEventListener('click',()=>openClue(i));
+    }else{
+      b.disabled=true;
+    }
+
+    area.appendChild(b);
+  });
 }
 function openClue(i){
   if(completed[i])return; current=i;hadWrong=false;const c=clues[i];
-  $('contextName').textContent=c.object; $('contextTitle').textContent=c.title;
-  $('questionBox').innerHTML=c.question+' <em>Do these microbes help people?</em>';
+  $('modalClueNumber').textContent=i+1; $('contextName').textContent=c.object; $('contextTitle').textContent=c.title;
+  $('questionBox').textContent=c.question;
   $('microbeFact').textContent=c.fact;
   $('contextCrop').style.backgroundPosition=c.x+'% '+c.y+'%';
   $('yesBtn').disabled=false;$('noBtn').disabled=false;$('yesBtn').className='ynBtn';$('noBtn').className='ynBtn';
@@ -184,7 +307,7 @@ function answer(value){
   if(value===c.helpful){
     chosen.classList.add('correct');$('yesBtn').disabled=true;$('noBtn').disabled=true;
     $('feedback').className='feedback good';$('feedback').textContent=c.helpful?'✅ Correct. In this cafeteria situation, these microbes have a useful role.':'✅ Correct. In this cafeteria situation, these microbes can cause harm.';
-    if(!hadWrong)firstTry++;completed[current]=true;solved++;const marker=document.querySelector(`.hotspot[data-index="${current}"]`);if(marker){marker.classList.add('found');marker.textContent='✓';marker.disabled=true}update();play('correctSound');$('returnBtn').hidden=false;
+    if(!hadWrong)firstTry++;completed[current]=true;solved++;const marker=document.querySelector(`.hotspot[data-index="${current}"]`);if(marker){marker.classList.add('found');marker.disabled=true}update();play('correctSound');$('returnBtn').hidden=false;
   }else{hadWrong=true;chosen.classList.add('wrong');chosen.disabled=true;$('feedback').className='feedback bad';$('feedback').textContent='❌ Look again at the object you tapped and reread the situation before trying the other answer.';play('wrongSound')}
 }
 function closeModal(){
