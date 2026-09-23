@@ -309,15 +309,16 @@ margin-top: 14px;
 }
 
 .option{
-background:#dcfce7;
-padding: 16px 10px;
+background:#ffffff;
+padding: 16px 12px;
 border-radius: 12px;
 cursor:pointer;
 text-align:center;
 font-size: 16px;
 font-weight: 600;
 touch-action: manipulation;
-box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+border: 2px solid #dbeafe;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -417,6 +418,59 @@ color: #166534;
 margin: 1px 0;
 }
 
+
+/* =====================================
+   LESS-OBVIOUS ASSESSMENT OPTIONS
+===================================== */
+.optionGrid{
+  align-items:stretch;
+}
+.option{
+  text-align:left;
+  justify-content:flex-start;
+  line-height:1.35;
+}
+.option::before{
+  content:"";
+  width:10px;
+  height:10px;
+  flex:0 0 10px;
+  margin-right:8px;
+  border:2px solid #94a3b8;
+  border-radius:50%;
+}
+.option.correct::before{
+  background:#22c55e;
+  border-color:#15803d;
+}
+.option.wrong::before{
+  background:#ef4444;
+  border-color:#b91c1c;
+}
+@media(max-width:600px){
+  .optionGrid{
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .option{
+    min-height:56px;
+    font-size:15px;
+    padding:13px 14px;
+  }
+}
+
+
+#splash-overlay{
+transition:opacity .25s ease;
+}
+.splash-fallback{
+margin-top:12px;
+color:#ffffff;
+font-size:22px;
+font-weight:800;
+letter-spacing:.3px;
+}
+
 </style>
 
 </head>
@@ -426,6 +480,7 @@ margin: 1px 0;
 <!-- INTRO SPLASH OVERLAY -->
 <div id="splash-overlay">
 <img src="assets/innovine-logo.png" alt="Innovine Logo" onerror="this.style.display='none';">
+<div class="splash-fallback">🌍 Food Chain Rescue</div>
 </div>
 
 <div id="background">
@@ -512,15 +567,15 @@ margin: 1px 0;
 <!-- MISSION 1 -->
 <div id="forestMission1">
 <h3>🌱 Mission 1: What Do Plants Need?</h3>
-<p class="center">Select the <b>THREE</b> items needed for photosynthesis.</p>
+<p class="center">Select the <b>THREE</b> things a green plant takes from its surroundings to make food.</p>
 
-<div class="optionGrid">
+<div class="optionGrid" id="forestProducerOptions">
 <div class="option" onclick="checkForestProducer(this,true)">☀️ Sunlight</div>
+<div class="option" onclick="checkForestProducer(this,false)">🌬️ Oxygen</div>
 <div class="option" onclick="checkForestProducer(this,true)">💧 Water</div>
-<div class="option" onclick="checkForestProducer(this,true)">🌬️ CO₂</div>
-<div class="option" onclick="checkForestProducer(this,false)">🍫 Chocolate</div>
-<div class="option" onclick="checkForestProducer(this,false)">🧃 Juice</div>
-<div class="option" onclick="checkForestProducer(this,false)">🛞 Tyre</div>
+<div class="option" onclick="checkForestProducer(this,false)">🪨 Soil particles</div>
+<div class="option" onclick="checkForestProducer(this,true)">🌫️ Carbon dioxide</div>
+<div class="option" onclick="checkForestProducer(this,false)">🌬️ Nitrogen gas</div>
 </div>
 
 <div id="forestTree" class="hidden" style="font-size:80px; text-align:center; margin-top:15px;">
@@ -572,11 +627,11 @@ margin: 1px 0;
 <h3>🐸 Mission 3: Ecosystem Crisis</h3>
 <p class="center">A disease kills most frogs. What happens to the grasshopper population?</p>
 
-<div class="optionGrid">
-<div class="option" onclick="checkForestCrisis(false)">Decrease</div>
-<div class="option" onclick="checkForestCrisis(true)">Increase</div>
-<div class="option" onclick="checkForestCrisis(false)">Disappear</div>
-<div class="option" onclick="checkForestCrisis(false)">No Change</div>
+<div class="optionGrid" id="forestCrisisOptions">
+<div class="option" onclick="checkForestCrisis(true)">Grasshoppers increase because fewer frogs are eating them.</div>
+<div class="option" onclick="checkForestCrisis(false)">Grasshoppers decrease because frogs were their main food.</div>
+<div class="option" onclick="checkForestCrisis(false)">Grasshoppers stay the same because only plants affect them.</div>
+<div class="option" onclick="checkForestCrisis(false)">Grasshoppers disappear immediately when frogs die.</div>
 </div>
 
 <div id="forestComplete" class="hidden center">
@@ -590,18 +645,32 @@ margin: 1px 0;
 </div>
 
 <script>
+window.addEventListener('error', function(){
+  const splash = document.getElementById('splash-overlay');
+  if(splash){ splash.style.display = 'none'; }
+});
 
 /* =====================================
-   SPLASH TIMER
+   SPLASH TIMER — ROBUST VERSION
+   Does not wait for images/audio to finish loading.
 ===================================== */
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    const splash = document.getElementById('splash-overlay');
-    if(splash) {
+function hideSplash(){
+  const splash = document.getElementById('splash-overlay');
+  if(splash){
+    splash.style.opacity = '0';
+    splash.style.pointerEvents = 'none';
+    setTimeout(function(){
       splash.style.display = 'none';
-    }
-  }, 2500);
+    }, 250);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(hideSplash, 900);
 });
+
+/* Hard fallback in case a browser handles DOM events unusually. */
+setTimeout(hideSplash, 1800);
 
 /* =====================================
    SOUNDS
@@ -633,6 +702,7 @@ function startAdventure(){
 function showForest(){
   document.getElementById("mapScreen").classList.add("hidden");
   document.getElementById("forestScreen").classList.remove("hidden");
+  shuffleOptionGrid("forestProducerOptions");
 }
 
 /* =====================================
@@ -678,6 +748,15 @@ function shuffleArray(arr){
   }
   return arr;
 }
+
+function shuffleOptionGrid(id){
+  const grid = document.getElementById(id);
+  if(!grid) return;
+  const nodes = Array.from(grid.children);
+  shuffleArray(nodes);
+  nodes.forEach(node => grid.appendChild(node));
+}
+
 
 function loadForestChoices(){
   const box = document.getElementById("forestChoices");
@@ -754,6 +833,7 @@ function checkForestChain(){
 function showForestMission3(){
   document.getElementById("forestMission2").classList.add("hidden");
   document.getElementById("forestMission3").classList.remove("hidden");
+  shuffleOptionGrid("forestCrisisOptions");
 }
 
 function checkForestCrisis(correct){
@@ -803,14 +883,14 @@ document.body.insertAdjacentHTML("beforeend", `
   <h2>💧 Pond Ecosystem</h2>
   <div id="pondMission1">
     <h3>🧹 Mission 1: Clean The Pond</h3>
-    <p class="center">Tap ONLY the pollution items.</p>
-    <div class="optionGrid">
-      <div class="option" onclick="pondPollution(true,this)">🛢️ Oil Spill</div>
-      <div class="option" onclick="pondPollution(false,this)">🐟 Fish</div>
-      <div class="option" onclick="pondPollution(true,this)">🥤 Plastic</div>
-      <div class="option" onclick="pondPollution(false,this)">🌿 Plant</div>
-      <div class="option" onclick="pondPollution(true,this)">🗑️ Trash</div>
-      <div class="option" onclick="pondPollution(false,this)">🦆 Duck</div>
+    <p class="center">Select the <b>three human-made pollutants</b> that can harm the pond.</p>
+    <div class="optionGrid" id="pondPollutionOptions">
+      <div class="option" onclick="pondPollution(true,this)">🛢️ Oil film from a leaking machine</div>
+      <div class="option" onclick="pondPollution(false,this)">🍂 Fallen leaves from nearby trees</div>
+      <div class="option" onclick="pondPollution(true,this)">🧴 Detergent-rich wastewater</div>
+      <div class="option" onclick="pondPollution(false,this)">🌿 Native aquatic plants</div>
+      <div class="option" onclick="pondPollution(true,this)">🥤 Plastic wrapper and bottle waste</div>
+      <div class="option" onclick="pondPollution(false,this)">🌧️ Clean rainwater entering the pond</div>
     </div>
     <div id="pondMission1Done" class="hidden center">
       <br><button class="btn" onclick="showPondMission2()">Next Mission →</button>
@@ -845,6 +925,7 @@ document.body.insertAdjacentHTML("beforeend", `
 function showPond(){
   document.getElementById("mapScreen").classList.add("hidden");
   document.getElementById("pondScreen").classList.remove("hidden");
+  shuffleOptionGrid("pondPollutionOptions");
 }
 
 let pondCorrect = 0;
@@ -927,15 +1008,21 @@ function checkPondChain(){
 
 function showPondMission3(){
   document.getElementById("pondMission2").classList.add("hidden");
+  const existing = document.getElementById("pondMission3");
+  if(existing){
+    existing.classList.remove("hidden");
+    shuffleOptionGrid("pondCrisisOptions");
+    return;
+  }
   document.getElementById("pondScreen").insertAdjacentHTML("beforeend", `
     <div id="pondMission3">
       <h3>💧 Mission 3: Crisis</h3>
       <p class="center">A large number of fish die. What happens to herons?</p>
-      <div class="optionGrid">
-        <div class="option" onclick="checkPondCrisis(true)">Decrease</div>
-        <div class="option" onclick="checkPondCrisis(false)">Increase</div>
-        <div class="option" onclick="checkPondCrisis(false)">Disappear</div>
-        <div class="option" onclick="checkPondCrisis(false)">No Change</div>
+      <div class="optionGrid" id="pondCrisisOptions">
+        <div class="option" onclick="checkPondCrisis(true)">Herons decrease because fewer fish are available as prey.</div>
+        <div class="option" onclick="checkPondCrisis(false)">Herons increase because dead fish create more oxygen.</div>
+        <div class="option" onclick="checkPondCrisis(false)">Herons stay unchanged because fish are unrelated to them.</div>
+        <div class="option" onclick="checkPondCrisis(false)">Herons increase because they begin producing their own food.</div>
       </div>
       <div id="pondComplete" class="hidden center">
         <br><h3>🏅 Pond Complete!</h3>
@@ -943,6 +1030,7 @@ function showPondMission3(){
       </div>
     </div>
   `);
+  shuffleOptionGrid("pondCrisisOptions");
 }
 
 function checkPondCrisis(correct){
@@ -976,11 +1064,11 @@ document.body.insertAdjacentHTML("beforeend", `
   <div id="grassMission1">
     <h3>🦌 Mission 1: Balance</h3>
     <p class="center">If tiger numbers decrease, what happens to deer?</p>
-    <div class="optionGrid">
-      <div class="option" onclick="checkGrassQ(true)">Increase</div>
-      <div class="option" onclick="checkGrassQ(false)">Decrease</div>
-      <div class="option" onclick="checkGrassQ(false)">Disappear</div>
-      <div class="option" onclick="checkGrassQ(false)">No Change</div>
+    <div class="optionGrid" id="grassBalanceOptions">
+      <div class="option" onclick="checkGrassQ(true)">Deer increase because fewer tigers are hunting them.</div>
+      <div class="option" onclick="checkGrassQ(false)">Deer decrease because tigers provide food for deer.</div>
+      <div class="option" onclick="checkGrassQ(false)">Deer stay the same because predator numbers do not affect prey.</div>
+      <div class="option" onclick="checkGrassQ(false)">Deer disappear because fewer tigers are present.</div>
     </div>
     <div id="grassMission1Done" class="hidden center">
       <br><button class="btn" onclick="showGrassMission2()">Next Mission →</button>
@@ -992,6 +1080,7 @@ document.body.insertAdjacentHTML("beforeend", `
 function showGrass(){
   document.getElementById("mapScreen").classList.add("hidden");
   document.getElementById("grassScreen").classList.remove("hidden");
+  shuffleOptionGrid("grassBalanceOptions");
 }
 
 function checkGrassQ(correct){
@@ -1008,6 +1097,12 @@ const grassChain = ["🌿 Grass", "🦌 Deer", "🐅 Tiger", "🦅 Vulture"];
 
 function showGrassMission2(){
   document.getElementById("grassMission1").classList.add("hidden");
+  const existing = document.getElementById("grassMission2");
+  if(existing){
+    existing.classList.remove("hidden");
+    loadGrassChoices();
+    return;
+  }
   document.getElementById("grassScreen").insertAdjacentHTML("beforeend", `
     <div id="grassMission2">
       <h3>🌾 Mission 2: Build The Chain</h3>
@@ -1089,15 +1184,21 @@ function checkGrassChain(){
 
 function showGrassMission3(){
   document.getElementById("grassMission2").classList.add("hidden");
+  const existing = document.getElementById("grassMission3");
+  if(existing){
+    existing.classList.remove("hidden");
+    shuffleOptionGrid("grassCrisisOptions");
+    return;
+  }
   document.getElementById("grassScreen").insertAdjacentHTML("beforeend", `
     <div id="grassMission3">
       <h3>🌾 Mission 3: Crisis</h3>
       <p class="center">A drought kills grass. What happens to deer?</p>
-      <div class="optionGrid">
-        <div class="option" onclick="checkGrassCrisis(true)">Decrease</div>
-        <div class="option" onclick="checkGrassCrisis(false)">Increase</div>
-        <div class="option" onclick="checkGrassCrisis(false)">Stay Same</div>
-        <div class="option" onclick="checkGrassCrisis(false)">Double</div>
+      <div class="optionGrid" id="grassCrisisOptions">
+        <div class="option" onclick="checkGrassCrisis(true)">Deer decrease because their main food becomes scarce.</div>
+        <div class="option" onclick="checkGrassCrisis(false)">Deer increase because drought creates more grass.</div>
+        <div class="option" onclick="checkGrassCrisis(false)">Deer stay the same because producers do not affect consumers.</div>
+        <div class="option" onclick="checkGrassCrisis(false)">Deer double because there are fewer plants to compete for.</div>
       </div>
       <div id="grassComplete" class="hidden center">
         <br><h3>🏅 Grassland Complete!</h3>
@@ -1105,6 +1206,7 @@ function showGrassMission3(){
       </div>
     </div>
   `);
+  shuffleOptionGrid("grassCrisisOptions");
 }
 
 function checkGrassCrisis(correct){
@@ -1137,14 +1239,14 @@ document.body.insertAdjacentHTML("beforeend", `
   <h2>🌊 Ocean Ecosystem</h2>
   <div id="oceanMission1">
     <h3>♻️ Mission 1: Cleanup</h3>
-    <p class="center">Tap ALL plastic items.</p>
-    <div class="optionGrid">
-      <div class="option" onclick="checkOceanPlastic(true,this)">🥤 Bottle</div>
-      <div class="option" onclick="checkOceanPlastic(true,this)">🛍️ Bag</div>
-      <div class="option" onclick="checkOceanPlastic(true,this)">🧴 Container</div>
-      <div class="option" onclick="checkOceanPlastic(false,this)">🐬 Dolphin</div>
-      <div class="option" onclick="checkOceanPlastic(false,this)">🐠 Fish</div>
-      <div class="option" onclick="checkOceanPlastic(false,this)">🌊 Water</div>
+    <p class="center">Select the <b>three plastic-based wastes</b> that should be removed from the ocean.</p>
+    <div class="optionGrid" id="oceanPlasticOptions">
+      <div class="option" onclick="checkOceanPlastic(true,this)">🥤 Discarded plastic drink bottle</div>
+      <div class="option" onclick="checkOceanPlastic(false,this)">🌿 Floating seaweed</div>
+      <div class="option" onclick="checkOceanPlastic(true,this)">🧵 Nylon fishing line</div>
+      <div class="option" onclick="checkOceanPlastic(false,this)">🐚 Empty seashell</div>
+      <div class="option" onclick="checkOceanPlastic(true,this)">🛍️ Plastic food wrapper</div>
+      <div class="option" onclick="checkOceanPlastic(false,this)">🪵 Small piece of driftwood</div>
     </div>
     <div id="oceanMission1Done" class="hidden center">
       <br><button class="btn" onclick="showOceanMission2()">Next Mission →</button>
@@ -1180,6 +1282,12 @@ const oceanChain = ["🦠 Phytoplankton", "🦐 Zooplankton", "🐟 Small Fish",
 
 function showOceanMission2(){
   document.getElementById("oceanMission1").classList.add("hidden");
+  const existing = document.getElementById("oceanMission2");
+  if(existing){
+    existing.classList.remove("hidden");
+    loadOceanChoices();
+    return;
+  }
   document.getElementById("oceanScreen").insertAdjacentHTML("beforeend", `
     <div id="oceanMission2">
       <h3>🌊 Mission 2: Ocean Chain</h3>
@@ -1261,15 +1369,21 @@ function checkOceanChain(){
 
 function showOceanMission3(){
   document.getElementById("oceanMission2").classList.add("hidden");
+  const existing = document.getElementById("oceanMission3");
+  if(existing){
+    existing.classList.remove("hidden");
+    shuffleOptionGrid("oceanCrisisOptions");
+    return;
+  }
   document.getElementById("oceanScreen").insertAdjacentHTML("beforeend", `
     <div id="oceanMission3">
       <h3>🌊 Mission 3: Crisis</h3>
       <p class="center">Overfishing reduces sharks. What happens to small fish over time?</p>
-      <div class="optionGrid">
-        <div class="option" onclick="checkOceanCrisis(true)">Increase</div>
-        <div class="option" onclick="checkOceanCrisis(false)">Decrease</div>
-        <div class="option" onclick="checkOceanCrisis(false)">Stay Same</div>
-        <div class="option" onclick="checkOceanCrisis(false)">Disappear</div>
+      <div class="optionGrid" id="oceanCrisisOptions">
+        <div class="option" onclick="checkOceanCrisis(true)">Small fish increase because fewer sharks are eating them.</div>
+        <div class="option" onclick="checkOceanCrisis(false)">Small fish decrease because sharks are their main food source.</div>
+        <div class="option" onclick="checkOceanCrisis(false)">Small fish stay the same because predator numbers never affect prey.</div>
+        <div class="option" onclick="checkOceanCrisis(false)">Small fish disappear immediately when shark numbers fall.</div>
       </div>
       <div id="oceanComplete" class="hidden center">
         <br><h3>🏅 Ocean Complete!</h3>
@@ -1277,6 +1391,7 @@ function showOceanMission3(){
       </div>
     </div>
   `);
+  shuffleOptionGrid("oceanCrisisOptions");
 }
 
 function checkOceanCrisis(correct){
