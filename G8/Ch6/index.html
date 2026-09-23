@@ -399,6 +399,255 @@ html, body{width:100%;max-width:100%;overflow-x:hidden;}
 }
 </style>
 
+
+<style id="compact-phone-app-layout">
+/* =========================================================
+   COMPACT PHONE APP LAYOUT
+   Keeps the atom + controls visible with minimal scrolling.
+========================================================= */
+@media (max-width: 700px){
+
+  body{
+    padding:
+      max(4px, env(safe-area-inset-top))
+      max(4px, env(safe-area-inset-right))
+      max(7px, env(safe-area-inset-bottom))
+      max(4px, env(safe-area-inset-left));
+  }
+
+  .container{
+    width:100%;
+    max-width:none;
+  }
+
+  /* Compact title: one line instead of a large two-line banner */
+  .header-bar{
+    min-height:38px;
+    margin:0 0 5px;
+    gap:6px;
+  }
+
+  .title{
+    font-size:1.05rem;
+    line-height:1.1;
+    white-space:nowrap;
+    text-shadow:0 0 7px rgba(79,216,255,.25);
+  }
+
+  /* Target selector becomes a slim toolbar */
+  .element-select-container{
+    min-height:48px;
+    margin:0 0 6px;
+    padding:6px 9px;
+    gap:7px;
+    flex-wrap:nowrap;
+    border-radius:12px;
+    font-size:.78rem;
+  }
+
+  .element-select-container label{
+    white-space:nowrap;
+  }
+
+  select{
+    min-width:0;
+    max-width:170px;
+    padding:7px 9px;
+    font-size:.82rem;
+  }
+
+  /*
+     Mobile game layout:
+     atom occupies the top,
+     Instructions and Mission sit side-by-side below it.
+  */
+  .game{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-areas:
+      "atom atom"
+      "instructions mission";
+    gap:6px;
+  }
+
+  .game > .panel:nth-child(1){
+    grid-area:instructions;
+  }
+
+  .game > .panel:nth-child(2){
+    grid-area:atom;
+  }
+
+  .game > .panel:nth-child(3){
+    grid-area:mission;
+  }
+
+  .panel{
+    padding:9px;
+    border-radius:12px;
+    min-width:0;
+  }
+
+  /* Atom becomes the hero but no longer consumes most of the page */
+  .game > .panel:nth-child(2){
+    padding:3px;
+  }
+
+  .atomArea{
+    height:302px;
+  }
+
+  .shell1{
+    width:118px;
+    height:118px;
+  }
+
+  .shell2{
+    width:184px;
+    height:184px;
+  }
+
+  .shell3{
+    width:250px;
+    height:250px;
+  }
+
+  #nucleus{
+    width:92px;
+    height:92px;
+    border-width:3px;
+  }
+
+  .nucleusParticle{
+    width:14px;
+    height:14px;
+    font-size:.43rem;
+  }
+
+  .electronPlaced{
+    width:17px;
+    height:17px;
+    box-shadow:0 0 8px #2563eb;
+  }
+
+  .activeTarget,
+  .activeTarget:hover,
+  .activeTarget:active{
+    width:34px;
+    height:34px;
+  }
+
+  /* Compact control cards */
+  .game > .panel:nth-child(1) h2,
+  .game > .panel:nth-child(3) h2{
+    margin:0 0 6px;
+    font-size:.94rem;
+    line-height:1.1;
+  }
+
+  .game > .panel:nth-child(1) h2 + br,
+  .game > .panel:nth-child(3) h2 + br{
+    display:none;
+  }
+
+  #instructionBox{
+    min-height:46px;
+    font-size:.72rem;
+    line-height:1.35;
+  }
+
+  #particleArea{
+    height:58px;
+    margin-top:5px;
+  }
+
+  .particle{
+    width:48px;
+    height:48px;
+    font-size:1.1rem;
+  }
+
+  #missionText{
+    min-height:45px;
+    font-size:.70rem;
+    line-height:1.35;
+  }
+
+  #status{
+    margin-top:6px;
+    font-size:.70rem;
+    line-height:1.35;
+  }
+
+  #layoutNote{
+    display:none;
+  }
+
+  .game > .panel:nth-child(3) button{
+    min-height:34px;
+    margin-top:7px;
+    padding:7px 5px;
+    border-radius:9px;
+    font-size:.70rem;
+  }
+
+  /* Quiz/certificate still scroll normally after assembly is finished. */
+  #quizScreen,
+  #certificateScreen{
+    grid-column:1/-1;
+  }
+}
+
+@media (max-width: 380px){
+  .title{
+    font-size:.94rem;
+  }
+
+  .element-select-container{
+    font-size:.72rem;
+  }
+
+  select{
+    max-width:145px;
+    font-size:.76rem;
+  }
+
+  .atomArea{
+    height:282px;
+  }
+
+  .shell1{
+    width:110px;
+    height:110px;
+  }
+
+  .shell2{
+    width:174px;
+    height:174px;
+  }
+
+  .shell3{
+    width:238px;
+    height:238px;
+  }
+
+  #nucleus{
+    width:88px;
+    height:88px;
+  }
+
+  .panel{
+    padding:8px;
+  }
+
+  #instructionBox,
+  #missionText,
+  #status{
+    font-size:.66rem;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -659,17 +908,17 @@ function updateInstructions() {
   const box = document.getElementById("instructionBox");
 
   if (stage === "proton") {
-    box.innerHTML = "Tap the Proton.<br><br>Then tap the golden nucleus.";
+    box.innerHTML = "Tap the <strong>Proton</strong>, then tap the golden nucleus.";
   } else if (stage === "neutron") {
-    box.innerHTML = "Tap the Neutron.<br><br>Then tap the golden nucleus.";
+    box.innerHTML = "Tap the <strong>Neutron</strong>, then tap the golden nucleus.";
   } else if (stage === "k") {
-    box.innerHTML = "Tap the Electron.<br><br>Then tap the glowing target on the innermost shell (K).";
+    box.innerHTML = "Tap the <strong>Electron</strong>, then tap the glowing target on the K shell.";
   } else if (stage === "l") {
-    box.innerHTML = "Tap the Electron.<br><br>Then tap the glowing target on the second shell (L).";
+    box.innerHTML = "Tap the <strong>Electron</strong>, then tap the glowing target on the L shell.";
   } else if (stage === "m") {
-    box.innerHTML = "Tap the Electron.<br><br>Then tap the glowing target on the third shell (M).";
+    box.innerHTML = "Tap the <strong>Electron</strong>, then tap the glowing target on the M shell.";
   } else {
-    box.innerHTML = "🏆 " + currentElement.name + " Atom Completed!<br><br>Complete the assessment below.";
+    box.innerHTML = "🏆 <strong>" + currentElement.name + " atom completed!</strong> Complete the assessment below.";
   }
 }
 
@@ -804,7 +1053,7 @@ function nextStep() {
     
     if (currentElement.neutrons > 0) {
       stage = "neutron";
-      document.getElementById("missionText").innerHTML = "Stage 2<br><br>Add " + currentElement.neutrons + " Neutrons";
+      document.getElementById("missionText").innerHTML = "<strong>Stage 2</strong> • Add " + currentElement.neutrons + " neutrons";
       createParticle("neutron");
       updateStatus();
       updateInstructions();
@@ -824,7 +1073,7 @@ function nextStep() {
     if (currentElement.k > 0) {
       stage = "k";
       document.getElementById("shell1").style.display = "block";
-      document.getElementById("missionText").innerHTML = "Stage 3<br><br>Place " + currentElement.k + " Electrons<br>in K Shell";
+      document.getElementById("missionText").innerHTML = "<strong>Stage 3</strong> • Place " + currentElement.k + " electron(s) in K shell";
       createParticle("electron");
       showNextTarget();
       updateStatus();
@@ -844,7 +1093,7 @@ function nextStep() {
     if (currentElement.l > 0) {
       stage = "l";
       document.getElementById("shell2").style.display = "block";
-      document.getElementById("missionText").innerHTML = "Stage 4<br><br>Place " + currentElement.l + " Electrons<br>in L Shell";
+      document.getElementById("missionText").innerHTML = "<strong>Stage 4</strong> • Place " + currentElement.l + " electron(s) in L shell";
       createParticle("electron");
       showNextTarget();
       updateStatus();
@@ -866,7 +1115,7 @@ function nextStep() {
     if (currentElement.m > 0) {
       stage = "m";
       document.getElementById("shell3").style.display = "block";
-      document.getElementById("missionText").innerHTML = "Stage 5<br><br>Place " + currentElement.m + " Electron(s)<br>in M Shell";
+      document.getElementById("missionText").innerHTML = "<strong>Stage 5</strong> • Place " + currentElement.m + " electron(s) in M shell";
       createParticle("electron");
       showNextTarget();
       updateStatus();
@@ -940,7 +1189,7 @@ function resetLab() {
   if (quiz) quiz.style.display = "none";
   if (cert) cert.style.display = "none";
 
-  document.getElementById("missionText").innerHTML = "Stage 1<br><br>Add " + currentElement.protons + " Protons";
+  document.getElementById("missionText").innerHTML = "<strong>Stage 1</strong> • Add " + currentElement.protons + " protons";
   
   createParticle("proton");
   updateStatus();
