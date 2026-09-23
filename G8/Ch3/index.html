@@ -1,462 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Lab Escape: Solutions & Density Quest</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .game-container {
-            background-color: #1e293b;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            max-width: 650px;
-            width: 100%;
-            padding: 30px;
-            border: 1px solid #334155;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 15px;
-        }
-        .brand-logo {
-            max-width: 200px;
-            height: auto;
-            object-fit: contain;
-            margin-bottom: 20px;
-            filter: drop-shadow(0px 0px 10px rgba(56, 189, 248, 0.4));
-        }
-        .header h1 {
-            color: #38bdf8;
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-        }
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #0f172a;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .energy-bar-container {
-            width: 150px;
-            height: 16px;
-            background-color: #334155;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .energy-bar {
-            width: 100%;
-            height: 100%;
-            background-color: #22c55e;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-        .chamber-title {
-            font-size: 1.3rem;
-            color: #fbbf24;
-            margin-bottom: 8px;
-        }
-        .question-tracker {
-            font-size: 0.85rem;
-            color: #38bdf8;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-        .description {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #cbd5e1;
-            margin-bottom: 20px;
-        }
-        .instruction-box {
-            background-color: #0f172a;
-            border-left: 4px solid #38bdf8;
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 24px;
-            text-align: left;
-        }
-        .instruction-box ul {
-            padding-left: 20px;
-            margin-top: 10px;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .options-grid {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .option-btn {
-            background-color: #334155;
-            color: #f8fafc;
-            border: 2px solid transparent;
-            padding: 14px 18px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-        .option-btn:hover:not(:disabled) {
-            background-color: #475569;
-            border-color: #38bdf8;
-        }
-        .option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-        .feedback {
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            display: none;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        .feedback.correct {
-            background-color: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #4ade80;
-        }
-        .feedback.incorrect {
-            background-color: rgba(239, 68, 68, 0.2);
-            border: 1px solid #ef4444;
-            color: #f87171;
-        }
-        .action-btn {
-            width: 100%;
-            background-color: #0284c7;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .action-btn:hover {
-            background-color: #0369a1;
-        }
-        .restart-btn {
-            background-color: #e11d48;
-        }
-        .restart-btn:hover {
-            background-color: #be123c;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AquaLab – Grade 8 Chapter 3</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg1:#f3fbfb;
+  --bg2:#edf4ff;
+  --card:#ffffff;
+  --ink:#1f3442;
+  --muted:#6b7d89;
+  --line:#d9e6ea;
+  --teal:#2ea8a1;
+  --teal-dark:#247f79;
+  --teal-soft:#e5f7f5;
+  --blue:#58a9da;
+  --blue-soft:#eaf7fd;
+  --gold:#efbf57;
+  --gold-soft:#fff5d6;
+  --green:#2d9a63;
+  --green-soft:#ecf8f0;
+  --red:#d86468;
+  --red-soft:#fff2f1;
+  --purple:#7c64bc;
+  --purple-soft:#f0ebfb;
+  --shadow:0 10px 28px rgba(40,75,90,.12);
+  --radius:22px;
+}
+html,body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2));min-height:100%}
+body{min-height:100vh;min-height:100dvh;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer;border:none}
+button:disabled{cursor:default;opacity:.7}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+h1,h2,h3,p{margin:0}
+
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes wave{0%{background-position-x:0}100%{background-position-x:120px}}
+@keyframes floaty{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-8px)}}
+@keyframes dropStone{0%{top:-58px}100%{top:126px}}
+@keyframes sparkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes bubbleRise{0%{transform:translateY(8px);opacity:0}50%{opacity:1}100%{transform:translateY(-18px);opacity:0}}
+
+#splash{position:fixed;inset:0;display:grid;place-items:center;background:#fff;z-index:9999;transition:.35s ease}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splashInner{text-align:center}
+.splashInner img{width:136px;max-width:42vw;margin:0 auto}
+.splashInner .tag{margin-top:10px;color:var(--teal-dark);font-weight:900;letter-spacing:1px;font-size:14px}
+
+.screen{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:10px max(10px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+.panel{width:min(860px,100%);background:var(--card);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
+.primaryBtn,.secondaryBtn,.ghostBtn{min-height:46px;border-radius:14px;font-weight:900;font-size:12px;padding:10px 16px}
+.primaryBtn{background:linear-gradient(180deg,#40b5ae,#288881);color:#fff;box-shadow:0 4px 0 #206a66}
+.secondaryBtn{background:#fff;border:1.5px solid var(--line);color:#49606f}
+.ghostBtn{background:linear-gradient(180deg,#8c77c6,#7159b2);color:#fff}
+
+/* INTRO */
+#intro{display:none}
+.hero{position:relative;padding:78px 14px 18px;text-align:center;background:linear-gradient(160deg,#f6fdfd,#eef8fb 58%,#eefaf3)}
+.heroLogo{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:76px}
+.kicker{font-size:9px;font-weight:900;letter-spacing:1.5px;color:#728692;text-transform:uppercase}
+.hero h1{margin-top:8px;font-size:32px;line-height:1;color:var(--teal-dark)}
+.hero h1 span{display:block;margin-top:6px;font-size:.58em;color:#425e73}
+.hero p{margin:12px auto 0;max-width:560px;font-size:12px;line-height:1.45;color:#667885;font-weight:700}
+.heroLabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px auto 0;max-width:560px}
+.heroLab{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:10px 6px;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 5px 12px rgba(42,72,88,.06)}
+.heroLab .big{font-size:30px;animation:bob 2.6s ease-in-out infinite}
+.heroLab small{font-size:8px;font-weight:900;color:#5f7481;text-align:center;line-height:1.3}
+.heroBottom{padding:14px;text-align:center}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.step{background:#f9fbfc;border:1px solid var(--line);border-radius:14px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#607481;font-weight:900;font-size:7px}
+.step span{font-size:18px}
+
+/* GAME */
+#game{display:none;min-height:100vh;min-height:100dvh;padding:7px}
+.app{width:min(920px,100%);margin:0 auto}
+.topGrid{display:grid;grid-template-columns:64px minmax(0,1fr) 78px;gap:6px;margin-bottom:6px}
+.box{background:#fff;border-radius:18px;box-shadow:var(--shadow);min-height:58px;display:flex;align-items:center;justify-content:center}
+.homeBtn{font-size:22px;color:#556e7b;background:#fff}
+.titleBox{gap:6px;font-weight:900;color:#2d7f8e;font-size:15px}
+.scoreBox{background:var(--gold-soft);color:#87661e;font-size:14px;font-weight:900}
+.progressGrid{display:grid;grid-template-columns:minmax(0,1fr) 126px;gap:6px;margin-bottom:6px}
+.progressCard,.statusCard{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:9px 10px}
+.progressMeta{display:flex;justify-content:space-between;gap:6px;font-size:10px;color:#6b7f8b;font-weight:900;margin-bottom:8px}
+.track{height:10px;background:#eef2f4;border-radius:999px;overflow:hidden}
+.trackFill{height:100%;width:0;background:linear-gradient(90deg,#5bbdb5,#93d4c3);transition:.35s}
+.statusCard{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--purple)}
+.statusCard strong{font-size:13px}
+.statusCard small{font-size:7px;color:#8b8094;font-weight:900;margin-top:3px}
+.labMap{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:9px 10px 10px;margin-bottom:6px}
+.labMapHead{display:flex;justify-content:space-between;gap:8px;color:#536e78;font-size:10px;font-weight:900;margin-bottom:8px}
+.mapScroll{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.mapScroll::-webkit-scrollbar{display:none}
+.mapTabs{display:grid;grid-template-columns:repeat(7,84px);gap:6px;width:max-content}
+.mapTab{min-height:68px;background:#f8fbfb;border:1.5px solid var(--line);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#7a8a94;text-align:center;padding:6px 4px}
+.mapTab span{font-size:20px;margin-bottom:3px}
+.mapTab.current{background:#eaf7f5;border-color:#83c2bd;color:#2f7b77}
+.mapTab.done{background:#eef8f1;border-color:#abcfb7;color:#49785c}
+.missionCard{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.missionHead{padding:13px 13px 14px;border-bottom:1px solid var(--line);background:linear-gradient(160deg,#f7fcfd,#fbfdfd)}
+.missionLabel{font-size:8px;font-weight:900;letter-spacing:1.6px;color:#6b7f8b;text-transform:uppercase;margin-bottom:8px}
+.missionTitleRow{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center}
+.missionIcon{width:70px;height:70px;border-radius:18px;background:#fff;display:grid;place-items:center;font-size:36px;box-shadow:0 6px 15px rgba(42,72,88,.08)}
+#missionTitle{font-size:19px;line-height:1.18;font-weight:900;color:#2a4050}
+#missionHint{margin-top:5px;font-size:10px;line-height:1.4;color:#788893}
+.interaction{padding:12px;min-height:350px;animation:fadeUp .25s ease}
+.feedbackArea{padding:0 12px 12px}
+#feedback,#reward{display:none;padding:10px 11px;border-radius:12px;font-size:10px;line-height:1.45;font-weight:800}
+#feedback.good{display:block;background:var(--green-soft);border:1px solid #a5d2b4;color:#346f4c}
+#feedback.bad{display:block;background:var(--red-soft);border:1px solid #e2a7a5;color:#7b4f4f}
+#reward.show{display:block;background:linear-gradient(135deg,#e8f8f5,#eefaf2);color:#2f7b77;margin-top:6px;text-align:center}
+#nextBtn{width:100%;margin-top:8px}
+
+.choiceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.choiceBtn{background:#fff;border:2px solid var(--line);border-radius:16px;min-height:94px;padding:10px 8px;color:#405461;font-size:11px;line-height:1.35;font-weight:900;box-shadow:0 5px 12px rgba(42,72,88,.05)}
+.choiceBtn .emoji{display:block;font-size:28px;margin-bottom:5px}
+.choiceBtn.correct{background:var(--green-soft);border-color:#7cbf94;color:#316e49}
+.choiceBtn.wrong{background:var(--red-soft);border-color:#e19f9c;color:#7c4f4e;animation:shake .3s}
+.infoCard{background:#f8fbfc;border:1.5px solid var(--line);border-radius:15px;padding:12px;color:#5f7280;font-size:10px;line-height:1.5}
+.badgeCard{background:#eef7fa;border-radius:14px;padding:11px 12px;color:#395e70;font-size:11px;font-weight:900;text-align:center}
+
+/* Shared apparatus visuals */
+.sceneCard{border:2px solid #d1e2e6;border-radius:20px;background:linear-gradient(#eaf8fc 0 76%,#d6b27b 76%);min-height:248px;position:relative;overflow:hidden}
+.caption{position:absolute;left:10px;right:10px;bottom:14px;text-align:center;font-size:9px;color:#617783;font-weight:900}
+.beaker{position:absolute;left:50%;bottom:50px;transform:translateX(-50%);width:120px;height:145px;border:5px solid #78bfce;border-top:0;border-radius:0 0 23px 23px;background:rgba(255,255,255,.52);overflow:hidden}
+.water{position:absolute;left:0;right:0;bottom:0;height:72%;background:linear-gradient(180deg,rgba(131,215,241,.62),rgba(81,184,221,.65));background-size:120px 100%;animation:wave 4s linear infinite}
+.shadowBase{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);width:128px;height:12px;background:rgba(90,120,140,.15);border-radius:50%}
+
+/* Station 1 */
+.mixLayout{display:grid;grid-template-columns:42% 1fr;gap:12px}
+.mixName{background:#eef8fa;border-radius:14px;padding:11px 12px;text-align:center;font-size:12px;color:#315d6b;font-weight:900}
+.mixLayer,.mixSediment,.mixParticles,.mixCloud{position:absolute;left:10px;right:10px;z-index:3}
+.mixLayer{top:52px;height:18px;border-radius:50%;background:#e7be63}
+.mixSediment{bottom:10px;height:15px;border-radius:50%;background:#b78e59}
+.mixParticles{top:42px;bottom:18px;background:radial-gradient(circle at 18% 24%,#f3d970 0 3px,transparent 4px),radial-gradient(circle at 68% 34%,#f3d970 0 3px,transparent 4px),radial-gradient(circle at 45% 66%,#f3d970 0 3px,transparent 4px),radial-gradient(circle at 80% 76%,#f3d970 0 3px,transparent 4px),radial-gradient(circle at 30% 84%,#f3d970 0 3px,transparent 4px)}
+.mixCloud{top:36px;bottom:12px;background:linear-gradient(180deg,rgba(245,210,96,.1),rgba(245,210,96,.18))}
+.mixChoices{display:grid;gap:8px;align-content:start}
+
+/* Station 2 */
+.buildWrap{display:grid;gap:12px}
+.equationRow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center}
+.componentCard{background:#f9fcfd;border:1.5px solid var(--line);border-radius:16px;min-height:124px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
+.componentCard .emojiBig{font-size:34px;animation:bob 2.4s ease-in-out infinite}
+.componentCard strong{font-size:12px}.componentCard small{font-size:9px;color:var(--muted)}
+.roleSelect{width:100%;border:1.5px solid var(--line);border-radius:10px;min-height:40px;padding:6px 8px;background:#fff;color:#425560;font-size:11px;font-weight:800}
+.plusArrow{font-size:22px;color:var(--teal-dark);font-weight:900}
+.mixPreview{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.previewTile{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;color:#5e7180;font-size:8px;font-weight:900}
+.previewTile span{display:block;font-size:26px;margin-bottom:6px}
+
+/* Station 3 */
+.satWrap{display:grid;grid-template-columns:44% 1fr;gap:12px}
+.satGlass{position:absolute;left:50%;bottom:48px;transform:translateX(-50%);width:128px;height:150px;border:5px solid #78bfce;border-top:0;border-radius:0 0 22px 22px;background:#fff;overflow:hidden}
+.satWater{position:absolute;left:0;right:0;bottom:0;height:74%;background:linear-gradient(180deg,rgba(125,216,239,.62),rgba(79,182,221,.68));background-size:120px 100%;animation:wave 4s linear infinite}
+.satSalt{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:0;height:0;background:#f1d790;border-radius:50%;transition:.35s;z-index:3}
+.satCounter{position:absolute;left:10px;top:10px;background:#fff;padding:7px 9px;border-radius:10px;color:#556d7a;font-size:10px;font-weight:900}
+.spoon{position:absolute;right:14px;top:20px;font-size:34px;animation:bob 1.8s ease-in-out infinite}
+.addSpoon{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);min-height:38px;border-radius:11px;background:var(--purple);color:#fff;font-size:9px;font-weight:900;padding:7px 12px}
+.satSide{display:grid;gap:10px;align-content:start}
+.strengthBar{height:14px;border-radius:999px;overflow:hidden;background:#edf1f3}.strengthFill{width:0;height:100%;background:linear-gradient(90deg,#caeff3,#4f9fd0);transition:.25s}
+
+/* Station 4 */
+.tempWrap{display:grid;gap:12px}
+.tempTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tempTab{min-height:44px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:#5d7180;font-size:10px;font-weight:900}
+.tempTab.active{background:#eaf7f5;border-color:#7fc1bc;color:#2f7975}
+.tempStage{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tempTank{background:#f9fcfd;border:1.5px solid var(--line);border-radius:16px;min-height:200px;padding:10px;text-align:center}
+.tempTank strong{display:block;font-size:12px}
+.tempVisual{position:relative;width:94px;height:114px;margin:10px auto 6px;border:5px solid #78bfce;border-top:0;border-radius:0 0 18px 18px;background:#fff;overflow:hidden}
+.tempWater{position:absolute;left:0;right:0;bottom:0;height:72%;background:linear-gradient(180deg,rgba(131,215,241,.6),rgba(81,184,221,.66))}
+.solidPile{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);height:12px;background:#edd694;border-radius:50%}
+.bubbles .b{position:absolute;bottom:12px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.9);animation:bubbleRise 1.6s linear infinite}
+.tempRun{width:100%;min-height:44px;border-radius:12px;background:#467fab;color:#fff;font-size:10px;font-weight:900}
+
+/* Station 5 */
+.densityWrap{display:grid;grid-template-columns:44% 1fr;gap:12px}
+.scaleCard{background:#f8fbfc;border:1.5px solid var(--line);border-radius:18px;min-height:250px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.scaleArt{font-size:48px;animation:bob 2.2s ease-in-out infinite}
+.reading{min-width:138px;background:#20303a;color:#a7f0d7;border-radius:10px;padding:10px 12px;text-align:center;font-family:monospace;font-size:15px;font-weight:900}
+.formulaCard{background:#eef7fa;border-radius:14px;padding:12px;text-align:center;color:#355f6f;font-size:13px;font-weight:900}
+.densitySide{display:grid;gap:10px;align-content:start}
+.densityInput{width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:16px;font-weight:900;color:#334756}
+.calcBtn{min-height:43px;border-radius:12px;background:#3f8fc0;color:#fff;font-size:10px;font-weight:900}
+
+/* Station 6 */
+.displaceWrap{display:grid;grid-template-columns:42% 1fr;gap:12px}
+.cylinderStage{background:#f8fbfc;border:1.5px solid var(--line);border-radius:18px;min-height:300px;display:grid;place-items:center}
+.cylinder{position:relative;width:110px;height:232px;border:5px solid #78bfce;border-top:0;border-radius:0 0 18px 18px;background:#fff;overflow:hidden}
+.scaleMarks{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 18px,rgba(57,104,126,.27) 18px 20px)}
+.cylWater{position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(180deg,rgba(131,215,241,.62),rgba(81,184,221,.68));transition:height .7s ease}
+.meniscus{position:absolute;left:-6px;right:-6px;top:-4px;height:12px;border-radius:50%;background:rgba(255,255,255,.52)}
+.stone{position:absolute;left:50%;top:-58px;transform:translateX(-50%);font-size:38px;z-index:3}
+.cylinder.dropped .stone{animation:dropStone .7s ease forwards}
+.displaceSide{display:grid;gap:9px;align-content:start}
+.levelCard{background:#eef7fa;border-radius:13px;padding:11px;color:#4c6675;font-size:11px;line-height:1.45}
+.dropStone{min-height:43px;border-radius:12px;background:var(--purple);color:#fff;font-size:10px;font-weight:900}
+
+/* Station 7 */
+.floatWrap{display:grid;gap:12px}
+.floatTank{position:relative;min-height:238px;border:2px solid #d1e2e6;border-radius:18px;overflow:hidden;background:linear-gradient(#eaf8fc 0 22%,rgba(89,188,225,.56) 22%)}
+.floatWave{position:absolute;left:0;right:0;top:22%;height:18px;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0));animation:wave 4s linear infinite}
+.floatObject{position:absolute;left:50%;top:18px;transform:translateX(-50%);font-size:50px;transition:top .8s ease}
+.floatObject.floats{top:52px}
+.floatObject.sinks{top:175px}
+.floatPrompt{position:absolute;left:10px;right:10px;bottom:10px;background:rgba(255,255,255,.92);border-radius:10px;padding:8px 10px;text-align:center;color:#4f6876;font-size:10px;font-weight:900}
+.floatChoices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.floatBtn{min-height:44px;border-radius:12px;background:#fff;border:1.5px solid var(--line);color:#4a6070;font-size:11px;font-weight:900}
+.bossCard{background:var(--purple-soft);border-radius:14px;padding:12px;color:#5c4d87;font-size:11px;line-height:1.45;font-weight:800}
+
+/* END */
+#end{display:none}
+.endInner{text-align:center;padding:20px 16px}
+.endInner img{width:78px;margin:0 auto}.endIcon{font-size:52px;margin:6px 0}.endInner h2{font-size:24px;color:var(--teal-dark)}
+.finalScore{font-size:38px;font-weight:900;color:var(--green);margin-top:10px}
+.levelBadge{display:inline-block;margin-top:6px;background:#e8f6f4;border-radius:999px;padding:8px 12px;font-size:9px;color:#2d7975;font-weight:900}
+.reportGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:14px 0}
+.reportItem{background:#f8fbfc;border:1px solid var(--line);border-radius:11px;padding:10px;display:flex;justify-content:space-between;gap:8px;color:#60727f;font-size:8px;font-weight:900}
+.reportItem span:last-child{color:#2f7b51}
+.review{background:#f4f8f9;border-radius:12px;padding:11px;color:#5d6e7a;text-align:left;font-size:9px;line-height:1.45}
+.endActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+
+@media (max-width:640px){
+  .screen{padding-top:max(8px,env(safe-area-inset-top))}
+  .hero{padding:76px 10px 14px}.hero h1{font-size:30px}.hero p{font-size:11px}
+  .heroLabs{gap:5px}.heroLab{min-height:94px}.heroLab .big{font-size:26px}.heroLab small{font-size:7px}
+  .heroBottom{padding:10px}.step{font-size:6px;min-height:48px}.step span{font-size:16px}
+  #game{padding:6px}
+  .topGrid{grid-template-columns:60px minmax(0,1fr) 70px}
+  .box{min-height:54px;border-radius:16px}.titleBox{font-size:13px}.scoreBox{font-size:12px}
+  .progressGrid{grid-template-columns:minmax(0,1fr) 116px}.progressCard,.statusCard{padding:8px 9px;border-radius:16px}.progressMeta{font-size:9px}
+  .labMap{padding:8px 8px 9px}.labMapHead{font-size:9px}.mapTabs{grid-template-columns:repeat(7,78px)}.mapTab{min-height:62px}
+  .missionCard{border-radius:20px}.missionHead{padding:12px}.missionTitleRow{grid-template-columns:62px 1fr}.missionIcon{width:62px;height:62px;font-size:31px}#missionTitle{font-size:17px}#missionHint{font-size:9px}
+  .interaction{padding:10px;min-height:310px}
+  .choiceBtn{min-height:84px;font-size:10px;border-radius:13px}.choiceBtn .emoji{font-size:24px}
+  .mixLayout,.satWrap,.densityWrap,.displaceWrap{grid-template-columns:1fr}
+  .sceneCard{min-height:220px}.beaker{width:104px;height:130px;bottom:45px}.caption{font-size:8px}
+  .equationRow{grid-template-columns:1fr}.plusArrow{transform:rotate(90deg)}.componentCard{min-height:108px}
+  .tempStage{grid-template-columns:1fr 1fr;gap:7px}.tempTank{min-height:180px;padding:8px}.tempVisual{width:82px;height:98px}
+  .satGlass{width:110px;height:128px;bottom:45px}.satCounter{font-size:9px}
+  .scaleCard{min-height:220px}.cylinderStage{min-height:270px}
+  .feedbackArea{padding:0 10px 10px}#feedback,#reward{font-size:9px}
+}
+@media (max-width:390px){
+  .choiceGrid{grid-template-columns:1fr}
+  .reportGrid{grid-template-columns:1fr}
+  .tempStage{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
 
-<div class="game-container">
-    <!-- SCREEN 1: LOGO SCREEN (SPLASH) -->
-    <div id="logo-screen" style="text-align: center; padding: 20px 0;">
-        <img src="assets/logo.png" alt="Logo" class="brand-logo"><br>
-        <button class="action-btn" style="max-width: 250px;" onclick="showInstructions()">Continue</button>
-    </div>
-
-    <!-- SCREEN 2: INSTRUCTIONS SCREEN -->
-    <div id="instruction-screen" style="display: none; text-align: center;">
-        <div class="header">
-            <h2 style="color: #38bdf8; font-size: 1.6rem; margin-bottom: 4px;">The Lab Escape</h2>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Solutions & Density Quest</p>
-        </div>
-
-        <div class="instruction-box">
-            <h3 style="color: #38bdf8; font-size: 1.1rem; margin-bottom: 8px;">📜 Mission Briefing & Rules:</h3>
-            <p style="font-size: 0.95rem; color: #cbd5e1;">You are trapped inside a locked chemistry facility! Navigate through 3 security chambers containing 9 total questions by applying key science concepts.</p>
-            <ul>
-                <li><strong>3 Chambers (9 Questions):</strong> Clear 3 questions per chamber to bypass security locks.</li>
-                <li><strong>Energy Points (EP):</strong> You start with 100 EP. Incorrect answers deduct 10 EP.</li>
-                <li><strong>Audio Cues:</strong> Ensure sound is enabled for real-time acoustic feedback.</li>
-            </ul>
-        </div>
-
-        <button class="action-btn" onclick="startGame()">Start Quest</button>
-    </div>
-
-    <!-- SCREEN 3: GAMEPLAY SCREEN -->
-    <div id="game-screen" style="display: none;">
-        <div class="header">
-            <h1>The Lab Escape</h1>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Solutions & Density Quest</p>
-        </div>
-
-        <div class="status-bar">
-            <div>Chamber: <span id="chamber-num" style="color: #38bdf8; font-weight: bold;">1/3</span></div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span>Energy:</span>
-                <div class="energy-bar-container">
-                    <div class="energy-bar" id="energy-bar"></div>
-                </div>
-                <span id="energy-text" style="font-weight: bold;">100 EP</span>
-            </div>
-        </div>
-
-        <div id="game-body">
-            <div class="question-tracker" id="question-tracker">Question 1 of 3 in Chamber 1</div>
-            <h2 class="chamber-title" id="chamber-title">Chamber 1: The Mixture Lock</h2>
-            <p class="description" id="chamber-desc"></p>
-
-            <div class="options-grid" id="options-container">
-                <!-- Options populated dynamically -->
-            </div>
-
-            <div class="feedback" id="feedback-box"></div>
-            <button class="action-btn" id="next-btn" style="display: none;" onclick="nextQuestion()">Next Question</button>
-        </div>
-    </div>
-
-    <!-- SCREEN 4: END SCREEN -->
-    <div id="end-screen" style="display: none; text-align: center; padding: 10px 0;">
-      
-
-        <h2 style="color: #4ade80; font-size: 1.8rem; margin-bottom: 15px;">🎉 ESCAPE SUCCESSFUL!</h2>
-        <p class="description">You cleared all 9 questions across 3 chambers with <strong id="final-energy">100 EP</strong> remaining!</p>
-        <p class="description" style="font-size: 0.95rem;">You have successfully mastered uniform mixtures, solubility factors, saturation points, and density principles</p>
-        <button class="action-btn" style="width: auto; padding: 12px 30px; margin-top: 15px;" onclick="location.reload()">Play Again</button>
-    </div>
+<div id="splash">
+  <div class="splashInner">
+    <img src="assets/innovine-logo.png" alt="Innovine logo" />
+    <div class="tag">AQUALAB DELUXE</div>
+  </div>
 </div>
 
+<section id="intro" class="screen">
+  <div class="panel">
+    <div class="hero">
+      <img src="assets/innovine-logo.png" alt="Innovine logo" class="heroLogo" />
+      <div class="kicker">Grade 8 • Chapter 3</div>
+      <h1>AquaLab <span>Deluxe Science Mission</span></h1>
+      <p>
+        Explore mixtures, solutions, saturation, solubility, density, water displacement,
+        and floating–sinking through animated science stations designed for mobile learning.
+      </p>
+      <div class="heroLabs">
+        <div class="heroLab"><div class="big">🧪</div><small>Identify mixtures and solutions</small></div>
+        <div class="heroLab"><div class="big">🌡️</div><small>Test temperature and solubility</small></div>
+        <div class="heroLab"><div class="big">🌊</div><small>Predict float or sink</small></div>
+      </div>
+    </div>
+    <div class="heroBottom">
+      <div class="steps">
+        <div class="step"><span>👀</span>Observe</div>
+        <div class="step"><span>🧠</span>Think</div>
+        <div class="step"><span>✅</span>Test</div>
+        <div class="step"><span>🏆</span>Restore</div>
+      </div>
+      <button id="startBtn" class="primaryBtn" type="button">ENTER AQUALAB →</button>
+    </div>
+  </div>
+</section>
+
+<main id="game">
+  <div class="app">
+    <div class="topGrid">
+      <button id="homeBtn" class="box homeBtn" type="button">⌂</button>
+      <div class="box titleBox">🧪 AquaLab Deluxe</div>
+      <div class="box scoreBox">⭐ <span id="score">0</span>/7</div>
+    </div>
+
+    <div class="progressGrid">
+      <div class="progressCard">
+        <div class="progressMeta">
+          <span id="stationCounter">Station 1 / 7</span>
+          <span id="skillName">Mixtures</span>
+        </div>
+        <div class="track"><div id="trackFill" class="trackFill"></div></div>
+      </div>
+      <div class="statusCard">
+        <strong id="labStatus">RESTORING</strong>
+        <small>LAB STATUS</small>
+      </div>
+    </div>
+
+    <section class="labMap">
+      <div class="labMapHead">
+        <span>🗺️ LAB MAP</span>
+        <span id="completeCount">0 / 7 restored</span>
+      </div>
+      <div class="mapScroll"><div id="mapTabs" class="mapTabs"></div></div>
+    </section>
+
+    <section class="missionCard">
+      <div class="missionHead">
+        <div id="missionLabel" class="missionLabel"></div>
+        <div class="missionTitleRow">
+          <div id="missionIcon" class="missionIcon"></div>
+          <div>
+            <div id="missionTitle"></div>
+            <div id="missionHint"></div>
+          </div>
+        </div>
+      </div>
+      <div id="interaction" class="interaction"></div>
+      <div class="feedbackArea">
+        <div id="feedback"></div>
+        <div id="reward"></div>
+        <button id="nextBtn" class="primaryBtn" type="button" hidden>NEXT STATION →</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<section id="end" class="screen">
+  <div class="panel">
+    <div class="endInner">
+      <img src="assets/innovine-logo.png" alt="Innovine logo" />
+      <div class="endIcon">🧪🏆</div>
+      <h2>AquaLab Restored!</h2>
+      <div id="finalScore" class="finalScore"></div>
+      <div id="finalLevel" class="levelBadge"></div>
+      <div id="reportGrid" class="reportGrid"></div>
+      <div id="review" class="review"></div>
+      <div class="endActions">
+        <button id="againBtn" class="secondaryBtn" type="button">PLAY AGAIN</button>
+        <button id="restartBtn" class="primaryBtn" type="button">RESTART</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<audio id="correctSound" src="assets/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3" preload="auto"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
+
 <script>
-    // --- Audio Player ---
-    const correctSound = new Audio('assets/correct.mp3');
-    const wrongSound = new Audio('assets/wronf.mp3');
+document.addEventListener('DOMContentLoaded',()=>{
+  const $=id=>document.getElementById(id);
 
-    function playSound(type) {
-        if (type === 'correct') {
-            correctSound.currentTime = 0;
-            correctSound.play().catch(e => console.log('Audio error:', e));
-        } else if (type === 'incorrect') {
-            wrongSound.currentTime = 0;
-            wrongSound.play().catch(e => console.log('Audio error:', e));
-        }
-    }
+  const missions=[
+    {key:'mixtures',tab:'Mix',icon:'🥤',skill:'Mixtures',label:'STATION 1 • MIXTURE SCANNER',title:'Identify whether each mixture is uniform or non-uniform.',hint:'Look for even distribution, visible layers or settling particles.'},
+    {key:'solution',tab:'Build',icon:'🧂',skill:'Solutions',label:'STATION 2 • BUILD-A-SOLUTION',title:'Identify solute, solvent and solution correctly.',hint:'The solute dissolves in the solvent to form the solution.'},
+    {key:'saturation',tab:'Saturate',icon:'🥄',skill:'Saturation',label:'STATION 3 • SATURATION CHALLENGE',title:'Add salt until the solution becomes saturated.',hint:'At saturation, extra solute remains undissolved.'},
+    {key:'temperature',tab:'Heat',icon:'🌡️',skill:'Solubility',label:'STATION 4 • TEMPERATURE LAB',title:'See how temperature affects solids and gases differently.',hint:'Most solids dissolve better when heated, but gases do not.'},
+    {key:'density',tab:'Density',icon:'⚖️',skill:'Density',label:'STATION 5 • DENSITY DETECTIVE',title:'Calculate density and predict whether the object will float or sink.',hint:'Density = mass ÷ volume.'},
+    {key:'displacement',tab:'Measure',icon:'📏',skill:'Volume',label:'STATION 6 • MYSTERY STONE',title:'Use water displacement to find the volume of an irregular object.',hint:'Volume is equal to the rise in water level.'},
+    {key:'float',tab:'Float',icon:'🌊',skill:'Floating',label:'STATION 7 • FLOAT OR SINK TANK',title:'Predict float or sink, then solve the final boss science cases.',hint:'Floating depends on density and the surrounding liquid.'}
+  ];
 
-    // --- Screen Navigation Functions ---
-    function showInstructions() {
-        document.getElementById("logo-screen").style.display = "none";
-        document.getElementById("instruction-screen").style.display = "block";
-    }
+  let index=0, score=0, firstTry=true, locked=false;
+  const stars=new Array(missions.length).fill(false);
 
-    function startGame() {
-        document.getElementById("instruction-screen").style.display = "none";
-        document.getElementById("game-screen").style.display = "block";
-        loadQuestion();
-    }
+  function playSound(id){
+    const a=$(id); if(!a)return;
+    try{a.pause();a.currentTime=0;a.play().catch(()=>{});}catch(e){}
+  }
 
-    function showEndScreen() {
-        playSound('correct');
-        document.getElementById("game-screen").style.display = "none";
-        document.getElementById("end-screen").style.display = "block";
-        document.getElementById("final-energy").innerText = `${energy} EP`;
-    }
+  function renderMap(){
+    const box=$('mapTabs'); box.replaceChildren();
+    missions.forEach((m,i)=>{
+      const div=document.createElement('div');
+      div.className='mapTab'+(i<index?' done':'')+(i===index?' current':'');
+      div.innerHTML=`<span>${m.icon}</span><div>${m.tab}</div>`;
+      box.appendChild(div);
+    });
+    const current=box.children[index];
+    if(current) setTimeout(()=>current.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}),50);
+  }
 
-    // --- Data Model: 9 Questions Across 3 Chambers ---
-    const gameData = [
-        // CHAMBER 1: Uniform vs Non-Uniform Mixtures
-        {
-            chamberTitle: "Chamber 1: The Mixture Lock",
-            questions: [
-                {
-                    desc: "To unlock the liquid scanner, you must identify a <strong>UNIFORM mixture</strong> where all components spread evenly throughout.",
-                    options: [
-                        { text: "Option A: Sand mixed in water", correct: false, reason: "Incorrect! Sand settles at the bottom, forming a non-uniform mixture." },
-                        { text: "Option B: Salt dissolved completely in water", correct: true, reason: "Correct! Salt dissolved in water creates a uniform mixture with evenly distributed particles ." },
-                        { text: "Option C: Cooking oil poured over water", correct: false, reason: "Incorrect! Oil floats as a separate layer, forming a non-uniform mixture." }
-                    ]
-                },
-                {
-                    desc: "The scanner requires a solution. In a saltwater solution, what is the role of the <strong>WATER</strong>?",
-                    options: [
-                        { text: "Option A: Solvent (the liquid that dissolves the solute)", correct: true, reason: "Correct! Water is the solvent that dissolves the salt." },
-                        { text: "Option B: Solute (the substance being dissolved)", correct: false, reason: "Incorrect! The salt is the solute, while water acts as the solvent." },
-                        { text: "Option C: Precipitate", correct: false, reason: "Incorrect! Water acts as the liquid dissolving medium (solvent)." }
-                    ]
-                },
-                {
-                    desc: "Which of these everyday mixtures behaves as a <strong>uniform mixture (solution)</strong>?",
-                    options: [
-                        { text: "Option A: Chalk powder in water", correct: false, reason: "Incorrect! Chalk remains suspended and settles out, forming a non-uniform mixture." },
-                        { text: "Option B: Muddy lake water", correct: false, reason: "Incorrect! Muddy water contains suspended soil particles." },
-                        { text: "Option C: Clean sugar water solution", correct: true, reason: "Correct! Sugar dissolves completely to form a uniform liquid solution throughout." }
-                    ]
-                }
-            ]
-        },
-        // CHAMBER 2: Solubility & Saturation Dynamics
-        {
-            chamberTitle: "Chamber 2: The Saturated Doorway",
-            questions: [
-                {
-                    desc: "A heavy glass door is blocked by a massive block of sugar crystal. Which method will dissolve the sugar block <strong>fastest</strong>?",
-                    options: [
-                        { text: "Option A: Pour cold water over the sugar block ", correct: false, reason: "Incorrect! Cold water dissolves solid solutes much slower ." },
-                        { text: "Option B: Pour hot water over the sugar block and stir ", correct: true, reason: "Correct! Heating and stirring increase particle movement and solubility rate ." },
-                        { text: "Option C: Add more sugar to an already saturated liquid ", correct: false, reason: "Incorrect! Saturated solutions cannot dissolve additional solute at room temperature ." }
-                    ]
-                },
-                {
-                    desc: "What happens when you keep adding salt to a beaker of water until no more salt can dissolve?",
-                    options: [
-                        { text: "Option A: It becomes an unsaturated solution", correct: false, reason: "Incorrect! An unsaturated solution can still dissolve more solute ." },
-                        { text: "Option B: It becomes a saturated solution ", correct: true, reason: "Correct! A solution that cannot dissolve any more solute at a given temperature is saturated ." },
-                        { text: "Option C: The water evaporates instantly", correct: false, reason: "Incorrect! Excess solute simply settles at the bottom when saturated ." }
-                    ]
-                },
-                {
-                    desc: "How can you make a <strong>saturated sugar solution</strong> dissolve extra sugar without adding more water?",
-                    options: [
-                        { text: "Option A: Heat the solution to a higher temperature", correct: true, reason: "Correct! Increasing temperature raises the solubility limit for most solid solutes ." },
-                        { text: "Option B: Cool the solution in an ice bath", correct: false, reason: "Incorrect! Cooling reduces solubility, causing dissolved sugar to crystallize out ." },
-                        { text: "Option C: Leave it undisturbed in the dark", correct: false, reason: "Incorrect! Temperature change is required to alter the saturation capacity ." }
-                    ]
-                }
-            ]
-        },
-        // CHAMBER 3: Density & Buoyant Force
-        {
-            chamberTitle: "Chamber 3: The Floating Key",
-            questions: [
-                {
-                    desc: "The exit hatch key sits submerged at the bottom of a water container. How can you increase the buoyant force of the liquid to make the key float?",
-                    options: [
-                        { text: "Option A: Dissolve a large amount of salt into the water ", correct: true, reason: "Correct! Dissolving salt increases liquid density, providing greater buoyant upthrust ." },
-                        { text: "Option B: Pour cooking oil into the container ", correct: false, reason: "Incorrect! Oil sits on top because it is less dense, but does not increase water density ." },
-                        { text: "Option C: Cool the water down ", correct: false, reason: "Incorrect! Cooling water slightly does not increase density enough to float metal keys ." }
-                    ]
-                },
-                {
-                    desc: "Why does cooking oil float on top of pure water when mixed ?",
-                    options: [
-                        { text: "Option A: Oil is denser than water", correct: false, reason: "Incorrect! Denser liquids sink beneath less dense liquids ." },
-                        { text: "Option B: Oil is less dense than water ", correct: true, reason: "Correct! Substances with lower density float above liquids with higher density ." },
-                        { text: "Option C: Oil reacts chemically with water", correct: false, reason: "Incorrect! Oil floats due to physical density differences ." }
-                    ]
-                },
-                {
-                    desc: "An egg sinks in plain tap water but floats when salt is dissolved in the water . What scientific principle does this prove?",
-                    options: [
-                        { text: "Option A: Saltwater is denser than tap water, exerting greater buoyant force ", correct: true, reason: "Correct! Adding solute increases solution density, enabling lighter/equal density objects to float ." },
-                        { text: "Option B: Salt dissolves the eggshell", correct: false, reason: "Incorrect! The egg floats purely due to increased liquid density ." },
-                        { text: "Option C: Tap water has zero density", correct: false, reason: "Incorrect! Tap water has a density of ~1 g/cm³, whereas saltwater is denser ." }
-                    ]
-                }
-            ]
-        }
+  function updateHeader(){
+    const m=missions[index];
+    $('score').textContent=score;
+    $('stationCounter').textContent=`Station ${index+1} / 7`;
+    $('skillName').textContent=m.skill;
+    $('completeCount').textContent=`${index} / 7 restored`;
+    $('trackFill').style.width=Math.round(index/7*100)+'%';
+    $('labStatus').textContent=index===6?'FINAL':'RESTORING';
+    renderMap();
+  }
+
+  function resetFeedback(){
+    $('feedback').className=''; $('feedback').textContent='';
+    $('reward').className=''; $('reward').textContent='';
+    $('nextBtn').hidden=true;
+  }
+
+  function wrong(message){
+    firstTry=false;
+    $('feedback').className='bad'; $('feedback').textContent=message;
+    playSound('wrongSound');
+  }
+
+  function complete(message){
+    if(locked) return;
+    locked=true;
+    if(firstTry){ score++; stars[index]=true; $('reward').className='show'; $('reward').textContent='⭐ LAB STAR EARNED • FIRST ATTEMPT'; }
+    else { $('reward').className='show'; $('reward').textContent='✓ STATION RESTORED AFTER CORRECTION'; }
+    $('score').textContent=score;
+    $('feedback').className='good'; $('feedback').textContent=message;
+    $('nextBtn').hidden=false;
+    playSound('correctSound');
+  }
+
+  function startGame(){
+    index=0; score=0; firstTry=true; locked=false; stars.fill(false);
+    $('intro').style.display='none'; $('end').style.display='none'; $('game').style.display='block';
+    loadMission();
+  }
+
+  function loadMission(){
+    if(index>=missions.length){ endGame(); return; }
+    firstTry=true; locked=false; updateHeader(); resetFeedback();
+    const m=missions[index];
+    $('missionLabel').textContent=m.label;
+    $('missionIcon').textContent=m.icon;
+    $('missionTitle').textContent=m.title;
+    $('missionHint').textContent=m.hint;
+    const area=$('interaction'); area.replaceChildren();
+    ({mixtures:renderMixtures,solution:renderSolution,saturation:renderSaturation,temperature:renderTemperature,density:renderDensity,displacement:renderDisplacement,float:renderFloat}[m.key])();
+  }
+
+  function renderMixtures(){
+    const cases=[
+      {name:'Salt + water',kind:'cloud',caption:'Looks even throughout. No visible separate parts.',answer:'uniform'},
+      {name:'Sand + water',kind:'sediment',caption:'Solid particles settle down after some time.',answer:'non'},
+      {name:'Oil + water',kind:'layer',caption:'A separate layer forms above the water.',answer:'non'},
+      {name:'Copper sulphate solution',kind:'particles',caption:'The dissolved particles are spread uniformly.',answer:'uniform'}
     ];
-
-    let currentChamber = 0;
-    let currentQuestion = 0;
-    let energy = 100;
-
-    function loadQuestion() {
-        const chamberData = gameData[currentChamber];
-        const qData = chamberData.questions[currentQuestion];
-
-        document.getElementById("chamber-num").innerText = `${currentChamber + 1}/3`;
-        document.getElementById("question-tracker").innerText = `Question ${currentQuestion + 1} of 3 in Chamber ${currentChamber + 1}`;
-        document.getElementById("chamber-title").innerText = chamberData.chamberTitle;
-        document.getElementById("chamber-desc").innerHTML = qData.desc;
-        
-        const optionsContainer = document.getElementById("options-container");
-        optionsContainer.innerHTML = "";
-        
-        document.getElementById("feedback-box").style.display = "none";
-        document.getElementById("next-btn").style.display = "none";
-
-        qData.options.forEach((opt) => {
-            const btn = document.createElement("button");
-            btn.className = "option-btn";
-            btn.innerHTML = opt.text;
-            btn.onclick = () => checkAnswer(opt);
-            optionsContainer.appendChild(btn);
-        });
+    let caseIndex=0;
+    const wrap=document.createElement('div'); wrap.className='mixLayout';
+    wrap.innerHTML=`
+      <div class="sceneCard">
+        <div class="shadowBase"></div>
+        <div class="beaker"><div class="water"></div><div id="mixEffect"></div></div>
+        <div id="mixCaption" class="caption"></div>
+      </div>
+      <div class="mixChoices">
+        <div id="mixName" class="mixName"></div>
+        <button id="uniformBtn" class="choiceBtn" type="button"><span class="emoji">🟦</span>Uniform mixture</button>
+        <button id="nonBtn" class="choiceBtn" type="button"><span class="emoji">🟫</span>Non-uniform mixture</button>
+        <div class="infoCard">A <b>uniform mixture</b> looks the same throughout. A <b>non-uniform mixture</b> shows layers, settling or visible components.</div>
+      </div>`;
+    $('interaction').appendChild(wrap);
+    function showCase(){
+      const c=cases[caseIndex];
+      $('mixName').textContent=`${caseIndex+1} / ${cases.length} • ${c.name}`;
+      $('mixCaption').textContent=c.caption;
+      const effect=$('mixEffect'); effect.className=''; effect.classList.add(c.kind==='layer'?'mixLayer':c.kind==='sediment'?'mixSediment':c.kind==='cloud'?'mixCloud':'mixParticles');
+      ['uniformBtn','nonBtn'].forEach(id=>{$(id).disabled=false;$(id).classList.remove('correct','wrong')});
     }
-
-    function checkAnswer(option) {
-        const feedbackBox = document.getElementById("feedback-box");
-        const buttons = document.querySelectorAll(".option-btn");
-        
-        buttons.forEach(b => b.disabled = true);
-
-        if (option.correct) {
-            playSound('correct');
-            feedbackBox.className = "feedback correct";
-            feedbackBox.innerHTML = option.reason;
-            
-            const isLastQuestion = (currentChamber === 2 && currentQuestion === 2);
-            document.getElementById("next-btn").innerText = isLastQuestion ? "Claim Victory" : "Next Question";
-            document.getElementById("next-btn").style.display = "block";
-        } else {
-            playSound('incorrect');
-            energy -= 10;
-            updateEnergyDisplay();
-            feedbackBox.className = "feedback incorrect";
-            feedbackBox.innerHTML = option.reason + " (-10 EP)";
-
-            if (energy <= 0) {
-                document.getElementById("next-btn").innerText = "Restart Quest";
-                document.getElementById("next-btn").className = "action-btn restart-btn";
-                document.getElementById("next-btn").onclick = () => location.reload();
-                document.getElementById("next-btn").style.display = "block";
-            } else {
-                setTimeout(() => {
-                    buttons.forEach(b => b.disabled = false);
-                }, 1000);
-            }
-        }
-        feedbackBox.style.display = "block";
+    function answer(type,btn){
+      if(locked) return;
+      const c=cases[caseIndex];
+      if(type===c.answer){
+        btn.classList.add('correct'); $('uniformBtn').disabled=true; $('nonBtn').disabled=true;
+        if(caseIndex===cases.length-1) complete('✅ Mixture scanner complete. Uniform mixtures are evenly distributed; non-uniform mixtures show layers, settling or visible parts.');
+        else setTimeout(()=>{caseIndex++;showCase();},650);
+      } else { btn.classList.add('wrong'); btn.disabled=true; wrong('❌ Look carefully at the beaker. Is the mixture even throughout, or can you see layers or settling?'); }
     }
+    $('uniformBtn').onclick=()=>answer('uniform',$('uniformBtn'));
+    $('nonBtn').onclick=()=>answer('non',$('nonBtn'));
+    showCase();
+  }
 
-    function updateEnergyDisplay() {
-        if (energy < 0) energy = 0;
-        const energyBar = document.getElementById("energy-bar");
-        document.getElementById("energy-text").innerText = `${energy} EP`;
-        energyBar.style.width = `${energy}%`;
+  function renderSolution(){
+    const wrap=document.createElement('div'); wrap.className='buildWrap';
+    wrap.innerHTML=`
+      <div class="equationRow">
+        <div class="componentCard"><div class="emojiBig">🧂</div><strong>Sugar</strong><small>Choose its role</small><select id="role1" class="roleSelect"><option value="">Select...</option><option value="solute">Solute</option><option value="solvent">Solvent</option><option value="solution">Solution</option></select></div>
+        <div class="plusArrow">+</div>
+        <div class="componentCard"><div class="emojiBig">💧</div><strong>Water</strong><small>Choose its role</small><select id="role2" class="roleSelect"><option value="">Select...</option><option value="solute">Solute</option><option value="solvent">Solvent</option><option value="solution">Solution</option></select></div>
+        <div class="plusArrow">→</div>
+        <div class="componentCard"><div class="emojiBig">🥤</div><strong>Sugar solution</strong><small>Choose its role</small><select id="role3" class="roleSelect"><option value="">Select...</option><option value="solute">Solute</option><option value="solvent">Solvent</option><option value="solution">Solution</option></select></div>
+      </div>
+      <button id="mixBtn" class="ghostBtn" type="button">MIX & CHECK</button>
+      <div class="mixPreview">
+        <div class="previewTile"><span>🧂</span>Solid in liquid</div>
+        <div class="previewTile"><span>🍶</span>Liquid in liquid</div>
+        <div class="previewTile"><span>🫧</span>Gas in liquid</div>
+        <div class="previewTile"><span>💧</span>Water is a common solvent</div>
+      </div>`;
+    $('interaction').appendChild(wrap);
+    $('mixBtn').onclick=()=>{
+      const a=$('role1').value,b=$('role2').value,c=$('role3').value;
+      if(!a||!b||!c){ $('feedback').className='bad'; $('feedback').textContent='Choose a role for all three parts.'; return; }
+      if(a==='solute'&&b==='solvent'&&c==='solution'){
+        ['role1','role2','role3','mixBtn'].forEach(id=>$(id).disabled=true);
+        complete('✅ Correct. Sugar is the solute, water is the solvent, and together they form a solution.');
+      } else wrong('❌ Recheck the roles. The substance that dissolves is the solute; the substance it dissolves in is the solvent.');
+    };
+  }
 
-        if (energy <= 30) {
-            energyBar.style.backgroundColor = "#ef4444";
-        } else if (energy <= 60) {
-            energyBar.style.backgroundColor = "#f59e0b";
-        }
+  function renderSaturation(){
+    const wrap=document.createElement('div'); wrap.className='satWrap';
+    wrap.innerHTML=`
+      <div class="sceneCard">
+        <div class="satCounter">Spoon count: <span id="spoonCount">0</span></div>
+        <div class="spoon">🥄</div>
+        <div class="shadowBase"></div>
+        <div class="satGlass"><div class="satWater"></div><div id="satSalt" class="satSalt"></div></div>
+        <button id="addSpoon" class="addSpoon" type="button">ADD 1 SPOON OF SALT</button>
+      </div>
+      <div class="satSide">
+        <div class="infoCard">Keep adding salt. At first it dissolves. When the solution can dissolve no more, the extra salt remains at the bottom.</div>
+        <div><div style="font-size:10px;font-weight:900;color:#5d7180;margin-bottom:6px">Concentration meter</div><div class="strengthBar"><div id="strengthFill" class="strengthFill"></div></div></div>
+        <div id="satQuestion" hidden>
+          <div class="badgeCard">Extra salt remains undissolved. What is this solution now?</div>
+          <div class="choiceGrid" style="margin-top:8px">
+            <button id="unsatBtn" class="choiceBtn" type="button">Unsaturated</button>
+            <button id="satBtn" class="choiceBtn" type="button">Saturated</button>
+          </div>
+        </div>
+      </div>`;
+    $('interaction').appendChild(wrap);
+    let spoons=0;
+    $('addSpoon').onclick=()=>{
+      if(locked) return;
+      spoons++; $('spoonCount').textContent=spoons; $('strengthFill').style.width=Math.min(spoons*20,100)+'%';
+      if(spoons<5){ $('feedback').className='good'; $('feedback').textContent='Salt dissolved. The solvent can still dissolve more solute.'; }
+      else { $('addSpoon').disabled=true; $('satSalt').style.width='70px'; $('satSalt').style.height='16px'; $('satQuestion').hidden=false; $('feedback').className=''; $('feedback').textContent=''; }
+    };
+    $('unsatBtn').onclick=()=>{ $('unsatBtn').classList.add('wrong'); $('unsatBtn').disabled=true; wrong('❌ If extra solute stays undissolved, the solution has reached its limit at that temperature.'); };
+    $('satBtn').onclick=()=>{ $('satBtn').classList.add('correct'); $('satBtn').disabled=true; $('unsatBtn').disabled=true; complete('✅ Correct. A saturated solution contains the maximum amount of dissolved solute possible at that temperature.'); };
+  }
+
+  function renderTemperature(){
+    const wrap=document.createElement('div'); wrap.className='tempWrap';
+    wrap.innerHTML=`<div class="tempTabs"><button id="solidTab" class="tempTab active" type="button">🍬 Solids in water</button><button id="gasTab" class="tempTab" type="button">🫧 Gases in water</button></div><div id="tempContent"></div>`;
+    $('interaction').appendChild(wrap);
+    let solidDone=false,gasDone=false;
+    function drawSolid(){
+      $('solidTab').classList.add('active'); $('gasTab').classList.remove('active');
+      $('tempContent').innerHTML=`
+        <div class="tempStage">
+          <div class="tempTank"><strong>❄️ Cold water</strong><div class="tempVisual"><div class="tempWater"></div><div class="solidPile" style="width:52px"></div></div><small style="font-size:9px;color:#71818d">More undissolved sugar remains</small></div>
+          <div class="tempTank"><strong>☀️ Hot water</strong><div class="tempVisual"><div class="tempWater"></div><div class="solidPile" style="width:18px;opacity:.35"></div></div><small style="font-size:9px;color:#71818d">More sugar dissolves</small></div>
+        </div>
+        <button id="solidRun" class="tempRun" type="button">WHICH STATEMENT MATCHES THIS RESULT?</button>
+        <div id="solidQ" hidden class="choiceGrid" style="margin-top:8px">
+          <button id="solidCorrect" class="choiceBtn" type="button">For most solids, solubility increases when temperature increases.</button>
+          <button id="solidWrong" class="choiceBtn" type="button">Heating always decreases the solubility of solids.</button>
+        </div>`;
+      $('solidRun').onclick=()=>{$('solidQ').hidden=false; $('solidRun').disabled=true;};
+      $('solidCorrect').onclick=()=>{ $('solidCorrect').classList.add('correct'); $('solidWrong').disabled=true; solidDone=true; $('feedback').className='good'; $('feedback').textContent='✅ Correct. The hot-water beaker dissolves more sugar.'; if(gasDone) complete('✅ Temperature comparison complete. Most solids dissolve better in hotter water, but gases become less soluble as temperature rises.'); };
+      $('solidWrong').onclick=()=>{ $('solidWrong').classList.add('wrong'); $('solidWrong').disabled=true; wrong('❌ Compare the two beakers. Which one has less undissolved sugar?'); };
     }
-
-    function nextQuestion() {
-        if (currentQuestion < 2) {
-            currentQuestion++;
-            loadQuestion();
-        } else if (currentChamber < 2) {
-            currentChamber++;
-            currentQuestion = 0;
-            loadQuestion();
-        } else {
-            showEndScreen();
-        }
+    function drawGas(){
+      $('gasTab').classList.add('active'); $('solidTab').classList.remove('active');
+      $('tempContent').innerHTML=`
+        <div class="tempStage">
+          <div class="tempTank"><strong>❄️ Cooler water</strong><div class="tempVisual"><div class="tempWater"></div><div class="bubbles"><div class="b" style="left:18px;animation-delay:0s"></div><div class="b" style="left:42px;animation-delay:.4s"></div><div class="b" style="left:60px;animation-delay:.8s"></div></div></div><small style="font-size:9px;color:#71818d">More dissolved oxygen</small></div>
+          <div class="tempTank"><strong>🌡️ Warmer water</strong><div class="tempVisual"><div class="tempWater"></div><div class="bubbles"><div class="b" style="left:26px;animation-delay:.3s;opacity:.35"></div></div></div><small style="font-size:9px;color:#71818d">Less dissolved oxygen</small></div>
+        </div>
+        <button id="gasRun" class="tempRun" type="button">WHAT HAPPENS TO GAS SOLUBILITY?</button>
+        <div id="gasQ" hidden class="choiceGrid" style="margin-top:8px">
+          <button id="gasCorrect" class="choiceBtn" type="button">Gas solubility decreases when temperature increases.</button>
+          <button id="gasWrong" class="choiceBtn" type="button">Warm water contains more dissolved gas than cold water.</button>
+        </div>`;
+      $('gasRun').onclick=()=>{$('gasQ').hidden=false; $('gasRun').disabled=true;};
+      $('gasCorrect').onclick=()=>{ $('gasCorrect').classList.add('correct'); $('gasWrong').disabled=true; gasDone=true; $('feedback').className='good'; $('feedback').textContent='✅ Correct. Warm water contains less dissolved oxygen than cold water.'; if(solidDone) complete('✅ Temperature comparison complete. Most solids dissolve better in hotter water, but gases become less soluble as temperature rises.'); };
+      $('gasWrong').onclick=()=>{ $('gasWrong').classList.add('wrong'); $('gasWrong').disabled=true; wrong('❌ The chapter says warm water contains less dissolved oxygen than cold water.'); };
     }
+    $('solidTab').onclick=drawSolid; $('gasTab').onclick=drawGas; drawSolid();
+  }
+
+  function renderDensity(){
+    const wrap=document.createElement('div'); wrap.className='densityWrap';
+    wrap.innerHTML=`
+      <div class="scaleCard"><div class="scaleArt">⚖️</div><div><div style="font-size:9px;font-weight:900;color:#73828e;margin-bottom:4px">MASS</div><div class="reading">40 g</div></div><div><div style="font-size:9px;font-weight:900;color:#73828e;margin-bottom:4px">VOLUME</div><div class="reading">20 cm³</div></div></div>
+      <div class="densitySide">
+        <div class="formulaCard">Density = Mass ÷ Volume</div>
+        <label style="font-size:10px;font-weight:900;color:#5d7180">Enter density in g/cm³</label>
+        <input id="densityInput" class="densityInput" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 2" />
+        <button id="calcDensity" class="calcBtn" type="button">CHECK DENSITY</button>
+        <div id="floatDensityQ" hidden>
+          <div class="badgeCard">Water has a density of about 1 g/cm³. What will this object do?</div>
+          <div class="choiceGrid" style="margin-top:8px"><button id="densityFloat" class="choiceBtn" type="button">Float</button><button id="densitySink" class="choiceBtn" type="button">Sink</button></div>
+        </div>
+      </div>`;
+    $('interaction').appendChild(wrap);
+    $('calcDensity').onclick=()=>{
+      const value=parseFloat($('densityInput').value);
+      if(!Number.isFinite(value)){ $('feedback').className='bad'; $('feedback').textContent='Enter a density value first.'; return; }
+      if(Math.abs(value-2)<0.01){ $('densityInput').disabled=true; $('calcDensity').disabled=true; $('floatDensityQ').hidden=false; $('feedback').className='good'; $('feedback').textContent='✅ 40 ÷ 20 = 2 g/cm³.'; }
+      else wrong('❌ Recalculate using density = mass ÷ volume = 40 ÷ 20.');
+    };
+    $('densityFloat').onclick=()=>{ $('densityFloat').classList.add('wrong'); $('densityFloat').disabled=true; wrong('❌ The object is denser than water.'); };
+    $('densitySink').onclick=()=>{ $('densitySink').classList.add('correct'); $('densityFloat').disabled=true; $('densitySink').disabled=true; complete('✅ Correct. Density = 2 g/cm³, which is greater than the density of water, so the object sinks.'); };
+  }
+
+  function renderDisplacement(){
+    const wrap=document.createElement('div'); wrap.className='displaceWrap';
+    wrap.innerHTML=`
+      <div class="cylinderStage"><div id="cylinder" class="cylinder"><div class="scaleMarks"></div><div id="stone" class="stone">🪨</div><div id="cylWater" class="cylWater"><div class="meniscus"></div></div></div></div>
+      <div class="displaceSide">
+        <div class="levelCard"><strong>Initial water level:</strong> 40 mL</div>
+        <div id="finalLevelCard" class="levelCard"><strong>Final water level:</strong> —</div>
+        <button id="dropStone" class="dropStone" type="button">DROP STONE INTO WATER</button>
+        <div id="stoneCalc" hidden>
+          <label style="font-size:10px;font-weight:900;color:#5d7180">Volume of stone = final reading − initial reading</label>
+          <input id="stoneInput" class="densityInput" type="number" inputmode="numeric" placeholder="mL" style="margin-top:7px" />
+          <button id="stoneCheck" class="calcBtn" type="button" style="margin-top:7px;width:100%">CHECK VOLUME</button>
+        </div>
+        <div id="meniscusQ" hidden>
+          <div class="badgeCard">Where should your eye be when reading the measuring cylinder?</div>
+          <div class="choiceGrid" style="margin-top:8px"><button id="eyeCorrect" class="choiceBtn" type="button">👁️ At the same level as the meniscus</button><button id="eyeWrong" class="choiceBtn" type="button">👁️ Looking down from above</button></div>
+        </div>
+      </div>`;
+    $('interaction').appendChild(wrap);
+    $('dropStone').onclick=()=>{ $('dropStone').disabled=true; $('cylinder').classList.add('dropped'); $('cylWater').style.height='65%'; $('finalLevelCard').innerHTML='<strong>Final water level:</strong> 65 mL'; $('stoneCalc').hidden=false; };
+    $('stoneCheck').onclick=()=>{ const value=parseFloat($('stoneInput').value); if(value===25){ $('stoneInput').disabled=true; $('stoneCheck').disabled=true; $('meniscusQ').hidden=false; $('feedback').className='good'; $('feedback').textContent='✅ Volume of stone = 65 mL − 40 mL = 25 mL.'; } else wrong('❌ Subtract the initial water level from the final water level.'); };
+    $('eyeWrong').onclick=()=>{ $('eyeWrong').classList.add('wrong'); $('eyeWrong').disabled=true; wrong('❌ Looking from above can give an inaccurate reading.'); };
+    $('eyeCorrect').onclick=()=>{ $('eyeCorrect').classList.add('correct'); $('eyeCorrect').disabled=true; $('eyeWrong').disabled=true; complete('✅ Correct. The rise in water level gives the stone’s volume, and the meniscus should be read at eye level.'); };
+  }
+
+  function renderFloat(){
+    const objects=[
+      {name:'Coin',emoji:'🪙',result:'sink'},
+      {name:'Wooden block',emoji:'🪵',result:'float'},
+      {name:'Empty sealed bottle',emoji:'🧴',result:'float'},
+      {name:'Bottle filled with sand',emoji:'🧴',result:'sink'},
+      {name:'Ice cube',emoji:'🧊',result:'float'},
+      {name:'Life jacket',emoji:'🛟',result:'float'}
+    ];
+    let objIndex=0,bossIndex=0;
+    const wrap=document.createElement('div'); wrap.className='floatWrap';
+    wrap.innerHTML=`
+      <div class="floatTank"><div class="floatWave"></div><div id="floatObject" class="floatObject"></div><div id="floatPrompt" class="floatPrompt"></div></div>
+      <div id="floatChoices" class="floatChoices"><button id="floatBtn" class="floatBtn" type="button">FLOAT</button><button id="sinkBtn" class="floatBtn" type="button">SINK</button></div>
+      <div id="bossArea" hidden></div>`;
+    $('interaction').appendChild(wrap);
+    function showObject(){ const o=objects[objIndex]; $('floatObject').className='floatObject'; $('floatObject').textContent=o.emoji; $('floatPrompt').textContent=`${objIndex+1} / ${objects.length} • Predict: ${o.name}`; $('floatBtn').disabled=false; $('sinkBtn').disabled=false; }
+    function choose(result){
+      const o=objects[objIndex];
+      if(result===o.result){ $('floatBtn').disabled=true; $('sinkBtn').disabled=true; $('floatObject').classList.add(result==='float'?'floats':'sinks'); if(objIndex===objects.length-1) setTimeout(showBosses,850); else setTimeout(()=>{objIndex++;showObject();},850); }
+      else wrong('❌ Reconsider the object’s overall density compared with water.');
+    }
+    function showBosses(){
+      $('floatChoices').hidden=true; $('floatPrompt').textContent='FINAL BOSS CASES'; $('floatObject').textContent='🚢';
+      const bosses=[
+        {q:'Why can a large iron-and-steel ship float?',correct:'Its hollow structure lowers its overall average density.',wrong:'Iron itself is less dense than water.'},
+        {q:'Why do people float more easily in sea water?',correct:'Dissolved salts make sea water denser than fresh water.',wrong:'Sea water contains no dissolved substances.'},
+        {q:'Why does ice float on water?',correct:'Ice has a lower density because its particles are farther apart when water freezes.',wrong:'Ice always has greater density than liquid water.'}
+      ];
+      const boss=$('bossArea'); boss.hidden=false;
+      function drawBoss(){
+        if(bossIndex>=bosses.length){ complete('✅ Float-and-sink tank complete. Floating depends on density, trapped air, and the density of the surrounding liquid.'); return; }
+        const b=bosses[bossIndex];
+        boss.innerHTML=`<div class="bossCard"><strong>BOSS ${bossIndex+1} / 3</strong><br><br>${b.q}</div><div class="choiceGrid" style="margin-top:8px"><button id="bossA" class="choiceBtn" type="button">${b.correct}</button><button id="bossB" class="choiceBtn" type="button">${b.wrong}</button></div>`;
+        $('bossA').onclick=()=>{ $('bossA').classList.add('correct'); $('bossA').disabled=true; $('bossB').disabled=true; bossIndex++; setTimeout(drawBoss,650); };
+        $('bossB').onclick=()=>{ $('bossB').classList.add('wrong'); $('bossB').disabled=true; wrong('❌ That explanation does not match the density idea in the chapter.'); };
+      }
+      drawBoss();
+    }
+    $('floatBtn').onclick=()=>choose('float'); $('sinkBtn').onclick=()=>choose('sink'); showObject();
+  }
+
+  function nextMission(){ index++; loadMission(); }
+  function endGame(){
+    $('game').style.display='none'; $('end').style.display='grid';
+    $('finalScore').textContent=score+' / 7';
+    let level='🧪 AquaLab Apprentice'; if(score===7) level='🏆 AquaLab Master'; else if(score>=5) level='🔬 Skilled Lab Scientist'; else if(score>=3) level='💧 Solution Explorer';
+    $('finalLevel').textContent=level;
+    const report=$('reportGrid'); report.replaceChildren();
+    missions.forEach((m,i)=>{ const row=document.createElement('div'); row.className='reportItem'; row.innerHTML=`<span>${m.skill}</span><span>${stars[i]?'⭐ First try':'✓ Corrected'}</span>`; report.appendChild(row); });
+    $('review').innerHTML= score===7
+      ? '<strong>Excellent laboratory work!</strong> You restored every station on the first attempt — mixtures, solutions, saturation, solubility, density, volume measurement, and floating/sinking.'
+      : '<strong>AquaLab restored!</strong> Play again to earn more first-attempt stars and reinforce key Chapter 3 concepts.';
+    if(score===7) playSound('clapSound');
+  }
+
+  $('startBtn').onclick=startGame;
+  $('nextBtn').onclick=nextMission;
+  $('homeBtn').onclick=()=>location.reload();
+  $('againBtn').onclick=startGame;
+  $('restartBtn').onclick=()=>location.reload();
+
+  setTimeout(()=>{ $('splash').classList.add('hide'); $('intro').style.display='grid'; },1100);
+});
 </script>
-
 </body>
 </html>
