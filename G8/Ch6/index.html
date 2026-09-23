@@ -201,8 +201,8 @@ select {
 
 #nucleus{
   position: absolute;
-  width: 130px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 3px solid gold;
   background: rgba(255, 200, 0, 0.08);
@@ -219,34 +219,39 @@ select {
 
 @media(max-width: 700px){
   #nucleus{
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
   }
 }
 
 .nucleusParticle{
   position: absolute;
-  width: 24px;
-  height: 24px;
+  pointer-events: none;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: .75rem;
   font-weight: bold;
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.4);
+  box-shadow:
+    inset -2px -2px 4px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,255,255,0.12);
+  z-index: 3;
 }
 
 @media(max-width: 700px){
   .nucleusParticle{
-    width: 18px;
-    height: 18px;
-    font-size: .6rem;
+    width: 16px;
+    height: 16px;
+    font-size: .52rem;
   }
 }
 
 .electronPlaced{
   position: absolute;
+  pointer-events: none;
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -258,21 +263,33 @@ select {
 
 .activeTarget{
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 3px dashed #4fd8ff;
-  animation: pulse 1s infinite;
   cursor: pointer;
   transform: translate(-50%, -50%);
   z-index: 10;
-  background: rgba(79, 216, 255, 0.15);
+  background: rgba(79, 216, 255, 0.16);
+  box-shadow:
+    0 0 0 5px rgba(79,216,255,.08),
+    0 0 18px rgba(79,216,255,.55);
+  animation: targetGlow 1s ease-in-out infinite alternate;
 }
 
-@keyframes pulse{
-  0%{ transform: translate(-50%, -50%) scale(1); }
-  50%{ transform: translate(-50%, -50%) scale(1.15); }
-  100%{ transform: translate(-50%, -50%) scale(1); }
+@keyframes targetGlow{
+  from{
+    opacity:.72;
+    box-shadow:
+      0 0 0 4px rgba(79,216,255,.07),
+      0 0 10px rgba(79,216,255,.34);
+  }
+  to{
+    opacity:1;
+    box-shadow:
+      0 0 0 7px rgba(79,216,255,.12),
+      0 0 20px rgba(79,216,255,.72);
+  }
 }
 
 button{
@@ -297,6 +314,17 @@ button:active{
   transform: scale(0.98);
 }
 
+.activeTarget,
+.activeTarget:hover,
+.activeTarget:active{
+  width:42px;
+  height:42px;
+  padding:0;
+  margin:0;
+  background:rgba(79,216,255,.16);
+  transform:translate(-50%,-50%);
+}
+
 #status{
   margin-top: 15px;
   color: #4fd8ff;
@@ -316,13 +344,74 @@ input:focus {
   border-color: #4fd8ff;
 }
 </style>
+
+<style id="responsive-layout-fix">
+html, body{width:100%;max-width:100%;overflow-x:hidden;}
+.container{width:100%;max-width:1400px;padding:0 6px;}
+.game{grid-template-columns:minmax(200px,240px) minmax(420px,1fr) minmax(200px,240px);align-items:stretch;}
+.panel{min-width:0;overflow:hidden;}
+.atomArea{min-width:0;}
+@media(max-width:1200px){
+  body{padding:10px;}
+  .container{max-width:900px;padding:0;}
+  .header-bar{margin-bottom:12px;}
+  .title{font-size:clamp(1.45rem,4vw,2rem);}
+  .element-select-container{margin-bottom:12px;padding:10px;}
+  .game{display:grid;grid-template-columns:1fr;grid-template-areas:"atom" "instructions" "mission";gap:10px;}
+  .game > .panel:nth-child(1){grid-area:instructions;}
+  .game > .panel:nth-child(2){grid-area:atom;}
+  .game > .panel:nth-child(3){grid-area:mission;}
+  .panel{border-radius:16px;padding:15px;}
+  .atomArea{height:500px;}
+  #particleArea{height:92px;margin-top:8px;}
+  .particle{width:64px;height:64px;font-size:1.45rem;}
+  #instructionBox{font-size:.95rem;}
+  #missionText,#status{font-size:.95rem;}
+}
+@media(max-width:700px){
+  body{padding:max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left));}
+  .container{width:100%;}
+  .header-bar{margin-bottom:8px;}
+  .title{font-size:1.35rem;line-height:1.15;}
+  .element-select-container{flex-wrap:wrap;gap:7px;margin-bottom:8px;padding:9px;font-size:.9rem;}
+  select{max-width:100%;font-size:.9rem;}
+  .game{gap:8px;}
+  .panel{padding:12px;border-radius:14px;}
+  .atomArea{height:390px;}
+  .shell1{width:145px;height:145px;}
+  .shell2{width:230px;height:230px;}
+  .shell3{width:320px;height:320px;}
+  #nucleus{width:108px;height:108px;}
+  .nucleusParticle{width:16px;height:16px;font-size:.5rem;}
+  .electronPlaced{width:18px;height:18px;}
+  .activeTarget,.activeTarget:hover,.activeTarget:active{width:38px;height:38px;}
+  #particleArea{height:75px;}
+  .particle{width:56px;height:56px;font-size:1.25rem;}
+  button{padding:10px;font-size:.92rem;}
+  #instructionBox,#missionText,#status{font-size:.88rem;line-height:1.45;}
+}
+@media(max-width:380px){
+  .atomArea{height:350px;}
+  .shell1{width:132px;height:132px;}
+  .shell2{width:210px;height:210px;}
+  .shell3{width:288px;height:288px;}
+  #nucleus{width:100px;height:100px;}
+}
+</style>
+
 </head>
 
 <body>
 
 <!-- Initial Plain Splash Screen with Innovine Logo -->
 <div id="splash-overlay">
-  <img src="assets/logo.png" alt="Innovine Logo" onerror="console.log('Logo image missing in assets folder');">
+  <div style="text-align:center;">
+    <div style="font-size:54px;line-height:1;margin-bottom:10px;">⚛️</div>
+    <img src="assets/innovine-logo.png" alt="Innovine Logo"
+         style="margin:auto;"
+         onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='assets/logo.png';}else{this.style.display='none';}">
+    <div style="margin-top:10px;color:#4fd8ff;font-weight:800;font-size:1.15rem;">Atomic Structure Research Lab</div>
+  </div>
 </div>
 
 <!-- Audio Assets -->
@@ -374,6 +463,9 @@ input:focus {
   </div>
 
   <div id="status">0 / 0 Protons Added</div>
+  <div id="layoutNote" style="margin-top:8px;font-size:.78rem;color:#94a3b8;line-height:1.4;">
+    Nucleons are packed inside the nucleus; electrons are placed on shells.
+  </div>
 
   <button onclick="checkProgress()">Check Progress</button>
 </div>
@@ -382,21 +474,25 @@ input:focus {
 </div>
 
 <script>
-// Splash screen timer
-window.onload = function() {
+// Splash screen timer.
+// Use DOMContentLoaded instead of window.onload so missing/slow images or audio
+// cannot keep the game stuck on the splash screen.
+document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
-    document.getElementById('splash-overlay').style.display = 'none';
-    document.getElementById('main-container').style.display = 'block';
-  }, 5000);
-};
+    const splash = document.getElementById('splash-overlay');
+    const main = document.getElementById('main-container');
+    if (splash) splash.style.display = 'none';
+    if (main) main.style.display = 'block';
+  }, 850);
+});
 
 // Element Database
 const ELEMENTS = {
-  H:  { name: "Hydrogen", protons: 1, neutrons: 0, k: 1, l: 0, m: 0, mass: 1, valency: 1 },
-  He: { name: "Helium",   protons: 2, neutrons: 2, k: 2, l: 0, m: 0, mass: 4, valency: 0 },
-  C:  { name: "Carbon",   protons: 6, neutrons: 6, k: 2, l: 4, m: 0, mass: 12, valency: 4 },
-  O:  { name: "Oxygen",   protons: 8, neutrons: 8, k: 2, l: 6, m: 0, mass: 16, valency: 2 },
-  Na: { name: "Sodium",   protons: 11, neutrons: 12, k: 2, l: 8, m: 1, mass: 23, valency: 1 }
+  H:  { name: "Hydrogen", protons: 1,  neutrons: 0,  k: 1, l: 0, m: 0, mass: 1,  valenceElectrons: 1, valency: 1 },
+  He: { name: "Helium",   protons: 2,  neutrons: 2,  k: 2, l: 0, m: 0, mass: 4,  valenceElectrons: 2, valency: 0 },
+  C:  { name: "Carbon",   protons: 6,  neutrons: 6,  k: 2, l: 4, m: 0, mass: 12, valenceElectrons: 4, valency: 4 },
+  O:  { name: "Oxygen",   protons: 8,  neutrons: 8,  k: 2, l: 6, m: 0, mass: 16, valenceElectrons: 6, valency: 2 },
+  Na: { name: "Sodium",   protons: 11, neutrons: 12, k: 2, l: 8, m: 1, mass: 23, valenceElectrons: 1, valency: 1 }
 };
 
 let currentElementKey = "C";
@@ -416,31 +512,82 @@ const particleArea = document.getElementById("particleArea");
 const nucleus = document.getElementById("nucleus");
 const atomArea = document.getElementById("atomArea");
 
-// Dynamic layout grid generation for the nucleus
+// Compact nucleus layout.
+// Uses concentric rings that always stay inside the nucleus.
+// Ring capacity is based on hexagonal packing: 1, 6, 12, 18...
 function getNucleusPositions(totalParticles) {
-  const positions = [];
-  const rings = [1, 5, 10, 15]; // capacity per concentric ring in nucleus
-  let count = 0;
+  if (totalParticles <= 0) return [];
 
-  for (let r = 0; r < rings.length && count < totalParticles; r++) {
-    const ringCapacity = rings[r];
-    const radiusPct = r * 22; // Percent spacing from center
+  const positions = [{ left: 50, top: 50 }];
 
-    for (let i = 0; i < ringCapacity && count < totalParticles; i++) {
-      if (r === 0) {
-        positions.push({ left: 50, top: 50 });
-      } else {
-        const angle = (i / ringCapacity) * 2 * Math.PI;
-        positions.push({
-          left: 50 + radiusPct * Math.cos(angle),
-          top: 50 + radiusPct * Math.sin(angle)
-        });
-      }
-      count++;
+  if (totalParticles === 1) return positions;
+
+  let remaining = totalParticles - 1;
+  let ring = 1;
+
+  // Centre positions are kept within about 40% of the nucleus diameter,
+  // leaving enough clearance for the particle radius at the edge.
+  const radiusByRing = [0, 18, 33, 40];
+
+  while (remaining > 0) {
+    const ringCapacity = ring * 6;
+    const particlesOnThisRing = Math.min(ringCapacity, remaining);
+    const radiusPct = radiusByRing[ring] ?? 40;
+
+    // Rotate alternate rings so particles do not form straight radial lines.
+    const angleOffset =
+      -Math.PI / 2 +
+      (ring % 2 === 0 ? Math.PI / Math.max(particlesOnThisRing, 1) : 0);
+
+    for (let i = 0; i < particlesOnThisRing; i++) {
+      const angle =
+        angleOffset +
+        (i / particlesOnThisRing) * 2 * Math.PI;
+
+      positions.push({
+        left: 50 + radiusPct * Math.cos(angle),
+        top: 50 + radiusPct * Math.sin(angle)
+      });
     }
+
+    remaining -= particlesOnThisRing;
+    ring++;
   }
+
   return positions;
 }
+
+
+// Assign protons and neutrons to alternating nucleus slots.
+// This keeps the nucleus visually mixed instead of making a red core
+// with a yellow outer layer when protons are added before neutrons.
+function getNucleusLayout(protons, neutrons) {
+  const total = protons + neutrons;
+  const positions = getNucleusPositions(total);
+  const types = [];
+
+  let pLeft = protons;
+  let nLeft = neutrons;
+
+  while (pLeft > 0 || nLeft > 0) {
+    if (pLeft > 0) {
+      types.push("proton");
+      pLeft--;
+    }
+
+    if (nLeft > 0) {
+      types.push("neutron");
+      nLeft--;
+    }
+  }
+
+  // Pair the alternating particle types with the compact positions.
+  return positions.map((pos, i) => ({
+    ...pos,
+    type: types[i] || (i % 2 === 0 ? "proton" : "neutron")
+  }));
+}
+
 
 function playAudio(type) {
   const audio = document.getElementById("audio-" + type);
@@ -543,10 +690,21 @@ nucleus.addEventListener("click", function() {
 });
 
 function addToNucleus(type) {
-  const totalInNucleus = currentElement.protons + currentElement.neutrons;
-  const positions = getNucleusPositions(totalInNucleus);
-  const index = protonCount + neutronCount;
-  const pos = positions[index] || { left: 50, top: 50 };
+  const layout = getNucleusLayout(
+    currentElement.protons,
+    currentElement.neutrons
+  );
+
+  const matchingSlots = layout.filter(slot => slot.type === type);
+
+  const typeIndex =
+    type === "proton"
+      ? protonCount
+      : neutronCount;
+
+  const pos =
+    matchingSlots[typeIndex] ||
+    { left: 50, top: 50 };
 
   const particle = document.createElement("div");
   particle.className = "nucleusParticle";
@@ -556,6 +714,7 @@ function addToNucleus(type) {
 
   if (type === "proton") {
     particle.style.background = "#ff3b30";
+    particle.style.color = "#fff";
     particle.innerHTML = "P";
     protonCount++;
   }
@@ -571,21 +730,25 @@ function addToNucleus(type) {
   updateStatus();
 }
 
+
 function createTarget(left, top) {
   if (activeTarget) {
     activeTarget.remove();
   }
 
-  activeTarget = document.createElement("div");
+  activeTarget = document.createElement("button");
+  activeTarget.type = "button";
   activeTarget.className = "activeTarget";
   activeTarget.style.left = left;
   activeTarget.style.top = top;
+  activeTarget.setAttribute("aria-label", "Place electron on highlighted shell position");
 
   atomArea.appendChild(activeTarget);
 
-  activeTarget.onclick = function() {
+  activeTarget.addEventListener("click", function(event) {
+    event.stopPropagation();
     placeElectron(left, top);
-  };
+  });
 }
 
 function placeElectron(left, top) {
@@ -733,7 +896,9 @@ function nextStep() {
     document.getElementById("missionText").innerHTML =
       currentElement.name + " Built<br><br>Atomic Number: " + currentElement.protons +
       "<br>Mass Number: " + currentElement.mass +
-      "<br>Electronic Config: " + configStr;
+      "<br>Electronic Config: " + configStr +
+      "<br>Outer-shell Electrons: " + currentElement.valenceElectrons +
+      "<br>Valency: " + currentElement.valency;
 
     document.getElementById("status").innerHTML =
       "✔ " + protonCount + " Protons<br>" +
@@ -796,8 +961,12 @@ const quizHTML = `
   <input id="q2" type="number" style="width:100%;padding:10px;border-radius:10px;margin-top:5px;">
   <br><br>
 
-  <p>3. How many Valence (outer shell) electrons does it have?</p>
+  <p>3. How many electrons are present in the outermost occupied shell?</p>
   <input id="q3" type="number" style="width:100%;padding:10px;border-radius:10px;margin-top:5px;">
+  <br><br>
+
+  <p>4. What is the valency of this element?</p>
+  <input id="q4" type="number" style="width:100%;padding:10px;border-radius:10px;margin-top:5px;">
   <br><br>
 
   <button onclick="checkQuiz()">Submit Assessment</button>
@@ -811,6 +980,7 @@ function showQuiz() {
   document.getElementById("q1").value = "";
   document.getElementById("q2").value = "";
   document.getElementById("q3").value = "";
+  document.getElementById("q4").value = "";
   document.getElementById("quizScreen").style.display = "block";
 }
 
@@ -818,8 +988,14 @@ function checkQuiz() {
   const q1 = parseInt(document.getElementById("q1").value);
   const q2 = parseInt(document.getElementById("q2").value);
   const q3 = parseInt(document.getElementById("q3").value);
+  const q4 = parseInt(document.getElementById("q4").value);
 
-  if (q1 === currentElement.protons && q2 === currentElement.mass && q3 === currentElement.valency) {
+  if (
+    q1 === currentElement.protons &&
+    q2 === currentElement.mass &&
+    q3 === currentElement.valenceElectrons &&
+    q4 === currentElement.valency
+  ) {
     playAudio("correct");
     showCertificate();
   } else {
@@ -882,7 +1058,8 @@ function generateCertificate() {
   document.getElementById("certSummary").innerHTML = 
     "Has successfully assembled a <strong>" + currentElement.name + "</strong> atom.<br>" +
     "Atomic Number: " + currentElement.protons + " | Mass Number: " + currentElement.mass + "<br>" +
-    "Valence Electrons: " + currentElement.valency;
+    "Outer-shell Electrons: " + currentElement.valenceElectrons + "<br>" +
+    "Valency: " + currentElement.valency;
     
   document.getElementById("certificateContent").style.display = "block";
 }
