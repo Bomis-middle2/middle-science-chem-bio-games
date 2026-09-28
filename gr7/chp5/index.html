@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metal vs Non-Metal Explorer | Grade 7</title>
+<title>Metal vs Non-Metal Explorer</title>
 
 <style>
 *{box-sizing:border-box}
@@ -2552,6 +2552,156 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
 }
 
 </style>
+
+<style id="compact-evidence-summary">
+/* ==========================================================
+   COMPACT EVIDENCE SUMMARY
+   Replaces the tall 5-row Evidence Log with one compact strip.
+   ========================================================== */
+
+.evidenceBox{
+  min-height:0 !important;
+  margin-bottom:5px !important;
+  padding:7px 10px !important;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border-radius:10px !important;
+  background:#f4f9fc !important;
+  border:2px solid #d7e7ef !important;
+  font-size:11px !important;
+  line-height:1.2 !important;
+}
+
+.evidenceBox strong{
+  color:#0a5c89;
+  white-space:nowrap;
+}
+
+.evidenceBox span{
+  color:#5d6f7a;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.mysteryEvidence{
+  display:grid !important;
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  gap:5px !important;
+  margin:0 0 8px !important;
+}
+
+.evCard{
+  position:relative;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  grid-template-rows:auto auto !important;
+  place-items:center;
+  gap:2px !important;
+  min-height:54px !important;
+  padding:5px 2px !important;
+  border:2px solid #dce6ec !important;
+  border-radius:10px !important;
+  background:#fff !important;
+  text-align:center;
+  font-size:8px !important;
+  line-height:1.05 !important;
+  transform:none !important;
+}
+
+.evCard .evIcon{
+  width:25px !important;
+  height:25px !important;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#eef5f8 !important;
+  font-size:15px !important;
+}
+
+.evCard .evName{
+  width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#4a6170;
+  font-size:7px !important;
+  font-weight:900;
+}
+
+.evCard .evResult{
+  position:absolute;
+  right:3px;
+  top:3px;
+  width:15px;
+  height:15px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#edf1f3;
+  color:#8a979e !important;
+  font-size:9px !important;
+  font-weight:900;
+}
+
+.evCard.done{
+  background:#eaf7ee !important;
+  border-color:#76bd8a !important;
+}
+
+.evCard.done .evIcon{
+  background:#fff !important;
+}
+
+.evCard.done .evResult{
+  background:#35a65a;
+  color:#fff !important;
+}
+
+.evCard.active{
+  border-color:#e5bd39 !important;
+  box-shadow:0 0 0 2px rgba(229,189,57,.13);
+}
+
+@media(max-width:620px){
+  .evidenceBox{
+    padding:6px 8px !important;
+    margin-bottom:4px !important;
+    font-size:10px !important;
+  }
+
+  .mysteryEvidence{
+    gap:3px !important;
+    margin-bottom:5px !important;
+  }
+
+  .evCard{
+    min-height:45px !important;
+    padding:4px 1px !important;
+    border-radius:8px !important;
+  }
+
+  .evCard .evIcon{
+    width:21px !important;
+    height:21px !important;
+    font-size:13px !important;
+  }
+
+  .evCard .evName{
+    font-size:6px !important;
+  }
+
+  .evCard .evResult{
+    right:2px;
+    top:2px;
+    width:13px;
+    height:13px;
+    font-size:8px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -2616,7 +2766,7 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
       </div>
       <div class="step">
         <div class="num">4</div>
-        <b>Each completed test is added to your Evidence Log.</b>
+        <b>Each completed test is marked in your compact Evidence Summary.</b>
         <div class="stepIcon">🧠</div>
       </div>
       <div class="step">
@@ -2722,7 +2872,7 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
           </div>
 
           <div class="evidenceBox" id="evidenceBox">
-            <strong>Evidence Log:</strong> Complete all five property tests.
+            <strong>Evidence:</strong> <span>0 / 5 tests completed</span>
           </div>
 
           <div class="mysteryEvidence" id="mysteryEvidence"></div>
@@ -2740,7 +2890,7 @@ button:focus-visible{outline:4px solid #ffd45a;outline-offset:2px}
           </div>
 
           <div class="feedback" id="feedback">
-            Perform all five tests on this sample. The classification buttons will unlock when the Evidence Log is complete.
+            Perform all five tests on this sample. The classification buttons will unlock when all five tests are complete.
           </div>
 
           <div class="scienceNote">
@@ -3212,7 +3362,7 @@ function runTest(){
     $("feedback").className="feedback good";
     $("feedback").innerHTML=
       "✅ <b>Investigation complete!</b><br>You have tested all five physical properties of "+
-      mission.sample+". Use the complete Evidence Log to classify the sample.";
+      mission.sample+". Use the five test results to classify the sample.";
 
     $("answerOptions").classList.remove("classificationReady");
     void $("answerOptions").offsetWidth;
@@ -3230,8 +3380,8 @@ function updateEvidence(){
   const total=Object.keys(tests).length;
 
   $("evidenceBox").innerHTML=
-    "<strong>Evidence Log:</strong> "+completedTests.size+" / "+total+
-    " property tests completed for <b>"+mission.sample+"</b>.";
+    "<strong>Evidence:</strong> <span>"+completedTests.size+" / "+total+
+    " tests completed</span>";
 
   const container=$("mysteryEvidence");
   container.className="mysteryEvidence";
@@ -3245,19 +3395,25 @@ function updateEvidence(){
 
     const icon=document.createElement("div");
     icon.className="evIcon";
-    icon.textContent=done ? "✓" : tests[t].icon;
+    icon.textContent=tests[t].icon;
 
     const name=document.createElement("div");
     name.className="evName";
-    name.textContent=tests[t].title.replace(" TEST","");
+    name.textContent=tests[t].title.replace(" TEST","").replace("ELECTRICAL CONDUCTIVITY","CONDUCTIVITY");
 
-    const result=document.createElement("div");
-    result.className="evResult";
-    result.textContent=done ? mission.results[t] : "Not tested yet";
+    const status=document.createElement("div");
+    status.className="evResult";
+    status.textContent=done ? "✓" : "○";
+
+    card.title=done ? mission.results[t] : "Not tested yet";
+    card.setAttribute(
+      "aria-label",
+      name.textContent+": "+(done ? mission.results[t] : "not tested yet")
+    );
 
     card.appendChild(icon);
     card.appendChild(name);
-    card.appendChild(result);
+    card.appendChild(status);
     container.appendChild(card);
   });
 }
@@ -3303,7 +3459,7 @@ function checkAnswer(answer,btn){
 
       $("feedback").className="feedback bad";
       $("feedback").textContent=
-        "❌ Not quite. Review the complete Evidence Log from all five tests before choosing again.";
+        "❌ Not quite. Review the results from all five property tests before choosing again.";
 
       setTimeout(()=>btn.classList.remove("wrong"),450);
     }else{
@@ -3319,7 +3475,7 @@ function checkAnswer(answer,btn){
       $("feedback").innerHTML=
         "💡 <b>Correct classification:</b> "+
         (mission.type==="metal"?"Metal":"Non-metal")+
-        ". Use the combined evidence from all five property tests.";
+        ". Use the combined results from all five property tests.";
 
       $("nextBtn").style.display="block";
     }
