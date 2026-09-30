@@ -547,20 +547,21 @@ button{cursor:pointer}
   display:none;
   position:absolute;
   left:50%;
-  top:0;
+  top:34px;
   transform:translateX(-50%) rotate(3deg);
   width:22px;
-  height:126px;
+  height:138px;
   border:3px solid #655a71;
   border-radius:4px;
   background:var(--stripBase,#337fc8);
   transition:background .55s ease;
+  transform-origin:center top;
 }
 .strip.show{display:block}
 .strip.dipped{
   background:linear-gradient(
-    var(--stripBase,#337fc8) 0 56%,
-    var(--stripResult,#337fc8) 56% 100%
+    var(--stripBase,#337fc8) 0 64%,
+    var(--stripResult,#337fc8) 64% 100%
   );
 }
 
@@ -938,8 +939,9 @@ button{cursor:pointer}
     height:108px;
   }
   .strip{
+    top:24px;
     width:14px;
-    height:85px;
+    height:90px;
     border-width:2px;
   }
   .dropper{
