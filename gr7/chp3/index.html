@@ -1177,6 +1177,29 @@ button{cursor:pointer}
 }
 </style>
 
+
+<style id="guided-lab-flow">
+.guideControl,#testBtn,#answerSide{position:relative;transition:.22s ease}
+.guideActive{z-index:20;border-color:#7a58cf!important;background:#fbf8ff!important;box-shadow:0 0 0 5px rgba(122,88,207,.14),0 8px 18px rgba(86,60,155,.15)!important;animation:guidePulse 1.25s ease-in-out infinite}
+.guideActive::after{content:"NEXT";position:absolute;top:-9px;right:8px;padding:3px 7px;border-radius:999px;background:#6d4fbd;color:#fff;font-size:8px;font-weight:900;letter-spacing:.5px}
+.guideDone{border-color:#7ec89b!important;background:#f2fbf5!important;box-shadow:0 0 0 2px rgba(77,165,110,.08)!important}
+.guideWaiting{opacity:.72}
+.stepState{display:inline-block;min-width:13px;margin-left:3px;color:#2f9d62;font-weight:900}
+@keyframes guidePulse{0%,100%{box-shadow:0 0 0 3px rgba(122,88,207,.11),0 7px 16px rgba(86,60,155,.11)}50%{box-shadow:0 0 0 8px rgba(122,88,207,.17),0 9px 20px rgba(86,60,155,.16)}}
+.missionTarget{display:inline-block;padding:2px 7px;margin:0 2px;border-radius:8px;background:#fff4a8;color:#6f4c08;border:2px solid #e7c754;font-weight:900;box-shadow:0 0 0 3px rgba(237,204,91,.12);animation:missionTargetPulse 1.3s ease-in-out infinite}
+.missionTarget.done{background:#e9f8ef;color:#276c45;border-color:#83c89f;box-shadow:none;animation:none}
+@keyframes missionTargetPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+#testBtn.guideActive{background:linear-gradient(#8a69d7,#6244b4)!important;color:#fff!important;transform:translateY(-1px)}
+#answerSide.guideActive{border:3px solid #7a58cf;border-radius:15px;background:#fffaff!important}
+.missionGuideText{display:block;margin-top:4px;font-size:.88em;font-weight:800;color:#6c5b7f}
+.missionGuideText strong{color:#5e43a7}
+@media(max-width:620px){
+  .guideActive::after{top:-8px;right:5px;font-size:7px;padding:2px 5px}
+  .missionTarget{padding:1px 5px;border-width:1.5px}
+  .missionGuideText{margin-top:3px;font-size:.78em;line-height:1.3}
+}
+</style>
+
 </head>
 
 <body>
@@ -1224,19 +1247,19 @@ button{cursor:pointer}
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
-        <b>Select a sample. The selected sample appears on the lab bench and in the test beaker.</b>
+        <b>Select the sample named in the mission. The SAMPLE box will glow to guide you.</b>
         <div class="icon">🧴</div>
       </div>
 
       <div class="step">
         <div class="num">2</div>
-        <b>Select an indicator. Litmus appears as paper; turmeric and China rose appear as liquid indicators.</b>
+        <b>After the correct sample is selected, the INDICATOR box will glow. Choose any indicator to test the sample.</b>
         <div class="icon">🧪</div>
       </div>
 
       <div class="step">
         <div class="num">3</div>
-        <b>Click TEST SAMPLE. Only then will the indicator react and the observation appear.</b>
+        <b>After choosing an indicator, TEST SAMPLE will glow. Tap it to run the experiment and reveal the observation.</b>
         <div class="icon">🎨</div>
       </div>
 
@@ -1279,13 +1302,13 @@ button{cursor:pointer}
           <div class="labBench">
 
             <div class="selectionPanel">
-              <div class="control">
-                <label for="sampleSelect">1. SAMPLE</label>
+              <div class="control guideControl" id="sampleControl">
+                <label for="sampleSelect">1. SAMPLE <span class="stepState" id="sampleState"></span></label>
                 <select id="sampleSelect"></select>
               </div>
 
-              <div class="control">
-                <label for="indicatorSelect">2. INDICATOR</label>
+              <div class="control guideControl" id="indicatorControl">
+                <label for="indicatorSelect">2. INDICATOR <span class="stepState" id="indicatorState"></span></label>
                 <select id="indicatorSelect">
                   <option value="">Choose indicator</option>
                   <option value="blueLitmus">Blue litmus paper</option>
@@ -1346,7 +1369,7 @@ button{cursor:pointer}
 
         </div>
 
-        <div class="answerSide">
+        <div class="answerSide" id="answerSide">
           <div class="phaseTag">STEP 4 • INTERPRET THE RESULT</div>
 
           <div class="question">
@@ -1462,6 +1485,86 @@ function getSample(id){
   return samples.find(s=>s.id===id);
 }
 
+function setGuideState(elementId,state){
+  const el=$(elementId);
+  if(!el)return;
+
+  el.classList.remove("guideActive","guideDone","guideWaiting");
+
+  if(state==="active")el.classList.add("guideActive");
+  if(state==="done")el.classList.add("guideDone");
+  if(state==="waiting")el.classList.add("guideWaiting");
+}
+
+function updateGuidance(){
+  const targetId=missions[index];
+  const selectedSample=$("sampleSelect").value;
+  const selectedIndicator=$("indicatorSelect").value;
+  const sampleCorrect=selectedSample===targetId;
+
+  ["sampleControl","indicatorControl","testBtn","answerSide"].forEach(id=>{
+    const el=$(id);
+    if(el)el.classList.remove("guideActive","guideDone","guideWaiting");
+  });
+
+  $("sampleState").textContent="";
+  $("indicatorState").textContent="";
+
+  const targetNameEl=$("targetSampleName");
+
+  if(!sampleCorrect){
+    setGuideState("sampleControl","active");
+    setGuideState("indicatorControl","waiting");
+    setGuideState("testBtn","waiting");
+
+    if(targetNameEl)targetNameEl.classList.remove("done");
+
+    if($("missionGuide")){
+      $("missionGuide").innerHTML=
+        selectedSample
+        ? '👉 Select <strong>'+getSample(targetId).name+'</strong> from the SAMPLE list.'
+        : '👉 First, select <strong>'+getSample(targetId).name+'</strong> from the SAMPLE list.';
+    }
+    return;
+  }
+
+  setGuideState("sampleControl","done");
+  $("sampleState").textContent="✓";
+  if(targetNameEl)targetNameEl.classList.add("done");
+
+  if(!selectedIndicator){
+    setGuideState("indicatorControl","active");
+    setGuideState("testBtn","waiting");
+
+    if($("missionGuide")){
+      $("missionGuide").innerHTML=
+        '✓ Sample selected. 👉 Now choose an <strong>indicator</strong>.';
+    }
+    return;
+  }
+
+  setGuideState("indicatorControl","done");
+  $("indicatorState").textContent="✓";
+
+  if(!testDone || testedSampleId!==selectedSample){
+    setGuideState("testBtn","active");
+
+    if($("missionGuide")){
+      $("missionGuide").innerHTML=
+        '✓ Indicator ready. 👉 Tap <strong>TEST SAMPLE</strong>.';
+    }
+    return;
+  }
+
+  setGuideState("testBtn","done");
+  setGuideState("answerSide","active");
+
+  if($("missionGuide")){
+    $("missionGuide").innerHTML=
+      '✓ Observation recorded. 👉 Use the colour change to <strong>classify the sample</strong>.';
+  }
+}
+
 function playSound(id){
   if(!soundOn)return;
   const a=$(id);
@@ -1537,6 +1640,7 @@ function updateSamplePreview(){
     $("liquid").style.setProperty("--resultColor","#e9f2f5");
     $("observation").className="observation";
     $("observation").textContent="Select a sample and indicator, then click TEST SAMPLE.";
+    updateGuidance();
     return;
   }
 
@@ -1547,8 +1651,17 @@ function updateSamplePreview(){
   $("liquid").style.setProperty("--resultColor",sample.colour);
 
   $("observation").className="observation";
-  $("observation").textContent=
-    sample.name+" is now in the test beaker. Select an indicator.";
+
+  if(id===missions[index]){
+    $("observation").textContent=
+      sample.name+" is now in the test beaker. Select an indicator.";
+  }else{
+    $("observation").textContent=
+      sample.name+" is selected, but the mission asks you to test "+
+      getSample(missions[index]).name+".";
+  }
+
+  updateGuidance();
 }
 
 /* INDICATOR APPEARS IMMEDIATELY */
@@ -1572,6 +1685,8 @@ function updateIndicatorPreview(){
       $("sampleSelect").value
       ? "Sample selected. Now choose an indicator."
       : "Select a sample and indicator, then click TEST SAMPLE.";
+
+    updateGuidance();
     return;
   }
 
@@ -1603,6 +1718,8 @@ function updateIndicatorPreview(){
     $("sampleSelect").value
     ? info.name+" is ready. Click TEST SAMPLE."
     : info.name+" selected. Now choose a sample.";
+
+  updateGuidance();
 }
 
 /* SCIENTIFIC RESULTS */
@@ -1687,7 +1804,17 @@ function runTest(){
   if(!sampleId || !indicatorId){
     $("feedback").className="feedback bad";
     $("feedback").textContent=
-      "Select both the sample and the indicator before clicking TEST SAMPLE.";
+      "Select the mission sample and an indicator before clicking TEST SAMPLE.";
+    updateGuidance();
+    return;
+  }
+
+  if(sampleId!==missions[index]){
+    $("feedback").className="feedback bad";
+    $("feedback").textContent=
+      "This mission asks you to test "+getSample(missions[index]).name+
+      ". Select that sample first.";
+    updateGuidance();
     return;
   }
 
@@ -1747,6 +1874,8 @@ function runTest(){
   $("feedback").className="feedback";
   $("feedback").textContent=
     "Experiment complete. Interpret the observation and select the correct classification.";
+
+  updateGuidance();
 }
 
 function resetForMission(){
@@ -1788,6 +1917,8 @@ function resetForMission(){
     "Run the experiment first. The answer options will unlock after the test.";
 
   $("nextBtn").style.display="none";
+
+  updateGuidance();
 }
 
 function loadMission(){
@@ -1803,11 +1934,13 @@ function loadMission(){
   $("score").textContent=score;
   $("progressFill").style.width=(index/missions.length*100)+"%";
 
-  $("missionText").textContent=
-    "Mission: Test "+target.name+
-    ". Select it from the sample list, choose an indicator, perform the test and interpret the result.";
+  $("missionText").innerHTML=
+    'Mission: Test <span class="missionTarget" id="targetSampleName">'+target.name+
+    '</span>.'+
+    '<span class="missionGuideText" id="missionGuide"></span>';
 
   resetForMission();
+  updateGuidance();
 }
 
 function checkAnswer(choice,btn){
@@ -1838,6 +1971,8 @@ function checkAnswer(choice,btn){
       "</b> in this activity. Your conclusion is based on the indicator observation.";
 
     $("nextBtn").style.display="block";
+    $("answerSide").classList.remove("guideActive");
+    $("answerSide").classList.add("guideDone");
     playSound("correctAudio");
   }
   else{
@@ -1876,6 +2011,8 @@ function checkAnswer(choice,btn){
         ". Use the indicator colour change to reach the conclusion.";
 
       $("nextBtn").style.display="block";
+      $("answerSide").classList.remove("guideActive");
+      $("answerSide").classList.add("guideDone");
     }
   }
 }
